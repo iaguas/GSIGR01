@@ -5,6 +5,8 @@
 
 package GSILib.BSystem;
 
+import GSILib.BModel.Journalist;
+import GSILib.BModel.Photographer;
 import java.util.Date;
 
 /**
