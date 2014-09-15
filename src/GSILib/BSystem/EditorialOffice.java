@@ -3,9 +3,8 @@
  * For any further use contact the author at carlos.lopez@unavarra.es
  */
 
-package BSystem;
+package GSILib.BSystem;
 
-import BModel.*;
 import java.util.Date;
 
 /**
