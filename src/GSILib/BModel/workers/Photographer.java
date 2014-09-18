@@ -2,7 +2,9 @@
  * Esto es una prueba
  * Each line should be prefixed with  * 
  */
-package GSILib.BModel;
+package GSILib.BModel.workers;
+
+import GSILib.BModel.Worker;
 
 /**
  *

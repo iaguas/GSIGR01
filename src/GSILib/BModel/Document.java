@@ -4,6 +4,10 @@
  */
 package GSILib.BModel;
 
+import GSILib.BModel.workers.Journalist;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Alvaro
@@ -11,12 +15,22 @@ package GSILib.BModel;
 public class Document {
     
     private String headline, body;
+    private List<Journalist> journalists = new ArrayList<Journalist>();
+    private List<String> awards = new ArrayList<String>();
     //** firma de periodista **//
     
     // Constructor
     
-    public Document(String headline, String body){
+    protected Document(String headline, String body, Journalist journalist){
         this.headline = headline;
         this.body = body;
+        this.journalists.add(journalist);
+    }
+    
+    public void addJournalist(Journalist journalist){
+        this.journalists.add(journalist);
+    }
+    public void addAward(String prize){
+        awards.add(prize);
     }
 }

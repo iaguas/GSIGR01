@@ -4,8 +4,9 @@
  */
 package GSILib.BSystem;
 
-import GSILib.BModel.Journalist;
-import GSILib.BModel.Photographer;
+import GSILib.BModel.Document;
+import GSILib.BModel.workers.Journalist;
+import GSILib.BModel.workers.Photographer;
 import GSILib.BModel.Worker;
 import java.util.ArrayList;
 import java.util.Date;

@@ -2,8 +2,10 @@
  * Esto es una prueba
  * Each line should be prefixed with  * 
  */
-package GSILib.BModel;
+package GSILib.BModel.workers;
 
+import GSILib.BModel.Worker;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +13,7 @@ import java.util.List;
  *
  * @author Alvaro
  */
-public class Journalist extends Worker{
+public class Journalist extends Worker {
     
     private List<String> interests = new ArrayList<String>();
     

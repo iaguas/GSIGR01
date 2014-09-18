@@ -2,8 +2,11 @@
  * Esto es una prueba
  * Each line should be prefixed with  * 
  */
-package GSILib.BModel;
+package GSILib.BModel.documents;
 
+import GSILib.BModel.Document;
+import GSILib.BModel.Picture;
+import GSILib.BModel.workers.Journalist;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +19,11 @@ public class VisualNews extends Document{
     
     // Constructor
     
-    public VisualNews(String headline, String body){
-        super(headline, body);
+    protected VisualNews(String headline, String body, Journalist journalist){
+        super(headline, body, journalist);
     }
     
-    public addPicture(Picture picture){
+    public void addPicture(Picture picture){
         pictures.add(picture);
     }
 }
