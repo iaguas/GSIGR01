@@ -118,17 +118,17 @@ public class BusinessSystem implements EditorialOffice{
 
     @Override
     public boolean addReviewer(PrintableNews pn, Journalist rw) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return pn.addReviewer(rw);
     }
 
     @Override
     public boolean removeReviewer(PrintableNews pn, Journalist rw) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return pn.removeReviewer(rw);
     }
 
     @Override
     public Journalist[] listReviewers(PrintableNews pn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return pn.getReviwers();
     }
 
     @Override
@@ -217,21 +217,6 @@ public class BusinessSystem implements EditorialOffice{
 
     @Override
     public Journalist getAuthor(Document d) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean addReviewer(PrintableNews pn, Journalist rw) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean removeReviewer(PrintableNews pn, Journalist rw) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Journalist[] listReviewers(PrintableNews pn) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

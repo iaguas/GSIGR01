@@ -15,16 +15,26 @@ import java.util.List;
  */
 public class PrintableNews extends VisualNews{
     
-    private List<Journalist> allowedJournalists = new ArrayList<Journalist>();
+    private List<Journalist> reviewers = new ArrayList<Journalist>();
 
     public PrintableNews(String headline, String body, Journalist journalist) {
         super(headline, body, journalist);
     }
     
-    public void allowJournalist(Journalist journalist){
-        this.allowedJournalists.add(journalist);
+    public boolean addReviewer(Journalist journalist){
+        return this.reviewers.add(journalist);
     }
-    public boolean disallowJournalist(Journalist journalist){
-        return this.allowedJournalists.remove(journalist);
+    public boolean removeReviewer(Journalist journalist){
+        return this.reviewers.remove(journalist);
+    }
+    public Journalist[] getReviwers(){
+        Journalist[] reviewers = null;
+        int nextIndex = 0;
+        
+        for (int i = 0; i < this.reviewers.size(); i++){
+            reviewers[nextIndex] = this.reviewers.get(i);
+            nextIndex++;   
+        }
+        return reviewers;
     }
 }
