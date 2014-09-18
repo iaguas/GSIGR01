@@ -4,6 +4,8 @@
  */
 package GSILib.BModel;
 
+import GSILib.BModel.workers.Photographer;
+
 /**
  *
  * @author Alvaro
@@ -11,16 +13,21 @@ package GSILib.BModel;
 public class Picture {
     
     private String url;
+    private Photographer author;
     
     // Constructor
     
-    public Picture(String url){
+    public Picture(String url, Photographer photographer){
         this.url = url;
+        this.author = photographer;
     }
     
     // Get privates
     
     public String getUrl(){
         return this.url;
+    }
+    public Photographer getAutor(){
+        return this.author;
     }
 }

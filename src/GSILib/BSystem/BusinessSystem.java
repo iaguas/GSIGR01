@@ -8,6 +8,8 @@ import GSILib.BModel.Document;
 import GSILib.BModel.workers.Journalist;
 import GSILib.BModel.workers.Photographer;
 import GSILib.BModel.Worker;
+import GSILib.BModel.documents.visualNews.PrintableNews;
+import GSILib.BModel.documents.visualNews.WebNews;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.List;
 public class BusinessSystem implements EditorialOffice{
     
     private List<Worker> workers = new ArrayList<Worker>();
+    private List<Document> documents = new ArrayList<Document>();
     
     @Override
     public boolean addJournalist(Journalist jr){
@@ -74,7 +77,8 @@ public class BusinessSystem implements EditorialOffice{
 
     @Override
     public boolean insertNews(WebNews wn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.documents.add(wn);
+        return true; // temporal
     }
 
     @Override
@@ -163,7 +167,7 @@ public class BusinessSystem implements EditorialOffice{
     }
 
     @Override
-    public Journalist[] getJournalist(JournalIssue ji) {
+    public Journalist getJournalist(JournalIssue ji) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
