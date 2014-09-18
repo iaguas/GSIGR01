@@ -4,11 +4,13 @@
  */
 package GSILib.BModel;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Alvaro
  */
-public class Worker {
+public class Worker implements Serializable{
    
     private String id, name, birthDate;
     
