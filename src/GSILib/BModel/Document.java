@@ -33,4 +33,7 @@ public class Document {
     public void addAward(String prize){
         awards.add(prize);
     }
+    public Journalist getAuthor(){
+        return this.journalists.get(0);
+    }
 }

@@ -5,6 +5,10 @@
 
 package GSILib.BSystem;
 
+import GSILib.BModel.Document;
+import GSILib.BModel.Picture;
+import GSILib.BModel.documents.visualNews.PrintableNews;
+import GSILib.BModel.documents.visualNews.WebNews;
 import GSILib.BModel.workers.Journalist;
 import GSILib.BModel.workers.Photographer;
 import java.util.Date;
