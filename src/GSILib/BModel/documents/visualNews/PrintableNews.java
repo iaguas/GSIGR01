@@ -22,12 +22,15 @@ public class PrintableNews extends VisualNews{
     }
     
     public boolean addReviewer(Journalist journalist){
-        return this.reviewers.add(journalist);
+        if (! this.journalists.contains(journalist)){
+            return this.reviewers.add(journalist);
+        }
+        return false;
     }
     public boolean removeReviewer(Journalist journalist){
         return this.reviewers.remove(journalist);
     }
-    public Journalist[] getReviwers(){
+    public Journalist[] getReviewers(){
         Journalist[] reviewers = null;
         int nextIndex = 0;
         

@@ -20,8 +20,9 @@ public class WebNews extends VisualNews{
     
     // Constructor
     
-    public WebNews(String headline, String body, Journalist journalist) {
+    public WebNews(String headline, String body, Journalist journalist, String url) {
         super(headline, body, journalist);
+        this.url = url;
     }
     
     public boolean addKeyWord(String keyword){

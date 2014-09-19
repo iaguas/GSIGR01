@@ -5,6 +5,7 @@
 package GSILib.BSystem;
 
 import GSILib.BModel.Document;
+import GSILib.BModel.Newspaper;
 import GSILib.BModel.Picture;
 import GSILib.BModel.workers.Journalist;
 import GSILib.BModel.workers.Photographer;
@@ -13,7 +14,11 @@ import GSILib.BModel.documents.visualNews.PrintableNews;
 import GSILib.BModel.documents.visualNews.WebNews;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -24,6 +29,7 @@ public class BusinessSystem implements EditorialOffice{
     private List<Worker> workers = new ArrayList<Worker>();
     private List<Document> documents = new ArrayList<Document>();
     private List<Picture> pictures = new ArrayList<Picture>();
+    private LinkedHashMap<Date, Newspaper> newspapers = new LinkedHashMap<Date, Newspaper>();
     
     @Override
     public boolean addJournalist(Journalist jr){
@@ -78,28 +84,28 @@ public class BusinessSystem implements EditorialOffice{
     }
 
     @Override
-    public void insertNews(WebNews wn) {
-        this.documents.add(wn);
+    public boolean insertNews(WebNews wn) {
+        return this.documents.add(wn);
     }
 
     @Override
     public boolean removeNews(WebNews wn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.documents.remove(wn);
     }
 
     @Override
     public boolean addPrize(Document d, String prize) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return d.addPrize(prize);
     }
 
     @Override
     public boolean removePrize(Document d, String prize) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return d.removePrize(prize);
     }
 
     @Override
     public Journalist getAuthor(Document d) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return d.getAuthor();
     }
 
     @Override
@@ -128,7 +134,7 @@ public class BusinessSystem implements EditorialOffice{
 
     @Override
     public Journalist[] listReviewers(PrintableNews pn) {
-        return pn.getReviwers();
+        return pn.getReviewers();
     }
 
     @Override
@@ -171,57 +177,27 @@ public class BusinessSystem implements EditorialOffice{
     }
 
     @Override
-    public JournalIssue getNewspaper(Date d) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Newspaper getNewspaper(Date d) { // Era JournalIssue
+        return this.newspapers.get(d);
     }
 
     @Override
     public boolean deleteNewspaper(Date d) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return newspapers.remove(d) != null;
     }
 
     @Override
-    public boolean addNewsToIssue(JournalIssue ji, PrintableNews pn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean addNewsToIssue(Newspaper np, PrintableNews pn) {
+        return np.addNews(pn);
     }
 
     @Override
-    public Journalist getJournalist(JournalIssue ji) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Journalist[] getJournalist(Newspaper np) { // Era JournalIssue
+        return np.getAuthors();
     }
 
     @Override
     public Photographer getAuthor(Picture p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean insertNews(WebNews wn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean removeNews(WebNews wn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean addPrize(Document d, String prize) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean removePrize(Document d, String prize) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Journalist getAuthor(Document d) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean addNewsToIssue(JournalIssue ji, PrintableNews pn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return p.getAutor();
     }
 }

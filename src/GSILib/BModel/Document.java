@@ -16,7 +16,7 @@ public class Document {
     
     private String headline, body;
     private List<Journalist> journalists = new ArrayList<Journalist>();
-    private List<String> awards = new ArrayList<String>();
+    private List<String> prizes = new ArrayList<String>();
     //** firma de periodista **//
     
     // Constructor
@@ -27,13 +27,22 @@ public class Document {
         this.journalists.add(journalist);
     }
     
-    public void addJournalist(Journalist journalist){
-        this.journalists.add(journalist);
+    public boolean addJournalist(Journalist journalist){
+        return this.journalists.add(journalist);
     }
-    public void addAward(String prize){
-        awards.add(prize);
+    public boolean addPrize(String prize){
+        return this.prizes.add(prize);
     }
+    public boolean removePrize(String prize){
+        return this.prizes.remove(prize);
+    }
+    
+    // Get privates
+    
     public Journalist getAuthor(){
         return this.journalists.get(0);
+    }
+    public List getjournalists(){
+        return this.journalists;
     }
 }

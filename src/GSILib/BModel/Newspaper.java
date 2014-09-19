@@ -32,4 +32,15 @@ public class Newspaper {
     public boolean isPublishable(){
         return this.news.size() >= 20;
     }
+    public Journalist[] getAuthors(){
+        Journalist[] authorsOfANewspaper = null;
+        int nextIndex = 0;
+        
+        for (int i = 0; i < this.news.size(); i++){
+            authorsOfANewspaper[nextIndex] = this.news.get(i).getAuthor();
+            nextIndex++;
+            
+        }
+        return authorsOfANewspaper;
+    }
 }

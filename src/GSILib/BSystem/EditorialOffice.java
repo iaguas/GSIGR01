@@ -6,6 +6,7 @@
 package GSILib.BSystem;
 
 import GSILib.BModel.Document;
+import GSILib.BModel.Newspaper;
 import GSILib.BModel.Picture;
 import GSILib.BModel.documents.visualNews.PrintableNews;
 import GSILib.BModel.documents.visualNews.WebNews;
@@ -218,7 +219,7 @@ public interface EditorialOffice {
     public Photographer getAuthor(Picture p);
     
     /**
-     * Retrieves a webResource (WebNews or Picture) from its UML.
+     * Retrieves a webResource (WebNews or Picture) from its URL. // UML?
      * @param URL	The URL
      * @return 	The elemento, or null if no element matched the search.
      */
@@ -240,8 +241,8 @@ public interface EditorialOffice {
     
     /**
      * Create a newspaper for the specified date
-     * @param d The data of the newspaper. The system only allows one single newspaper per Date
-	 * @return true if and only if the paper was correctly created.
+     * @param d The ¿¿data?? of the newspaper. The system only allows one single newspaper per Date
+     * @return true if and only if the paper was correctly created.
      */
     public boolean createNewspaper(Date d);
     
@@ -250,7 +251,7 @@ public interface EditorialOffice {
      * @param d The date
      * @return The instance of JournalIssue for that date, or null if it does not exist.
      */
-    public JournalIssue getNewspaper(Date d);
+    public Newspaper getNewspaper(Date d); // Era JournalIssue
     
     /**
      * Deletes the newspaper from a specified date.
@@ -260,20 +261,20 @@ public interface EditorialOffice {
     
     /**
      * Adds a given news to a specific journal issue. In case the PrintableNews did not exist in the system,
-	 * 		it must also be stored. However, if the JournalIssue did not exist in the system, 
-	 *		the operation must have no effect and return a false result.
+     * 		it must also be stored. However, if the JournalIssue did not exist in the system, 
+     *		the operation must have no effect and return a false result.
      * @param ji	Issue at which the pn must be added
      * @param pn 	Printable news to be added to the journal issue
-	 * @return true if and only if the printable news could be added to the journal issue.
+     * @return true if and only if the printable news could be added to the journal issue.
      */
-    public boolean addNewsToIssue(JournalIssue ji,PrintableNews pn);
+    public boolean addNewsToIssue(Newspaper np,PrintableNews pn); // Era JournalIssue
     
     /**
      * Retrieves the list of journalist that have authored some document in a given JournalIssue
      * @param ji	The journal issue for which we seek the Journalist list
      * @return 	An array containing the journalists.
      */
-    Journalist[] getJournalist(JournalIssue ji);
+    Journalist[] getJournalist(Newspaper np); // Era JournalIssue
     
             
  
