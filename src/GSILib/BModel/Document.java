@@ -15,7 +15,7 @@ import java.util.List;
 public class Document {
     
     private String headline, body;
-    private List<Journalist> journalists = new ArrayList<Journalist>();
+    protected List<Journalist> journalists = new ArrayList<Journalist>();
     private List<String> prizes = new ArrayList<String>();
     //** firma de periodista **//
     
@@ -41,8 +41,5 @@ public class Document {
     
     public Journalist getAuthor(){
         return this.journalists.get(0);
-    }
-    public List getjournalists(){
-        return this.journalists;
     }
 }

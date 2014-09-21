@@ -25,8 +25,8 @@ public class Newspaper {
         // nulo
     }
 
-    public void addNews(PrintableNews printableNews){
-        this.news.add(printableNews);
+    public boolean addNews(PrintableNews printableNews){
+        return this.news.add(printableNews);
     }
     
     public boolean isPublishable(){

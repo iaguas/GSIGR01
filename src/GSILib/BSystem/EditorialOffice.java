@@ -8,6 +8,7 @@ package GSILib.BSystem;
 import GSILib.BModel.Document;
 import GSILib.BModel.Newspaper;
 import GSILib.BModel.Picture;
+import GSILib.BModel.documents.Teletype;
 import GSILib.BModel.documents.visualNews.PrintableNews;
 import GSILib.BModel.documents.visualNews.WebNews;
 import GSILib.BModel.workers.Journalist;

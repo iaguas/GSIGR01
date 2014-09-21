@@ -12,7 +12,8 @@ import java.io.Serializable;
  */
 public class Worker implements Serializable{
    
-    private String id, name, birthDate;
+    private String name, birthDate;
+    private Integer id;
     
     // Constructor
     
@@ -21,9 +22,15 @@ public class Worker implements Serializable{
         this.birthDate = birthDate;
     }
     
+    // Set privates
+    
+    public void setId(Integer id){
+        this.id = id;
+    }
+    
     // Get privates
     
-    public String getId(){
+    public Integer getId(){
         return this.id;
     }
     public String getName(){

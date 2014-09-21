@@ -10,6 +10,7 @@ import GSILib.BModel.Picture;
 import GSILib.BModel.workers.Journalist;
 import GSILib.BModel.workers.Photographer;
 import GSILib.BModel.Worker;
+import GSILib.BModel.documents.Teletype;
 import GSILib.BModel.documents.visualNews.PrintableNews;
 import GSILib.BModel.documents.visualNews.WebNews;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
@@ -31,26 +33,29 @@ public class BusinessSystem implements EditorialOffice{
     private List<Picture> pictures = new ArrayList<Picture>();
     private LinkedHashMap<Date, Newspaper> newspapers = new LinkedHashMap<Date, Newspaper>();
     
+    private AtomicInteger atomicInteger = new AtomicInteger();
+    
     @Override
     public boolean addJournalist(Journalist jr){
-        return workers.add(jr);
+        jr.setId(this.atomicInteger.getAndIncrement());
+        return this.workers.add(jr);
     }
 
     @Override
     public boolean existJournalist(Journalist jr) {
-        return workers.contains(jr);
+        return this.workers.contains(jr);
     }
 
     @Override
     public boolean removeJournalist(Journalist jr) {
-        return workers.remove(jr);
+        return this.workers.remove(jr);
     }
 
     @Override
     public Journalist findJournalist(String ID) {
         int workersLength = workers.size();
         for (int i = 0; i < workersLength; i++) {
-            if (workers.get(i).getId().equals(ID)) {
+            if (workers.get(i).getId() == Integer.parseInt(ID)) {
                 return (Journalist) workers.get(i);
             }
         }
@@ -87,10 +92,30 @@ public class BusinessSystem implements EditorialOffice{
     public boolean insertNews(WebNews wn) {
         return this.documents.add(wn);
     }
+    
+    @Override
+    public boolean insertNews(PrintableNews pn) {
+        return this.documents.add(pn);
+    }
+
+    @Override
+    public boolean insertNews(Teletype tp) {
+        return this.documents.add(tp);
+    }
 
     @Override
     public boolean removeNews(WebNews wn) {
         return this.documents.remove(wn);
+    }
+    
+    @Override
+    public boolean removeNews(PrintableNews pn) {
+        return this.documents.remove(pn);
+    }
+
+    @Override
+    public boolean removeNews(Teletype tp) {
+        return this.documents.remove(tp);
     }
 
     @Override
@@ -177,7 +202,7 @@ public class BusinessSystem implements EditorialOffice{
     }
 
     @Override
-    public Newspaper getNewspaper(Date d) { // Era JournalIssue
+    public Newspaper getNewspaper(Date d) {
         return this.newspapers.get(d);
     }
 
@@ -192,7 +217,7 @@ public class BusinessSystem implements EditorialOffice{
     }
 
     @Override
-    public Journalist[] getJournalist(Newspaper np) { // Era JournalIssue
+    public Journalist[] getJournalist(Newspaper np) {
         return np.getAuthors();
     }
 
