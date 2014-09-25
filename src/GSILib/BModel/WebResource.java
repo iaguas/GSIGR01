@@ -14,7 +14,7 @@ import GSILib.BModel.workers.Photographer;
  *
  * @author inigo.aguas & Iñaki Garcia
  */
-public interface URLResource {
+public interface WebResource {
     /* Constructor y método de WebNews*/   
     /*public WebNews(String headline, String body, Journalist journalist, String url);*/
     public boolean addKeyWord(String keyword);
