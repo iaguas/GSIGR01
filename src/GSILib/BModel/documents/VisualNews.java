@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  *
- * @author Alvaro
+ * @author Alvaro Gil & Iñigo Aguas & Iñaki Garcia
  */
 public class VisualNews extends Document{
     private List<Picture> pictures = new ArrayList<Picture>();

@@ -8,7 +8,7 @@ import GSILib.BModel.workers.Photographer;
 
 /**
  *
- * @author Alvaro
+ * @author Alvaro Gil & Iñigo Aguas & Iñaki Garcia
  */
 public class Picture {
     

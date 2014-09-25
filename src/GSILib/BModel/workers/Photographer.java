@@ -8,7 +8,7 @@ import GSILib.BModel.Worker;
 
 /**
  *
- * @author Alvaro
+ * @author Alvaro Gil & Iñigo Aguas & Iñaki Garcia
  */
 public class Photographer extends Worker{
     private String regularResidence, holidayResidence;

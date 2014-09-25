@@ -1,6 +1,7 @@
-/*
- * Esto es una prueba
- * Each line should be prefixed with  * 
+/**
+ * This interface retrieves the basic behaviour of an editorial office.
+ * It does support basic operations of introducing, retrieving and listing the most
+ *		basic information in the System 
  */
 package GSILib.BSystem;
 
@@ -20,8 +21,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- *
- * @author Alvaro
+ * @author Alvaro Gil & Iñigo Aguas & Iñaki Garcia Gil & Iñigo Aguas & Iñaki Garcia
  */
 public class BusinessSystem implements EditorialOffice{
     

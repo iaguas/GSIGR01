@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Alvaro
+ * @author Alvaro Gil & Iñigo Aguas & Iñaki Garcia
  */
 public class Worker implements Serializable{
    

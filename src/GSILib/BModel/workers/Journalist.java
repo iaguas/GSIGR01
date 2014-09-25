@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  *
- * @author Alvaro
+ * @author Alvaro Gil & Iñigo Aguas & Iñaki Garcia
  */
 public class Journalist extends Worker {
     

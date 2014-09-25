@@ -9,7 +9,7 @@ import GSILib.BModel.workers.Journalist;
 
 /**
  *
- * @author Alvaro
+ * @author Alvaro Gil & Iñigo Aguas & Iñaki Garcia
  */
 public class Teletype extends Document{
     

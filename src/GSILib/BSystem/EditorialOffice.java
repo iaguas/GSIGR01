@@ -68,7 +68,7 @@ public interface EditorialOffice {
     
     /**
      * Removes a photographer from the office
-     * @param pr false if it was non-existing, true if it was found and removed
+     * @param jr false if it was non-existing, true if it was found and removed
      * @return true if it was found and removed, false otherwise
      */
     public boolean removePhotographer(Photographer jr);
@@ -253,6 +253,7 @@ public interface EditorialOffice {
     /**
      * Deletes the newspaper from a specified date.
      * @param d The date for which the newspaper must be deleted
+     * @return true if newspaper is deleted correctly
      */
     public boolean deleteNewspaper(Date d);
     
@@ -260,7 +261,7 @@ public interface EditorialOffice {
      * Adds a given news to a specific journal issue. In case the PrintableNews did not exist in the system,
      * 		it must also be stored. However, if the JournalIssue did not exist in the system, 
      *		the operation must have no effect and return a false result.
-     * @param ji	Issue at which the pn must be added
+     * @param np	Issue at which the pn must be added
      * @param pn 	Printable news to be added to the journal issue
      * @return true if and only if the printable news could be added to the journal issue.
      */
@@ -268,7 +269,7 @@ public interface EditorialOffice {
     
     /**
      * Retrieves the list of journalist that have authored some document in a given JournalIssue
-     * @param ji	The journal issue for which we seek the Journalist list
+     * @param np	The journal issue for which we seek the Journalist list
      * @return 	An array containing the journalists.
      */
     Journalist[] getJournalist(Newspaper np); // Era JournalIssue
