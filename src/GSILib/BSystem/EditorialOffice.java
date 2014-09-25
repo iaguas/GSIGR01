@@ -6,6 +6,9 @@
 package GSILib.BSystem;
 
 import GSILib.BModel.*;
+import GSILib.BModel.workers.*;
+import GSILib.BModel.documents.*;
+import GSILib.BModel.documents.visualNews.*;
 import java.util.Date;
 
 /**

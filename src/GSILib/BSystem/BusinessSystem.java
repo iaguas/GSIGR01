@@ -5,16 +5,11 @@
 package GSILib.BSystem;
 
 /* Según Molina estas no hacen falta pq ya están en la interface */
-import GSILib.BModel.Document;
-import GSILib.BModel.Newspaper;
-import GSILib.BModel.Picture;
-import GSILib.BModel.WebResource;
-import GSILib.BModel.workers.Journalist;
-import GSILib.BModel.workers.Photographer;
-import GSILib.BModel.Worker;
-import GSILib.BModel.documents.Teletype;
-import GSILib.BModel.documents.visualNews.PrintableNews;
-import GSILib.BModel.documents.visualNews.WebNews;
+import GSILib.BModel.*;
+import GSILib.BModel.workers.*;
+import GSILib.BModel.documents.*;
+import GSILib.BModel.documents.visualNews.*;
+/* Esto no cambia, esto es cosa solo de la implementación */
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
