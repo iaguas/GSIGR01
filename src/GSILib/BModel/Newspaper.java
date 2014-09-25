@@ -24,14 +24,28 @@ public class Newspaper {
         
         // nulo
     }
-
-    public boolean addNews(PrintableNews printableNews){
-        return this.news.add(printableNews);
+    
+    /**
+     * Adds a printable news to the associated newspaper
+     * @param pn The printable news
+     * @return if printable news added correctly to newspaper
+     */
+    public boolean addNews(PrintableNews pn){
+        return this.news.add(pn);
     }
     
+    /**
+     * Verifies whether a newspaper is publishable
+     * @return true if the number of pages is at least 20
+     */
     public boolean isPublishable(){
         return this.news.size() >= 20;
     }
+    
+    /**
+     * Returns all the authors (journalists) of the news in the newspaper
+     * @return An array with the journalists who have written news in the newspaper
+     */
     public Journalist[] getAuthors(){
         Journalist[] authorsOfANewspaper = null;
         int nextIndex = 0;
