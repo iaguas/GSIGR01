@@ -4,6 +4,7 @@
  */
 package GSILib.BSystem;
 
+/* Según Molina estas no hacen falta pq ya están en la interface */
 import GSILib.BModel.Document;
 import GSILib.BModel.Newspaper;
 import GSILib.BModel.Picture;
