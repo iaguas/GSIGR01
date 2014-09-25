@@ -4,10 +4,11 @@
  */
 package GSILib.BSystem;
 
+/* Según Molina estas no hacen falta pq ya están en la interface */
 import GSILib.BModel.Document;
 import GSILib.BModel.Newspaper;
 import GSILib.BModel.Picture;
-import GSILib.BModel.URLResource;
+import GSILib.BModel.WebResource;
 import GSILib.BModel.workers.Journalist;
 import GSILib.BModel.workers.Photographer;
 import GSILib.BModel.Worker;
@@ -188,7 +189,7 @@ public class BusinessSystem implements EditorialOffice{
     }
 
     @Override
-    public URLResource getWebResource(String URL) {
+    public WebResource getWebResource(String URL) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
