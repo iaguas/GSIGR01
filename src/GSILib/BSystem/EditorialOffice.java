@@ -8,6 +8,7 @@ package GSILib.BSystem;
 import GSILib.BModel.Document;
 import GSILib.BModel.Newspaper;
 import GSILib.BModel.Picture;
+import GSILib.BModel.URLResource;
 import GSILib.BModel.documents.Teletype;
 import GSILib.BModel.documents.visualNews.PrintableNews;
 import GSILib.BModel.documents.visualNews.WebNews;
@@ -224,7 +225,7 @@ public interface EditorialOffice {
      * @param URL	The URL
      * @return 	The elemento, or null if no element matched the search.
      */
-    public WebResource getWebResource(String URL);
+    public URLResource getWebResource(String URL);
     
 	
 	/**
