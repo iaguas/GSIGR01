@@ -34,7 +34,7 @@ public class BusinessSystem implements EditorialOffice{
     
     @Override
     public boolean addJournalist(Journalist jr){
-        jr.setId(this.atomicInteger.getAndIncrement());
+        //jr.setId(String);
         return this.workers.add(jr);
     }
 
@@ -52,7 +52,7 @@ public class BusinessSystem implements EditorialOffice{
     public Journalist findJournalist(String ID) {
         int workersLength = workers.size();
         for (int i = 0; i < workersLength; i++) {
-            if (workers.get(i).getId() == Integer.parseInt(ID)) {
+            if (ID.equals(workers.get(i).getId())) {
                 return (Journalist) workers.get(i);
             }
         }
@@ -136,7 +136,7 @@ public class BusinessSystem implements EditorialOffice{
         int nextIndex = 0;
         
         for (int i = 0; i < this.documents.size(); i++){
-            if (this.documents.get(i).getAuthor() == j){
+            if (this.documents.get(i).getAuthor() == j){ // Esto no debería funcionar pq no son el mismo objeto.
                 documentsOfAJournalist[nextIndex] = this.documents.get(i);
                 nextIndex++;
             }

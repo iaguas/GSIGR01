@@ -15,9 +15,9 @@ public class Photographer extends Worker{
     
     // Constructor
     
-    public Photographer(String name, String birthDate, String regularResidence, String holidayResidence){
+    public Photographer(String id, String name, String birthDate, String regularResidence, String holidayResidence){
         
-        super(name, birthDate);
+        super(id, name, birthDate);
         
         this.regularResidence = regularResidence;
         this.holidayResidence = holidayResidence;

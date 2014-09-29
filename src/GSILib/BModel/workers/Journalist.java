@@ -19,10 +19,10 @@ public class Journalist extends Worker {
     
     // Constructor
 
-    public Journalist(String name, String birthDate, ArrayList interests){
+    public Journalist(String id, String name, String birthDate, ArrayList interests){
         
-        super(name, birthDate);
-        
+        super(id, name, birthDate);
+ 
         this.interests = interests;
     }
 }

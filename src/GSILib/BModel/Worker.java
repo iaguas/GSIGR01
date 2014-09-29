@@ -12,12 +12,11 @@ import java.io.Serializable;
  */
 public class Worker implements Serializable{
    
-    private String name, birthDate;
-    private Integer id;
+    private String id, name, birthDate;
     
     // Constructor
-    
-    public Worker(String name, String birthDate){
+    public Worker(String id, String name, String birthDate){
+        this.id = id;
         this.name = name;
         this.birthDate = birthDate;
     }
@@ -26,7 +25,7 @@ public class Worker implements Serializable{
      * Sets an ID for a Worker
      * @param id desired worker id
      */ 
-    public void setId(Integer id){
+    public void setId(String id){
         this.id = id;
     }
     
@@ -35,7 +34,7 @@ public class Worker implements Serializable{
      * Gets an ID of an associated Worker
      * @return id of the associated worker
      */
-    public Integer getId(){
+    public String getId(){
         return this.id;
     }
     
