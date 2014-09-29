@@ -20,7 +20,7 @@ public class PrintableNews extends VisualNews{
     public PrintableNews(String headline, String body, Journalist journalist) {
         super(headline, body, journalist);
     }
-    
+
     public boolean addReviewer(Journalist journalist){
         if (! this.journalists.contains(journalist)){
             return this.reviewers.add(journalist);

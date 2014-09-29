@@ -13,7 +13,7 @@ import GSILib.BModel.workers.Photographer;
 public class Picture {
     
     private String url;
-    private Photographer author;
+    private Photographer author; // Deberíamos considerar el hacerlo por el ID del Fotografo.
     
     // Constructor
     

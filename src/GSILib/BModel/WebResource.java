@@ -15,8 +15,6 @@ import GSILib.BModel.workers.Photographer;
  * @author inigo.aguas & Iñaki Garcia
  */
 
-// Comit hecho, aguas eres un boca tunel
-
 public interface WebResource {
     /* Constructor y método de WebNews*/   
     /*public WebNews(String headline, String body, Journalist journalist, String url);*/
