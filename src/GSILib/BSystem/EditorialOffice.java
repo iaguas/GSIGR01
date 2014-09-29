@@ -223,7 +223,7 @@ public interface EditorialOffice {
     public WebResource getWebResource(String URL);
     
 	
-	/**
+    /**
      * Returns all the WebNews in the system indexed by (an exact) keyword,
      *  up to upper/lower case matters.
      * @param keyword   The search term, which must be non-empty

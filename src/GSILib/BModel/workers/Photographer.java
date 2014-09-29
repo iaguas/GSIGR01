@@ -25,9 +25,18 @@ public class Photographer extends Worker{
     
     // Get privates
     
+    /**
+     * Gets the regular residence of the associated photographer
+     * @return the regular residence of the associated photographer
+     */
     public String getRegularResidence(){
         return this.regularResidence;
     }
+    
+    /**
+     * Gets the holiday residence of the associated photographer
+     * @return the holiday residence of the associated photographer
+     */
     public String getHolidayResidence(){
         return this.holidayResidence;
     }

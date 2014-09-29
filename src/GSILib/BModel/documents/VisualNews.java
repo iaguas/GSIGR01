@@ -23,6 +23,10 @@ public class VisualNews extends Document{
         super(headline, body, journalist);
     }
     
+    /**
+     * Adds a picture to the associated visual news
+     * @param picture desired picture to add
+     */
     public void addPicture(Picture picture){
         pictures.add(picture);
     }
