@@ -139,8 +139,8 @@ public class EOTester {
         // Imprimimos el resultado en la consola.
         System.out.println("\nS7)");
         System.out.println("La lista de documentos para un periodista que no ha escrito es: ");
-        if (documentList==null){
-            System.out.println("nada");
+        if (documentList.length==0){
+            System.out.println("No hay documentos para mostrar.");
         }
         for(Document d: documentList){
             System.out.println(d);
