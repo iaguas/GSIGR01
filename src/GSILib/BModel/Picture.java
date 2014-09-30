@@ -44,4 +44,17 @@ public class Picture {
     public Photographer getAutor(){
         return this.author;
     }
+        
+    @Override
+    public String toString(){
+        return "Picture URL: " + this.getUrl();
+    }
+    
+     /** Equals
+      * @param p a picture
+      * @return true if they are the same object.
+      */
+    public boolean equals(Picture p){
+        return this.getUrl().equals(p.getUrl());
+    }
 }

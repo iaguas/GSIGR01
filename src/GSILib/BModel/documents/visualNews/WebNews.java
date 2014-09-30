@@ -52,6 +52,10 @@ public class WebNews extends VisualNews{
                 this.keywords;
     }
     
+     /** Equals
+      * @param wn a webnews
+      * @return true if they are the same object.
+      */
     public boolean equals(WebNews wn){
         return this.getId().equals(wn.getId());
     }

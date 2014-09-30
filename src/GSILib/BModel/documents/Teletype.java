@@ -29,6 +29,11 @@ public class Teletype extends Document{
                 + "\n  Body: " + this.getBody() + "\n  Journalist: " +
                 this.getAuthor();
     }
+    
+      /** Equals
+      * @param tp a teletype
+      * @return true if they are the same object.
+      */
     public boolean equals(Teletype tp){
         return this.getId().equals(tp.getId());
     }

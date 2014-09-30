@@ -40,5 +40,5 @@ public class VisualNews extends Document{
      */
     public List<Picture> getPictures(){
         return this.pictures;
-    }
+    }  
 }

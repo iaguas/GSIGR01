@@ -3,9 +3,6 @@
  */
 package GSILib.BModel;
 
-/*import GSILib.BModel.Picture;*/
-/*import GSILib.BModel.documents.visualNews.WebNews;*/
-/*import GSILib.BModel.workers.Journalist;*/
 import GSILib.BModel.workers.Photographer;
 
 /**

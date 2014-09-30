@@ -38,6 +38,10 @@ public class Journalist extends Worker {
                 this.interests;
     }
     
+     /** Equals
+      * @param jr a journalist
+      * @return true if they are the same object.
+      */
     public boolean equals(Journalist jr){
         return this.getId().equals(jr.getId());
     }

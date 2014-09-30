@@ -13,16 +13,19 @@ import GSILib.BModel.documents.visualNews.*;
 import java.util.ArrayList;
 /**
  *
- * @author inigo.aguas
+ * @author Alvaro Gil & Iñigo Aguas & Iñaki Garcia
  */
 public class EOTester {
     public static void main(String[] args) {
         BusinessSystem bsystem = new BusinessSystem();
-         
+        
+        Journalist jr = new Journalist("4444Y","Bill Newman","23/06/1954",new ArrayList<>());
         bsystem.addJournalist(new Journalist("5555R","Ken Jones","16/05/1953",new ArrayList<>()));
         bsystem.addJournalist(new Journalist("6666S","Tim Cook","23/04/1956",new ArrayList<>()));
         bsystem.addJournalist(new Journalist("7777T","Bill McDonald","08/07/1978",new ArrayList<>()));
-        
+        bsystem.addPhotographer(new Photographer("3333C","Tom Ulman","24/03/1984","C/Falsa 123","C/Verdadera 456"));
+        bsystem.insertNews(new PrintableNews("title1","body1",jr));
+                
         /* S1: Si introduce a un trabajador, este puede ser localizado luego a
                partir de su ID.
         */
@@ -33,7 +36,7 @@ public class EOTester {
         interest.add("natacion");
         interest.add("belenismo");
         // Añadimos al nuevo periodista.
-        Journalist jr = new Journalist("1111A","Jonh Smith","09/02/1993",interest);
+        jr = new Journalist("1111A","Jonh Smith","09/02/1993",interest);
         bsystem.addJournalist(jr);
         // Buscamos el empleado por el ID.
         Journalist findJr = bsystem.findJournalist("1111A");
@@ -71,6 +74,7 @@ public class EOTester {
         System.out.println("S2)");
         System.out.println("El resultado de buscar un peridista que no existe es: " + jr + ".\n");
          
+        
         /* S3: Si se busca a un periodista con el ID de un fotográfo, el
                resultado es null.
         */
@@ -81,6 +85,7 @@ public class EOTester {
         System.out.println("S3)");
         System.out.println("El resultado de buscar un periodista con el ID de un fotografo es: " + jr + ".\n");
          
+        
         /* S4: Si intenta introducir a un peridista con el ID de un fotógrafo, 
                anteriormente introducido, el método addJournalist devuelve un 
                resultado falso.

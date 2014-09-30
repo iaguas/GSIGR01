@@ -17,7 +17,6 @@ public class Document {
     private String headline, body;
     protected List<Journalist> journalists = new ArrayList<Journalist>();
     private List<String> prizes = new ArrayList<String>();
-    //** TODO firma de periodista **//
     
     /**
      * Class constructor

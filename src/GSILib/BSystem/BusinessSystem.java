@@ -22,7 +22,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * @author Alvaro Gil & Iñigo Aguas & Iñaki Garcia Gil & Iñigo Aguas & Iñaki Garcia
+ * @author Alvaro Gil & Iñigo Aguas & Iñaki Garcia 
  */
 public class BusinessSystem implements EditorialOffice{
     
@@ -35,10 +35,6 @@ public class BusinessSystem implements EditorialOffice{
     
     @Override
     public boolean addJournalist(Journalist jr){
-        //jr.setId(String);
-        // TODO. Para poder introducir una nueva instancia de periodista hay que 
-        //       asegurarse de que no haya ningún worker que tenga el mismo id.
-        //       Igual hay que cambiar la coleccion???
         if(! this.workers.containsKey(jr.getId())){
             this.workers.put(jr.getId(), jr);
             return true;
@@ -65,12 +61,6 @@ public class BusinessSystem implements EditorialOffice{
 
     @Override
     public Journalist findJournalist(String ID) {
-        /*int workersLength = workers.size();
-        for (int i = 0; i < workersLength; i++) {
-            if (ID.equals(workers.get(i).getId())) {
-                return (Journalist) workers.get(i);
-            }
-        }*/
         if(this.workers.containsKey(ID)){
             return (Journalist) this.workers.get(ID);
         }
@@ -107,13 +97,6 @@ public class BusinessSystem implements EditorialOffice{
 
     @Override
     public Photographer findPhotographer(String ID) {
-        /*int workersLength = workers.size();
-        for (int i = 0; i < workersLength; i++) {
-            if (workers.get(i).getId().equals(ID)) {
-                return (Photographer) workers.get(i);
-            }
-        }
-        return null;*/
         if(this.workers.containsKey(ID)){
             return (Photographer) this.workers.get(ID);
         }
@@ -174,7 +157,6 @@ public class BusinessSystem implements EditorialOffice{
     public Document[] getDocuments(Journalist j) {
         ArrayList<Document> documentsOfAJournalist = new ArrayList<>();
         
-        // TODO. Sustituir esto por un Iterator.
         for (int i = 0; i < this.documents.size(); i++){
             if (this.documents.get(i).getAuthor().equals(j)){
                 documentsOfAJournalist.add(this.documents.get(i));

@@ -71,6 +71,10 @@ public class PrintableNews extends VisualNews{
                 this.getPictures() + "\n  Reviewers: " + this.reviewers;
     }
     
+     /** Equals
+      * @param pn a printablenews
+      * @return true if they are the same object.
+      */
     public boolean equals(PrintableNews pn){
         return this.getId().equals(pn.getId());
     }
