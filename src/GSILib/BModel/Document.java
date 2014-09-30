@@ -42,7 +42,6 @@ public class Document {
     
     /**
      * Adds a string-represented prize to a given document, which can be a Teleprinter, WebNew or PrintableNew.
-     * @param d The new the prize is associated with.
      * @param prize the prize the document was awarded with
      * @return true if the Document was already stored and it was correctly listed, false otherwise
      */
@@ -52,7 +51,6 @@ public class Document {
     
     /**
     * Deletes a prize that has been associated with a given Document
-     * @param d The document itself
      * @param prize The prize to be deleted
      * @return True if it was correctly deleted, false if it wasn't or did not exist.
      */    
@@ -62,7 +60,6 @@ public class Document {
     
     /**
      * Retrieves the author of a given news
-     * @param d The document itself
      * @return The journalist
      */
     public Journalist getAuthor(){

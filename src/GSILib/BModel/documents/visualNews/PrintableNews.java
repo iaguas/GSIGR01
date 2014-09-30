@@ -1,6 +1,5 @@
-/*
- * Esto es una prueba
- * Each line should be prefixed with  * 
+/**
+ * This is the class PrintableNews.
  */
 package GSILib.BModel.documents.visualNews;
 
@@ -16,7 +15,13 @@ import java.util.List;
 public class PrintableNews extends VisualNews{
     
     private List<Journalist> reviewers = new ArrayList<Journalist>();
-    // Constructor
+    
+    /**
+     * Class constructor
+     * @param headline
+     * @param body
+     * @param journalist
+     */
     public PrintableNews(String headline, String body, Journalist journalist) {
         super(headline, body, journalist);
     }
@@ -36,6 +41,7 @@ public class PrintableNews extends VisualNews{
     /**
      * Removes a reviewer (journalist) from the associated printable news
      * @param journalist the existing desired reviewer to remove from printable news
+     * @return true if journalist removed correctly
      */
     public boolean removeReviewer(Journalist journalist){
         return this.reviewers.remove(journalist);

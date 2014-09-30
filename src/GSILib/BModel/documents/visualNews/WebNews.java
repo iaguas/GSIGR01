@@ -1,6 +1,5 @@
-/*
- * Esto es una prueba
- * Each line should be prefixed with  * 
+/**
+ * This is the class WebNews.
  */
 package GSILib.BModel.documents.visualNews;
 
@@ -18,8 +17,13 @@ public class WebNews extends VisualNews{
     private String url;
     private List<String> keywords = new ArrayList<String>();
     
-    // Constructor
-    
+    /**
+     * Class constructor
+     * @param headline
+     * @param body
+     * @param journalist
+     * @param url
+     */
     public WebNews(String headline, String body, Journalist journalist, String url) {
         super(headline, body, journalist);
         this.url = url;

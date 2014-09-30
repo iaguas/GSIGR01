@@ -1,6 +1,5 @@
-/*
- * Esto es una prueba
- * Each line should be prefixed with  * 
+/**
+ * This is the class Picture.
  */
 package GSILib.BModel;
 
@@ -15,8 +14,11 @@ public class Picture {
     private String url;
     private Photographer author; // Deberíamos considerar el hacerlo por el ID del Fotografo.
     
-    // Constructor
-    
+    /**
+     * Class constructor
+     * @param url
+     * @param photographer
+     */
     public Picture(String url, Photographer photographer){
         this.url = url;
         this.author = photographer;
