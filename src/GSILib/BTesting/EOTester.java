@@ -1,8 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/* 
+ * Práctica 01 - Grupo 01
+ * Gestión de Sistemas de Información
+ * Universidad Pública de Navarra
  */
+
 package GSILib.BTesting;
 
 import GSILib.BSystem.*;
@@ -11,9 +12,13 @@ import GSILib.BModel.workers.*;
 import GSILib.BModel.documents.*;
 import GSILib.BModel.documents.visualNews.*;
 import java.util.ArrayList;
+
 /**
- *
- * @author Alvaro Gil & Iñigo Aguas & Iñaki Garcia
+ * This is the class EOTester.
+ * This class is used in order to know that all things in the practise are done 
+ * OK.
+ * @version 1.0
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class EOTester {
     public static void main(String[] args) {

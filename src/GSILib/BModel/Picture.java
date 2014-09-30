@@ -1,34 +1,37 @@
-/**
- * This is the class Picture.
+/* 
+ * Práctica 01 - Grupo 01
+ * Gestión de Sistemas de Información
+ * Universidad Pública de Navarra
  */
+
 package GSILib.BModel;
 
 import GSILib.BModel.workers.Photographer;
 
 /**
- *
- * @author Alvaro Gil & Iñigo Aguas & Iñaki Garcia
+ * This is the class Picture.
+ * It respresent a picture in the system throw it URL.
+ * @version 1.0
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class Picture {
     
     private String url;
-    private Photographer author; // Deberíamos considerar el hacerlo por el ID del Fotografo.
+    private Photographer author;
     
     /**
-     * Class constructor
-     * @param url
-     * @param photographer
+     * Class constructor in which you have to put the URL and the photographer.
+     * @param url An unique identifier of a picture.
+     * @param photographer Author of the picture.
      */
     public Picture(String url, Photographer photographer){
         this.url = url;
         this.author = photographer;
     }
     
-    // Get privates
     /**
-     * Retrieves the information on the URL of a Picture. If the Picture is not stored in the system,
-     *		the result is null.
-     *
+     * Retrieves the information on the URL of a Picture. 
+     * If the Picture is not stored in the system, the result is null.
      * @return The URL associated with the picture
      */
     public String getUrl(){
@@ -36,9 +39,8 @@ public class Picture {
     }
     
     /**
-     * Retrieves the information on the author of a Picture. If the Picture is not stored in the system,
-     *		the result is null.
-     *
+     * Retrieves the information on the author of a Picture. 
+     * If the Picture is not stored in the system, the result is null.
      * @return The photographer associated with the picture
      */    
     public Photographer getAutor(){
@@ -50,10 +52,11 @@ public class Picture {
         return "Picture URL: " + this.getUrl();
     }
     
-     /** Equals
-      * @param p a picture
-      * @return true if they are the same object.
-      */
+    /** 
+     * Equals. Known if 2 object are the same.
+     * @param p a picture
+     * @return true if they are the same object, false otherwise.
+     */
     public boolean equals(Picture p){
         return this.getUrl().equals(p.getUrl());
     }

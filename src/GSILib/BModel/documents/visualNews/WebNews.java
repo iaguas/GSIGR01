@@ -1,6 +1,9 @@
-/**
- * This is the class WebNews.
+/* 
+ * Práctica 01 - Grupo 01
+ * Gestión de Sistemas de Información
+ * Universidad Pública de Navarra
  */
+
 package GSILib.BModel.documents.visualNews;
 
 import GSILib.BModel.documents.VisualNews;
@@ -9,8 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author Alvaro Gil & Iñigo Aguas & Iñaki Garcia
+ * This is the class WebNews.
+ * This is a type of notice VisualNews which is identify by an URL and have a 
+ * headline, body and author.
+ * @version 1.0
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class WebNews extends VisualNews{
     
@@ -18,11 +24,11 @@ public class WebNews extends VisualNews{
     private List<String> keywords = new ArrayList<String>();
     
     /**
-     * Class constructor
-     * @param headline
-     * @param body
-     * @param journalist
-     * @param url
+     * Class constructor that makes an object with headline, body, author and URL.
+     * @param headline headline of the notice that you want to save.
+     * @param body all text of the notice.
+     * @param journalist worker who has written the notice.
+     * @param url URL that's a unique identifier of the notice.
      */
     public WebNews(String headline, String body, Journalist journalist, String url) {
         super(headline, body, journalist);
@@ -42,7 +48,6 @@ public class WebNews extends VisualNews{
         return false;
     }
      
-    // Overdrive methods equals and toString.
     @Override
     public String toString(){
         return "WebNews ID: " + this.getId() + "\n  Headline: " + 
@@ -52,10 +57,11 @@ public class WebNews extends VisualNews{
                 this.keywords;
     }
     
-     /** Equals
-      * @param wn a webnews
-      * @return true if they are the same object.
-      */
+    /** 
+     * Equals. Known if 2 object are the same.
+     * @param wn a webnews
+     * @return true if they are the same object, false otherwise.
+     */
     public boolean equals(WebNews wn){
         return this.getId().equals(wn.getId());
     }

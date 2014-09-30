@@ -1,6 +1,9 @@
-/**
- * This is the class VisualNews.
+/* 
+ * Práctica 01 - Grupo 01
+ * Gestión de Sistemas de Información
+ * Universidad Pública de Navarra
  */
+
 package GSILib.BModel.documents;
 
 import GSILib.BModel.Document;
@@ -10,17 +13,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author Alvaro Gil & Iñigo Aguas & Iñaki Garcia
+ * This is the class VisualNews.
+ * This is an abstraction of a PrintableNews and Webnews that is a Document with
+ * pictures.
+ * @version 1.0
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class VisualNews extends Document{
     private List<Picture> pictures = new ArrayList<>();
     
     /**
-     * Class constructor
-     * @param headline
-     * @param body
-     * @param journalist
+     * Class constructor that makes an object with headline, body and author.
+     * @param headline headline of the notice that you want to save.
+     * @param body all text of the notice.
+     * @param journalist worker who has written the notice.
      */
     protected VisualNews(String headline, String body, Journalist journalist){
         super(headline, body, journalist);

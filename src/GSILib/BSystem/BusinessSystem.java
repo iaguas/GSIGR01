@@ -1,36 +1,41 @@
-/**
- * This interface retrieves the basic behaviour of an editorial office.
- * It does support basic operations of introducing, retrieving and listing the most
- *		basic information in the System 
+/* 
+ * Práctica 01 - Grupo 01
+ * Gestión de Sistemas de Información
+ * Universidad Pública de Navarra
  */
+
 package GSILib.BSystem;
 
-/* Según Molina estas no hacen falta pq ya están en la interface */
+/* Aunque ya están en la interface, se introducen también aquí */
 import GSILib.BModel.*;
 import GSILib.BModel.workers.*;
 import GSILib.BModel.documents.*;
 import GSILib.BModel.documents.visualNews.*;
-/* Esto no cambia, esto es cosa solo de la implementación */
+/* Estos, en cambio, son solo cosa de la implementación, que no debe conocerse */
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * @author Alvaro Gil & Iñigo Aguas & Iñaki Garcia 
+ * This is the class BusinessSystem.
+ * In this class we implement the system it self with help of all the classes of
+ * the model.
+ * @version 1.0
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class BusinessSystem implements EditorialOffice{
     
+    // Colecciones de objetos propias del sistema.
     private HashMap<String, Worker> workers = new HashMap<>();
     private List<Document> documents = new ArrayList<>();
     private HashMap<String, Picture> pictures = new HashMap<>();
     private LinkedHashMap<Date, Newspaper> newspapers = new LinkedHashMap<>();
-    
+
+    // Clase para dar el ID a las noticias (de cualquier tipo) de forma única.
     private AtomicInteger atomicInteger = new AtomicInteger();
     
     @Override
@@ -53,10 +58,7 @@ public class BusinessSystem implements EditorialOffice{
     public boolean removeJournalist(Journalist jr) {
         String id = jr.getId();
         this.workers.remove(id);
-        if(this.workers.containsKey(id))
-            return false;
-        else
-            return true;
+        return !this.workers.containsKey(id);
     }
 
     @Override
@@ -89,10 +91,7 @@ public class BusinessSystem implements EditorialOffice{
     public boolean removePhotographer(Photographer pr) {
         String id = pr.getId();
         this.workers.remove(id);
-        if(this.workers.containsKey(id))
-            return false;
-        else
-            return true;
+        return !this.workers.containsKey(id);
     }
 
     @Override
@@ -157,9 +156,9 @@ public class BusinessSystem implements EditorialOffice{
     public Document[] getDocuments(Journalist j) {
         ArrayList<Document> documentsOfAJournalist = new ArrayList<>();
         
-        for (int i = 0; i < this.documents.size(); i++){
-            if (this.documents.get(i).getAuthor().equals(j)){
-                documentsOfAJournalist.add(this.documents.get(i));
+        for (Document d : this.documents) {
+            if (d.getAuthor().equals(j)) {
+                documentsOfAJournalist.add(d);
             }
         }
         Document[] docs = documentsOfAJournalist.toArray(new Document[documentsOfAJournalist.size()]);
@@ -196,10 +195,7 @@ public class BusinessSystem implements EditorialOffice{
     public boolean removePicture(Picture p) {
         String url = p.getUrl();
         this.pictures.remove(url);
-        if(this.pictures.containsKey(url))
-            return false;
-        else
-            return true;
+        return !this.pictures.containsKey(url);
     }
 
     @Override

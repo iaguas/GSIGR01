@@ -1,24 +1,30 @@
-/**
- * This is the class Photographer.
+/* 
+ * Práctica 01 - Grupo 01
+ * Gestión de Sistemas de Información
+ * Universidad Pública de Navarra
  */
+
 package GSILib.BModel.workers;
 
 import GSILib.BModel.Worker;
 
 /**
- *
- * @author Alvaro Gil & Iñigo Aguas & Iñaki Garcia
+ * This is the class Photographer.
+ * He represent a worker who takes pictures into de system. He has ID, name,
+ * birthDate and, especialy, its residence and holyday residence.
+ * @version 1.0
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class Photographer extends Worker{
     private String regularResidence, holidayResidence;
     
     /**
      * Class constructor
-     * @param id
-     * @param name
-     * @param birthDate
-     * @param regularResidence
-     * @param holidayResidence
+     * @param id This is an unique ID of the worker.
+     * @param name The name of the worker.
+     * @param birthDate The birth dathe of the worker.
+     * @param regularResidence The regular residence of a photographer.
+     * @param holidayResidence The residence during the holydays of a photographer.
      */
     public Photographer(String id, String name, String birthDate, String regularResidence, String holidayResidence){
         
@@ -27,8 +33,6 @@ public class Photographer extends Worker{
         this.regularResidence = regularResidence;
         this.holidayResidence = holidayResidence;
     }
-    
-    // Get privates
     
     /**
      * Gets the regular residence of the associated photographer
@@ -46,7 +50,6 @@ public class Photographer extends Worker{
         return this.holidayResidence;
     }
     
-    // Overdrive methods equals and toString.
     @Override
     public String toString(){
         return "Journalist ID: " + this.getId() + "\n  Name: " + this.getName()
@@ -54,6 +57,11 @@ public class Photographer extends Worker{
                 + this.regularResidence + "\n  Holiday residence: " + this.holidayResidence;
     }
     
+    /** 
+     * Equals. Known if 2 object are the same.
+     * @param p a photographer
+     * @return true if they are the same object, false otherwise.
+     */
     public boolean equals(Photographer p){
         return this.getId().equals(p.getId());
     }

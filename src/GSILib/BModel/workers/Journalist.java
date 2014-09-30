@@ -1,36 +1,40 @@
-/**
- * This is the class Journalist.
+/* 
+ * Práctica 01 - Grupo 01
+ * Gestión de Sistemas de Información
+ * Universidad Pública de Navarra
  */
+
 package GSILib.BModel.workers;
 
 import GSILib.BModel.Worker;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author Alvaro Gil & Iñigo Aguas & Iñaki Garcia
+ * This is the class Journalist.
+ * He represent a worker who writes Document into de system. He has ID, name,
+ * birthDate and, especialy, interest.
+ * @version 1.0
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class Journalist extends Worker {
     
-    private List<String> interests = new ArrayList<String>();
+    private List<String> interests = new ArrayList<>();
     
     /**
      * Class constructor
-     * @param id
-     * @param name
-     * @param birthDate
-     * @param interests
+     * @param id This is an unique ID of the worker.
+     * @param name The name of the worker.
+     * @param birthDate The birth dathe of the worker.
+     * @param interests Is a list of a keyword of interest of a Journalist.
      */
     public Journalist(String id, String name, String birthDate, ArrayList interests){
-        
+        // Utilizamos el constructor de la superclase
         super(id, name, birthDate);
- 
+        // Introducimos los intereses en esta clase, que es quien los contiene.
         this.interests = interests;
     }
     
-    // Overdrive methods equals and toString.
     @Override
     public String toString(){
         return "Journalist ID: " + this.getId() + "\n  Name: " + this.getName()
@@ -38,10 +42,11 @@ public class Journalist extends Worker {
                 this.interests;
     }
     
-     /** Equals
-      * @param jr a journalist
-      * @return true if they are the same object.
-      */
+    /** 
+     * Equals. Known if 2 object are the same.
+     * @param jr a journalist
+     * @return true if they are the same object, false otherwise.
+     */
     public boolean equals(Journalist jr){
         return this.getId().equals(jr.getId());
     }
