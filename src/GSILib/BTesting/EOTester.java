@@ -61,15 +61,20 @@ public class EOTester {
         /* S2: Si busca a un periodista que no existe con findJournalist, el 
                resultado es null.
         */
-        jr = bsystem.findJournalist("999999");
-        System.out.println("El resultado es " + jr);
+        // No se han introducido periodistas que tengan el ID a 0000Z. Se comprueba.
+        jr = bsystem.findJournalist("0000Z");
+        // Imprimimos el resultado en la consola
+        System.out.println("S2)");
+        System.out.println("El resultado de buscar un peridista que no existe es: " + jr + "\n");
          
         /* S3: Si se busca a un periodista con el ID de un fotográfo, el
                resultado es null.
         */
-        // Mismo problema, de donde obtenemos el ID?
-        jr = bsystem.findJournalist("999999");
-        System.out.println("El resultado es " + jr);
+        // En S1 hemos introducido un fotógrafo con ID 2222B. Probamos a buscarlo
+        // como si de un periodista se tratase.
+        jr = bsystem.findJournalist("2222A");
+        System.out.println("S3)");
+        System.out.println("El resultado de buscar un periodista con el ID de un fotografo es: " + jr + "\n");
          
         /* S4: Si intenta introducir a un peridista con el ID de un fotógrafo, 
                anteriormente introducido, el método addJournalist devuelve un 
