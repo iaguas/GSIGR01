@@ -1,6 +1,5 @@
-/*
- * Esto es una prueba
- * Each line should be prefixed with  * 
+/**
+ * This is the class Worker, which includes Journalist and Photographer.
  */
 package GSILib.BModel;
 
@@ -14,7 +13,12 @@ public class Worker implements Serializable{
    
     private String id, name, birthDate;
     
-    // Constructor
+    /**
+     * Class constructor
+     * @param id
+     * @param name
+     * @param birthDate
+     */
     public Worker(String id, String name, String birthDate){
         this.id = id;
         this.name = name;

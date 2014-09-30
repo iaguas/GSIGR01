@@ -1,6 +1,5 @@
-/*
- * Esto es una prueba
- * Each line should be prefixed with  * 
+/**
+ * This is the class Photographer.
  */
 package GSILib.BModel.workers;
 
@@ -13,8 +12,14 @@ import GSILib.BModel.Worker;
 public class Photographer extends Worker{
     private String regularResidence, holidayResidence;
     
-    // Constructor
-    
+    /**
+     * Class constructor
+     * @param id
+     * @param name
+     * @param birthDate
+     * @param regularResidence
+     * @param holidayResidence
+     */
     public Photographer(String id, String name, String birthDate, String regularResidence, String holidayResidence){
         
         super(id, name, birthDate);

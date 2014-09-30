@@ -1,6 +1,5 @@
-/*
- * Esto es una prueba
- * Each line should be prefixed with  * 
+/**
+ * This is the class Teletype.
  */
 package GSILib.BModel.documents;
 
@@ -13,8 +12,12 @@ import GSILib.BModel.workers.Journalist;
  */
 public class Teletype extends Document{
     
-    // Constructor
-    
+    /**
+     * Class constructor
+     * @param headline
+     * @param body
+     * @param journalist
+     */
     public Teletype(String headline, String body, Journalist journalist){
         super(headline, body, journalist);
     }
@@ -26,7 +29,6 @@ public class Teletype extends Document{
                 + "\n  Body: " + this.getBody() + "\n  Journalist: " +
                 this.getAuthor();
     }
-    
     public boolean equals(Teletype tp){
         return this.getId().equals(tp.getId());
     }

@@ -1,6 +1,5 @@
-/*
- * Esto es una prueba
- * Each line should be prefixed with  * 
+/**
+ * This is the class Journalist.
  */
 package GSILib.BModel.workers;
 
@@ -17,8 +16,13 @@ public class Journalist extends Worker {
     
     private List<String> interests = new ArrayList<String>();
     
-    // Constructor
-
+    /**
+     * Class constructor
+     * @param id
+     * @param name
+     * @param birthDate
+     * @param interests
+     */
     public Journalist(String id, String name, String birthDate, ArrayList interests){
         
         super(id, name, birthDate);

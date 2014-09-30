@@ -1,11 +1,10 @@
-/*
- * Esto es una prueba
- * Each line should be prefixed with  * 
+/**
+ * This is the class Newspaper.
  */
 package GSILib.BModel;
 
 import GSILib.BModel.documents.visualNews.PrintableNews;
-import GSILib.BModel.documents.visualNews.WebNews;
+/*import GSILib.BModel.documents.visualNews.WebNews;*/
 import GSILib.BModel.workers.Journalist;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +17,9 @@ public class Newspaper {
     
     private List<PrintableNews> news = new ArrayList<PrintableNews>();
     
-    // Constructor
-    
+    /**
+     * Class constructor
+     */
     public Newspaper(){
         
         // nulo
