@@ -138,16 +138,16 @@ public class BusinessSystem implements EditorialOffice{
 
     @Override
     public Document[] getDocuments(Journalist j) {
-        Document[] documentsOfAJournalist = null;
-        int nextIndex = 0;
+        ArrayList<Document> documentsOfAJournalist = new ArrayList<>();
         
+        // TODO. Sustituir esto por un Iterator.
         for (int i = 0; i < this.documents.size(); i++){
-            if (this.documents.get(i).getAuthor().equals(j)){ // Esto no debería funcionar pq no son el mismo objeto.
-                documentsOfAJournalist[nextIndex] = this.documents.get(i);
-                nextIndex++;
+            if (this.documents.get(i).getAuthor().equals(j)){
+                documentsOfAJournalist.add(this.documents.get(i));
             }
         }
-        return documentsOfAJournalist;
+        Document[] docs = documentsOfAJournalist.toArray(new Document[documentsOfAJournalist.size()]);
+        return docs;
     }
 
     @Override

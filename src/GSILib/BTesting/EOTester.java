@@ -127,8 +127,6 @@ public class EOTester {
         for(Document d: documentList){
             System.out.println(d);
         }
-        System.out.println(tt);
-        System.out.println(tt.equals(tt2));
         
         
         /* S7: Trate de recuperar las noticas escritas por un periodista que no
@@ -137,10 +135,17 @@ public class EOTester {
         // Primero recuperamos un periodista por su ID. No tiene ninguna noticia asignada.
         jr = bsystem.findJournalist("7777T");
         // Después, recuperamos las noticias del periodista anterior.
-        //documentList = bsystem.getDocuments(jr);
+        documentList = bsystem.getDocuments(jr);
         // Imprimimos el resultado en la consola.
-        System.out.println("S7)");
-        //System.out.println("La lista de documentos para un periodista que no ha escrito es: " + documentList + ".\n");
+        System.out.println("\nS7)");
+        System.out.println("La lista de documentos para un periodista que no ha escrito es: ");
+        if (documentList==null){
+            System.out.println("nada");
+        }
+        for(Document d: documentList){
+            System.out.println(d);
+        }
+        
         
         /* S8: Introduzca varias fotos en el sistema. Más adelante, asocie varias
                fotos a una de las noticias introducidas anteriormente
@@ -150,9 +155,9 @@ public class EOTester {
         */
         // Creamos varias fotos asignadas a un único fotógrafo.
         Photographer pg = new Photographer("1234Z","Jonh Smith", "30/04/1953","C/ Falsa 123", "C/ Verdadera 567");
-        Picture pic1 = new Picture("http://midominio.com/fotos/pic1", pg);
-        Picture pic2 = new Picture("http://midominio.com/fotos/pic2", pg);
-        Picture pic3 = new Picture("http://midominio.com/fotos/pic3", pg);
+        Picture pic1 = new Picture("http://midominio.com/photos/pic1", pg);
+        Picture pic2 = new Picture("http://midominio.com/photos/pic2", pg);
+        Picture pic3 = new Picture("http://midominio.com/photos/pic3", pg);
         
         // Asociamos las fotos a la noticia.
         bsystem.addPicture(pic1);
@@ -163,8 +168,12 @@ public class EOTester {
         Document[] docs = bsystem.getDocuments(jr);
         
         // Buscamos la noticia que nos interesa
-        
+        int i = 0;
+        boolean end = false;
+        while(i<docs.length || end){
+            if (docs[i].equals(pn)){}
+        } 
         // Mostramos que tiene todas las fotos.
-        
+        System.out.println("\nS8)");
     }
 }
