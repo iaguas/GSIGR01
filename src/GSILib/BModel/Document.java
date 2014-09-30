@@ -13,15 +13,18 @@ import java.util.List;
  */
 public class Document {
     
+    private Integer id;
     private String headline, body;
     protected List<Journalist> journalists = new ArrayList<Journalist>();
     private List<String> prizes = new ArrayList<String>();
-    //** firma de periodista **//
+    //** TODO firma de periodista **//
     
     /**
      * Class constructor
+     * @param headline
+     * @param body
+     * @param journalist
      */
-    
     protected Document(String headline, String body, Journalist journalist){
         this.headline = headline;
         this.body = body;
@@ -64,5 +67,37 @@ public class Document {
      */
     public Journalist getAuthor(){
         return this.journalists.get(0);
+    }
+    
+    /** 
+     * Add an unique id to a document
+     * @param id The id itself
+     */
+    public void setId(Integer id){
+        this.id = id;
+    }
+    
+    /**
+     * Retrieves the ID of a given document.
+     * @return The ID of a document.
+     */
+    public Integer getId(){
+        return this.id;
+    }
+    
+    /**
+     * Retrieves the headline of a given document.
+     * @return The headline of a document.
+     */
+    public String getHeadline(){
+        return this.headline;
+    }
+    
+    /**
+     * Retrieves the body of a given document.
+     * @return The body of a document.
+     */
+    public String getBody(){
+        return this.body;
     }
 }

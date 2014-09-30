@@ -55,4 +55,18 @@ public class PrintableNews extends VisualNews{
         }
         return reviewers;
     }
+    
+    // Overdrive methods equals and toString.
+    @Override
+    public String toString(){
+        return "PrintableNews ID: " + this.getId() + "\n  Headline: " + 
+                this.getHeadline() + "\n  Body: " + this.getBody() + 
+                "\n  Journalist: " + this.getAuthor() + "\n  Pictures" + 
+                this.getPictures() + "\n  Reviewers: " + this.reviewers;
+    }
+    
+    public boolean equals(PrintableNews pn){
+        return this.getId().equals(pn.getId());
+    }
+    
 }

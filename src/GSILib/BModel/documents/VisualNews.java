@@ -30,4 +30,8 @@ public class VisualNews extends Document{
     public void addPicture(Picture picture){
         pictures.add(picture);
     }
+    
+    public List<Picture> getPictures(){
+        return this.pictures;
+    }
 }

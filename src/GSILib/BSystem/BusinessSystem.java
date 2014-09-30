@@ -90,16 +90,19 @@ public class BusinessSystem implements EditorialOffice{
 
     @Override
     public boolean insertNews(WebNews wn) {
+        wn.setId(this.atomicInteger.getAndIncrement());
         return this.documents.add(wn);
     }
     
     @Override
     public boolean insertNews(PrintableNews pn) {
+        pn.setId(this.atomicInteger.getAndIncrement());
         return this.documents.add(pn);
     }
 
     @Override
     public boolean insertNews(Teletype tp) {
+        tp.setId(this.atomicInteger.getAndIncrement());
         return this.documents.add(tp);
     }
 
@@ -139,7 +142,7 @@ public class BusinessSystem implements EditorialOffice{
         int nextIndex = 0;
         
         for (int i = 0; i < this.documents.size(); i++){
-            if (this.documents.get(i).getAuthor() == j){ // Esto no debería funcionar pq no son el mismo objeto.
+            if (this.documents.get(i).getAuthor().equals(j)){ // Esto no debería funcionar pq no son el mismo objeto.
                 documentsOfAJournalist[nextIndex] = this.documents.get(i);
                 nextIndex++;
             }

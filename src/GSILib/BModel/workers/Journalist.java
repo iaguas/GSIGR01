@@ -27,9 +27,10 @@ public class Journalist extends Worker {
     }
     
     // Overdrive methods equals and toString.
+    @Override
     public String toString(){
         return "Journalist ID: " + this.getId() + "\n  Name: " + this.getName()
-                + "\n  BirthDate; " + this.getBirthDate() + "\n  Interests: " +
+                + "\n  BirthDate: " + this.getBirthDate() + "\n  Interests: " +
                 this.interests;
     }
     

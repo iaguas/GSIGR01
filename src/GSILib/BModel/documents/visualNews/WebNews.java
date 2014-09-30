@@ -37,4 +37,18 @@ public class WebNews extends VisualNews{
         }
         return false;
     }
+     
+    // Overdrive methods equals and toString.
+    @Override
+    public String toString(){
+        return "WebNews ID: " + this.getId() + "\n  Headline: " + 
+                this.getHeadline() + "\n  Body: " + this.getBody() + 
+                "\n  Journalist: " + this.getAuthor() + "\n  Pictures" + 
+                this.getPictures() + "\n  URL: " + this.url + "\n  Keywords" +
+                this.keywords;
+    }
+    
+    public boolean equals(WebNews wn){
+        return this.getId().equals(wn.getId());
+    }
 }

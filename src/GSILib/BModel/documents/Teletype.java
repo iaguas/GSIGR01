@@ -18,4 +18,16 @@ public class Teletype extends Document{
     public Teletype(String headline, String body, Journalist journalist){
         super(headline, body, journalist);
     }
+    
+    // Overdrive methods equals and toString.
+    @Override
+    public String toString(){
+        return "Teletype ID: " + this.getId() + "\n  Headline: " + this.getHeadline()
+                + "\n  Body: " + this.getBody() + "\n  Journalist: " +
+                this.getAuthor();
+    }
+    
+    public boolean equals(Teletype tp){
+        return this.getId().equals(tp.getId());
+    }
 }

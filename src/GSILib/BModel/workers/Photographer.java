@@ -42,9 +42,10 @@ public class Photographer extends Worker{
     }
     
     // Overdrive methods equals and toString.
+    @Override
     public String toString(){
         return "Journalist ID: " + this.getId() + "\n  Name: " + this.getName()
-                + "\n  BirthDate; " + this.getBirthDate() + "\n  Regular residence: " 
+                + "\n  BirthDate: " + this.getBirthDate() + "\n  Regular residence: " 
                 + this.regularResidence + "\n  Holiday residence: " + this.holidayResidence;
     }
     

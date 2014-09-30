@@ -19,7 +19,9 @@ public class EOTester {
     public static void main(String[] args) {
         BusinessSystem bsystem = new BusinessSystem();
          
-        // TODO. Añadir mas datos al sistema. 
+        // TODO. Añadir mas datos al sistema.
+        bsystem.addJournalist(new Journalist("6666S","Tim Cook","23/04/1956",new ArrayList<>()));
+        bsystem.addJournalist(new Journalist("7777T","Bill McDonald","08/07/1978",new ArrayList<>()));
         
         /* S1: Si introduce a un trabajador, este puede ser localizado luego a
                partir de su ID.
@@ -84,7 +86,7 @@ public class EOTester {
                resultado falso.
         */
         // Para este ejemplo volvemos a utilizar el ID 2222B del apartado S1.
-        boolean ok = bsystem.addJournalist(new Journalist("2222B","Anne James","23/09/1974",new ArrayList<String>()));
+        boolean ok = bsystem.addJournalist(new Journalist("2222B","Anne James","23/09/1974",new ArrayList<>()));
         // Imprimimos el resultado en la consola.
         System.out.println("S4)");
         System.out.println("El resultado de introducir un periodista con el ID de un fotografo es: " + ok + ".\n");
@@ -106,27 +108,39 @@ public class EOTester {
                asígnelas a un periodista presente en el sistema. Trate de
                recuperarlas usando getDocuments.
         */
+        // Buscamos y guardamos el periodista que vamos a utilizar en S6).
+        jr = bsystem.findJournalist("6666S");
         // Creamos las nuevas noticias.
         PrintableNews pn = new PrintableNews("title1","body1",jr);
         Teletype tt = new Teletype("title2","body2",jr);
+        Teletype tt2 = tt;
         WebNews wn = new WebNews("title3","body3",jr,"http://midominio.com/noticias/id");
-        
         // Insertamos las noticias.
         bsystem.insertNews(pn);
         bsystem.insertNews(tt);
         bsystem.insertNews(wn);
-                
         // Recuperamos los documentos con el método propuesto.
-        Document[] documentList = bsystem.getDocuments(bsystem.findJournalist("99999"));
+        Document[] documentList = bsystem.getDocuments(bsystem.findJournalist("6666S"));
+        // Imprimimos en las consola el resultado.
+        System.out.println("S6)");
+        System.out.println("Los documentos encontrados son los siguientes: ");
+        for(Document d: documentList){
+            System.out.println(d);
+        }
+        System.out.println(tt);
+        System.out.println(tt.equals(tt2));
+        
         
         /* S7: Trate de recuperar las noticas escritas por un periodista que no
                tenga noticias asociadas.
         */
-        // Recuperar un periodista por su ID.
-        jr = bsystem.findJournalist("99999");
-        
-        // Recuperamos las noticias del periodista anterior.
-        documentList = bsystem.getDocuments(jr);
+        // Primero recuperamos un periodista por su ID. No tiene ninguna noticia asignada.
+        jr = bsystem.findJournalist("7777T");
+        // Después, recuperamos las noticias del periodista anterior.
+        //documentList = bsystem.getDocuments(jr);
+        // Imprimimos el resultado en la consola.
+        System.out.println("S7)");
+        //System.out.println("La lista de documentos para un periodista que no ha escrito es: " + documentList + ".\n");
         
         /* S8: Introduzca varias fotos en el sistema. Más adelante, asocie varias
                fotos a una de las noticias introducidas anteriormente
