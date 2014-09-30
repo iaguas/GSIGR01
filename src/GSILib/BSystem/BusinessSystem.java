@@ -25,10 +25,10 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class BusinessSystem implements EditorialOffice{
     
-    private List<Worker> workers = new ArrayList<Worker>();
-    private List<Document> documents = new ArrayList<Document>();
-    private List<Picture> pictures = new ArrayList<Picture>();
-    private LinkedHashMap<Date, Newspaper> newspapers = new LinkedHashMap<Date, Newspaper>();
+    private HashMap<String, Worker> workers = new HashMap<>();
+    private List<Document> documents = new ArrayList<>();
+    private List<Picture> pictures = new ArrayList<>();
+    private LinkedHashMap<Date, Newspaper> newspapers = new LinkedHashMap<>();
     
     private AtomicInteger atomicInteger = new AtomicInteger();
     
@@ -38,54 +38,87 @@ public class BusinessSystem implements EditorialOffice{
         // TODO. Para poder introducir una nueva instancia de periodista hay que 
         //       asegurarse de que no haya ningún worker que tenga el mismo id.
         //       Igual hay que cambiar la coleccion???
-        return this.workers.add(jr);
+        if(! this.workers.containsKey(jr.getId())){
+            this.workers.put(jr.getId(), jr);
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     @Override
     public boolean existJournalist(Journalist jr) {
-        return this.workers.contains(jr);
+        return this.workers.containsValue(jr);
     }
 
     @Override
     public boolean removeJournalist(Journalist jr) {
-        return this.workers.remove(jr);
+        String id = jr.getId();
+        this.workers.remove(id);
+        if(this.workers.containsKey(id))
+            return false;
+        else
+            return true;
     }
 
     @Override
     public Journalist findJournalist(String ID) {
-        int workersLength = workers.size();
+        /*int workersLength = workers.size();
         for (int i = 0; i < workersLength; i++) {
             if (ID.equals(workers.get(i).getId())) {
                 return (Journalist) workers.get(i);
             }
+        }*/
+        if(this.workers.containsKey(ID)){
+            return (Journalist) this.workers.get(ID);
         }
-        return null;
+        else{
+            return null;
+        }
     }
 
     @Override
     public boolean addPhotographer(Photographer pr) {
-        return workers.add(pr);
+        if(! this.workers.containsKey(pr.getId())){
+            this.workers.put(pr.getId(), pr);
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     @Override
     public boolean existPhotographer(Photographer pr) {
-        return workers.contains(pr);
+        return workers.containsKey(pr.getId());
     }
 
     @Override
     public boolean removePhotographer(Photographer pr) {
-        return workers.remove(pr);
+        String id = pr.getId();
+        this.workers.remove(id);
+        if(this.workers.containsKey(id))
+            return false;
+        else
+            return true;
     }
 
     @Override
     public Photographer findPhotographer(String ID) {
-        int workersLength = workers.size();
+        /*int workersLength = workers.size();
         for (int i = 0; i < workersLength; i++) {
             if (workers.get(i).getId().equals(ID)) {
                 return (Photographer) workers.get(i);
             }
         }
-        return null;
+        return null;*/
+        if(this.workers.containsKey(ID)){
+            return (Photographer) this.workers.get(ID);
+        }
+        else{
+            return null;
+        }
     }
 
     @Override
