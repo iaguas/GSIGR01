@@ -14,6 +14,7 @@ import GSILib.BModel.documents.visualNews.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class BusinessSystem implements EditorialOffice{
     
     private HashMap<String, Worker> workers = new HashMap<>();
     private List<Document> documents = new ArrayList<>();
-    private List<Picture> pictures = new ArrayList<>();
+    private HashMap<String, Picture> pictures = new HashMap<>();
     private LinkedHashMap<Date, Newspaper> newspapers = new LinkedHashMap<>();
     
     private AtomicInteger atomicInteger = new AtomicInteger();
@@ -200,26 +201,35 @@ public class BusinessSystem implements EditorialOffice{
 
     @Override
     public boolean addPicture(Picture p) {
-        return this.pictures.add(p);
+        if(! this.pictures.containsKey(p.getUrl())){
+            this.pictures.put(p.getUrl(), p);
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     @Override
     public boolean removePicture(Picture p) {
-        return this.pictures.remove(p);
+        String url = p.getUrl();
+        this.pictures.remove(url);
+        if(this.pictures.containsKey(url))
+            return false;
+        else
+            return true;
     }
 
     @Override
     public Picture[] getPictures(Photographer p) {
-        Picture[] picturesOfAPhotographer = null;
-        int nextIndex = 0;
-        
-        for (int i = 0; i < this.pictures.size(); i++){
-            if (this.pictures.get(i).getAutor() == p){
-                picturesOfAPhotographer[nextIndex] = this.pictures.get(i);
-                nextIndex++;
-            }
+        ArrayList<Picture> picsOfAPhotographer = new ArrayList<>();
+
+        for (Map.Entry e : pictures.entrySet()) {
+            picsOfAPhotographer.add((Picture) e.getValue());
         }
-        return picturesOfAPhotographer;
+        
+        Picture[] pics = picsOfAPhotographer.toArray(new Picture[picsOfAPhotographer.size()]);
+        return pics;
     }
 
     @Override

@@ -19,7 +19,7 @@ public class EOTester {
     public static void main(String[] args) {
         BusinessSystem bsystem = new BusinessSystem();
          
-        // TODO. Añadir mas datos al sistema.
+        bsystem.addJournalist(new Journalist("5555R","Ken Jones","16/05/1953",new ArrayList<>()));
         bsystem.addJournalist(new Journalist("6666S","Tim Cook","23/04/1956",new ArrayList<>()));
         bsystem.addJournalist(new Journalist("7777T","Bill McDonald","08/07/1978",new ArrayList<>()));
         
@@ -108,12 +108,13 @@ public class EOTester {
                asígnelas a un periodista presente en el sistema. Trate de
                recuperarlas usando getDocuments.
         */
-        // Buscamos y guardamos el periodista que vamos a utilizar en S6).
+        // Buscamos y guardamos los periodistas que vamos a utilizar en S6).
+        Journalist jr1 = bsystem.findJournalist("5555R");
         jr = bsystem.findJournalist("6666S");
+        
         // Creamos las nuevas noticias.
-        PrintableNews pn = new PrintableNews("title1","body1",jr);
+        PrintableNews pn = new PrintableNews("title1","body1",jr1);
         Teletype tt = new Teletype("title2","body2",jr);
-        Teletype tt2 = tt;
         WebNews wn = new WebNews("title3","body3",jr,"http://midominio.com/noticias/id");
         // Insertamos las noticias.
         bsystem.insertNews(pn);
@@ -153,27 +154,26 @@ public class EOTester {
                recupere la noticia usando getDocuments y compruebe que la
                asociación ha sido adecuada.
         */
-        // Creamos varias fotos asignadas a un único fotógrafo.
+        // Creamos varias fotos asignadas a un único fotógrafo (podría ser a varios).
         Photographer pg = new Photographer("1234Z","Jonh Smith", "30/04/1953","C/ Falsa 123", "C/ Verdadera 567");
         Picture pic1 = new Picture("http://midominio.com/photos/pic1", pg);
         Picture pic2 = new Picture("http://midominio.com/photos/pic2", pg);
         Picture pic3 = new Picture("http://midominio.com/photos/pic3", pg);
-        
-        // Asociamos las fotos a la noticia.
+        // Añadimos las fotos al sistema.
         bsystem.addPicture(pic1);
         bsystem.addPicture(pic2);
         bsystem.addPicture(pic3);
-        
+        // Asociamos las fotos a una noticia
+        pn.addPicture(pic1);
+        pn.addPicture(pic2);
+        pn.addPicture(pic3);
         // Recuperamos la noticia
-        Document[] docs = bsystem.getDocuments(jr);
-        
-        // Buscamos la noticia que nos interesa
-        int i = 0;
-        boolean end = false;
-        while(i<docs.length || end){
-            if (docs[i].equals(pn)){}
-        } 
+        Document[] docs = bsystem.getDocuments(jr1);
+        // Como el periodista solo tiene una noticia, la seleccionamos.
+        pn = (PrintableNews) docs[0];
         // Mostramos que tiene todas las fotos.
         System.out.println("\nS8)");
+        System.out.println("La noticia ha sido actualizada de forma adecuada:");
+        System.out.println(pn);
     }
 }

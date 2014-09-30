@@ -25,7 +25,7 @@ public class Picture {
     // Get privates
     /**
      * Retrieves the information on the URL of a Picture. If the Picture is not stored in the system,
-	 *		the result is null.
+     *		the result is null.
      *
      * @return The URL associated with the picture
      */
@@ -35,7 +35,7 @@ public class Picture {
     
     /**
      * Retrieves the information on the author of a Picture. If the Picture is not stored in the system,
-	 *		the result is null.
+     *		the result is null.
      *
      * @return The photographer associated with the picture
      */    
