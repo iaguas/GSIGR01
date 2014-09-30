@@ -2,6 +2,13 @@ package GSILib;
 
 public class ErroresYProblemas {
 
+    /* 
+    AGUAS. Martes 30. 2.48
+    
+    Falta implementar de forma correcta que no se puedan usar ID iguales en los 
+    métodos addJournlist y addPhotographer
+    */
+    
     /*
     AGUAS. Lunes 29, 19.49
     

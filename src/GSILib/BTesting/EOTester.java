@@ -67,7 +67,7 @@ public class EOTester {
         jr = bsystem.findJournalist("0000Z");
         // Imprimimos el resultado en la consola.
         System.out.println("S2)");
-        System.out.println("El resultado de buscar un peridista que no existe es: " + jr + "\n");
+        System.out.println("El resultado de buscar un peridista que no existe es: " + jr + ".\n");
          
         /* S3: Si se busca a un periodista con el ID de un fotográfo, el
                resultado es null.
@@ -77,7 +77,7 @@ public class EOTester {
         jr = bsystem.findJournalist("2222A");
         // Imprimimos el resultado en la consola.
         System.out.println("S3)");
-        System.out.println("El resultado de buscar un periodista con el ID de un fotografo es: " + jr + "\n");
+        System.out.println("El resultado de buscar un periodista con el ID de un fotografo es: " + jr + ".\n");
          
         /* S4: Si intenta introducir a un peridista con el ID de un fotógrafo, 
                anteriormente introducido, el método addJournalist devuelve un 
@@ -87,16 +87,20 @@ public class EOTester {
         boolean ok = bsystem.addJournalist(new Journalist("2222B","Anne James","23/09/1974",new ArrayList<String>()));
         // Imprimimos el resultado en la consola.
         System.out.println("S4)");
-        System.out.println("El resultado de introducir un periodista con el ID de un fotografo es: " + ok + "\n");
+        System.out.println("El resultado de introducir un periodista con el ID de un fotografo es: " + ok + ".\n");
         
          
         /* S5: Si busca un periodista al que ha eliminado (con removeJournalist)
                el resultado de findJournalist es null.
         */
-        jr = bsystem.findJournalist("99999");
-        bsystem.removeJournalist(jr);
-        jr = bsystem.findJournalist("999999");
-        System.out.println("El resultado es " + jr);
+        // En primer lugar, eliminamos al periodista 1111A creado en S1).
+        bsystem.removeJournalist(bsystem.findJournalist("1111A"));
+        // Después, intentamos buscarlo.
+        findJr = bsystem.findJournalist("1111A");
+        // Imprimimos el resultado en la consola.
+        System.out.println("S5)");
+        System.out.println("El resultado de buscar un periodista borrado es: " + findJr + ".\n");
+
         
         /* S6: Introduzca varias noticias (de varias clases intanciables) y
                asígnelas a un periodista presente en el sistema. Trate de
