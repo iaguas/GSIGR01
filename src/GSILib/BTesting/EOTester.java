@@ -19,6 +19,8 @@ public class EOTester {
     public static void main(String[] args) {
         BusinessSystem bsystem = new BusinessSystem();
          
+        // TODO. Añadir mas datos al sistema. 
+        
         /* S1: Si introduce a un trabajador, este puede ser localizado luego a
                partir de su ID.
         */
@@ -44,12 +46,12 @@ public class EOTester {
             System.out.println("Los periodistas son diferentes (no son el mismo).");
                 
         // Probamos lo mismo con un trabajador de tipo Photographer.
-        // Creamos el fotógrafo
+        // Creamos el fotógrafo.
         Photographer p = new Photographer("2222B","Tom Smith","24/03/1984","C/Falsa 123","C/Verdadera 456");
-        // Añadimos el nuevo fotógrafo 
+        // Añadimos el nuevo fotógrafo.
         bsystem.addPhotographer(p);
         Photographer findP = bsystem.findPhotographer("2222B");
-        // Imprimimos el resultado en la consola
+        // Imprimimos el resultado en la consola.
         System.out.println("Comparamos el fotógrafo introducido con el encontrado:");
         System.out.println(p);
         System.out.println(findP);
@@ -63,7 +65,7 @@ public class EOTester {
         */
         // No se han introducido periodistas que tengan el ID a 0000Z. Se comprueba.
         jr = bsystem.findJournalist("0000Z");
-        // Imprimimos el resultado en la consola
+        // Imprimimos el resultado en la consola.
         System.out.println("S2)");
         System.out.println("El resultado de buscar un peridista que no existe es: " + jr + "\n");
          
@@ -73,6 +75,7 @@ public class EOTester {
         // En S1 hemos introducido un fotógrafo con ID 2222B. Probamos a buscarlo
         // como si de un periodista se tratase.
         jr = bsystem.findJournalist("2222A");
+        // Imprimimos el resultado en la consola.
         System.out.println("S3)");
         System.out.println("El resultado de buscar un periodista con el ID de un fotografo es: " + jr + "\n");
          
@@ -80,7 +83,12 @@ public class EOTester {
                anteriormente introducido, el método addJournalist devuelve un 
                resultado falso.
         */
-        // Mismo problema, de donde obtenemos el ID?
+        // Para este ejemplo volvemos a utilizar el ID 2222B del apartado S1.
+        boolean ok = bsystem.addJournalist(new Journalist("2222B","Anne James","23/09/1974",new ArrayList<String>()));
+        // Imprimimos el resultado en la consola.
+        System.out.println("S4)");
+        System.out.println("El resultado de introducir un periodista con el ID de un fotografo es: " + ok + "\n");
+        
          
         /* S5: Si busca un periodista al que ha eliminado (con removeJournalist)
                el resultado de findJournalist es null.

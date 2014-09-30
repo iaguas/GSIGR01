@@ -35,6 +35,9 @@ public class BusinessSystem implements EditorialOffice{
     @Override
     public boolean addJournalist(Journalist jr){
         //jr.setId(String);
+        // TODO. Para poder introducir una nueva instancia de periodista hay que 
+        //       asegurarse de que no haya ningún worker que tenga el mismo id.
+        //       Igual hay que cambiar la coleccion???
         return this.workers.add(jr);
     }
 
