@@ -40,4 +40,15 @@ public class Photographer extends Worker{
     public String getHolidayResidence(){
         return this.holidayResidence;
     }
+    
+    // Overdrive methods equals and toString.
+    public String toString(){
+        return "Journalist ID: " + this.getId() + "\n  Name: " + this.getName()
+                + "\n  BirthDate; " + this.getBirthDate() + "\n  Regular residence: " 
+                + this.regularResidence + "\n  Holiday residence: " + this.holidayResidence;
+    }
+    
+    public boolean equals(Photographer p){
+        return this.getId().equals(p.getId());
+    }
 }

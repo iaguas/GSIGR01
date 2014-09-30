@@ -25,4 +25,15 @@ public class Journalist extends Worker {
  
         this.interests = interests;
     }
+    
+    // Overdrive methods equals and toString.
+    public String toString(){
+        return "Journalist ID: " + this.getId() + "\n  Name: " + this.getName()
+                + "\n  BirthDate; " + this.getBirthDate() + "\n  Interests: " +
+                this.interests;
+    }
+    
+    public boolean equals(Journalist jr){
+        return this.getId().equals(jr.getId());
+    }
 }

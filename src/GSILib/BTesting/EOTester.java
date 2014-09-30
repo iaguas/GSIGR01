@@ -16,25 +16,48 @@ import java.util.ArrayList;
  * @author inigo.aguas
  */
 public class EOTester {
-    public void main(String[] args){
+    public static void main(String[] args) {
         BusinessSystem bsystem = new BusinessSystem();
          
         /* S1: Si introduce a un trabajador, este puede ser localizado luego a
                partir de su ID.
         */
+        // Comenzamos probando hacer un trabajador de tipo Journalist.
         // Completamos primero la lista de intereses
         ArrayList<String> interest = new ArrayList<>();
         interest.add("lectura");
         interest.add("natacion");
         interest.add("belenismo");
-        // Añadimos al nuevo periodísta. Se podría hacer de forma análoga para
-        // para los fotógrafos.
-        Journalist jr = new Journalist("Jonh Smith", "09/02/1993", interest);
+        // Añadimos al nuevo periodista.
+        Journalist jr = new Journalist("1111A","Jonh Smith","09/02/1993",interest);
         bsystem.addJournalist(jr);
         // Buscamos el empleado por el ID.
-        // TODO: ¿Y de donde narices sacamos el ID?, Habrá que hacer un nuevo método...
-         
-         
+        Journalist findJr = bsystem.findJournalist("1111A");
+        // Imprimimos el resultado en la consola
+        System.out.println("S1)");
+        System.out.println("Comparamos el periodista introducido con el encontrado:");
+        System.out.println(jr);
+        System.out.println(findJr);
+        if (jr.equals(findJr))
+            System.out.println("Los dos periodistas son iguales (es el mismo).");
+        else
+            System.out.println("Los periodistas son diferentes (no son el mismo).");
+                
+        // Probamos lo mismo con un trabajador de tipo Photographer.
+        // Creamos el fotógrafo
+        Photographer p = new Photographer("2222B","Tom Smith","24/03/1984","C/Falsa 123","C/Verdadera 456");
+        // Añadimos el nuevo fotógrafo 
+        bsystem.addPhotographer(p);
+        Photographer findP = bsystem.findPhotographer("2222B");
+        // Imprimimos el resultado en la consola
+        System.out.println("Comparamos el fotógrafo introducido con el encontrado:");
+        System.out.println(p);
+        System.out.println(findP);
+        if (p.equals(findP))
+            System.out.println("Los dos fotógrafos son iguales (es el mismo).\n");
+        else
+            System.out.println("Los fotógrafos son diferentes (no son el mismo).\n");
+        
         /* S2: Si busca a un periodista que no existe con findJournalist, el 
                resultado es null.
         */
@@ -95,7 +118,7 @@ public class EOTester {
                asociación ha sido adecuada.
         */
         // Creamos varias fotos asignadas a un único fotógrafo.
-        Photographer pg = new Photograper("Jonh Smith", "30/04/1953","C/ Falsa 123", "C/ Verdadera 567");
+        Photographer pg = new Photographer("1234Z","Jonh Smith", "30/04/1953","C/ Falsa 123", "C/ Verdadera 567");
         Picture pic1 = new Picture("http://midominio.com/fotos/pic1", pg);
         Picture pic2 = new Picture("http://midominio.com/fotos/pic2", pg);
         Picture pic3 = new Picture("http://midominio.com/fotos/pic3", pg);
