@@ -29,7 +29,7 @@ public class Newspaper {
      */
     public Newspaper(){
         // Creamos un periodico vacio.
-        news = new ArrayList<PrintableNews>();
+        news = new ArrayList<>();
     }
     
     /**
