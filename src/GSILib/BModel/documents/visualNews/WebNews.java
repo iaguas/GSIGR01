@@ -53,6 +53,24 @@ public class WebNews extends VisualNews{
         // Advertimos que el añadido no ha sido correcto.
         return false;
     }
+    
+    /**
+     * Takes the URL of a webnews.
+     * @return the url that identifies a webnews.
+     */ 
+    public List<String> getKeyWords(){
+        // Devolvemos las palabras clave
+        return keywords;        
+    }
+    
+     /**
+     * Takes the URL of a webnews.
+     * @return the url that identifies a webnews.
+     */ 
+    public String getUrl(){
+        // Devolvemos la URL
+        return this.url;
+    }
      
     @Override
     public String toString(){

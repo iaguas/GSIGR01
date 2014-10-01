@@ -261,17 +261,46 @@ public class BusinessSystem implements EditorialOffice{
 
     @Override
     public WebResource getWebResource(String URL) {
+        // Creamos una instancia de webnews.
+        WebNews wn = new WebNews("void","void",new Journalist("void", "void", "void", null),"void");
         // Comprobamos que estamos hablando de la foto.
         if(this.pictures.containsKey(URL))
             // Devolvemos la foto solicitada.
             return (WebResource) pictures.get(URL);
+        else 
+            // Recorremos los documentos buscando las webnews.
+            for(Document d: documents)
+                // Buscamos solo los documentos de tipo webnews.
+                if (d.getClass().getName().equals("GSILib.BModel.documents.visualNews.WebNews")){
+                    wn = (WebNews) d;
+                    // Si es la webnews que buscamos, la devolvemos.
+                    if(wn.getUrl().equals(URL))
+                        return (WebResource) wn;
+                }        
+        // Si no encontramos nada, devolvemos null.
         return null;
     }
 
     @Override
     public WebNews[] getIndexedNews(String keyword) {
-        // TODO.
-        return null;
+        // Creamos una lista de webnews.
+        ArrayList<WebNews> list = new ArrayList<>();
+        // Creamos una instancia de webnews.
+        WebNews wn = new WebNews("void","void",new Journalist("void", "void", "void", null),"void");
+        
+        // Recorremos todos los documentos buscando las webnews.
+        for(Document d: documents)
+            // Buscamos solo los documentos de tipo webnews.
+            if (d.getClass().getName().equals("GSILib.BModel.documents.visualNews.WebNews")){
+                    wn = (WebNews) d;
+                    // Si es la webnews que buscamos, la devolvemos.
+                    if(wn.getKeyWords().contains(keyword))
+                        list.add(wn);
+                }
+        
+        // Devolvemos la tabla de webnews
+        WebNews[] arrayWebNews = list.toArray(new WebNews[list.size()]);
+        return arrayWebNews;
     }
 
     @Override
