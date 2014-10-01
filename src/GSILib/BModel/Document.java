@@ -111,4 +111,21 @@ public class Document {
         // Recuperamos el texto de un documento.
         return this.body;
     }
+    
+    @Override
+    public String toString(){
+        // Devolvemos un string con los datos del documento.
+        return "Document ID: " + this.getId() + "\n  Headline: " + this.getHeadline()
+                + "\n  Body: " + this.getBody() + "\n  Journalist: " +
+                this.getAuthor();    }
+    
+    /** 
+     * Equals. Known if 2 object are the same.
+     * @param d a document.
+     * @return true if they are the same object, false otherwise.
+     */
+    public boolean equals(Document d){
+        // Comparamos y devolvemos si es el mismo periodico o no.
+        return this.getId().equals(d.getId());
+    }
 }

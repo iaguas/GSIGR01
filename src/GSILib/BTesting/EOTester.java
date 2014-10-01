@@ -185,5 +185,14 @@ public class EOTester {
         System.out.println("\nS8)");
         System.out.println("La noticia ha sido actualizada de forma adecuada:");
         System.out.println(pn);
+        
+        /*
+         * NOTA: Además de los ejercicios obligatorios presentados, en este 
+         *       proyecto se han implementado los métodos equals y toString en
+         *       todas las clases. Asi mismo, se ha documetado todo el código de
+         *       manera apropiada.
+         *       Se hace, también, la entrega del informe que corresponde a las 
+         *       pregutas de la Práctica 01.
+         */
     }
 }
