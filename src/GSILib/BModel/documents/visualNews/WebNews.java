@@ -60,7 +60,7 @@ public class WebNews extends VisualNews{
      */ 
     public List<String> getKeyWords(){
         // Devolvemos las palabras clave
-        return keywords;        
+        return this.keywords;        
     }
     
      /**
