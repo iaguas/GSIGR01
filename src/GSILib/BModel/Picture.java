@@ -16,8 +16,9 @@ import GSILib.BModel.workers.Photographer;
  */
 public class Picture {
     
-    private String url;
-    private Photographer author;
+    // Atributos de la clase
+    private String url; // Identificador único, la URL.
+    private Photographer author; // Fotografo autor de la foto.
     
     /**
      * Class constructor in which you have to put the URL and the photographer.
@@ -25,6 +26,7 @@ public class Picture {
      * @param photographer Author of the picture.
      */
     public Picture(String url, Photographer photographer){
+        // Introducimos los datos suministrados por el constructor.
         this.url = url;
         this.author = photographer;
     }
@@ -35,6 +37,7 @@ public class Picture {
      * @return The URL associated with the picture
      */
     public String getUrl(){
+        // Devolvemos la URL
         return this.url;
     }
     
@@ -44,11 +47,13 @@ public class Picture {
      * @return The photographer associated with the picture
      */    
     public Photographer getAutor(){
+        // Devolvemos el autor.
         return this.author;
     }
         
     @Override
     public String toString(){
+        // Devolvemos un string con los datos de la imagen.
         return "Picture URL: " + this.getUrl();
     }
     
@@ -58,6 +63,7 @@ public class Picture {
      * @return true if they are the same object, false otherwise.
      */
     public boolean equals(Picture p){
+        // Comparamos y devolvemos si son iguales o no.
         return this.getUrl().equals(p.getUrl());
     }
 }

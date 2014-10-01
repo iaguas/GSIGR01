@@ -39,6 +39,7 @@ public class Photographer extends Worker{
      * @return the regular residence of the associated photographer
      */
     public String getRegularResidence(){
+        // Devolvemos la residencia habitual.
         return this.regularResidence;
     }
     
@@ -47,12 +48,14 @@ public class Photographer extends Worker{
      * @return the holiday residence of the associated photographer
      */
     public String getHolidayResidence(){
+        // Devolvemos la residencia vacacional.
         return this.holidayResidence;
     }
     
     @Override
     public String toString(){
-        return "Journalist ID: " + this.getId() + "\n  Name: " + this.getName()
+        // Devolvemos un string con los datos del fotografo.
+        return "Photographer ID: " + this.getId() + "\n  Name: " + this.getName()
                 + "\n  BirthDate: " + this.getBirthDate() + "\n  Regular residence: " 
                 + this.regularResidence + "\n  Holiday residence: " + this.holidayResidence;
     }
@@ -63,6 +66,7 @@ public class Photographer extends Worker{
      * @return true if they are the same object, false otherwise.
      */
     public boolean equals(Photographer p){
+        // Comparamos y devolvemos si son iguales o no.
         return this.getId().equals(p.getId());
     }
 }

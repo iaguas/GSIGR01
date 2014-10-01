@@ -25,11 +25,13 @@ public class Teletype extends Document{
      * @param journalist worker who has written the notice.
      */
     public Teletype(String headline, String body, Journalist journalist){
+        // Llamamos al constructor de la clase padre.
         super(headline, body, journalist);
     }
     
     @Override
     public String toString(){
+        // Devolvemos un string con los datos del teletipo.
         return "Teletype ID: " + this.getId() + "\n  Headline: " + this.getHeadline()
                 + "\n  Body: " + this.getBody() + "\n  Journalist: " +
                 this.getAuthor();
@@ -41,6 +43,7 @@ public class Teletype extends Document{
      * @return true if they are the same object, false otherwise.
      */
     public boolean equals(Teletype tp){
+        // Comparamos y devolvemos si son iguales o no.
         return this.getId().equals(tp.getId());
     }
 }

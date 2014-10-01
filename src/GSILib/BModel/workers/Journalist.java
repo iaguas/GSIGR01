@@ -19,7 +19,8 @@ import java.util.List;
  */
 public class Journalist extends Worker {
     
-    private List<String> interests = new ArrayList<>();
+    // Atributo de la clase
+    private List<String> interests = new ArrayList<>(); // Lista de intereses.
     
     /**
      * Class constructor
@@ -37,6 +38,7 @@ public class Journalist extends Worker {
     
     @Override
     public String toString(){
+        // Devolvemos un string con los datos del periodista.
         return "Journalist ID: " + this.getId() + "\n  Name: " + this.getName()
                 + "\n  BirthDate: " + this.getBirthDate() + "\n  Interests: " +
                 this.interests;
@@ -48,6 +50,7 @@ public class Journalist extends Worker {
      * @return true if they are the same object, false otherwise.
      */
     public boolean equals(Journalist jr){
+        // Comparamos y devolvemos si son iguales o no.
         return this.getId().equals(jr.getId());
     }
 }

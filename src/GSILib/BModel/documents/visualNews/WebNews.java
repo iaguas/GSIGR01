@@ -19,9 +19,9 @@ import java.util.List;
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class WebNews extends VisualNews{
-    
-    private String url;
-    private List<String> keywords = new ArrayList<String>();
+    // Atributos de la clase.
+    private String url; // URL identificable de la clase.
+    private List<String> keywords = new ArrayList<>(); // Palabras clave identificables.
     
     /**
      * Class constructor that makes an object with headline, body, author and URL.
@@ -31,25 +31,32 @@ public class WebNews extends VisualNews{
      * @param url URL that's a unique identifier of the notice.
      */
     public WebNews(String headline, String body, Journalist journalist, String url) {
+        // Llamamos al constructor de la superclase.
         super(headline, body, journalist);
+        // Añadimos l
         this.url = url;
     }
     
     /**
      * Adds a key word to the list of the associated WebNews
      * @param keyword key word to input
-     * @return true if key word is smaller than 6 characters, and is added to the associated WebNews correctly
+     * @return true if key word is smaller than 6 characters, and is added to 
+     * the associated WebNews correctly, false otherwise.
      */ 
     public boolean addKeyWord(String keyword){
+        // Comprobamos que la palabra tenga al menos 6 caracteres para añadirla.
         if (this.keywords.size() <= 6){
             this.keywords.add(keyword);
+            // Advertimos que el añadido ha sido correcto.
             return true;
         }
+        // Advertimos que el añadido no ha sido correcto.
         return false;
     }
      
     @Override
     public String toString(){
+        // Devolvemos un string con los datos de la noticia web.
         return "WebNews ID: " + this.getId() + "\n  Headline: " + 
                 this.getHeadline() + "\n  Body: " + this.getBody() + 
                 "\n  Journalist: " + this.getAuthor() + "\n  Pictures" + 
@@ -62,7 +69,8 @@ public class WebNews extends VisualNews{
      * @param wn a webnews
      * @return true if they are the same object, false otherwise.
      */
-    public boolean equals(WebNews wn){
+    public boolean equals(WebNews wn){        
+        // Comparamos y devolvemos si son iguales o no.
         return this.getId().equals(wn.getId());
     }
 }

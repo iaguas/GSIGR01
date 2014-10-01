@@ -7,7 +7,6 @@
 package GSILib.BModel;
 
 import GSILib.BModel.documents.visualNews.PrintableNews;
-/*import GSILib.BModel.documents.visualNews.WebNews;*/
 import GSILib.BModel.workers.Journalist;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,15 +20,17 @@ import java.util.List;
  */
 public class Newspaper {
     
-    private Date date = new Date();
-    private List<PrintableNews> news = new ArrayList<PrintableNews>();
+    // Atributos de la clase.
+    private Date date = new Date(); // Fecha de publicación del periodico.
+    private List<PrintableNews> news; // Lista de noticias publicadas.
     
     /**
      * Class constructor
      * @param date It represents the date of the newspaper. It's unique for each one.
      */
-    public Newspaper(Date date){
-        this.date = date;
+    public Newspaper(){
+        // Creamos un periodico vacio.
+        news = new ArrayList<PrintableNews>();
     }
     
     /**
@@ -38,6 +39,7 @@ public class Newspaper {
      * @return true if printable news added correctly to newspaper, false otherwise.
      */
     public boolean addNews(PrintableNews pn){
+        // Añadimos una noticia a la colección del periodico.
         return this.news.add(pn);
     }
     
@@ -46,6 +48,7 @@ public class Newspaper {
      * @return true if the number of pages is at least 20, false otherwise.
      */
     public boolean isPublishable(){
+        // Comprobamos si el periodico tiene al menos 20 noticas.
         return this.news.size() >= 20;
     }
     
@@ -54,14 +57,42 @@ public class Newspaper {
      * @return An array with the journalists who have written news in the newspaper.
      */
     public Journalist[] getAuthors(){
+        // Creamos una tabla periodista y la dejamos a null por si no hubiera a quien meter.
         Journalist[] authorsOfANewspaper = null;
+        // Creamos el íncide para recorrer la tabla.
         int nextIndex = 0;
-        
+        // Recorremos las noticias buscando a los periodistas que las escriben
+        // Añadimos a estos a la tabla de periodistas.
         for (int i = 0; i < this.news.size(); i++){
             authorsOfANewspaper[nextIndex] = this.news.get(i).getAuthor();
             nextIndex++;
-            
         }
+        // Devolvemos la tabla que hemos creado.
         return authorsOfANewspaper;
+    }
+    
+    /**
+     * Returns publication date of a newspaper.
+     * @return A date in which the newspaper has been published.
+     */
+    public Date getDate(){
+        // Devuelve la fecha del periodico.
+        return this.date;
+    }
+            
+    @Override
+    public String toString(){
+        // Devolvemos un string con los datos del periodico.
+        return "Newspaper date: " + this.date + "News: " + this.news;
+    }
+    
+    /** 
+     * Equals. Known if 2 object are the same.
+     * @param n a newspaper.
+     * @return true if they are the same object, false otherwise.
+     */
+    public boolean equals(Newspaper n){
+        // Comparamos y devolvemos si es el mismo periodico o no.
+        return this.getDate().equals(n.getDate());
     }
 }

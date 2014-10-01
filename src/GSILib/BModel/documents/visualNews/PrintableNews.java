@@ -20,7 +20,8 @@ import java.util.List;
  */
 public class PrintableNews extends VisualNews{
     
-    private List<Journalist> reviewers = new ArrayList<Journalist>();
+    // Atributo de la clase.
+    private List<Journalist> reviewers = new ArrayList<>(); // Revisores de la noticia.
     
     /**
      * Class constructor that makes an object with headline, body and author.
@@ -29,15 +30,17 @@ public class PrintableNews extends VisualNews{
      * @param journalist worker who has written the notice.
      */
     public PrintableNews(String headline, String body, Journalist journalist) {
+        // Llamamos al constructor de la superclase.
         super(headline, body, journalist);
     }
     
     /**
      * Adds a reviewer (journalist) to the associated printable news
      * @param journalist the desired reviewer to add
-     * @return true if the reviewer isn't added to the printable news yet
+     * @return true if the reviewer isn't added to the printable news yet, false otherwise.
      */
     public boolean addReviewer(Journalist journalist){
+        // Comprobamos que el periodista no esté de autor y lo añadimos como revisor.
         if (! this.journalists.contains(journalist)){
             return this.reviewers.add(journalist);
         }
@@ -47,9 +50,10 @@ public class PrintableNews extends VisualNews{
     /**
      * Removes a reviewer (journalist) from the associated printable news
      * @param journalist the existing desired reviewer to remove from printable news
-     * @return true if journalist removed correctly
+     * @return true if journalist removed correctly, false otherwise.
      */
     public boolean removeReviewer(Journalist journalist){
+        // Eliminamos al revisor de la colección de revisores.
         return this.reviewers.remove(journalist);
     }
     
@@ -57,19 +61,24 @@ public class PrintableNews extends VisualNews{
      * Gets a list of reviewer (journalists) from the associated printable news
      * @return the list of reviewers from the associated printable news
      */
-    public Journalist[] getReviewers(){
+    public Journalist[] getReviewers(){            
+        // Creamos una tabla periodista y la dejamos a null por si no hubiera a quien meter.
         Journalist[] reviewers = null;
+        // Creamos el íncide para recorrer la tabla.
         int nextIndex = 0;
-        
+        // Recorremos las noticias buscando a los periodistas que las escriben
+        // Añadimos a estos a la tabla de periodistas.
         for (int i = 0; i < this.reviewers.size(); i++){
             reviewers[nextIndex] = this.reviewers.get(i);
             nextIndex++;   
         }
+        // Devolvemos la tabla que hemos creado.
         return reviewers;
     }
     
     @Override
     public String toString(){
+        // Devolvemos un string con los datos de la noticia imprimible.
         return "PrintableNews ID: " + this.getId() + "\n  Headline: " + 
                 this.getHeadline() + "\n  Body: " + this.getBody() + 
                 "\n  Journalist: " + this.getAuthor() + "\n  Pictures" + 
@@ -82,6 +91,7 @@ public class PrintableNews extends VisualNews{
      * @return true if they are the same object, false otherwise.
      */
     public boolean equals(PrintableNews pn){
+        // Comparamos y devolvemos si son iguales o no.
         return this.getId().equals(pn.getId());
     }
     

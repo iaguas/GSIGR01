@@ -20,7 +20,9 @@ import java.util.List;
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class VisualNews extends Document{
-    private List<Picture> pictures = new ArrayList<>();
+    
+    // Atributo de la clase
+    private List<Picture> pictures = new ArrayList<>(); // Imágenes adosadas a las noticias.
     
     /**
      * Class constructor that makes an object with headline, body and author.
@@ -29,6 +31,7 @@ public class VisualNews extends Document{
      * @param journalist worker who has written the notice.
      */
     protected VisualNews(String headline, String body, Journalist journalist){
+        // Llamamos al constructor de la superclase.
         super(headline, body, journalist);
     }
     
@@ -37,6 +40,7 @@ public class VisualNews extends Document{
      * @param picture desired picture to add
      */
     public void addPicture(Picture picture){
+        // Añadimos una foto a la lista de fotos.
         pictures.add(picture);
     }
     
@@ -45,6 +49,24 @@ public class VisualNews extends Document{
      * @return list of pictures from the visual news
      */
     public List<Picture> getPictures(){
+        // Devolvemos la lista de fotos.
         return this.pictures;
     }  
+
+    public String toString(){
+        // Devolvemos un string con los datos del teletipo.
+        return "VisualNews ID: " + this.getId() + "\n  Headline: " + this.getHeadline()
+                + "\n  Body: " + this.getBody() + "\n  Journalist: " +
+                this.getAuthor() + "Pictures: " + this.pictures;
+    }
+    
+    /** 
+     * Equals. Known if 2 object are the same.
+     * @param vn a teletype
+     * @return true if they are the same object, false otherwise.
+     */
+    public boolean equals(VisualNews vn){
+        // Comparamos y devolvemos si son iguales o no.
+        return this.getId().equals(vn.getId());
+    }
 }

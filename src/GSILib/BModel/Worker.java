@@ -62,4 +62,21 @@ public class Worker implements Serializable{
     public String getBirthDate(){
         return this.birthDate;
     }
+    
+    @Override
+    public String toString(){
+        // Devolvemos un string con los datos del trabajador.
+        return "Worker ID: " + this.getId() + "\n  Name: " + this.getName()
+                + "\n  BirthDate: " + this.getBirthDate();
+    }
+    
+    /** 
+     * Equals. Known if 2 object are the same.
+     * @param w a worker
+     * @return true if they are the same object, false otherwise.
+     */
+    public boolean equals(Worker w){
+        // Comparamos y devolvemos si son iguales o no.
+        return this.getId().equals(w.getId());
+    }
 }

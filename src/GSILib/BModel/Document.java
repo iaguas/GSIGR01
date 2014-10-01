@@ -18,10 +18,11 @@ import java.util.List;
  */
 public class Document {
     
-    private Integer id;
-    private String headline, body;
-    protected List<Journalist> journalists = new ArrayList<Journalist>();
-    private List<String> prizes = new ArrayList<String>();
+    // Atributos de la clase
+    private Integer id; // ID único.
+    private String headline, body; // Titular y texto de la noticia.
+    protected List<Journalist> journalists = new ArrayList<>(); // Lista de periodistas.
+    private List<String> prizes = new ArrayList<>(); // Lista de premios.
     
     /**
      * Class constructor for a document with headline, body and author.
@@ -30,6 +31,7 @@ public class Document {
      * @param journalist worker who has written the notice.
      */
     protected Document(String headline, String body, Journalist journalist){
+        // Construimos la clase con los datos básicos de esta.
         this.headline = headline;
         this.body = body;
         this.journalists.add(journalist);
@@ -41,6 +43,7 @@ public class Document {
      * @return true if it was correctly added, false if it was null or already existing.
      */    
     public boolean addJournalist(Journalist jr){
+        // Añadimos un periodista a los posibles autores de documentos.
         return this.journalists.add(jr);
     }
     
@@ -50,6 +53,7 @@ public class Document {
      * @return true if the Document was already stored and it was correctly listed, false otherwise.
      */
     public boolean addPrize(String prize){
+        // Añadimos un premio a la colección del sistema.
         return this.prizes.add(prize);
     }
     
@@ -59,6 +63,7 @@ public class Document {
      * @return True if it was correctly deleted, false if it wasn't or did not exist.
      */    
     public boolean removePrize(String prize){
+        // Eliminamos el premio de la colección del sistema.
         return this.prizes.remove(prize);
     }
     
@@ -67,6 +72,7 @@ public class Document {
      * @return The journalist author of the document.
      */
     public Journalist getAuthor(){
+        // Rescatamos un autor de un documento.
         return this.journalists.get(0);
     }
     
@@ -75,6 +81,7 @@ public class Document {
      * @param id The id itself
      */
     public void setId(Integer id){
+        // Disponemos el ID para cada documento.
         this.id = id;
     }
     
@@ -83,6 +90,7 @@ public class Document {
      * @return The ID of a document.
      */
     public Integer getId(){
+        // Recuperamos el ID de un documento.
         return this.id;
     }
     
@@ -91,6 +99,7 @@ public class Document {
      * @return The headline of a document.
      */
     public String getHeadline(){
+        // Recuperamos el titular de un documento.
         return this.headline;
     }
     
@@ -99,6 +108,7 @@ public class Document {
      * @return The body of a document.
      */
     public String getBody(){
+        // Recuperamos el texto de un documento.
         return this.body;
     }
 }
