@@ -25,8 +25,7 @@ public class Newspaper {
     private List<PrintableNews> news; // Lista de noticias publicadas.
     
     /**
-     * Class constructor
-     * @param date It represents the date of the newspaper. It's unique for each one.
+     * Class constructor of a void newspaper.
      */
     public Newspaper(){
         // Creamos un periodico vacio.
