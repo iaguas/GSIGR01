@@ -12,3 +12,7 @@ hs_err_pid*
 /nbproject/private/
 /build/
 /dist/
+
+# Ignore generated files
+*.ods
+*cpgz

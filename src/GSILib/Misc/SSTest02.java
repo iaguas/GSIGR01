@@ -1,6 +1,7 @@
-/*
- * Esto es una prueba
- * Each line should be prefixed with  * 
+/* 
+ * Práctica 02 - Grupo 01
+ * Gestión de Sistemas de Información
+ * Universidad Pública de Navarra
  */
 
 package GSILib.Misc;
