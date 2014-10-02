@@ -3,7 +3,7 @@
  * Each line should be prefixed with  * 
  */
 
-package GSI.Misc;
+package GSILib.Misc;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;

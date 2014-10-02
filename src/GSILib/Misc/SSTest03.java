@@ -1,4 +1,4 @@
-package GSI.Misc;
+package GSILib.Misc;
 
 /**
  *
