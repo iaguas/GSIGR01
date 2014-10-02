@@ -5,6 +5,11 @@
 package GSI.Misc;
 
 import java.io.File;
+import java.io.IOException;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import org.jopendocument.dom.OOUtils;
+import org.jopendocument.dom.spreadsheet.SpreadSheet;
 
 /**
  *
@@ -14,7 +19,7 @@ import java.io.File;
 public class SSTest01 {
     private int[][] subTabla;
     
-    public void main(String[] args){
+    public void main(String[] args) throws IOException{
         subTabla = new int[4][6];
 
         TableModel model = new DefaultTableModel(subTabla);  
