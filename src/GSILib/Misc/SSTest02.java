@@ -7,10 +7,11 @@
 package GSILib.Misc;
 import static java.awt.Color.*;
 import java.io.File;
+import java.io.IOException;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import org.jopendocument.dom.OOUtils;
-import org.jopendocument.dom.spreadsheet.*;
+import org.jopendocument.dom.spreadsheet.SpreadSheet;
 import org.jopendocument.dom.spreadsheet.TableStyle.*;
 //import org.jopendocument.dom.spreadsheet.SpreadSheet;
 //import org.jopendocument.dom.   StyleProperties;
@@ -21,7 +22,7 @@ import org.jopendocument.dom.spreadsheet.TableStyle.*;
  */
 public class SSTest02 {
      // Create the data to save.
-    public static void main(String args[]){
+    public static void main(String args[]) throws IOException{
         int[][] tabla = new int[4][6]; // Array bidimensional (matriz)
         int[][] tabla_test01 = new int[4][6];
         /*
@@ -38,17 +39,28 @@ public class SSTest02 {
         // La tabla se invierte horizontal y verticalmente
         // De esta manera, el elemento [1,1] se encontrará en la [4,6]
         // Dependiendo del número, las celdas se colorearán de una forma u otra
-        for(int i=0;i<4;i++){
+       /* for(int i=0;i<4;i++){
             for(int j=0;i<6;j++){
                 tabla[i][j]=tabla_test01[j][i];
             }
-        }
+        }*/
 
-        String[] columns = new String[] { "Month", "Temp" };
+        //String[] columns = new String[] { "Month", "Temp" };
 
-        TableModel model = new DefaultTableModel(data, columns);
-        model.setBackgroundColor(cyan);
-
+        TableModel model = new DefaultTableModel();
+        /*for(int i=0;i<4;i++){
+            for(int j=0;i<6;j++){
+                model.setValueAt(i+j, i, j);
+                //tabla[i][j]=tabla_test01[j][i];
+            }
+        }*/
+        //model.setBackgroundColor(cyan);
         // Save the data to an ODS file and open it.
-        final File file = new File("test02.ods");   
+        File file = new File("test02.ods");
+        
+        SpreadSheet.createEmpty(model).saveAs(file);
+        /*SpreadSheet mySpreadSheet = new SpreadSheet();
+        mySpreadSheet.createEmpty(model);*/
+        
+    }
 }
