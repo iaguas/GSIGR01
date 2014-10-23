@@ -57,8 +57,11 @@ public class SSTest02 {
         //model.setBackgroundColor(cyan);
         // Save the data to an ODS file and open it.
         File file = new File("test02.ods");
-        
-        SpreadSheet.createEmpty(model).saveAs(file);
+        // 
+        SpreadSheet mySpreadSheet = SpreadSheet.create(1,8,8);
+
+        mySpreadSheet.saveAs(file);
+        //SpreadSheet.createEmpty(model).saveAs(file);
         /*SpreadSheet mySpreadSheet = new SpreadSheet();
         mySpreadSheet.createEmpty(model);*/
         
