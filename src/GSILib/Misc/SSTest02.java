@@ -5,69 +5,61 @@
  */
 
 package GSILib.Misc;
-import static java.awt.Color.*;
+
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import org.jopendocument.dom.OOUtils;
-//import org.jopendocument.dom.spreadsheet.SpreadSheet;
+import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
-import org.jopendocument.dom.spreadsheet.Table;
-//import org.jopendocument.dom.spreadsheet.SpreadSheet;
-//import org.jopendocument.dom.   StyleProperties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  *
  * @author Iñaki
  */
 public class SSTest02 {
-     // Create the data to save.
-    public static void main(String args[]) throws IOException{
-        int[][] tabla = new int[4][6]; // Array bidimensional (matriz)
-        int[][] tabla_test01 = new int[4][6];
-        /*
-        // Create the data to save.
-        final Object[][] data = new Object[6][2];
-        data[0] = new Object[] { "January", 1 };
-        data[1] = new Object[] { "February", 3 };
-        data[2] = new Object[] { "March", 8 };
-        data[3] = new Object[] { "April", 10 };
-        data[4] = new Object[] { "May", 15 };
-        data[5] = new Object[] { "June", 18 };*/
+    
+    // Movimiento de la tabla con respecto al origen de coordinadas.
+    static final int COLEXTRA = 3;
+    static final int FILEXTRA = 3;
         
-        // Vaciar las primeras 3 filas y sus correspondientes 5 columnas
-        // La tabla se invierte horizontal y verticalmente
-        // De esta manera, el elemento [1,1] se encontrará en la [4,6]
-        // Dependiendo del número, las celdas se colorearán de una forma u otra
-       /* for(int i=0;i<4;i++){
-            for(int j=0;i<6;j++){
-                tabla[i][j]=tabla_test01[j][i];
-            }
-        }*/
-
-        //String[] columns = new String[] { "Month", "Temp" };
-
-        TableModel model = new DefaultTableModel();
-        /*for(int i=0;i<4;i++){
-            for(int j=0;i<6;j++){
-                model.setValueAt(i+j, i, j);
-                //tabla[i][j]=tabla_test01[j][i];
-            }
-        }*/
-        //model.setBackgroundColor(cyan);
-        // Save the data to an ODS file and open it.
-        File file = new File("test02.ods");
-        // Creación de hoja de cálculo (1 página; 7 filas y 11 columnas de anchura)
-        SpreadSheet mySpreadSheet = SpreadSheet.create(1,7,11);
-        // Crear una tabla y colocarla en las coordenadas (3C o (3,5))
-        mySpreadSheet.setValueAt((Object) new Integer(2), 3, 5);
-        //SpreadSheet.createEmpty(model).;
+    public static void main(String args[]){
+        // Creamos la tabla de números que vamos a guardar.
+        int[][] intArray = {{7,4,7,5,19,5}, {4,7,6,18,1,6}, {3,11,6,15,8,9}, {9,8,7,22,7,13}};
         
-        mySpreadSheet.saveAs(file);
-        //SpreadSheet.createEmpty(model).saveAs(file);
-        /*SpreadSheet mySpreadSheet = new SpreadSheet();
-        mySpreadSheet.createEmpty(model);*/
+        // Creamos el objeto fichero con el que manejaremos la hoja de calculo.
+        final File file = new File("test02.ods");
+        // Creamos la hoja de cálculo
+        SpreadSheet mySpreadSheet = SpreadSheet.create(1,100,100);
+        // Rescatamos la hoja dentro de la hoja de cálculo
+        final Sheet sheet = mySpreadSheet.getSheet(0);
+        
+        // Bucle para recorrer la tabla de números y guardarla en el archivo.
+        for (int i=0; i<intArray.length; i++){
+            for (int j=0; j<intArray[0].length; j++){
+                // Introducimos el dato correspondiente.
+                sheet.setValueAt((Object) intArray[i][j], j+FILEXTRA, i+COLEXTRA);
+                // Pintamos la celda del color correspondiente.
+                if(intArray[i][j] >= 10){
+                    sheet.getCellAt(j+FILEXTRA, i+COLEXTRA).setBackgroundColor(new Color(0,0,255));
+                }
+                else{
+                    sheet.getCellAt(j+FILEXTRA, i+COLEXTRA).setBackgroundColor(new Color(255,0,0));
+                }
+            }
+        }
+        
+        
+        // Guardamos la hoja de cálculo con todos los datos.
+        try {
+            OOUtils.open(sheet.getSpreadSheet().saveAs(file));
+        } 
+        catch (IOException ex) {
+            Logger.getLogger(SSTest02.class.getName()).log(Level.SEVERE, null, ex); // TODO: Revisar.
+        }
         
     }
 }
