@@ -6,13 +6,13 @@
 
 package GSILib.Misc;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jopendocument.dom.OOUtils;
+import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
 
 /**
@@ -21,23 +21,32 @@ import org.jopendocument.dom.spreadsheet.SpreadSheet;
  */
 
 public class SSTest01 {
-    public static void main(String[] args) throws IOException{
+    public static void main(String args[]){
+        // Creamos la tabla de números que vamos a guardar.
+        int[][] intArray = {{7,4,7,5,19,5}, {4,7,6,18,1,6}, {3,11,6,15,8,9}, {9,8,7,22,7,13}};
         
-        final Object[][] data = new Object[4][6];
-        data[0] = new Object[] { 0, 1, 2, 3, 4, 5 };
-        data[1] = new Object[] { 6, 7, 8, 9, 10, 11 };
-        data[2] = new Object[] { 12, 13, 14, 15, 16, 17 };
-        data[3] = new Object[] { 18, 19, 20, 21, 22, 23 };
-
-        Object columnNames[] = { null, null, null, null, null, null };
-        
-        TableModel model = new DefaultTableModel(data, columnNames); 
-        
-        // Save the file
-        
+        // Creamos el objeto fichero con el que manejaremos la hoja de calculo.
         final File file = new File("test01.ods");
-        SpreadSheet.createEmpty(model).saveAs(file);
-
-        OOUtils.open(file);
+        // Creamos la hoja de cálculo
+        SpreadSheet mySpreadSheet = SpreadSheet.create(1,100,100);
+        // Rescatamos la hoja dentro de la hoja de cálculo
+        final Sheet sheet = mySpreadSheet.getSheet(0);
+        
+        // Bucle para recorrer la tabla de números y guardarla en el archivo.
+        for (int i=0; i<intArray.length; i++){
+            for (int j=0; j<intArray[0].length; j++){
+                // Introducimos el dato correspondiente.
+                sheet.setValueAt((Object) intArray[i][j], j, i);
+            }
+        }
+        
+        // Guardamos la hoja de cálculo con todos los datos.
+        try {
+            OOUtils.open(sheet.getSpreadSheet().saveAs(file));
+        } 
+        catch (IOException ex) {
+            Logger.getLogger(SSTest02.class.getName()).log(Level.SEVERE, null, ex); // TODO: Revisar.
+        }
+        
     }
 }

@@ -16,3 +16,6 @@ hs_err_pid*
 # Ignore generated files
 *.ods
 *cpgz
+
+# Ignore Mac files
+*.DS_Store
