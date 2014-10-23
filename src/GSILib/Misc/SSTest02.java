@@ -11,8 +11,9 @@ import java.io.IOException;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import org.jopendocument.dom.OOUtils;
+//import org.jopendocument.dom.spreadsheet.SpreadSheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
-import org.jopendocument.dom.spreadsheet.TableStyle.*;
+import org.jopendocument.dom.spreadsheet.Table;
 //import org.jopendocument.dom.spreadsheet.SpreadSheet;
 //import org.jopendocument.dom.   StyleProperties;
 
@@ -57,9 +58,12 @@ public class SSTest02 {
         //model.setBackgroundColor(cyan);
         // Save the data to an ODS file and open it.
         File file = new File("test02.ods");
-        // 
-        SpreadSheet mySpreadSheet = SpreadSheet.create(1,8,8);
-
+        // Creación de hoja de cálculo (1 página; 7 filas y 11 columnas de anchura)
+        SpreadSheet mySpreadSheet = SpreadSheet.create(1,7,11);
+        // Crear una tabla y colocarla en las coordenadas (3C o (3,5))
+        mySpreadSheet.setValueAt((Object) new Integer(2), 3, 5);
+        //SpreadSheet.createEmpty(model).;
+        
         mySpreadSheet.saveAs(file);
         //SpreadSheet.createEmpty(model).saveAs(file);
         /*SpreadSheet mySpreadSheet = new SpreadSheet();
