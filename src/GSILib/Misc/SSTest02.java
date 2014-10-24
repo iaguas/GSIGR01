@@ -1,7 +1,7 @@
 /* 
  * Práctica 02 - Grupo 01
  * Gestión de Sistemas de Información
- * Universidad Pública de Navarra
+ * Universidad Pública de Navarra - curso 2014-15
  */
 
 package GSILib.Misc;
@@ -36,6 +36,7 @@ public class SSTest02 {
         SpreadSheet mySpreadSheet = SpreadSheet.create(1,100,100);
         // Rescatamos la hoja dentro de la hoja de cálculo
         final Sheet sheet = mySpreadSheet.getSheet(0);
+        sheet.setName("prueba");
         
         // Bucle para recorrer la tabla de números y guardarla en el archivo.
         for (int i=0; i<intArray.length; i++){

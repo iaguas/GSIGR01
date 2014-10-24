@@ -1,7 +1,7 @@
 /* 
  * Práctica 01 - Grupo 01
  * Gestión de Sistemas de Información
- * Universidad Pública de Navarra
+ * Universidad Pública de Navarra - curso 2014-15
  */
 
 package GSILib.BModel.documents.visualNews;
