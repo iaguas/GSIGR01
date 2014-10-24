@@ -12,6 +12,9 @@ import GSILib.BModel.workers.*;
 import GSILib.BModel.documents.*;
 import GSILib.BModel.documents.visualNews.*;
 /* Estos, en cambio, son solo cosa de la implementación, que no debe conocerse */
+import java.math.BigDecimal;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,6 +22,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.jopendocument.dom.spreadsheet.Sheet;
+import org.jopendocument.dom.spreadsheet.SpreadSheet;
 
 /**
  * This is the class BusinessSystem.
@@ -342,5 +349,44 @@ public class BusinessSystem implements EditorialOffice{
     public Photographer getAuthor(Picture p) {
         // Retornamos el autor de una imagen.
         return p.getAutor();
+    }
+    
+    // TODO: javadoc.
+    public int importTeletypes(File f){
+        // Leemos y almacenamos los datos que hay en la hoja.
+        Sheet sheet = null;
+        try {
+            sheet = SpreadSheet.createFromFile(f).getSheet(0);
+        } 
+        catch (IOException ex) {
+            // TODO: Revisar.
+            Logger.getLogger(BusinessSystem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        int i = 0;
+        // Iteramos sobre todos los elementos de la hoja de cálculo.
+        while(! sheet.getCellAt(i,0).isEmpty()){
+            // Importamos el ID del periodista del teletipo.
+            BigDecimal authorIDnum = (BigDecimal) sheet.getCellAt(0,i).getValue();
+            String authorID = authorIDnum.toString();
+            // Importamos el titular del teletipo.
+            String headline = (String) sheet.getCellAt(1,i).getValue();
+            // Importamos el cuerpo del teletipo.
+            String body = (String) sheet.getCellAt(2,i).getValue();
+            Teletype tt = new Teletype(headline, body, this.findJournalist(authorID));
+            // Para importar los premios hacemos otro bucle.
+            int j = 3;
+            while(! sheet.getCellAt(j,i).isEmpty()){
+                // Importamos los premios conforme los leemos.
+                tt.addPrize((String) sheet.getCellAt(j,i).getValue());
+                j++;
+            }
+            // Guardamos el teletipo en el sistema.
+            this.insertNews(tt);
+            // Avanzamos a la siguiente fila.
+            i++;
+        }
+        
+        return 0;
     }
 }
