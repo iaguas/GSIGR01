@@ -36,7 +36,8 @@ public class SSTest02 {
         SpreadSheet mySpreadSheet = SpreadSheet.create(1,100,100);
         // Rescatamos la hoja dentro de la hoja de cálculo
         final Sheet sheet = mySpreadSheet.getSheet(0);
-        sheet.setName("prueba");
+        // Damos nombre a la hoja.
+        sheet.setName("sstest02");
         
         // Bucle para recorrer la tabla de números y guardarla en el archivo.
         for (int i=0; i<intArray.length; i++){
@@ -56,11 +57,13 @@ public class SSTest02 {
         
         // Guardamos la hoja de cálculo con todos los datos.
         try {
-            OOUtils.open(sheet.getSpreadSheet().saveAs(file));
+            OOUtils.open(mySpreadSheet.saveAs(file));
         } 
         catch (IOException ex) {
             Logger.getLogger(SSTest02.class.getName()).log(Level.SEVERE, null, ex); // TODO: Revisar.
         }
         
+        // Información de usuario.
+        System.out.println("El archivo test02.ods se ha escrito de manera correcta.");
     }
 }

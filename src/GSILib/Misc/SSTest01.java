@@ -47,5 +47,8 @@ public class SSTest01 {
             Logger.getLogger(SSTest02.class.getName()).log(Level.SEVERE, null, ex); // TODO: Revisar.
         }
         
+        // Información de usuario.
+        System.out.println("El archivo test02.ods se ha escrito de manera correcta.");
+        
     }
 }
