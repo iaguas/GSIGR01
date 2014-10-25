@@ -187,11 +187,11 @@ public class BusinessSystem implements EditorialOffice{
         return d.removePrize(prize);
     }
     
-    // TODO: Javadoc
+    @Override
     public String[] listPrizes(Document d){
         // Nota. Para que luego no nos diga que somos cutres hazlo con un iterator
         // tienes ejemplos en listDocuments y listReviewers.
-        return null;
+        return d.getPrizes();
     }
 
     @Override

@@ -113,6 +113,16 @@ public class Document {
     }
     
     /** 
+     * Retrieves the prizes of a given document.
+     * @param d a document.
+     * @return The array of the prizes.
+     */
+    public String[] getPrizes(){
+        // Devolvemos el array de prizes
+        return (String[]) this.prizes.toArray();
+    }
+    
+    /** 
      * Equals. Known if 2 object are the same.
      * @param d a document.
      * @return true if they are the same object, false otherwise.
@@ -120,16 +130,6 @@ public class Document {
     public boolean equals(Document d){
         // Comparamos y devolvemos si es el mismo periodico o no.
         return this.getId().equals(d.getId());
-    }
-    
-    /** 
-     * Retrieves the prizes of a given document.
-     * @param d a document.
-     * @return The array of the prizes.
-     */
-    public String[] getPrizes(Document d){
-        // Devolvemos la lista de prizes
-        return (String[]) this.prizes.toArray();
     }
     
     @Override
