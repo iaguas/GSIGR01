@@ -393,7 +393,45 @@ public class BusinessSystem implements EditorialOffice{
             // Avanzamos a la siguiente fila.
             i++;
         }
-        
         return 0;
     }
+    
+    // TODO: javadoc.
+    public int importPrintableNews(File f){
+        // Leemos y almacenamos los datos que hay en la hoja.
+        Sheet sheet = null;
+        try {
+            sheet = SpreadSheet.createFromFile(f).getSheet(0);
+        } 
+        catch (IOException ex) {
+            // TODO: Revisar.
+            Logger.getLogger(BusinessSystem.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        int i = 0;
+        // Iteramos sobre todos los elementos de la hoja de cálculo.
+        while(! sheet.getCellAt(i,0).isEmpty()){
+            // Importamos el ID del periodista revisor de la noticia imprimible.
+            BigDecimal reviewerIDnum = (BigDecimal) sheet.getCellAt(0,i).getValue();
+            String reviewerID = reviewerIDnum.toString();
+            // Importamos el titular del teletipo.
+            String headline = (String) sheet.getCellAt(1,i).getValue();
+            // Importamos el cuerpo del teletipo.
+            String body = (String) sheet.getCellAt(2,i).getValue();
+            PrintableNews pn = new PrintableNews(headline, body, this.findJournalist(reviewerID));
+            // Para importar los premios hacemos otro bucle.
+            int j = 3;
+            while(sheet.getCellAt(j,i).getValue() == "*"){
+                // Importamos los premios conforme los leemos.
+                pn.addPrize((String) sheet.getCellAt(j,i).getValue());
+                j++;
+            }
+            // Guardamos el la noticia imprimible en el sistema.
+            this.insertNews(pn);
+            // Avanzamos a la siguiente fila.
+            i++;
+        }
+        return 0;
+    }
+    
 }
