@@ -76,12 +76,15 @@ public class SSTest04 {
                     sheetPrintableNews.setValueAt(d.getId(), 0, numPrintableNews);
                     sheetPrintableNews.setValueAt(d.getHeadline(), 1, numPrintableNews);
                     sheetPrintableNews.setValueAt(d.getBody(), 2, numPrintableNews);
-                    if(!pn.getPictures().isEmpty()){
+                    if(! pn.getPictures().isEmpty()){
                         sheetWebNews.setValueAt(pn.getPictures().get(0), 4, numPrintableNews);
                     }
-                    if(pn.getReviewers().length!=0){
-                        sheetWebNews.setValueAt(pn.getReviewers()[0].getId(), 4, numPrintableNews);
+                    try{
+                        if(pn.getReviewers().length != 0){
+                            sheetWebNews.setValueAt(pn.getReviewers()[0].getId(), 4, numPrintableNews);
+                        }
                     }
+                    catch (java.lang.NullPointerException e){}
                     numPrintableNews++;
             }
             

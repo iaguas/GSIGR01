@@ -112,12 +112,15 @@ public class Document {
         return this.body;
     }
     
-    @Override
-    public String toString(){
-        // Devolvemos un string con los datos del documento.
-        return "Document ID: " + this.getId() + "\n  Headline: " + this.getHeadline()
-                + "\n  Body: " + this.getBody() + "\n  Journalist: " +
-                this.getAuthor();    }
+    /** 
+     * Retrieves the prizes of a given document.
+     * @param d a document.
+     * @return The array of the prizes.
+     */
+    public String[] getPrizes(){
+        // Devolvemos el array de prizes
+        return (String[]) this.prizes.toArray();
+    }
     
     /** 
      * Equals. Known if 2 object are the same.
@@ -127,5 +130,13 @@ public class Document {
     public boolean equals(Document d){
         // Comparamos y devolvemos si es el mismo periodico o no.
         return this.getId().equals(d.getId());
+    }
+    
+    @Override
+    public String toString(){
+        // Devolvemos un string con los datos del documento.
+        return "Document ID: " + this.getId() + "\n  Headline: " + this.getHeadline()
+                + "\n  Body: " + this.getBody() + "\n  Journalist: " +
+                this.getAuthor();    
     }
 }
