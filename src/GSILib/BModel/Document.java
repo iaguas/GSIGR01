@@ -119,6 +119,8 @@ public class Document {
      */
     public String[] getPrizes(){
         // Devolvemos el array de prizes
+        if(this.prizes.isEmpty())
+            return null;
         return (String[]) this.prizes.toArray();
     }
     

@@ -79,12 +79,10 @@ public class SSTest04 {
                     if(! pn.getPictures().isEmpty()){
                         sheetWebNews.setValueAt(pn.getPictures().get(0), 4, numPrintableNews);
                     }
-                    try{
-                        if(pn.getReviewers().length != 0){
-                            sheetWebNews.setValueAt(pn.getReviewers()[0].getId(), 4, numPrintableNews);
-                        }
+                    if(pn.getReviewers() != null){
+                        sheetWebNews.setValueAt(pn.getReviewers()[0].getId(), 4, numPrintableNews);
                     }
-                    catch (java.lang.NullPointerException e){}
+                    
                     numPrintableNews++;
             }
             
