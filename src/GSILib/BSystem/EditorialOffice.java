@@ -248,7 +248,7 @@ public interface EditorialOffice {
      * @param d The date
      * @return The instance of JournalIssue for that date, or null if it does not exist.
      */
-    public Newspaper getNewspaper(Date d); // Era JournalIssue
+    public Newspaper getNewspaper(Date d);
     
     /**
      * Deletes the newspaper from a specified date.
@@ -265,18 +265,20 @@ public interface EditorialOffice {
      * @param pn 	Printable news to be added to the journal issue
      * @return true if and only if the printable news could be added to the journal issue.
      */
-    public boolean addNewsToIssue(Newspaper np,PrintableNews pn); // Era JournalIssue
+    public boolean addNewsToIssue(Newspaper np,PrintableNews pn);
     
     /**
      * Retrieves the list of journalist that have authored some document in a given JournalIssue
      * @param np	The journal issue for which we seek the Journalist list
      * @return 	An array containing the journalists.
      */
-    Journalist[] getJournalist(Newspaper np); // Era JournalIssue
+    Journalist[] getJournalist(Newspaper np);
     
-            
- 
-
-    
+    /**
+     * Retrieves the list of prizes that a Document earned
+     * @param d	The Document
+     * @return 	An array containing the prizes.
+     */
+    public String[] listPrizes(Document d);
     
 }
