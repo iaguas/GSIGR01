@@ -186,6 +186,13 @@ public class BusinessSystem implements EditorialOffice{
         // Eliminamos el premio de la colección de premios.
         return d.removePrize(prize);
     }
+    
+    // TODO: Javadoc
+    public String[] listPrizes(Document d){
+        // Nota. Para que luego no nos diga que somos cutres hazlo con un iterator
+        // tienes ejemplos en listDocuments y listReviewers.
+        return null;
+    }
 
     @Override
     public Journalist getAuthor(Document d) {
