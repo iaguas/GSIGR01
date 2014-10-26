@@ -62,18 +62,10 @@ public class PrintableNews extends VisualNews{
      * @return the list of reviewers from the associated printable news
      */
     public Journalist[] getReviewers(){            
-        // Creamos una tabla periodista y la dejamos a null por si no hubiera a quien meter.
-        Journalist[] reviewers = null;
-        // Creamos el íncide para recorrer la tabla.
-        int nextIndex = 0;
-        // Recorremos las noticias buscando a los periodistas que las escriben
-        // Añadimos a estos a la tabla de periodistas.
-        for (int i = 0; i < this.reviewers.size(); i++){
-            reviewers[nextIndex] = this.reviewers.get(i);
-            nextIndex++;   
-        }
-        // Devolvemos la tabla que hemos creado.
-        return reviewers;
+        
+        if (this.reviewers.isEmpty())
+            return null;
+        return (Journalist[]) this.reviewers.toArray();
     }
     
     @Override
