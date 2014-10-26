@@ -67,6 +67,7 @@ public class SSTest04 {
                     sheetTeletypes.setValueAt(d.getId(), 0, numTeletype);
                     sheetTeletypes.setValueAt(d.getHeadline(), 1, numTeletype);
                     sheetTeletypes.setValueAt(d.getBody(), 2, numTeletype);
+                    String[] s = bsystem.listPrizes(d);
                     numTeletype++;
             }
             
