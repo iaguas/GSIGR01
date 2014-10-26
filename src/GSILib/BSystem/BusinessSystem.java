@@ -360,7 +360,8 @@ public class BusinessSystem implements EditorialOffice{
     
     // TODO: javadoc.
     public int importTeletypes(File f){
-        // Leemos y almacenamos los datos que hay en la hoja.
+        // Leemos y almacenamos los datos que hay en la hoja correspondiente.
+        // Teletypes (hoja 0)
         Sheet sheet = null;
         try {
             sheet = SpreadSheet.createFromFile(f).getSheet(0);
@@ -398,10 +399,11 @@ public class BusinessSystem implements EditorialOffice{
     
     // TODO: javadoc.
     public int importPrintableNews(File f){
-        // Leemos y almacenamos los datos que hay en la hoja.
+        // Leemos y almacenamos los datos que hay en la hoja correspondiente.
+        // PrintableNews (hoja 1)
         Sheet sheet = null;
         try {
-            sheet = SpreadSheet.createFromFile(f).getSheet(0);
+            sheet = SpreadSheet.createFromFile(f).getSheet(1);
         } 
         catch (IOException ex) {
             // TODO: Revisar.
@@ -421,9 +423,15 @@ public class BusinessSystem implements EditorialOffice{
             PrintableNews pn = new PrintableNews(headline, body, this.findJournalist(reviewerID));
             // Para importar los premios hacemos otro bucle.
             int j = 3;
-            while(sheet.getCellAt(j,i).getValue() == "*"){
+            while(sheet.getCellAt(j,i).getValue() != "*"){
                 // Importamos los premios conforme los leemos.
                 pn.addPrize((String) sheet.getCellAt(j,i).getValue());
+                j++;
+            }
+            // Para importar los revisores, hacemos otro bucle más
+            while(sheet.getCellAt(j,i).getValue() != "#"){
+                // Importamos los premios conforme los leemos.
+                addReviewer(pn, findJournalist((String) sheet.getCellAt(j,i).getValue()));
                 j++;
             }
             // Guardamos el la noticia imprimible en el sistema.
