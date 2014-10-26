@@ -403,7 +403,7 @@ public class BusinessSystem implements EditorialOffice{
         // PrintableNews (hoja 1)
         Sheet sheet = null;
         try {
-            sheet = SpreadSheet.createFromFile(f).getSheet(1);
+            sheet = SpreadSheet.createFromFile(f).getSheet(0 /* 1 */);
         } 
         catch (IOException ex) {
             // TODO: Revisar.
@@ -423,13 +423,13 @@ public class BusinessSystem implements EditorialOffice{
             PrintableNews pn = new PrintableNews(headline, body, this.findJournalist(reviewerID));
             // Para importar los premios hacemos otro bucle.
             int j = 3;
-            while(sheet.getCellAt(j,i).getValue() != "*"){
+            while(!((String) sheet.getCellAt(j,i).getValue()).equals("*")){
                 // Importamos los premios conforme los leemos.
                 pn.addPrize((String) sheet.getCellAt(j,i).getValue());
                 j++;
             }
             // Para importar los revisores, hacemos otro bucle más
-            while(sheet.getCellAt(j,i).getValue() != "#"){
+            while(!((String) sheet.getCellAt(j,i).getValue()).equals("#")){
                 // Importamos los premios conforme los leemos.
                 addReviewer(pn, findJournalist((String) sheet.getCellAt(j,i).getValue()));
                 j++;
