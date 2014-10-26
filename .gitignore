@@ -14,7 +14,6 @@ hs_err_pid*
 /dist/
 
 # Ignore generated files
-*.ods
 *cpgz
 
 # Ignore Mac files
