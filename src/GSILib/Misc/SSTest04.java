@@ -137,7 +137,7 @@ public class SSTest04 {
         
         // Guardamos la hoja de cálculo con todos los datos.
         try {
-            OOUtils.open(sheetTeletypes.getSpreadSheet().saveAs(file));
+            OOUtils.open(mySpreadSheet.saveAs(file));
         } 
         catch (IOException ex) {
             System.err.printf("No se pudo guardar el archivo.\n");

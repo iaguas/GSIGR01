@@ -15,9 +15,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * This is the test class SSTest06.
- * This class ensures the correct operation of the PrintableNews exportation to 
- * an .ods file.
+ * This is the test class TestSave.
+ * This class tests the correct save of BusinessSystem in a .ods file.
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
