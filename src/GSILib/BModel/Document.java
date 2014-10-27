@@ -114,11 +114,10 @@ public class Document {
     
     /** 
      * Retrieves the prizes of a given document.
-     * @param d a document.
-     * @return The array of the prizes.
+     * @return The array of the prizes. If it is empty, it will be null.
      */
     public String[] getPrizes(){
-        // Devolvemos el array de prizes
+        // Devolvemos el array de premios.
         if(this.prizes.isEmpty())
             return null;
         return (String[]) this.prizes.toArray();

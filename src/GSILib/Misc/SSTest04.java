@@ -39,8 +39,11 @@ public class SSTest04 {
         // Dentro creamos el periodista al que le asignaremos las noticias.
         Journalist jr = new Journalist("1111A", "Tom Anderson", "16/05/1995", new ArrayList<>());
         bsystem.addJournalist(jr);
-        // Y añadimos noticias de todo tipo para este periodista.       
-        bsystem.insertNews(new Teletype("title1","body1",jr));
+        // Y añadimos noticias de todo tipo para este periodista. 
+        Teletype tt = new Teletype("title1","body1",jr);
+        tt.addPrize("Super TT 14");
+        bsystem.insertNews(tt);
+        System.out.println(tt);
         bsystem.insertNews(new PrintableNews("title2","body2",jr));
         bsystem.insertNews(new WebNews("title3","body3",jr,"http://midominio.com/noticias/id"));
         //...
@@ -64,7 +67,7 @@ public class SSTest04 {
         for(Document d: documentList){
             // Guardo los datos de los teletipos.
             if (d.getClass().getName().equals("GSILib.BModel.documents.Teletype")){
-                    sheetTeletypes.setValueAt(d.getId(), 0, numTeletype);
+                    sheetTeletypes.setValueAt(d.getAuthor().getId(), 0, numTeletype);
                     sheetTeletypes.setValueAt(d.getHeadline(), 1, numTeletype);
                     sheetTeletypes.setValueAt(d.getBody(), 2, numTeletype);
                     String[] s = bsystem.listPrizes(d);
@@ -94,10 +97,10 @@ public class SSTest04 {
                     sheetWebNews.setValueAt(d.getHeadline(), 1, numWebNews);
                     sheetWebNews.setValueAt(d.getBody(), 2, numWebNews);
                     sheetWebNews.setValueAt(wn.getUrl(), 3, numWebNews);
-                    if(!wn.getPictures().isEmpty()){
+                    if(! wn.getPictures().isEmpty()){
                         sheetWebNews.setValueAt(wn.getPictures().get(0), 4, numWebNews);
                     }
-                    if(!wn.getKeyWords().isEmpty()){
+                    if(! wn.getKeyWords().isEmpty()){
                         sheetWebNews.setValueAt(wn.getKeyWords().get(0), 5, numWebNews);
                     }
                     numWebNews++;

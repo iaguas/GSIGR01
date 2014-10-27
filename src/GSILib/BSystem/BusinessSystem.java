@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.jopendocument.dom.spreadsheet.Cell;
 import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
 
@@ -375,19 +376,23 @@ public class BusinessSystem implements EditorialOffice{
         // Iteramos sobre todos los elementos de la hoja de cálculo.
         while(! sheet.getCellAt(i,0).isEmpty()){
             // Importamos el ID del periodista del teletipo.
-            BigDecimal authorIDnum = (BigDecimal) sheet.getCellAt(0,i).getValue();
-            String authorID = authorIDnum.toString();
+           // BigDecimal authorIDnum = (BigDecimal) sheet.getCellAt(0,i).getValue();
+            //String authorID = authorIDnum.toString();
+            String authorID = sheet.getCellAt(0,i).getTextValue();
             // Importamos el titular del teletipo.
-            String headline = (String) sheet.getCellAt(1,i).getValue();
+            String headline = sheet.getCellAt(1,i).getTextValue();
             // Importamos el cuerpo del teletipo.
-            String body = (String) sheet.getCellAt(2,i).getValue();
+            String body = sheet.getCellAt(2,i).getTextValue();
             Teletype tt = new Teletype(headline, body, this.findJournalist(authorID));
             // Para importar los premios hacemos otro bucle.
             int j = 3;
-            while(! sheet.getCellAt(j,i).isEmpty()){
+            String str = sheet.getCellAt(j,i).getTextValue();
+            while(sheet.getColumnCount()>j && (! sheet.getCellAt(j,i).getTextValue().equals("")) ){
                 // Importamos los premios conforme los leemos.
                 tt.addPrize((String) sheet.getCellAt(j,i).getValue());
                 j++;
+                //Cell c =sheet.getCellAt(j,i);
+                //str = c.getTextValue();
             }
             // Guardamos el teletipo en el sistema.
             this.insertNews(tt);
