@@ -358,8 +358,12 @@ public class BusinessSystem implements EditorialOffice{
         // Retornamos el autor de una imagen.
         return p.getAutor();
     }
-    
-    // TODO: javadoc.
+ 
+    /**
+     * Reads the Teletypes from an .ods file and imports them into the system
+     * @param f The input file (.ods, Open Office spreadsheet) to read from
+     * @return the number of Teletypes correctly added to the system
+     */
     public int importTeletypes(File f){
         // Leemos y almacenamos los datos que hay en la hoja correspondiente.
         // Teletypes (hoja 0)
@@ -398,10 +402,14 @@ public class BusinessSystem implements EditorialOffice{
             // Avanzamos a la siguiente fila.
             i++;
         }
-        return 0;
+        return i;
     }
     
-    // TODO: javadoc.
+    /**
+     * Reads the PrintableNews from an .ods file and imports them into the system
+     * @param f The input file (.ods, Open Office spreadsheet) to read from
+     * @return the number of PrintableNews correctly added to the system
+     */
     public int importPrintableNews(File f){
         // Leemos y almacenamos los datos que hay en la hoja correspondiente.
         // PrintableNews (hoja 1)
@@ -446,7 +454,7 @@ public class BusinessSystem implements EditorialOffice{
             // Avanzamos a la siguiente fila.
             i++;
         }
-        return 0;
+        return i;
     }
     
 }

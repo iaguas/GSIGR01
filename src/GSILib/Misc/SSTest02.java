@@ -15,10 +15,14 @@ import org.jopendocument.dom.spreadsheet.SpreadSheet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
- *
- * @author Iñaki
+ * This is the test class SSTest02.
+ * This class creates a bidimensional array of 4 x 6 of integers, leaves a
+ * space of 3 rows and 5 columns in a sheet, changes the background color of the
+ * cells they are stored in (if >=10, red; else, blue) and saves it in the 
+ * first sheet of a spreadsheet file, "test02.ods".
+ * @version 1.0
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class SSTest02 {
     

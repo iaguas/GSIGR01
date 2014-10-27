@@ -15,10 +15,12 @@ import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
 
 /**
- *
- * @author Alvaro
+ * This is the test class SSTest01.
+ * This class creates a bidimensional array of 4 x 6 of integers, and stores it
+ * in the first sheet of a spreadsheet file, "test01.ods".
+ * @version 1.0
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-
 public class SSTest01 {
     public static void main(String args[]){
         // Creamos la tabla de números que vamos a guardar.

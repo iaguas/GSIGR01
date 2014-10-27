@@ -20,13 +20,12 @@ import org.jopendocument.dom.OOUtils;
 import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
 
-
 /**
- *
- * @author inigo
+ * This is the test class SSTest04.
+ * This exports Document instances from the system to an "documents.ods" file.
+ * @version 1.0
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-
-
 public class SSTest04 {
     public static void main(String args[]){
         // Variables para el control de bucle de escritura de datos.
