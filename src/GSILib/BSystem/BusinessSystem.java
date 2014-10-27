@@ -374,7 +374,7 @@ public class BusinessSystem implements EditorialOffice{
         
         int i = 0;
         // Iteramos sobre todos los elementos de la hoja de cálculo.
-        while(! sheet.getCellAt(i,0).isEmpty()){
+        while(sheet.getRowCount()>i && (! sheet.getCellAt(i,0).isEmpty())){
             // Importamos el ID del periodista del teletipo.
             String authorID = sheet.getCellAt(0,i).getTextValue();
             // Importamos el titular del teletipo.
@@ -416,7 +416,7 @@ public class BusinessSystem implements EditorialOffice{
         
         int i = 0;
         // Iteramos sobre todos los elementos de la hoja de cálculo.
-        while(! sheet.getCellAt(i,0).isEmpty()){
+        while(sheet.getRowCount()>i && (! sheet.getCellAt(i,0).isEmpty())){
             // Importamos el ID del periodista revisor de la noticia imprimible.
             String authorID = sheet.getCellAt(0,i).getTextValue();
             // Importamos el titular de la noticia imprimible.
