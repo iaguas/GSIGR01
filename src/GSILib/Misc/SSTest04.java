@@ -43,10 +43,13 @@ public class SSTest04 {
         Teletype tt = new Teletype("title1","body1",jr);
         tt.addPrize("Super TT 14");
         bsystem.insertNews(tt);
-        System.out.println(tt);
-        bsystem.insertNews(new PrintableNews("title2","body2",jr));
-        bsystem.insertNews(new WebNews("title3","body3",jr,"http://midominio.com/noticias/id"));
-        //...
+        PrintableNews pn = new PrintableNews("title2","body2",jr);
+        pn.addPrize("Patata prize 2014");
+        bsystem.insertNews(pn);
+        WebNews wn = new WebNews("title3","body3",jr,"http://midominio.com/noticias/id");
+        wn.addPrize("Master Webnews 2013");
+        bsystem.insertNews(wn);
+        // TODO: Meter alguna cosa más para comprobar que todo funciona.
         
         // Creamos una nueva hoja de cálculo.
         // Creamos el objeto fichero con el que manejaremos la hoja de calculo.
@@ -70,46 +73,68 @@ public class SSTest04 {
                     sheetTeletypes.setValueAt(d.getAuthor().getId(), 0, numTeletype);
                     sheetTeletypes.setValueAt(d.getHeadline(), 1, numTeletype);
                     sheetTeletypes.setValueAt(d.getBody(), 2, numTeletype);
-                    String[] s;
-                    if (bsystem.listPrizes(d) != null)
-                        s = bsystem.listPrizes(d);
-                    String[] lPrizes = bsystem.listPrizes(d);
-                    for (int i=0; i<lPrizes.length; i++){
-                        sheetTeletypes.setValueAt(lPrizes[i+3], i+3, numTeletype);
+                    String[] lPrizes;
+                    if (bsystem.listPrizes(d) != null){
+                        lPrizes = bsystem.listPrizes(d);
+                        for (int i=0; i<lPrizes.length; i++){
+                            sheetTeletypes.setValueAt(lPrizes[i], i+3, numTeletype);
+                        }
                     }
                     numTeletype++;
             }
             
             // Guardo los datos de las PrintableNews.
             if (d.getClass().getName().equals("GSILib.BModel.documents.visualNews.PrintableNews")){
-                    PrintableNews pn = (PrintableNews) d;
-                    sheetPrintableNews.setValueAt(d.getId(), 0, numPrintableNews);
-                    sheetPrintableNews.setValueAt(d.getHeadline(), 1, numPrintableNews);
-                    sheetPrintableNews.setValueAt(d.getBody(), 2, numPrintableNews);
-                    if(! pn.getPictures().isEmpty()){
-                        sheetWebNews.setValueAt(pn.getPictures().get(0), 4, numPrintableNews);
+                int colsPN=3;
+                pn = (PrintableNews) d;
+                sheetPrintableNews.setValueAt(d.getId(), 0, numPrintableNews);
+                sheetPrintableNews.setValueAt(d.getHeadline(), 1, numPrintableNews);
+                sheetPrintableNews.setValueAt(d.getBody(), 2, numPrintableNews);
+
+                if(! pn.getPictures().isEmpty()){
+                    sheetWebNews.setValueAt(pn.getPictures().get(0), colsPN, numPrintableNews);
+                    colsPN++;
+                }
+                if(pn.getReviewers() != null){
+                    sheetWebNews.setValueAt(pn.getReviewers()[0].getId(), colsPN, numPrintableNews);
+                    colsPN++;
+                }
+                String[] lPrizes;
+                if (bsystem.listPrizes(d) != null){
+                    lPrizes = bsystem.listPrizes(d);
+                    for (int i=0; i<lPrizes.length; i++){
+                        sheetPrintableNews.setValueAt(lPrizes[i], colsPN, numPrintableNews);
+                        colsPN++;
                     }
-                    if(pn.getReviewers() != null){
-                        sheetWebNews.setValueAt(pn.getReviewers()[0].getId(), 4, numPrintableNews);
-                    }
-                    
-                    numPrintableNews++;
+                }
+                numPrintableNews++;
             }
             
             // Guardo los datos de las WebNews.
             if (d.getClass().getName().equals("GSILib.BModel.documents.visualNews.WebNews")){
-                    WebNews wn = (WebNews) d;
-                    sheetWebNews.setValueAt(d.getAuthor().getId(), 0, numWebNews);
-                    sheetWebNews.setValueAt(d.getHeadline(), 1, numWebNews);
-                    sheetWebNews.setValueAt(d.getBody(), 2, numWebNews);
-                    sheetWebNews.setValueAt(wn.getUrl(), 3, numWebNews);
-                    if(! wn.getPictures().isEmpty()){
-                        sheetWebNews.setValueAt(wn.getPictures().get(0), 4, numWebNews);
+                int colsWN = 4;
+                wn = (WebNews) d;
+                sheetWebNews.setValueAt(d.getAuthor().getId(), 0, numWebNews);
+                sheetWebNews.setValueAt(d.getHeadline(), 1, numWebNews);
+                sheetWebNews.setValueAt(d.getBody(), 2, numWebNews);
+                sheetWebNews.setValueAt(wn.getUrl(), 3, numWebNews);
+                if(! wn.getPictures().isEmpty()){
+                    sheetWebNews.setValueAt(wn.getPictures().get(0), colsWN, numWebNews);
+                    colsWN++;
+                }
+                if(! wn.getKeyWords().isEmpty()){
+                    sheetWebNews.setValueAt(wn.getKeyWords().get(0), colsWN, numWebNews);
+                    colsWN++;
+                }
+                String[] lPrizes;
+                if (bsystem.listPrizes(d) != null){
+                    lPrizes = bsystem.listPrizes(d);
+                    for (int i=0; i<lPrizes.length; i++){
+                        sheetWebNews.setValueAt(lPrizes[i], colsWN, numWebNews);
+                        colsWN++;
                     }
-                    if(! wn.getKeyWords().isEmpty()){
-                        sheetWebNews.setValueAt(wn.getKeyWords().get(0), 5, numWebNews);
-                    }
-                    numWebNews++;
+                }
+                numWebNews++;
             }
         }
         
