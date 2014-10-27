@@ -47,6 +47,17 @@ public class Document {
         return this.journalists.add(jr);
     }
     
+    /** 
+     * Retrieves the prizes of a given document.
+     * @return The array of the prizes. If it is empty, it will be null.
+     */
+    public String[] getPrizes(){
+        // Devolvemos el array de premios.
+        if(this.prizes.isEmpty())
+            return null;
+        return this.prizes.toArray(new String[this.prizes.size()]);
+    }
+    
     /**
      * Adds a string-represented prize to a given document, which can be a Teleprinter, WebNew or PrintableNew.
      * @param prize the prize the document was awarded with.
@@ -110,17 +121,6 @@ public class Document {
     public String getBody(){
         // Recuperamos el texto de un documento.
         return this.body;
-    }
-    
-    /** 
-     * Retrieves the prizes of a given document.
-     * @return The array of the prizes. If it is empty, it will be null.
-     */
-    public String[] getPrizes(){
-        // Devolvemos el array de premios.
-        if(this.prizes.isEmpty())
-            return null;
-        return (String[]) this.prizes.toArray();
     }
     
     /** 
