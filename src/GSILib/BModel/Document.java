@@ -7,6 +7,7 @@
 package GSILib.BModel;
 
 import GSILib.BModel.workers.Journalist;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-public class Document {
+public class Document{
     
     // Atributos de la clase
     private Integer id; // ID único.
@@ -120,6 +121,10 @@ public class Document {
         // Devolvemos el array de premios.
         if(this.prizes.isEmpty())
             return null;
+        try{
+            String[] patata = (String[]) this.prizes.toArray();
+        }
+        catch (IOException ex){}
         return (String[]) this.prizes.toArray();
     }
     
