@@ -376,13 +376,12 @@ public class BusinessSystem implements EditorialOffice{
         // Iteramos sobre todos los elementos de la hoja de cálculo.
         while(! sheet.getCellAt(i,0).isEmpty()){
             // Importamos el ID del periodista del teletipo.
-           // BigDecimal authorIDnum = (BigDecimal) sheet.getCellAt(0,i).getValue();
-            //String authorID = authorIDnum.toString();
             String authorID = sheet.getCellAt(0,i).getTextValue();
             // Importamos el titular del teletipo.
             String headline = sheet.getCellAt(1,i).getTextValue();
             // Importamos el cuerpo del teletipo.
             String body = sheet.getCellAt(2,i).getTextValue();
+            // Buscamos al periodista en el sistema.
             Teletype tt = new Teletype(headline, body, this.findJournalist(authorID));
             // Para importar los premios hacemos otro bucle.
             int j = 3;
@@ -408,7 +407,7 @@ public class BusinessSystem implements EditorialOffice{
         // PrintableNews (hoja 1)
         Sheet sheet = null;
         try {
-            sheet = SpreadSheet.createFromFile(f).getSheet(0 /* 1 */);
+            sheet = SpreadSheet.createFromFile(f).getSheet(0);
         } 
         catch (IOException ex) {
             // TODO: Revisar.
@@ -419,24 +418,27 @@ public class BusinessSystem implements EditorialOffice{
         // Iteramos sobre todos los elementos de la hoja de cálculo.
         while(! sheet.getCellAt(i,0).isEmpty()){
             // Importamos el ID del periodista revisor de la noticia imprimible.
-            BigDecimal reviewerIDnum = (BigDecimal) sheet.getCellAt(0,i).getValue();
-            String reviewerID = reviewerIDnum.toString();
-            // Importamos el titular del teletipo.
-            String headline = (String) sheet.getCellAt(1,i).getValue();
-            // Importamos el cuerpo del teletipo.
-            String body = (String) sheet.getCellAt(2,i).getValue();
-            PrintableNews pn = new PrintableNews(headline, body, this.findJournalist(reviewerID));
+            String authorID = sheet.getCellAt(0,i).getTextValue();
+            // Importamos el titular de la noticia imprimible.
+            String headline = sheet.getCellAt(1,i).getTextValue();
+            // Importamos el cuerpo de la noticia imprimible.
+            String body = sheet.getCellAt(2,i).getTextValue();
+            // Buscamos al periodista en el sistema.
+            PrintableNews pn = new PrintableNews(headline, body, this.findJournalist(authorID));
+            
             // Para importar los premios hacemos otro bucle.
             int j = 3;
-            while(!((String) sheet.getCellAt(j,i).getValue()).equals("*")){
+            while(sheet.getColumnCount()>j && !(sheet.getCellAt(j,i).getTextValue()).equals("*") && (! sheet.getCellAt(j,i).isEmpty())){
                 // Importamos los premios conforme los leemos.
-                pn.addPrize((String) sheet.getCellAt(j,i).getValue());
+                pn.addPrize(sheet.getCellAt(j,i).getTextValue());
                 j++;
             }
+            // Avanzamos las columnas para coger el siguiente valor, los revisores.
+            j++; 
             // Para importar los revisores, hacemos otro bucle más
-            while(!((String) sheet.getCellAt(j,i).getValue()).equals("#")){
+            while(sheet.getColumnCount()>j && (! sheet.getCellAt(j,i).isEmpty())){
                 // Importamos los premios conforme los leemos.
-                addReviewer(pn, findJournalist((String) sheet.getCellAt(j,i).getValue()));
+                addReviewer(pn, findJournalist(sheet.getCellAt(j,i).getTextValue()));
                 j++;
             }
             // Guardamos el la noticia imprimible en el sistema.
