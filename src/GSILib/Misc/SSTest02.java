@@ -12,13 +12,15 @@ import java.io.IOException;
 import org.jopendocument.dom.OOUtils;
 import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 
 /**
- *
- * @author Iñaki
+ * This is the test class SSTest02.
+ * This class creates a bidimensional array of 4 x 6 of integers, leaves a
+ * space of 3 rows and 5 columns in a sheet, changes the background color of the
+ * cells they are stored in (if >=10, red; else, blue) and saves it in the 
+ * first sheet of a spreadsheet file, "test02.ods".
+ * @version 1.0
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class SSTest02 {
     
@@ -60,7 +62,7 @@ public class SSTest02 {
             OOUtils.open(mySpreadSheet.saveAs(file));
         } 
         catch (IOException ex) {
-            Logger.getLogger(SSTest02.class.getName()).log(Level.SEVERE, null, ex); // TODO: Revisar.
+            System.err.printf("No se pudo guardar el archivo.\n");
         }
         
         // Información de usuario.

@@ -14,19 +14,16 @@ import GSILib.BSystem.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jopendocument.dom.OOUtils;
 import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
 
-
 /**
- *
- * @author inigo
+ * This is the test class SSTest04.
+ * This exports Document instances from the system to an "documents.ods" file.
+ * @version 1.0
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-
-
 public class SSTest04 {
     public static void main(String args[]){
         // Variables para el control de bucle de escritura de datos.
@@ -70,17 +67,17 @@ public class SSTest04 {
         for(Document d: documentList){
             // Guardo los datos de los teletipos.
             if (d.getClass().getName().equals("GSILib.BModel.documents.Teletype")){
-                    sheetTeletypes.setValueAt(d.getAuthor().getId(), 0, numTeletype);
-                    sheetTeletypes.setValueAt(d.getHeadline(), 1, numTeletype);
-                    sheetTeletypes.setValueAt(d.getBody(), 2, numTeletype);
-                    String[] lPrizes;
-                    if (bsystem.listPrizes(d) != null){
-                        lPrizes = bsystem.listPrizes(d);
-                        for (int i=0; i<lPrizes.length; i++){
-                            sheetTeletypes.setValueAt(lPrizes[i], i+3, numTeletype);
-                        }
+                sheetTeletypes.setValueAt(d.getAuthor().getId(), 0, numTeletype);
+                sheetTeletypes.setValueAt(d.getHeadline(), 1, numTeletype);
+                sheetTeletypes.setValueAt(d.getBody(), 2, numTeletype);
+                String[] lPrizes;
+                if (bsystem.listPrizes(d) != null){
+                    lPrizes = bsystem.listPrizes(d);
+                    for (int i=0; i<lPrizes.length; i++){
+                        sheetTeletypes.setValueAt(lPrizes[i], i+3, numTeletype);
                     }
-                    numTeletype++;
+                }
+                numTeletype++;
             }
             
             // Guardo los datos de las PrintableNews.
@@ -143,7 +140,7 @@ public class SSTest04 {
             OOUtils.open(sheetTeletypes.getSpreadSheet().saveAs(file));
         } 
         catch (IOException ex) {
-            Logger.getLogger(SSTest04.class.getName()).log(Level.SEVERE, null, ex); // TODO: Revisar.
+            System.err.printf("No se pudo guardar el archivo.\n");
         }
     }
 }

@@ -8,13 +8,15 @@ package GSILib.Misc;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
+
 /**
- *
- * @author inigo.aguas
+ * This is the test class SSTest03.
+ * This class reads the values stored in "test02.ods" file, regardless of other
+ * cell properties.
+ * @version 1.0
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class SSTest03 {
     public static void main(String args[]){
@@ -26,8 +28,7 @@ public class SSTest03 {
             sheetTest02 = SpreadSheet.createFromFile(file).getSheet(0);
         } 
         catch (IOException ex) {
-            // TODO: Revisar.
-            Logger.getLogger(SSTest03.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.printf("No se encontró el archivo.\n");
         }
         
         // Preparamos el patrón del que leemos 
@@ -42,7 +43,5 @@ public class SSTest03 {
             }
             System.out.println();
         }
-        
-        //TODO: cerrar archivo
     }
 }

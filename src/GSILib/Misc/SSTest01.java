@@ -8,17 +8,17 @@ package GSILib.Misc;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jopendocument.dom.OOUtils;
 import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
 
 /**
- *
- * @author Alvaro
+ * This is the test class SSTest01.
+ * This class creates a bidimensional array of 4 x 6 of integers, and stores it
+ * in the first sheet of a spreadsheet file, "test01.ods".
+ * @version 1.0
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-
 public class SSTest01 {
     public static void main(String args[]){
         // Creamos la tabla de números que vamos a guardar.
@@ -44,7 +44,7 @@ public class SSTest01 {
             OOUtils.open(sheet.getSpreadSheet().saveAs(file));
         } 
         catch (IOException ex) {
-            Logger.getLogger(SSTest02.class.getName()).log(Level.SEVERE, null, ex); // TODO: Revisar.
+            System.err.printf("No se pudo guardar el archivo.\n");
         }
         
         // Información de usuario.

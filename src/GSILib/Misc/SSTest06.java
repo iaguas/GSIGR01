@@ -10,11 +10,12 @@ import GSILib.BSystem.BusinessSystem;
 import java.io.File;
 
 /**
- *
- * @author inigo
+ * This is the test class SSTest06.
+ * This class ensures the correct operation of the PrintableNews exportation to 
+ * an .ods file.
+ * @version 1.0
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-
-
 public class SSTest06 {
     public static void main(String args[]){
         // Creamos la instancia de nuestro sistema de información.
