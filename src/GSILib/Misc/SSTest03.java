@@ -8,8 +8,6 @@ package GSILib.Misc;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
 
@@ -30,8 +28,7 @@ public class SSTest03 {
             sheetTest02 = SpreadSheet.createFromFile(file).getSheet(0);
         } 
         catch (IOException ex) {
-            // TODO: Revisar.
-            Logger.getLogger(SSTest03.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.printf("No se encontró el archivo.\n");
         }
         
         // Preparamos el patrón del que leemos 
