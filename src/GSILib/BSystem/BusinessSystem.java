@@ -11,18 +11,19 @@ import GSILib.BModel.*;
 import GSILib.BModel.workers.*;
 import GSILib.BModel.documents.*;
 import GSILib.BModel.documents.visualNews.*;
+import GSILib.persistence.*;
 /* Estos, en cambio, son solo cosa de la implementación, que no debe conocerse */
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.jopendocument.dom.OOUtils;
 import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
 
@@ -33,7 +34,7 @@ import org.jopendocument.dom.spreadsheet.SpreadSheet;
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-public class BusinessSystem implements EditorialOffice{
+public class BusinessSystem implements EditorialOffice, ODSPersistent{
     
     // Colecciones de objetos propias del sistema.
     private HashMap<String, Worker> workers = new HashMap<>(); // Trabajadores (periodistas y fotografos)
@@ -452,5 +453,189 @@ public class BusinessSystem implements EditorialOffice{
         }
         return i;
     }
-    
+
+    @Override
+    public boolean loadFromFile(File f) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean saveToFile(File file) {
+        // Creamos una nueva hoja de cálculo.
+        SpreadSheet mySpreadSheet = SpreadSheet.create(4,1000,1000);
+        // Rescatamos la hoja dentro de la hoja de cálculo
+        final Sheet sheetWorkers = mySpreadSheet.getSheet(0);
+        sheetWorkers.setName("Workers");
+        final Sheet sheetDocuments = mySpreadSheet.getSheet(1);
+        sheetDocuments.setName("Documents");
+        final Sheet sheetPictures = mySpreadSheet.getSheet(2);
+        sheetPictures.setName("Pictures");
+        final Sheet sheetNewspapers = mySpreadSheet.getSheet(2);
+        sheetNewspapers.setName("Newspapers");
+        
+        // Recorremos la lista de Workers
+        
+        int numWorker = 0;
+        Iterator iteratorWorkers = this.workers.entrySet().iterator();
+        while (iteratorWorkers.hasNext()) {
+            // Cargamos ese par
+            Map.Entry pair = (Map.Entry)iteratorWorkers.next();
+            // Cargamos el valor de ese par como Worker
+            Worker worker = (Worker) pair.getValue();
+            // Rellenar la tabla
+            sheetWorkers.setValueAt(pair.getKey(), 0, numWorker);
+            sheetWorkers.setValueAt(worker.getName(), 1, numWorker);
+            sheetWorkers.setValueAt(worker.getBirthDate(), 2, numWorker);
+            // Guardo Journalists
+            if (worker.getClass().getName().equals("GSILib.BModel.workers.Journalist")){
+                sheetWorkers.setValueAt("Journalist", 3, numWorker);
+                // Especificamos que es un Journalist con un casting
+                Journalist journalist = (Journalist) worker;
+                String[] interests = journalist.getInterests();
+                if (interests != null){
+                    for (int i=0; i<interests.length; i++){
+                        sheetWorkers.setValueAt(interests[i], i+4, numWorker);
+                    }
+                }
+            }
+            // Guardo Photographers
+            else if (worker.getClass().getName().equals("GSILib.BModel.workers.Photographer")){
+                sheetWorkers.setValueAt("Photographer", 3, numWorker);
+                // Especificamos que es un Photographer con un casting
+                Photographer photographer = (Photographer) worker;
+                sheetWorkers.setValueAt(photographer.getRegularResidence(), 4, numWorker);
+                sheetWorkers.setValueAt(photographer.getHolidayResidence(), 5, numWorker);
+                
+            }
+            // Error
+            else{
+                System.err.printf("Worker no pertenece");
+            }
+            numWorker++;  
+        }
+        
+        // Recorremos la lista de Documents
+        
+        int numDocument = 0;
+        for(Document document: this.documents){
+            // Guardo los datos de ese documento
+            sheetDocuments.setValueAt(document.getId(), 0, numDocument);
+            sheetDocuments.setValueAt(document.getHeadline(), 1, numDocument);
+            sheetDocuments.setValueAt(document.getAuthor(), 2, numDocument);
+            
+            // Guardo los datos de los teletipos.
+            if (document.getClass().getName().equals("GSILib.BModel.documents.Teletype")){
+                sheetDocuments.setValueAt(d.getAuthor().getId(), 0, numTeletype);
+                sheetDocuments.setValueAt(d.getHeadline(), 1, numTeletype);
+                sheetDocuments.setValueAt(d.getBody(), 2, numTeletype);
+                String[] lPrizes;
+                if (bsystem.listPrizes(d) != null){
+                    lPrizes = bsystem.listPrizes(d);
+                    for (int i=0; i<lPrizes.length; i++){
+                        sheetDocuments.setValueAt(lPrizes[i], i+3, numTeletype);
+                    }
+                }
+            }
+            
+            // Guardo los datos de las PrintableNews.
+            if (document.getClass().getName().equals("GSILib.BModel.documents.visualNews.PrintableNews")){
+                int colsPN=3;
+                pn = (PrintableNews) d;
+                sheetPrintableNews.setValueAt(d.getId(), 0, numPrintableNews);
+                sheetPrintableNews.setValueAt(d.getHeadline(), 1, numPrintableNews);
+                sheetPrintableNews.setValueAt(d.getBody(), 2, numPrintableNews);
+
+                if(! pn.getPictures().isEmpty()){
+                    sheetWebNews.setValueAt(pn.getPictures().get(0), colsPN, numPrintableNews);
+                    colsPN++;
+                }
+                if(pn.getReviewers() != null){
+                    sheetWebNews.setValueAt(pn.getReviewers()[0].getId(), colsPN, numPrintableNews);
+                    colsPN++;
+                }
+                String[] lPrizes;
+                if (bsystem.listPrizes(d) != null){
+                    lPrizes = bsystem.listPrizes(d);
+                    for (int i=0; i<lPrizes.length; i++){
+                        sheetPrintableNews.setValueAt(lPrizes[i], colsPN, numPrintableNews);
+                        colsPN++;
+                    }
+                }
+                numPrintableNews++;
+            }
+            
+            // Guardo los datos de las WebNews.
+            if (document.getClass().getName().equals("GSILib.BModel.documents.visualNews.WebNews")){
+                int colsWN = 4;
+                wn = (WebNews) d;
+                sheetWebNews.setValueAt(d.getAuthor().getId(), 0, numWebNews);
+                sheetWebNews.setValueAt(d.getHeadline(), 1, numWebNews);
+                sheetWebNews.setValueAt(d.getBody(), 2, numWebNews);
+                sheetWebNews.setValueAt(wn.getUrl(), 3, numWebNews);
+                if(! wn.getPictures().isEmpty()){
+                    sheetWebNews.setValueAt(wn.getPictures().get(0), colsWN, numWebNews);
+                    colsWN++;
+                }
+                if(! wn.getKeyWords().isEmpty()){
+                    sheetWebNews.setValueAt(wn.getKeyWords().get(0), colsWN, numWebNews);
+                    colsWN++;
+                }
+                String[] lPrizes;
+                if (bsystem.listPrizes(d) != null){
+                    lPrizes = bsystem.listPrizes(d);
+                    for (int i=0; i<lPrizes.length; i++){
+                        sheetWebNews.setValueAt(lPrizes[i], colsWN, numWebNews);
+                        colsWN++;
+                    }
+                }
+            }
+            numDocument++;
+        }
+        
+        // Recorremos la lista de Pictures
+        
+        int numPicture = 0;
+        Iterator iteratorPictures = this.pictures.entrySet().iterator();
+        while (iteratorPictures.hasNext()) {
+            // Cargamos ese par
+            Map.Entry pair = (Map.Entry)iteratorPictures.next();
+            // Cargamos el valor de ese par como Picture
+            Picture picture = (Picture) pair.getValue();
+            // Rellenar la tabla
+            sheetPictures.setValueAt(pair.getKey(), 0, numPicture);
+            sheetPictures.setValueAt(picture.getAutor(), 1, numPicture);
+            sheetPictures.setValueAt(picture.getUrl(), 2, numPicture);
+            numPicture++;  
+        }
+        
+        // Recorremos la lista de Newspapers
+        
+        int numNewspaper = 0;
+        Iterator iteratorNewspapers = this.newspapers.entrySet().iterator();
+        while (iteratorNewspapers.hasNext()) {
+            // Cargamos ese par
+            Map.Entry pair = (Map.Entry)iteratorNewspapers.next();
+            // Cargamos el valor de ese par como Newspaper
+            Newspaper newspaper = (Newspaper) pair.getValue();
+            // Rellenar la tabla
+            sheetNewspapers.setValueAt(pair.getKey(), 0, numNewspaper);
+            // Rellenar la tabla - Campos multivaluados
+            PrintableNews[] printableNews = newspaper.getPrintableNews();
+            if (printableNews != null){
+                for (int i=0; i<printableNews.length; i++){
+                    sheetNewspapers.setValueAt(printableNews[i], i+1, numNewspaper);
+                }
+            }
+            numNewspaper++;  
+        }
+        
+        // Guardamos la hoja de cálculo con todos los datos.
+        try {
+            OOUtils.open(sheetWorkers.getSpreadSheet().saveAs(file));
+        } 
+        catch (IOException ex) {
+            System.err.printf("No se pudo guardar el archivo.\n");
+        }
+        return true;
+    }   
 }

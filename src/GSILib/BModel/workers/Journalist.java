@@ -36,6 +36,12 @@ public class Journalist extends Worker {
         this.interests = interests;
     }
     
+    public String[] getInterests(){
+        if(this.interests.isEmpty())
+            return null;
+        return this.interests.toArray(new String[this.interests.size()]);
+    }
+    
     @Override
     public String toString(){
         // Devolvemos un string con los datos del periodista.

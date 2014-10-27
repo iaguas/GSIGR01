@@ -33,6 +33,16 @@ public class Newspaper {
     }
     
     /**
+     * Returns all the PrintableNews in the newspaper.
+     * @return An array with the PrintableNews in the newspaper.
+     */
+    public PrintableNews[] getPrintableNews(){
+        if(this.news.isEmpty())
+            return null;
+        return this.news.toArray(new PrintableNews[this.news.size()]);
+    }
+    
+    /**
      * Adds a printable news to the associated newspaper
      * @param pn The printable news which are part of the newspaper.
      * @return true if printable news added correctly to newspaper, false otherwise.
