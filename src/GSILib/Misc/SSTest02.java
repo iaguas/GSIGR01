@@ -12,8 +12,6 @@ import java.io.IOException;
 import org.jopendocument.dom.OOUtils;
 import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /**
@@ -60,7 +58,7 @@ public class SSTest02 {
             OOUtils.open(mySpreadSheet.saveAs(file));
         } 
         catch (IOException ex) {
-            Logger.getLogger(SSTest02.class.getName()).log(Level.SEVERE, null, ex); // TODO: Revisar.
+            System.err.printf("No se pudo guardar el archivo.\n");
         }
         
         // Información de usuario.

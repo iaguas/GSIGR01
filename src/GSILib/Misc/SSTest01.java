@@ -8,8 +8,6 @@ package GSILib.Misc;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jopendocument.dom.OOUtils;
 import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
@@ -44,7 +42,7 @@ public class SSTest01 {
             OOUtils.open(sheet.getSpreadSheet().saveAs(file));
         } 
         catch (IOException ex) {
-            Logger.getLogger(SSTest02.class.getName()).log(Level.SEVERE, null, ex); // TODO: Revisar.
+            System.err.printf("No se pudo guardar el archivo.\n");
         }
         
         // Información de usuario.

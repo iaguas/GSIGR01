@@ -14,8 +14,6 @@ import GSILib.BSystem.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jopendocument.dom.OOUtils;
 import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
@@ -67,45 +65,45 @@ public class SSTest04 {
         for(Document d: documentList){
             // Guardo los datos de los teletipos.
             if (d.getClass().getName().equals("GSILib.BModel.documents.Teletype")){
-                    sheetTeletypes.setValueAt(d.getAuthor().getId(), 0, numTeletype);
-                    sheetTeletypes.setValueAt(d.getHeadline(), 1, numTeletype);
-                    sheetTeletypes.setValueAt(d.getBody(), 2, numTeletype);
-                    String[] s;
-                    if (bsystem.listPrizes(d) != null)
-                        s = bsystem.listPrizes(d);
-                    numTeletype++;
+                sheetTeletypes.setValueAt(d.getAuthor().getId(), 0, numTeletype);
+                sheetTeletypes.setValueAt(d.getHeadline(), 1, numTeletype);
+                sheetTeletypes.setValueAt(d.getBody(), 2, numTeletype);
+                String[] s;
+                if (bsystem.listPrizes(d) != null)
+                    s = bsystem.listPrizes(d);
+                numTeletype++;
             }
             
             // Guardo los datos de las PrintableNews.
             if (d.getClass().getName().equals("GSILib.BModel.documents.visualNews.PrintableNews")){
-                    PrintableNews pn = (PrintableNews) d;
-                    sheetPrintableNews.setValueAt(d.getId(), 0, numPrintableNews);
-                    sheetPrintableNews.setValueAt(d.getHeadline(), 1, numPrintableNews);
-                    sheetPrintableNews.setValueAt(d.getBody(), 2, numPrintableNews);
-                    if(! pn.getPictures().isEmpty()){
-                        sheetWebNews.setValueAt(pn.getPictures().get(0), 4, numPrintableNews);
-                    }
-                    if(pn.getReviewers() != null){
-                        sheetWebNews.setValueAt(pn.getReviewers()[0].getId(), 4, numPrintableNews);
-                    }
-                    
-                    numPrintableNews++;
+                PrintableNews pn = (PrintableNews) d;
+                sheetPrintableNews.setValueAt(d.getId(), 0, numPrintableNews);
+                sheetPrintableNews.setValueAt(d.getHeadline(), 1, numPrintableNews);
+                sheetPrintableNews.setValueAt(d.getBody(), 2, numPrintableNews);
+                if(! pn.getPictures().isEmpty()){
+                    sheetWebNews.setValueAt(pn.getPictures().get(0), 4, numPrintableNews);
+                }
+                if(pn.getReviewers() != null){
+                    sheetWebNews.setValueAt(pn.getReviewers()[0].getId(), 4, numPrintableNews);
+                }
+
+                numPrintableNews++;
             }
             
             // Guardo los datos de las WebNews.
             if (d.getClass().getName().equals("GSILib.BModel.documents.visualNews.WebNews")){
-                    WebNews wn = (WebNews) d;
-                    sheetWebNews.setValueAt(d.getAuthor().getId(), 0, numWebNews);
-                    sheetWebNews.setValueAt(d.getHeadline(), 1, numWebNews);
-                    sheetWebNews.setValueAt(d.getBody(), 2, numWebNews);
-                    sheetWebNews.setValueAt(wn.getUrl(), 3, numWebNews);
-                    if(! wn.getPictures().isEmpty()){
-                        sheetWebNews.setValueAt(wn.getPictures().get(0), 4, numWebNews);
-                    }
-                    if(! wn.getKeyWords().isEmpty()){
-                        sheetWebNews.setValueAt(wn.getKeyWords().get(0), 5, numWebNews);
-                    }
-                    numWebNews++;
+                WebNews wn = (WebNews) d;
+                sheetWebNews.setValueAt(d.getAuthor().getId(), 0, numWebNews);
+                sheetWebNews.setValueAt(d.getHeadline(), 1, numWebNews);
+                sheetWebNews.setValueAt(d.getBody(), 2, numWebNews);
+                sheetWebNews.setValueAt(wn.getUrl(), 3, numWebNews);
+                if(! wn.getPictures().isEmpty()){
+                    sheetWebNews.setValueAt(wn.getPictures().get(0), 4, numWebNews);
+                }
+                if(! wn.getKeyWords().isEmpty()){
+                    sheetWebNews.setValueAt(wn.getKeyWords().get(0), 5, numWebNews);
+                }
+                numWebNews++;
             }
         }
         
@@ -114,7 +112,7 @@ public class SSTest04 {
             OOUtils.open(sheetTeletypes.getSpreadSheet().saveAs(file));
         } 
         catch (IOException ex) {
-            Logger.getLogger(SSTest04.class.getName()).log(Level.SEVERE, null, ex); // TODO: Revisar.
+            System.err.printf("No se pudo guardar el archivo.\n");
         }
     }
 }

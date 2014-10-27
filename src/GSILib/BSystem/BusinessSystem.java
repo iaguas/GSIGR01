@@ -22,8 +22,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jopendocument.dom.spreadsheet.Cell;
 import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
@@ -307,11 +305,11 @@ public class BusinessSystem implements EditorialOffice{
         for(Document d: documents)
             // Buscamos solo los documentos de tipo webnews.
             if (d.getClass().getName().equals("GSILib.BModel.documents.visualNews.WebNews")){
-                    wn = (WebNews) d;
-                    // Si es la webnews que buscamos, la devolvemos.
-                    if(wn.getKeyWords().contains(keyword))
-                        list.add(wn);
-                }
+                wn = (WebNews) d;
+                // Si es la webnews que buscamos, la devolvemos.
+                if(wn.getKeyWords().contains(keyword))
+                    list.add(wn);
+            }
         
         // Devolvemos la tabla de webnews
         WebNews[] arrayWebNews = list.toArray(new WebNews[list.size()]);
@@ -368,8 +366,7 @@ public class BusinessSystem implements EditorialOffice{
             sheet = SpreadSheet.createFromFile(f).getSheet(0);
         } 
         catch (IOException ex) {
-            // TODO: Revisar.
-            Logger.getLogger(BusinessSystem.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.printf("No se encontró el archivo.\n");
         }
         
         int i = 0;
@@ -410,8 +407,7 @@ public class BusinessSystem implements EditorialOffice{
             sheet = SpreadSheet.createFromFile(f).getSheet(0);
         } 
         catch (IOException ex) {
-            // TODO: Revisar.
-            Logger.getLogger(BusinessSystem.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.printf("No se encontró el archivo.\n");
         }
         
         int i = 0;
