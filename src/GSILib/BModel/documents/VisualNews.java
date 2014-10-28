@@ -48,9 +48,11 @@ public class VisualNews extends Document{
      * Shows a list of pictures from the associated visual news
      * @return list of pictures from the visual news
      */
-    public List<Picture> getPictures(){
+    public Picture[] getPictures(){
         // Devolvemos la lista de fotos.
-        return this.pictures;
+        if (this.pictures.isEmpty())
+            return null;
+        return this.pictures.toArray(new Picture[this.pictures.size()]);
     }  
 
     public String toString(){

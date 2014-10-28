@@ -84,23 +84,25 @@ public class SSTest04 {
             if (d.getClass().getName().equals("GSILib.BModel.documents.visualNews.PrintableNews")){
                 int colsPN=3;
                 pn = (PrintableNews) d;
-                sheetPrintableNews.setValueAt(d.getId(), 0, numPrintableNews);
+                sheetPrintableNews.setValueAt(d.getAuthor().getId(), 0, numPrintableNews);
                 sheetPrintableNews.setValueAt(d.getHeadline(), 1, numPrintableNews);
                 sheetPrintableNews.setValueAt(d.getBody(), 2, numPrintableNews);
 
-                if(! pn.getPictures().isEmpty()){
-                    sheetWebNews.setValueAt(pn.getPictures().get(0), colsPN, numPrintableNews);
+                if(pn.getPictures() != null){
+                    sheetWebNews.setValueAt(pn.getPictures()[0], 3, numPrintableNews);
                     colsPN++;
                 }
+                else{colsPN++;}
                 if(pn.getReviewers() != null){
-                    sheetWebNews.setValueAt(pn.getReviewers()[0].getId(), colsPN, numPrintableNews);
+                    sheetWebNews.setValueAt(pn.getReviewers()[0].getId(), 4, numPrintableNews);
                     colsPN++;
                 }
+                else{colsPN++;}
                 String[] lPrizes;
                 if (bsystem.listPrizes(d) != null){
                     lPrizes = bsystem.listPrizes(d);
-                    for (int i=0; i<lPrizes.length; i++){
-                        sheetPrintableNews.setValueAt(lPrizes[i], colsPN, numPrintableNews);
+                    for (String lPrize : lPrizes) {
+                        sheetPrintableNews.setValueAt(lPrize, colsPN, numPrintableNews);
                         colsPN++;
                     }
                 }
@@ -115,19 +117,21 @@ public class SSTest04 {
                 sheetWebNews.setValueAt(d.getHeadline(), 1, numWebNews);
                 sheetWebNews.setValueAt(d.getBody(), 2, numWebNews);
                 sheetWebNews.setValueAt(wn.getUrl(), 3, numWebNews);
-                if(! wn.getPictures().isEmpty()){
-                    sheetWebNews.setValueAt(wn.getPictures().get(0), colsWN, numWebNews);
+                if(wn.getPictures() != null){
+                    sheetWebNews.setValueAt(wn.getPictures()[0], colsWN, numWebNews);
                     colsWN++;
-                }
+                }                
+                else{colsWN++;}
                 if(! wn.getKeyWords().isEmpty()){
                     sheetWebNews.setValueAt(wn.getKeyWords().get(0), colsWN, numWebNews);
                     colsWN++;
                 }
+                else{colsWN++;}
                 String[] lPrizes;
                 if (bsystem.listPrizes(d) != null){
                     lPrizes = bsystem.listPrizes(d);
-                    for (int i=0; i<lPrizes.length; i++){
-                        sheetWebNews.setValueAt(lPrizes[i], colsWN, numWebNews);
+                    for (String lPrize : lPrizes) {
+                        sheetWebNews.setValueAt(lPrize, colsWN, numWebNews);
                         colsWN++;
                     }
                 }

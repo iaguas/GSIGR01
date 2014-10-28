@@ -11,6 +11,7 @@ import GSILib.BModel.*;
 import GSILib.BModel.workers.*;
 import GSILib.BModel.documents.*;
 import GSILib.BModel.documents.visualNews.*;
+import java.io.File;
 import java.util.ArrayList;
 
 /**

@@ -482,13 +482,12 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
         sheetNewspapers.setName("Newspapers");
         
         // Recorremos la lista de Workers
-        
         int numJournalist = 0, numPhotographer = 0;
         Iterator iteratorWorkers = this.workers.entrySet().iterator();
         while (iteratorWorkers.hasNext()) {
             // Cargamos ese par
             Map.Entry pair = (Map.Entry)iteratorWorkers.next();
-            // Guardo Journalists
+            // Se guardan los periodistas
             if (pair.getValue().getClass().getName().equals("GSILib.BModel.workers.Journalist")){
                 // Especificamos que es un Journalist con un casting
                 Journalist journalist = (Journalist) pair.getValue();
@@ -505,9 +504,9 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
                 
                 numJournalist++;
             }
-            // Guardo Photographers
+            // Se guardan los fotógrafos
             else if (pair.getValue().getClass().getName().equals("GSILib.BModel.workers.Photographer")){
-                // Especificamos que es un Photographer con un casting
+                // Especificamos que es un fotógrafo con un casting
                 Photographer photographer = (Photographer) pair.getValue();
                 // Guardamos los datos del Photographer
                 sheetPhotographers.setValueAt(pair.getKey(), 0, numPhotographer);
@@ -520,24 +519,24 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
             }
             // Error
             else{
-                System.err.printf("Worker no pertenece a subclase.\n");
+                System.err.printf("El trabajador no pertenece a ninguna de las subclases.\n");
             }  
         }
         
         // Recorremos la lista de Documents
-        
         int numTeletype = 0, numPrintableNews = 0, numWebNews = 0;
         int colsTeletype, colsPrintableNews, colsWebNews; 
         for(Document document: this.documents){
             // Guardo los datos de los Teletypes.
             if (document.getClass().getName().equals("GSILib.BModel.documents.Teletype")){
-                colsTeletype = 3;
+                colsTeletype = 4;
                 // Especificamos que es un Teletype con un casting
                 Teletype teletype = (Teletype) document;
                 // Guardamos los datos del Journalist
                 sheetTeletypes.setValueAt(document.getAuthor().getId(), 0, numTeletype);
-                sheetTeletypes.setValueAt(document.getHeadline(), 1, numTeletype);
-                sheetTeletypes.setValueAt(document.getBody(), 2, numTeletype);
+                sheetTeletypes.setValueAt(document.getAuthor().getId(), 1, numTeletype);
+                sheetTeletypes.setValueAt(document.getHeadline(), 2, numTeletype);
+                sheetTeletypes.setValueAt(document.getBody(), 3, numTeletype);
                 // Campos multivaluados
                 String[] teletypePrizes = this.listPrizes(document);
                 if (teletypePrizes != null){
@@ -545,28 +544,44 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
                         sheetTeletypes.setValueAt(teletypePrizes[i], i + colsTeletype, numTeletype);
                     }
                 }
-                
                 numTeletype++;
             }
             
             // Guardo los datos de las PrintableNews.
             if (document.getClass().getName().equals("GSILib.BModel.documents.visualNews.PrintableNews")){
-                colsPrintableNews = 3;
+                colsPrintableNews = 4;
                 // Especificamos que es un PrintableNew con un casting
                 PrintableNews printableNews = (PrintableNews) document;
                 // Guardamos los datos del PrintableNew
                 sheetPrintableNews.setValueAt(document.getId(), 0, numPrintableNews);
-                sheetPrintableNews.setValueAt(document.getHeadline(), 1, numPrintableNews);
-                sheetPrintableNews.setValueAt(document.getBody(), 2, numPrintableNews);
-
-                if(! printableNews.getPictures().isEmpty()){
-                    sheetWebNews.setValueAt(printableNews.getPictures().get(0), colsPrintableNews, numPrintableNews);
-                    colsPrintableNews++;
+                sheetPrintableNews.setValueAt(document.getAuthor().getId(), 1, numPrintableNews);
+                sheetPrintableNews.setValueAt(document.getHeadline(), 2, numPrintableNews);
+                sheetPrintableNews.setValueAt(document.getBody(), 3, numPrintableNews);
+                
+                Picture[] printableNewsPics = printableNews.getPictures();
+                if(printableNewsPics != null){
+                    for (Picture p: printableNewsPics){
+                        sheetPrintableNews.setValueAt(p.getUrl(), colsPrintableNews, numPrintableNews);
+                        colsPrintableNews++;
+                    }
                 }
-                if(printableNews.getReviewers() != null){
-                    sheetWebNews.setValueAt(printableNews.getReviewers()[0].getId(), colsPrintableNews, numPrintableNews);
-                    colsPrintableNews++;
+                
+                // Metemos el * que diferenciará los campos multievaluados
+                sheetPrintableNews.setValueAt("*", colsPrintableNews, numPrintableNews);
+                colsPrintableNews++;
+                
+                Journalist[] reviewList = printableNews.getReviewers();
+                if(reviewList != null){
+                    for(Journalist reviewer : reviewList){
+                        sheetPrintableNews.setValueAt(reviewer.getId(), colsPrintableNews, numPrintableNews);
+                        colsPrintableNews++;
+                    }
                 }
+                
+                // Metemos la # que diferenciará los siguientes multievaluados
+                sheetPrintableNews.setValueAt("#", colsPrintableNews, numPrintableNews);
+                colsPrintableNews++;
+                
                 String[] printableNewsPrizes = this.listPrizes(document);
                 if (printableNewsPrizes != null){
                     for (int i=0; i<printableNewsPrizes.length; i++){
@@ -579,36 +594,44 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
             
             // Guardo los datos de las WebNews.
             if (document.getClass().getName().equals("GSILib.BModel.documents.visualNews.WebNews")){
-                colsWebNews = 4;
+                colsWebNews = 5;
                 // Especificamos que es un WebNews con un casting
                 WebNews webNews = (WebNews) document;
                 // Guardamos los datos del WebNews
-                sheetWebNews.setValueAt(document.getAuthor().getId(), 0, numWebNews);
-                sheetWebNews.setValueAt(document.getHeadline(), 1, numWebNews);
-                sheetWebNews.setValueAt(document.getBody(), 2, numWebNews);
-                sheetWebNews.setValueAt(webNews.getUrl(), 3, numWebNews);
-                if(! webNews.getPictures().isEmpty()){
+                sheetWebNews.setValueAt(document.getId(), 0, numWebNews);
+                sheetWebNews.setValueAt(document.getAuthor().getId(), 1, numWebNews);
+                sheetWebNews.setValueAt(document.getHeadline(), 2, numWebNews);
+                sheetWebNews.setValueAt(document.getBody(), 3, numWebNews);
+                sheetWebNews.setValueAt(webNews.getUrl(), 4, numWebNews);
+                /*if(! webNews.getPictures().isEmpty()){
                     sheetWebNews.setValueAt(webNews.getPictures().get(0), colsWebNews, numWebNews);
                     colsWebNews++;
-                }
-                if(! webNews.getKeyWords().isEmpty()){
-                    sheetWebNews.setValueAt(webNews.getKeyWords().get(0), colsWebNews, numWebNews);
-                    colsWebNews++;
-                }
-                String[] webNewsPrizes = this.listPrizes(document);
-                if (webNewsPrizes != null){
-                    for (int i=0; i<webNewsPrizes.length; i++){
-                        sheetWebNews.setValueAt(webNewsPrizes[i], colsWebNews, numWebNews);
+                }*/
+                
+                Picture[] webNewsPics = webNews.getPictures();
+                if(webNewsPics != null){
+                    for (Picture p: webNewsPics){
+                        sheetWebNews.setValueAt(p.getUrl(), colsWebNews, numWebNews);
                         colsWebNews++;
                     }
                 }
                 
+                // Metemos el * que diferenciará los campos multievaluados
+                sheetWebNews.setValueAt("*", colsWebNews, numWebNews);
+                colsWebNews++;
+                
+                List<String> webNewsKeyWords = webNews.getKeyWords();
+                if (! webNewsKeyWords.isEmpty()){
+                    for (int i=0; i<webNewsKeyWords.size(); i++){
+                        sheetWebNews.setValueAt(webNewsKeyWords.get(i), colsWebNews, numWebNews);
+                        colsWebNews++;
+                    }
+                }
                 numWebNews++;
             }
         }
         
         // Recorremos la lista de Pictures
-        
         int numPicture = 0;
         Iterator iteratorPictures = this.pictures.entrySet().iterator();
         while (iteratorPictures.hasNext()) {
@@ -617,10 +640,9 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
             // Cargamos el valor de ese par como Picture
             Picture picture = (Picture) pair.getValue();
             // Rellenar la tabla
-            sheetPictures.setValueAt(pair.getKey(), 0, numPicture);
-            sheetPictures.setValueAt(picture.getAutor(), 1, numPicture);
-            sheetPictures.setValueAt(picture.getUrl(), 2, numPicture);
-            
+            //sheetPictures.setValueAt(pair.getKey(), 0, numPicture);
+            sheetPictures.setValueAt(picture.getAutor().getId(), 0, numPicture);
+            sheetPictures.setValueAt(picture.getUrl(), 1, numPicture);
             numPicture++;  
         }
         
@@ -639,10 +661,9 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
             PrintableNews[] printableNews = newspaper.getPrintableNews();
             if (printableNews != null){
                 for (int i=0; i<printableNews.length; i++){
-                    sheetNewspapers.setValueAt(printableNews[i], i+1, numNewspaper);
+                    sheetNewspapers.setValueAt(printableNews[i].getId(), i+1, numNewspaper);
                 }
             }
-            
             numNewspaper++;  
         }
         

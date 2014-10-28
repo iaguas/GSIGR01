@@ -62,10 +62,10 @@ public class PrintableNews extends VisualNews{
      * @return the list of reviewers from the associated printable news
      */
     public Journalist[] getReviewers(){            
-        
+        // Devolvemos los revisores.
         if (this.reviewers.isEmpty())
             return null;
-        return (Journalist[]) this.reviewers.toArray();
+        return this.reviewers.toArray(new Journalist[this.reviewers.size()]);
     }
     
     @Override
