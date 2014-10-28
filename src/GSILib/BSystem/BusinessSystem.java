@@ -387,13 +387,10 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
             Teletype tt = new Teletype(headline, body, this.findJournalist(authorID));
             // Para importar los premios hacemos otro bucle.
             int j = 3;
-            String str = sheet.getCellAt(j,i).getTextValue();
             while(sheet.getColumnCount()>j && (! sheet.getCellAt(j,i).getTextValue().equals("")) ){
                 // Importamos los premios conforme los leemos.
                 tt.addPrize((String) sheet.getCellAt(j,i).getValue());
                 j++;
-                //Cell c =sheet.getCellAt(j,i);
-                //str = c.getTextValue();
             }
             // Guardamos el teletipo en el sistema.
             this.insertNews(tt);
@@ -404,7 +401,11 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
     }
     
     /**
-     * Reads the PrintableNews from an .ods file and imports them into the system
+     * Reads the PrintableNews from an .ods file and imports them into the system.
+     * In order to make a way to import variable thing, we are going to put a separator
+     * between the data. It is, first of all, we are going to take the usual data of
+     * a printable news and then we take the prizes, then an asterics (*), then 
+     * the pictures, then an # and last the reviewers.
      * @param f The input file (.ods, Open Office spreadsheet) to read from
      * @return the number of PrintableNews correctly added to the system
      */
@@ -438,6 +439,17 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
                 pn.addPrize(sheet.getCellAt(j,i).getTextValue());
                 j++;
             }
+            
+            // Avanzamos las columnas para coger el siguiente valor, las fotos.
+            j++;
+            
+            // Para importar las fotos hacemos otro bucle.
+            while(sheet.getColumnCount()>j && !(sheet.getCellAt(j,i).getTextValue()).equals("#") && (! sheet.getCellAt(j,i).isEmpty())){
+                // Importamos los premios conforme los leemos.
+                pn.addPrize(sheet.getCellAt(j,i).getTextValue());
+                j++;
+            }
+            
             // Avanzamos las columnas para coger el siguiente valor, los revisores.
             j++; 
             // Para importar los revisores, hacemos otro bucle más
@@ -456,7 +468,193 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
 
     @Override
     public boolean loadFromFile(File f) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // Variables de control
+        int i, j;
+        
+        // Leemos y almacenamos los datos que hay en la hoja correspondiente.
+        Sheet sheetJournalist = null;
+        Sheet sheetPhotographers = null;
+        Sheet sheetTeletypes = null;
+        Sheet sheetPrintableNews = null;
+        Sheet sheetWebNews = null;
+        Sheet sheetPictures = null;
+        Sheet sheetNewspapers = null;
+        try {
+            sheetJournalist = SpreadSheet.createFromFile(f).getSheet(0);
+            sheetPhotographers = SpreadSheet.createFromFile(f).getSheet(1);
+            sheetTeletypes = SpreadSheet.createFromFile(f).getSheet(2);
+            sheetPrintableNews = SpreadSheet.createFromFile(f).getSheet(3);
+            sheetWebNews = SpreadSheet.createFromFile(f).getSheet(4);
+            sheetPictures = SpreadSheet.createFromFile(f).getSheet(5);
+            sheetNewspapers = SpreadSheet.createFromFile(f).getSheet(6);
+        } 
+        catch (IOException ex) {
+            System.err.printf("No se encontró el archivo.\n");
+        }
+        
+        // Empezamos a importar las cosas por el orden necesario para poder hacer
+        // que nunca dé null al buscar algo en el almacén de datos.
+        // Comenzamos importandos los trabajadores.
+        
+        i = 0;
+        // Iteramos sobre todos los periodistas de la hoja de cálculo.
+        while(sheetJournalist.getRowCount()>i && (! sheetJournalist.getCellAt(i,0).isEmpty())){
+            // Importamos el ID del periodista.
+            String id = sheetJournalist.getCellAt(0,i).getTextValue();
+            // Importamos el nombre del periodista
+            String name = sheetJournalist.getCellAt(1,i).getTextValue();
+            // Importamos la fecha de nacimiento del periodista.
+            String dateBorn = sheetJournalist.getCellAt(2,i).getTextValue();
+            // Importamos los intereses del periodista
+            j = 3;
+            // Para importar los intereses hacemos otro bucle.
+            ArrayList<String> interests = new ArrayList<>();
+            while(sheetJournalist.getColumnCount()>j && (! sheetJournalist.getCellAt(j,i).getTextValue().equals("")) ){
+                // Importamos los intereses conforme los leemos.
+                interests.add(sheetJournalist.getCellAt(j,i).getTextValue());
+                j++;
+            }
+            
+            // Creamos el periodista al sistema.
+            Journalist jr = new Journalist(id, name, dateBorn, interests);
+            // Guardamos el periodista en el sistema.
+            this.addJournalist(jr);
+            // Avanzamos a la siguiente fila.
+            i++;
+        }
+        
+        i = 0;
+        // Iteramos sobre todos los fotografos de la hoja de cálculo.
+        while(sheetJournalist.getRowCount()>i && (! sheetJournalist.getCellAt(i,0).isEmpty())){
+            // Importamos el ID del periodista.
+            String id = sheetJournalist.getCellAt(0,i).getTextValue();
+            // Importamos el nombre del periodista
+            String name = sheetJournalist.getCellAt(1,i).getTextValue();
+            // Importamos la fecha de nacimiento del periodista.
+            String dateBorn = sheetJournalist.getCellAt(2,i).getTextValue();
+            // Importamos los intereses del periodista
+            j = 3;
+            // Para importar los intereses hacemos otro bucle.
+            ArrayList<String> interests = new ArrayList<>();
+            while(sheetJournalist.getColumnCount()>j && (! sheetJournalist.getCellAt(j,i).getTextValue().equals("")) ){
+                // Importamos los intereses conforme los leemos.
+                interests.add(sheetJournalist.getCellAt(j,i).getTextValue());
+                j++;
+            }
+            
+            // Creamos el periodista al sistema.
+            Journalist jr = new Journalist(id, name, dateBorn, interests);
+            // Guardamos el periodista en el sistema.
+            this.addJournalist(jr);
+            // Avanzamos a la siguiente fila.
+            i++;
+        }
+        
+        i = 0;
+        // Iteramos sobre todos los fotografos de la hoja de cálculo.
+        while(sheetPhotographers.getRowCount()>i && (! sheetPhotographers.getCellAt(i,0).isEmpty())){
+            // Importamos el ID del fotografo.
+            String id = sheetPhotographers.getCellAt(0,i).getTextValue();
+            // Importamos el nombre del fotografo
+            String name = sheetPhotographers.getCellAt(1,i).getTextValue();
+            // Importamos la fecha de nacimiento del fotografo.
+            String dateBorn = sheetPhotographers.getCellAt(2,i).getTextValue();
+            // Importamos la dirección habitual.
+            String usualAdress = sheetPhotographers.getCellAt(3,i).getTextValue();
+            // Importamos la dirección de vacaciones.
+            String holidayAdress = sheetPhotographers.getCellAt(4,i).getTextValue();
+
+            // Creamos el periodista al sistema.
+            Photographer pg = new Photographer(id, name, dateBorn, usualAdress, holidayAdress);            
+            // Guardamos el periodista en el sistema.
+            this.addPhotographer(pg);
+            // Avanzamos a la siguiente fila.
+            i++;
+        }
+        
+        i=0;
+        // Iteramos sobre todos las fotos de la hoja de cálculo.
+        while(sheetPictures.getRowCount()>i && (! sheetPictures.getCellAt(i,0).isEmpty())){
+            // Importamos el ID del fotografo.
+            String authorId = sheetPictures.getCellAt(0,i).getTextValue();
+            // Importamos la url de la foto.
+            String url = sheetPictures.getCellAt(1,i).getTextValue();
+                      
+            // Guardamos el periodista en el sistema.
+            this.addPicture(new Picture(url, this.findPhotographer(authorId)));
+            // Avanzamos a la siguiente fila.
+            i++;
+        }
+        
+        i = 0;
+        // Iteramos sobre todos los teletipos de la hoja de cálculo.
+        while(sheetTeletypes.getRowCount()>i && (! sheetTeletypes.getCellAt(i,0).isEmpty())){
+            // Importamos el ID del periodista del teletipo.
+            String authorID = sheetTeletypes.getCellAt(1,i).getTextValue();
+            // Importamos el titular del teletipo.
+            String headline = sheetTeletypes.getCellAt(2,i).getTextValue();
+            // Importamos el cuerpo del teletipo.
+            String body = sheetTeletypes.getCellAt(3,i).getTextValue();
+            // Buscamos al periodista en el sistema.
+            Teletype tt = new Teletype(headline, body, this.findJournalist(authorID));
+            // Para importar los premios hacemos otro bucle.
+            j = 4;
+            String str = sheetTeletypes.getCellAt(j,i).getTextValue();
+            while(sheetTeletypes.getColumnCount()>j && (! sheetTeletypes.getCellAt(j,i).getTextValue().equals("")) ){
+                // Importamos los premios conforme los leemos.
+                tt.addPrize((String) sheetTeletypes.getCellAt(j,i).getValue());
+                j++;
+            }
+            // Guardamos el teletipo en el sistema.
+            this.insertNews(tt);
+            // Avanzamos a la siguiente fila.
+            i++;
+        }
+        
+        i = 0;
+        // Iteramos sobre todas las noticias imprimibles de la hoja de cálculo.
+        while(sheetPrintableNews.getRowCount()>i && (! sheetPrintableNews.getCellAt(i,0).isEmpty())){
+            // Importamos el ID del periodista revisor de la noticia imprimible.
+            String authorID = sheetPrintableNews.getCellAt(1,i).getTextValue();
+            // Importamos el titular de la noticia imprimible.
+            String headline = sheetPrintableNews.getCellAt(2,i).getTextValue();
+            // Importamos el cuerpo de la noticia imprimible.
+            String body = sheetPrintableNews.getCellAt(3,i).getTextValue();
+            // Buscamos al periodista en el sistema.
+            PrintableNews pn = new PrintableNews(headline, body, this.findJournalist(authorID));
+            
+            // Para importar los premios hacemos otro bucle.
+            j = 4;
+            while(sheetPrintableNews.getColumnCount()>j && !(sheetPrintableNews.getCellAt(j,i).getTextValue()).equals("*") && (! sheet.getCellAt(j,i).isEmpty())){
+                // Importamos los premios conforme los leemos.
+                pn.addPrize(sheetPrintableNews.getCellAt(j,i).getTextValue());
+                j++;
+            }
+            
+            // Avanzamos las columnas para coger el siguiente valor, las fotos.
+            j++;
+            
+            // Para importar los premios hacemos otro bucle.
+            while(sheetPrintableNews.getColumnCount()>j && !(sheetPrintableNews.getCellAt(j,i).getTextValue()).equals("#") && (! sheet.getCellAt(j,i).isEmpty())){
+                // Importamos los premios conforme los leemos.
+                pn.addPrize(sheetPrintableNews.getCellAt(j,i).getTextValue());
+                j++;
+            }
+            
+            // Avanzamos las columnas para coger el siguiente valor, los revisores.
+            j++; 
+            // Para importar los revisores, hacemos otro bucle más
+            while(sheetPrintableNews.getColumnCount()>j && (! sheetPrintableNews.getCellAt(j,i).isEmpty())){
+                // Importamos los premios conforme los leemos.
+                addReviewer(pn, findJournalist(sheetPrintableNews.getCellAt(j,i).getTextValue()));
+                j++;
+            }
+            // Guardamos el la noticia imprimible en el sistema.
+            this.insertNews(pn);
+            // Avanzamos a la siguiente fila.
+            i++;
+        }        
+        return true;
     }
 
     @Override

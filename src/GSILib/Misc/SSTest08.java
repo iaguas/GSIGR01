@@ -1,5 +1,13 @@
- Error reading included file file:///Users/inigo/Dropbox/Universidad/7_semestre/04%20Gestión%20de%20Sistemas%20Informáticos/Prácticas/Git3/GSIGR01/nbproject/licenseheader.txt
+/* 
+ * Práctica 02 - Grupo 01
+ * Gestión de Sistemas de Información
+ * Universidad Pública de Navarra - curso 2014-15
+ */
+
 package GSILib.Misc;
+
+import GSILib.BSystem.BusinessSystem;
+import java.io.File;
 
 /**
  * This is the test class SSTest08.
