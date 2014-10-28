@@ -272,6 +272,15 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
         Picture[] pics = picsOfAPhotographer.toArray(new Picture[picsOfAPhotographer.size()]);
         return pics;
     }
+    
+    /**
+     * This method returns a Picture when you put it's URL.
+     * @param url an string that's it URL
+     * @return a Picture which have this url.
+     */
+    public Picture findPicture(String url) {
+        return ;
+    }
 
     @Override
     public WebResource getWebResource(String URL) {
@@ -405,7 +414,8 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
      * In order to make a way to import variable thing, we are going to put a separator
      * between the data. It is, first of all, we are going to take the usual data of
      * a printable news and then we take the prizes, then an asterics (*), then 
-     * the pictures, then an # and last the reviewers.
+     * the reviewers, then an # and last the pictures. Putting the * and # is 
+     * compulsory.
      * @param f The input file (.ods, Open Office spreadsheet) to read from
      * @return the number of PrintableNews correctly added to the system
      */
@@ -446,7 +456,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
             // Para importar las fotos hacemos otro bucle.
             while(sheet.getColumnCount()>j && !(sheet.getCellAt(j,i).getTextValue()).equals("#") && (! sheet.getCellAt(j,i).isEmpty())){
                 // Importamos los premios conforme los leemos.
-                pn.addPrize(sheet.getCellAt(j,i).getTextValue());
+                pn.addReviewer(findJournalist(sheet.getCellAt(j,i).getTextValue()));
                 j++;
             }
             
@@ -455,7 +465,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
             // Para importar los revisores, hacemos otro bucle más
             while(sheet.getColumnCount()>j && (! sheet.getCellAt(j,i).isEmpty())){
                 // Importamos los premios conforme los leemos.
-                addReviewer(pn, findJournalist(sheet.getCellAt(j,i).getTextValue()));
+                pn.addPicture(this.findPicture(sheet.getCellAt(j,i).getTextValue()));
                 j++;
             }
             // Guardamos el la noticia imprimible en el sistema.
@@ -625,7 +635,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
             
             // Para importar los premios hacemos otro bucle.
             j = 4;
-            while(sheetPrintableNews.getColumnCount()>j && !(sheetPrintableNews.getCellAt(j,i).getTextValue()).equals("*") && (! sheet.getCellAt(j,i).isEmpty())){
+            while(sheetPrintableNews.getColumnCount()>j && !(sheetPrintableNews.getCellAt(j,i).getTextValue()).equals("*") && (! sheetPrintableNews.getCellAt(j,i).isEmpty())){
                 // Importamos los premios conforme los leemos.
                 pn.addPrize(sheetPrintableNews.getCellAt(j,i).getTextValue());
                 j++;
@@ -635,9 +645,9 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
             j++;
             
             // Para importar los premios hacemos otro bucle.
-            while(sheetPrintableNews.getColumnCount()>j && !(sheetPrintableNews.getCellAt(j,i).getTextValue()).equals("#") && (! sheet.getCellAt(j,i).isEmpty())){
+            while(sheetPrintableNews.getColumnCount()>j &&  !(sheetPrintableNews.getCellAt(j,i).getTextValue()).equals("#") && (! sheetPrintableNews.getCellAt(j,i).isEmpty())){
                 // Importamos los premios conforme los leemos.
-                pn.addPrize(sheetPrintableNews.getCellAt(j,i).getTextValue());
+                pn.addReviewer(findJournalist(sheetPrintableNews.getCellAt(j,i).getTextValue()));
                 j++;
             }
             
@@ -646,9 +656,10 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
             // Para importar los revisores, hacemos otro bucle más
             while(sheetPrintableNews.getColumnCount()>j && (! sheetPrintableNews.getCellAt(j,i).isEmpty())){
                 // Importamos los premios conforme los leemos.
-                addReviewer(pn, findJournalist(sheetPrintableNews.getCellAt(j,i).getTextValue()));
+                pn.addPicture(this.findPicture(sheetPrintableNews.getCellAt(j,i).getTextValue()));
                 j++;
             }
+
             // Guardamos el la noticia imprimible en el sistema.
             this.insertNews(pn);
             // Avanzamos a la siguiente fila.
