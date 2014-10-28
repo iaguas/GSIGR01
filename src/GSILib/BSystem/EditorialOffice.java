@@ -275,10 +275,17 @@ public interface EditorialOffice {
     Journalist[] getJournalist(Newspaper np);
     
     /**
-     * Retrieves the list of prizes that a Document earned
+     * Retrieves the array of prizes that a Document earned
      * @param d	The Document
      * @return 	An array containing the prizes.
      */
     public String[] listPrizes(Document d);
+    
+    /**
+     * Retrieves the picture with that url
+     * @param url The picture's url
+     * @return The picture object.
+     */
+    public Picture getPicture(String url);
     
 }
