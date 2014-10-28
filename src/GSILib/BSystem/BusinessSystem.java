@@ -885,4 +885,9 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
         }
         return true;
     }   
+
+    @Override
+    public Picture getPicture(String url) {
+        return this.pictures.get(url);
+    }
 }
