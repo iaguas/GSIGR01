@@ -4,6 +4,12 @@
  * Universidad Pública de Navarra - curso 2014-15
  */
 
+    /* NOTA:
+    A la entrega de esta práctica se añaden ambos ejercicios extra.
+    Se dejan las clases SSTest05 a 08 para la prueba de todos los métodos 
+    implementados que no disponían de clases de test.
+    */
+
 package GSILib.BSystem;
 
 /* Aunque ya están en la interface, se introducen también aquí */
@@ -15,6 +21,8 @@ import GSILib.persistence.*;
 /* Estos, en cambio, son solo cosa de la implementación, que no debe conocerse */
 import java.io.File;
 import java.io.IOException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -273,13 +281,10 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
         return pics;
     }
     
-    /**
-     * This method returns a Picture when you put it's URL.
-     * @param url an string that's it URL
-     * @return a Picture which have this url.
-     */
-    public Picture findPicture(String url) {
-        return ;
+    @Override
+    public Picture getPicture(String url) {
+        // Devolvemos la imagen.
+        return this.pictures.get(url);
     }
 
     @Override
@@ -465,7 +470,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
             // Para importar los revisores, hacemos otro bucle más
             while(sheet.getColumnCount()>j && (! sheet.getCellAt(j,i).isEmpty())){
                 // Importamos los premios conforme los leemos.
-                pn.addPicture(this.findPicture(sheet.getCellAt(j,i).getTextValue()));
+                pn.addPicture(this.getPicture(sheet.getCellAt(j,i).getTextValue()));
                 j++;
             }
             // Guardamos el la noticia imprimible en el sistema.
@@ -501,6 +506,9 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
         catch (IOException ex) {
             System.err.printf("No se encontró el archivo.\n");
         }
+        
+        
+        System.out.println(sheetNewspapers.getCellAt(0,0).getTextValue());
         
         // Empezamos a importar las cosas por el orden necesario para poder hacer
         // que nunca dé null al buscar algo en el almacén de datos.
@@ -644,19 +652,19 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
             // Avanzamos las columnas para coger el siguiente valor, las fotos.
             j++;
             
-            // Para importar los premios hacemos otro bucle.
+            // Para importar los revisores hacemos otro bucle.
             while(sheetPrintableNews.getColumnCount()>j &&  !(sheetPrintableNews.getCellAt(j,i).getTextValue()).equals("#") && (! sheetPrintableNews.getCellAt(j,i).isEmpty())){
-                // Importamos los premios conforme los leemos.
+                // Importamos los revisores conforme los leemos.
                 pn.addReviewer(findJournalist(sheetPrintableNews.getCellAt(j,i).getTextValue()));
                 j++;
             }
             
             // Avanzamos las columnas para coger el siguiente valor, los revisores.
             j++; 
-            // Para importar los revisores, hacemos otro bucle más
+            // Para importar las fotos, hacemos otro bucle más
             while(sheetPrintableNews.getColumnCount()>j && (! sheetPrintableNews.getCellAt(j,i).isEmpty())){
-                // Importamos los premios conforme los leemos.
-                pn.addPicture(this.findPicture(sheetPrintableNews.getCellAt(j,i).getTextValue()));
+                // Importamos las fotos conforme los leemos.
+                pn.addPicture(this.getPicture(sheetPrintableNews.getCellAt(j,i).getTextValue()));
                 j++;
             }
 
@@ -664,7 +672,54 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
             this.insertNews(pn);
             // Avanzamos a la siguiente fila.
             i++;
-        }        
+        }
+        
+        i = 0;
+        // Iteramos sobre todas las noticias web de la hoja de cálculo.
+        while(sheetWebNews.getRowCount()>i && (! sheetWebNews.getCellAt(i,0).isEmpty())){
+            // Importamos el ID del periodista revisor de la noticia web.
+            String authorID = sheetWebNews.getCellAt(1,i).getTextValue();
+            // Importamos el titular de la noticia web.
+            String headline = sheetWebNews.getCellAt(2,i).getTextValue();
+            // Importamos el cuerpo de la noticia web.
+            String body = sheetWebNews.getCellAt(3,i).getTextValue();
+            // Importamos la url de la noticica web.
+            String url = sheetWebNews.getCellAt(4,i).getTextValue();
+            // Buscamos al periodista en el sistema.
+            WebNews wn = new WebNews(headline, body, this.findJournalist(authorID), url);
+            
+            // Para importar los premios hacemos otro bucle.
+            j = 5;
+            while(sheetWebNews.getColumnCount()>j && !(sheetWebNews.getCellAt(j,i).getTextValue()).equals("*") && (! sheetWebNews.getCellAt(j,i).isEmpty())){
+                // Importamos los premios conforme los leemos.
+                wn.addPrize(sheetWebNews.getCellAt(j,i).getTextValue());
+                j++;
+            }
+            
+            // Avanzamos las columnas para coger el siguiente valor, las fotos.
+            j++;
+            
+            // Para importar los revisores hacemos otro bucle.
+            while(sheetWebNews.getColumnCount()>j &&  !(sheetWebNews.getCellAt(j,i).getTextValue()).equals("#") && (! sheetWebNews.getCellAt(j,i).isEmpty())){
+                // Importamos los revisores conforme los leemos.
+                wn.addPicture(this.getPicture(sheetWebNews.getCellAt(j,i).getTextValue()));
+                j++;
+            }
+            
+            // Avanzamos las columnas para coger el siguiente valor, los revisores.
+            j++; 
+            // Para importar las fotos, hacemos otro bucle más
+            while(sheetWebNews.getColumnCount()>j && (! sheetWebNews.getCellAt(j,i).isEmpty())){
+                // Importamos las fotos conforme los leemos.
+                wn.addKeyWord(sheetWebNews.getCellAt(j,i).getTextValue());
+                j++;
+            }
+
+            // Guardamos el la noticia imprimible en el sistema.
+            this.insertNews(wn);
+            // Avanzamos a la siguiente fila.
+            i++;
+        }
         return true;
     }
 
@@ -672,7 +727,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
     public boolean saveToFile(File file) {
         // Creamos una nueva hoja de cálculo.
         SpreadSheet mySpreadSheet = SpreadSheet.create(7,1000,1000);
-        // Rescatamos la hoja dentro de la hoja de cálculo
+        // Rescatamos la hoja dentro de la hoja de cálculo para cada tipo de dato.
         final Sheet sheetJournalists = mySpreadSheet.getSheet(0);
         sheetJournalists.setName("Journalists");
         final Sheet sheetPhotographers = mySpreadSheet.getSheet(1);
@@ -767,18 +822,19 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
                 sheetPrintableNews.setValueAt(document.getHeadline(), 2, numPrintableNews);
                 sheetPrintableNews.setValueAt(document.getBody(), 3, numPrintableNews);
                 
-                Picture[] printableNewsPics = printableNews.getPictures();
-                if(printableNewsPics != null){
-                    for (Picture p: printableNewsPics){
-                        sheetPrintableNews.setValueAt(p.getUrl(), colsPrintableNews, numPrintableNews);
+                // Guardamos los revisores
+                String[] printableNewsPrizes = this.listPrizes(document);
+                if (printableNewsPrizes != null){
+                    for (int i=0; i<printableNewsPrizes.length; i++){
+                        sheetPrintableNews.setValueAt(printableNewsPrizes[i], colsPrintableNews, numPrintableNews);
                         colsPrintableNews++;
                     }
                 }
-                
+
                 // Metemos el * que diferenciará los campos multievaluados
                 sheetPrintableNews.setValueAt("*", colsPrintableNews, numPrintableNews);
                 colsPrintableNews++;
-                
+                // Guardamos los revisores
                 Journalist[] reviewList = printableNews.getReviewers();
                 if(reviewList != null){
                     for(Journalist reviewer : reviewList){
@@ -790,11 +846,11 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
                 // Metemos la # que diferenciará los siguientes multievaluados
                 sheetPrintableNews.setValueAt("#", colsPrintableNews, numPrintableNews);
                 colsPrintableNews++;
-                
-                String[] printableNewsPrizes = this.listPrizes(document);
-                if (printableNewsPrizes != null){
-                    for (int i=0; i<printableNewsPrizes.length; i++){
-                        sheetPrintableNews.setValueAt(printableNewsPrizes[i], colsPrintableNews, numPrintableNews);
+                //Guardamos las fotos
+                Picture[] printableNewsPics = printableNews.getPictures();
+                if(printableNewsPics != null){
+                    for (Picture p: printableNewsPics){
+                        sheetPrintableNews.setValueAt(p.getUrl(), colsPrintableNews, numPrintableNews);
                         colsPrintableNews++;
                     }
                 }
@@ -812,11 +868,21 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
                 sheetWebNews.setValueAt(document.getHeadline(), 2, numWebNews);
                 sheetWebNews.setValueAt(document.getBody(), 3, numWebNews);
                 sheetWebNews.setValueAt(webNews.getUrl(), 4, numWebNews);
-                /*if(! webNews.getPictures().isEmpty()){
-                    sheetWebNews.setValueAt(webNews.getPictures().get(0), colsWebNews, numWebNews);
-                    colsWebNews++;
-                }*/
                 
+                // Guardamos los revisores
+                String[] printableNewsPrizes = this.listPrizes(document);
+                if (printableNewsPrizes != null){
+                    for (int i=0; i<printableNewsPrizes.length; i++){
+                        sheetPrintableNews.setValueAt(printableNewsPrizes[i], colsWebNews, numWebNews);
+                        colsWebNews++;
+                    }
+                }
+                
+                // Metemos el * que diferenciará los campos multievaluados
+                sheetWebNews.setValueAt("*", colsWebNews, numWebNews);
+                colsWebNews++;
+
+                // Introducimos las fotos.
                 Picture[] webNewsPics = webNews.getPictures();
                 if(webNewsPics != null){
                     for (Picture p: webNewsPics){
@@ -825,10 +891,11 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
                     }
                 }
                 
-                // Metemos el * que diferenciará los campos multievaluados
-                sheetWebNews.setValueAt("*", colsWebNews, numWebNews);
+                // Metemos el # que diferenciará los campos multievaluados
+                sheetWebNews.setValueAt("#", colsWebNews, numWebNews);
                 colsWebNews++;
                 
+                // Introducimos las palabras clave.
                 List<String> webNewsKeyWords = webNews.getKeyWords();
                 if (! webNewsKeyWords.isEmpty()){
                     for (int i=0; i<webNewsKeyWords.size(); i++){
@@ -857,6 +924,9 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
         
         // Recorremos la lista de Newspapers
         
+        // Preparamos el formato con el que guardaremos la fecha.
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        
         int numNewspaper = 0;
         Iterator iteratorNewspapers = this.newspapers.entrySet().iterator();
         while (iteratorNewspapers.hasNext()) {
@@ -865,7 +935,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
             // Cargamos el valor de ese par como Newspaper
             Newspaper newspaper = (Newspaper) pair.getValue();
             // Rellenar la tabla
-            sheetNewspapers.setValueAt(pair.getKey(), 0, numNewspaper);
+            sheetNewspapers.setValueAt(formatter.format(pair.getKey()), 0, numNewspaper);
             // Rellenar la tabla - Campos multivaluados
             PrintableNews[] printableNews = newspaper.getPrintableNews();
             if (printableNews != null){
@@ -885,9 +955,4 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
         }
         return true;
     }   
-
-    @Override
-    public Picture getPicture(String url) {
-        return this.pictures.get(url);
-    }
 }
