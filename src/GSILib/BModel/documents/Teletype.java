@@ -8,6 +8,8 @@ package GSILib.BModel.documents;
 
 import GSILib.BModel.Document;
 import GSILib.BModel.workers.Journalist;
+import GSILib.Serializable.XMLRepresentable;
+import java.io.File;
 
 /**
  * This is the class Teletype.
@@ -16,7 +18,7 @@ import GSILib.BModel.workers.Journalist;
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-public class Teletype extends Document{
+public class Teletype extends Document implements XMLRepresentable{
     
     /**
      * Class constructor that makes an object with headline, body and author.
@@ -45,5 +47,20 @@ public class Teletype extends Document{
     public boolean equals(Teletype tp){
         // Comparamos y devolvemos si son iguales o no.
         return this.getId().equals(tp.getId());
+    }
+
+    @Override
+    public String toXML() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean saveToXML(File f) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean saveToXML(String filePath) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
