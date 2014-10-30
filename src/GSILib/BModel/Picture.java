@@ -7,6 +7,8 @@
 package GSILib.BModel;
 
 import GSILib.BModel.workers.Photographer;
+import GSILib.Serializable.XMLRepresentable;
+import java.io.File;
 
 /**
  * This is the class Picture.
@@ -14,7 +16,7 @@ import GSILib.BModel.workers.Photographer;
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-public class Picture {
+public class Picture implements XMLRepresentable{
     
     // Atributos de la clase
     private String url; // Identificador único, la URL.
@@ -65,5 +67,20 @@ public class Picture {
     public boolean equals(Picture p){
         // Comparamos y devolvemos si son iguales o no.
         return this.getUrl().equals(p.getUrl());
+    }
+
+    @Override
+    public String toXML() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean saveToXML(File f) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean saveToXML(String filePath) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

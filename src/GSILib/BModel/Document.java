@@ -7,6 +7,8 @@
 package GSILib.BModel;
 
 import GSILib.BModel.workers.Journalist;
+import GSILib.Serializable.XMLRepresentable;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,7 @@ import java.util.List;
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-public class Document{
+public class Document implements XMLRepresentable{
     
     // Atributos de la clase
     private Integer id; // ID único.
@@ -140,5 +142,20 @@ public class Document{
         return "Document ID: " + this.getId() + "\n  Headline: " + this.getHeadline()
                 + "\n  Body: " + this.getBody() + "\n  Journalist: " +
                 this.getAuthor();    
+    }
+
+    @Override
+    public String toXML() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean saveToXML(File f) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean saveToXML(String filePath) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

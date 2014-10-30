@@ -8,6 +8,8 @@ package GSILib.BModel;
 
 import GSILib.BModel.documents.visualNews.PrintableNews;
 import GSILib.BModel.workers.Journalist;
+import GSILib.Serializable.XMLRepresentable;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +20,7 @@ import java.util.List;
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-public class Newspaper {
+public class Newspaper implements XMLRepresentable{
     
     // Atributos de la clase.
     private Date date = new Date(); // Fecha de publicación del periodico.
@@ -103,5 +105,20 @@ public class Newspaper {
     public boolean equals(Newspaper n){
         // Comparamos y devolvemos si es el mismo periodico o no.
         return this.getDate().equals(n.getDate());
+    }
+
+    @Override
+    public String toXML() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean saveToXML(File f) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean saveToXML(String filePath) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -6,6 +6,8 @@
 
 package GSILib.BModel;
 
+import GSILib.Serializable.XMLRepresentable;
+import java.io.File;
 import java.io.Serializable;
 
 /**
@@ -15,7 +17,7 @@ import java.io.Serializable;
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-public class Worker implements Serializable{
+public class Worker implements Serializable, XMLRepresentable{
    
     private String id, name, birthDate;
     
@@ -78,5 +80,20 @@ public class Worker implements Serializable{
     public boolean equals(Worker w){
         // Comparamos y devolvemos si son iguales o no.
         return this.getId().equals(w.getId());
+    }
+
+    @Override
+    public String toXML() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean saveToXML(File f) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean saveToXML(String filePath) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
