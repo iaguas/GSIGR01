@@ -37,7 +37,7 @@ public class Journalist extends Worker implements XMLRepresentable{
     // Atributo de la clase
     private List<String> interests = new ArrayList<>(); // Lista de intereses.
     // XML Engine
-    private Document xml;
+    private org.w3c.dom.Document xml;
     
     /**
      * Class constructor
@@ -82,20 +82,17 @@ public class Journalist extends Worker implements XMLRepresentable{
             System.out.println("Error while trying to instantiate DocumentBuilder " + pce);
             System.exit(1);
         }
+        
+        // Añadimos a la raiz un solo elemento
 
-        // Creamos el elemento raiz Journalists
-        Element xmlRoot =  this.xml.createElement("Journalists");
-        this.xml.appendChild(xmlRoot);
-
-        xmlRoot.appendChild( getElement(this) );
+        this.xml.appendChild(getElement());
     }
     
     /**
      * Helper method which creates a XML element <Journalist>
-     * @param journalist The Journalist for which we need to create an xml representation
      * @return XML element snippet representing a journalist
      */
-    public Element getElement(Journalist journalist){
+    public Element getElement(){
 
         Element xmlJournalist = this.xml.createElement("Journalist");
         
@@ -136,7 +133,7 @@ public class Journalist extends Worker implements XMLRepresentable{
     }
     
     /**
-     * Gets this journalist in XML.
+     * Gets this journalist in XML string.
      * @return the xml string of this journalist.
      */
     @Override
@@ -163,7 +160,7 @@ public class Journalist extends Worker implements XMLRepresentable{
     
     /**
      * Stores this journalist in XML.
-     * @return is the journalist was successfully stored into the xml file.
+     * @return if the journalist was successfully stored into the xml file.
      */
     @Override
     public boolean saveToXML(File file) {
@@ -192,7 +189,7 @@ public class Journalist extends Worker implements XMLRepresentable{
 
     /**
      * Stores this journalist in XML.
-     * @return is the journalist was successfully stored into the xml file.
+     * @return if the journalist was successfully stored into the xml file.
      */
     @Override
     public boolean saveToXML(String filePath) {
