@@ -1,4 +1,4 @@
-package GSILib.persistence;
+package GSILib.Serializable;
 
 import java.io.File;
 
