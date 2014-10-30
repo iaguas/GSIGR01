@@ -83,16 +83,16 @@ public class Journalist extends Worker implements XMLRepresentable{
         
         // Añadimos a la raiz un solo elemento
 
-        this.xml.appendChild(this.getElement());
+        this.xml.appendChild(this.getElement(this.xml));
     }
     
     /**
      * Helper method which creates a XML element <Journalist>
      * @return XML element snippet representing a journalist
      */
-    public Element getElement(){
+    public Element getElement(org.w3c.dom.Document xml){
 
-        Element xmlJournalist = this.xml.createElement("Journalist");
+        Element xmlJournalist = xml.createElement("Journalist");
         
         // Para una raiz Journalist, introducimos su id como atributo
         
@@ -100,28 +100,28 @@ public class Journalist extends Worker implements XMLRepresentable{
 
         // Para una raiz Journalist, introducimos otra raiz Name
         
-        Element xmlJournalistName = this.xml.createElement("Name");
-        Text journalistName = this.xml.createTextNode(this.getName());
+        Element xmlJournalistName = xml.createElement("Name");
+        Text journalistName = xml.createTextNode(this.getName());
         xmlJournalistName.appendChild(journalistName);
         xmlJournalist.appendChild(xmlJournalistName);
 
         // Para una raiz Journalist, introducimos otra raiz BirthDate
         
-        Element xmlJournalistBirthDate = this.xml.createElement("BirthDate");
-        Text journalistBirthDate = this.xml.createTextNode(this.getBirthDate());
+        Element xmlJournalistBirthDate = xml.createElement("BirthDate");
+        Text journalistBirthDate = xml.createTextNode(this.getBirthDate());
         xmlJournalistBirthDate.appendChild(journalistBirthDate);
         xmlJournalist.appendChild(xmlJournalistBirthDate);
         
         // Para una raiz Journalist, introducimos otra raiz Interests
         
         String[] interests = this.getInterests();
-        Element xmlJournalistInterests = this.xml.createElement("Interests");
+        Element xmlJournalistInterests = xml.createElement("Interests");
         for(String interest : interests){
             
             // Para una raiz Interests, introducimos otra raiz Interest
             
-            Element xmlJournalistInterest = this.xml.createElement("Interest");
-            Text journalistInterest = this.xml.createTextNode(interest);
+            Element xmlJournalistInterest = xml.createElement("Interest");
+            Text journalistInterest = xml.createTextNode(interest);
             xmlJournalistInterest.appendChild(journalistInterest);      
             xmlJournalistInterests.appendChild(xmlJournalistInterest);
         }

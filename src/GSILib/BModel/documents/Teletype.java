@@ -64,41 +64,41 @@ public class Teletype extends Document implements XMLRepresentable{
         
         // Añadimos a la raiz un solo elemento
 
-        this.xml.appendChild(this.getElement());
+        this.xml.appendChild(this.getElement(this.xml));
     }
     
     /**
      * Helper method which creates a XML element <Teletype>
      * @return XML element snippet representing a journalist
      */
-    public Element getElement(){
+    public Element getElement(org.w3c.dom.Document xml){
 
-        Element xmlTeletyle = this.xml.createElement("Teletype");
+        Element xmlTeletype = xml.createElement("Teletype");
 
         // Para una raiz Teletype, introducimos otra raiz Headline
         
-        Element xmlTeletypeHeadline = this.xml.createElement("Headline");
-        Text teletypeHeadline = this.xml.createTextNode(this.getHeadline());
+        Element xmlTeletypeHeadline = xml.createElement("Headline");
+        Text teletypeHeadline = xml.createTextNode(this.getHeadline());
         xmlTeletypeHeadline.appendChild(teletypeHeadline);
-        xmlTeletyle.appendChild(xmlTeletypeHeadline);
+        xmlTeletype.appendChild(xmlTeletypeHeadline);
 
         // Para una raiz Teletype, introducimos otra raiz Body
         
-        Element xmlTeletypeBody = this.xml.createElement("Body");
-        Text teletypeBody = this.xml.createTextNode(this.getBody());
+        Element xmlTeletypeBody = xml.createElement("Body");
+        Text teletypeBody = xml.createTextNode(this.getBody());
         xmlTeletypeBody.appendChild(teletypeBody);
-        xmlTeletyle.appendChild(xmlTeletypeBody);
+        xmlTeletype.appendChild(xmlTeletypeBody);
         
         // Para una raiz Teletype, introducimos otra raiz Journalist
         
-        Element xmlTeletypeJournalist = this.xml.createElement("Journalist");
+        //Element xmlTeletypeJournalist = this.xml.createElement("Journalist");
         
         // Para una raiz Journalist, introducimos su id como atributo
         
-        xmlTeletypeJournalist.setAttribute("id", this.getAuthor().getId());
-        xmlTeletyle.appendChild(xmlTeletypeJournalist);
+        //xmlTeletypeJournalist.setAttribute("id", this.getAuthor().getId());
+        xmlTeletype.appendChild(this.getAuthor().getElement(xml));
         
-        return xmlTeletyle;
+        return xmlTeletype;
     }
     
     /**

@@ -87,16 +87,16 @@ public class Photographer extends Worker implements XMLRepresentable{
         
         // Añadimos a la raiz un solo elemento
 
-        this.xml.appendChild(this.getElement());
+        this.xml.appendChild(this.getElement(this.xml));
     }
     
     /**
      * Helper method which creates a XML element <Photographer>
      * @return XML element snippet representing a photographer
      */
-    public Element getElement(){
+    public Element getElement(org.w3c.dom.Document xml){
 
-        Element xmlPhotographer = this.xml.createElement("Photographer");
+        Element xmlPhotographer = xml.createElement("Photographer");
         
         // Para una raiz Photographer, introducimos su id como atributo
         
@@ -104,29 +104,29 @@ public class Photographer extends Worker implements XMLRepresentable{
 
         // Para una raiz Photographer, introducimos otra raiz Name
         
-        Element xmlPhotographerName = this.xml.createElement("Name");
-        Text photographerName = this.xml.createTextNode(this.getName());
+        Element xmlPhotographerName = xml.createElement("Name");
+        Text photographerName = xml.createTextNode(this.getName());
         xmlPhotographerName.appendChild(photographerName);
         xmlPhotographer.appendChild(xmlPhotographerName);
 
         // Para una raiz Photographer, introducimos otra raiz BirthDate
         
-        Element xmlPhotographerBirthDate = this.xml.createElement("BirthDate");
-        Text photographerBirthDate = this.xml.createTextNode(this.getBirthDate());
+        Element xmlPhotographerBirthDate = xml.createElement("BirthDate");
+        Text photographerBirthDate = xml.createTextNode(this.getBirthDate());
         xmlPhotographerBirthDate.appendChild(photographerBirthDate);
         xmlPhotographer.appendChild(xmlPhotographerBirthDate);
         
         // Para una raiz Photographer, introducimos otra raiz RegularResidence
         
-        Element xmlPhotographerRegularResidence = this.xml.createElement("RegularResidence");
-        Text photographerRegularResidence = this.xml.createTextNode(this.getRegularResidence());
+        Element xmlPhotographerRegularResidence = xml.createElement("RegularResidence");
+        Text photographerRegularResidence = xml.createTextNode(this.getRegularResidence());
         xmlPhotographerRegularResidence.appendChild(photographerRegularResidence);
         xmlPhotographer.appendChild(xmlPhotographerRegularResidence);
         
         // Para una raiz Photographer, introducimos otra raiz HolidayResidence
         
-        Element xmlPhotographerHolidayResidence = this.xml.createElement("HolidayResidence");
-        Text photographerHolidayResidence = this.xml.createTextNode(this.getHolidayResidence());
+        Element xmlPhotographerHolidayResidence = xml.createElement("HolidayResidence");
+        Text photographerHolidayResidence = xml.createTextNode(this.getHolidayResidence());
         xmlPhotographerHolidayResidence.appendChild(photographerHolidayResidence);
         xmlPhotographer.appendChild(xmlPhotographerHolidayResidence);
         
