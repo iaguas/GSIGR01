@@ -63,8 +63,6 @@ public class Journalist extends Worker implements XMLRepresentable{
         return this.interests.toArray(new String[this.interests.size()]);
     }
     
-    
-    
     // TODO : JavaDoc 
     // Esta funcion simplemente calcula el arbol XML
     private void createXMLTree(){
@@ -85,7 +83,7 @@ public class Journalist extends Worker implements XMLRepresentable{
         
         // Añadimos a la raiz un solo elemento
 
-        this.xml.appendChild(getElement());
+        this.xml.appendChild(this.getElement());
     }
     
     /**
