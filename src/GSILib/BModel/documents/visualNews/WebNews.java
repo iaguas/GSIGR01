@@ -8,11 +8,19 @@ package GSILib.BModel.documents.visualNews;
 
 import GSILib.BModel.documents.VisualNews;
 import GSILib.BModel.workers.Journalist;
+import GSILib.Serializable.XMLRepresentable;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import org.apache.xml.serialize.OutputFormat;
+import org.apache.xml.serialize.XMLSerializer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
@@ -24,12 +32,14 @@ import org.w3c.dom.Text;
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-public class WebNews extends VisualNews{
+public class WebNews extends VisualNews implements XMLRepresentable{
     // Atributos de la clase.
     private String url; // URL identificable de la clase.
     private List<String> keywords = new ArrayList<>(); // Palabras clave identificables.
+    // XML Engine
     private org.w3c.dom.Document xml;
-    private Object XMLStoreMode;
+    // XML Store Mode
+    static final String XMLStoreMode = "full"; // {"full","relational"}
     
     /**
      * Class constructor that makes an object with headline, body, author and URL.
@@ -79,28 +89,8 @@ public class WebNews extends VisualNews{
         // Devolvemos la URL
         return this.url;
     }
-     
-    @Override
-    public String toString(){
-        // Devolvemos un string con los datos de la noticia web.
-        return "WebNews ID: " + this.getId() + "\n  Headline: " + 
-                this.getHeadline() + "\n  Body: " + this.getBody() + 
-                "\n  Journalist: " + this.getAuthor() + "\n  Pictures" + 
-                this.getPictures() + "\n  URL: " + this.url + "\n  Keywords" +
-                this.keywords;
-    }
     
-    /** 
-     * Equals. Known if 2 object are the same.
-     * @param wn a webnews
-     * @return true if they are the same object, false otherwise.
-     */
-    public boolean equals(WebNews wn){        
-        // Comparamos y devolvemos si son iguales o no.
-        return this.getId().equals(wn.getId());
-    }
-    
-     // TODO : JavaDoc 
+    // TODO : JavaDoc 
     // Esta funcion simplemente calcula el arbol XML
     private void createXMLTree(){
         
@@ -123,45 +113,43 @@ public class WebNews extends VisualNews{
         this.xml.appendChild(this.getElement(this.xml));
     }
     
-    // Método getElement para generar la estructura XML para cada instancia
-     /**
+    /**
      * Helper method which creates a XML element <WebNews>
-     * @param xml
-     * @return XML element snippet representing a journalist
+     * @return XML element snippet representing a webNews
      */
-    
-    /* TODO: BORRAR ESTE COMENTARIO AL TERMINAR 
-     * @param headline headline of the notice that you want to save.
-     * @param body all text of the notice.
-     * @param journalist worker who has written the notice.
-     * @param url URL that's a unique identifier of the notice.*/
     public Element getElement(org.w3c.dom.Document xml){
 
         Element xmlWebNews = xml.createElement("WebNews");
 
-        // Para una raiz Webnews, introducimos otra raiz Headline
+        // Para una raiz WebNews, introducimos otra raiz Headline
         
         Element xmlWebNewsHeadline = xml.createElement("Headline");
-        Text webnewsHeadline = xml.createTextNode(this.getHeadline());
-        xmlWebNewsHeadline.appendChild(webnewsHeadline);
-        // Se añade una subraiz con appendChild
+        Text webNewsHeadline = xml.createTextNode(this.getHeadline());
+        xmlWebNewsHeadline.appendChild(webNewsHeadline);
         xmlWebNews.appendChild(xmlWebNewsHeadline);
 
         // Para una raiz WebNews, introducimos otra raiz Body
         
         Element xmlWebNewsBody = xml.createElement("Body");
-        Text webnewsBody = xml.createTextNode(this.getBody());
-        xmlWebNewsBody.appendChild(webnewsBody);
+        Text webNewsBody = xml.createTextNode(this.getBody());
+        xmlWebNewsBody.appendChild(webNewsBody);
         xmlWebNews.appendChild(xmlWebNewsBody);
         
-        // Para una raiz WebNews, introducimos otra raiz Journalists
-        //Element xmlWebNewsJournalists = xml.createElement("Journalists");
+        // Para una raiz WebNews, introducimos otra raiz Body
         
-        //xmlWebNews.appendChild(xmlWebNewsJournalists
-        if(this.XMLStoreMode.equals("relational")){
+        Element xmlWebNewsUrl = xml.createElement("Url");
+        Text webNewsUrl = xml.createTextNode(this.getUrl());
+        xmlWebNewsUrl.appendChild(webNewsUrl);
+        xmlWebNews.appendChild(xmlWebNewsUrl);
+        
+        // Para una raiz WebNews, introducimos otra raiz Journalist
+        
+        if (this.XMLStoreMode.equals("relational")){
+            
             // Para una raiz Journalist, introducimos su id como atributo
             Element xmlWebNewsJournalist = xml.createElement("Journalist");
             xmlWebNewsJournalist.setAttribute("id", this.getAuthor().getId());
+            xmlWebNews.appendChild(xmlWebNewsJournalist);
         }
         else if(this.XMLStoreMode.equals("full")){
             
@@ -172,9 +160,125 @@ public class WebNews extends VisualNews{
             System.err.print("unrecognized method");
         }
         
+        // Para una raiz WebNews, introducimos otra raiz Keywords
         
-        //xmlWebNews.appendChild(this.getAuthor().getElement(xml));
+        Element xmlWebNewsKeywords = xml.createElement("Keywords");
+        for(String keyword : this.keywords){
+            
+            // Para una raiz Keywords, introducimos las keyword
+            
+            Element xmlWebNewsKeyword = xml.createElement("Keyword");
+            Text webNewsKeyword = xml.createTextNode(keyword);
+            xmlWebNewsKeyword.appendChild(webNewsKeyword);
+            xmlWebNewsKeywords.appendChild(xmlWebNewsKeyword);
+        }
+        
+        xmlWebNews.appendChild(xmlWebNewsKeywords);
         
         return xmlWebNews;
+    }
+    
+    /**
+     * Gets this WebNews in XML string.
+     * @return the xml string of this teletype.
+     */
+    @Override
+    public String toXML() {
+        
+        // Almacenar en una variable
+        
+        this.createXMLTree();
+        
+        Writer out = new StringWriter();
+        try{
+            OutputFormat format = new OutputFormat(this.xml);
+            format.setIndenting(true);
+            
+            XMLSerializer serializerToString = new XMLSerializer(out , format);
+            serializerToString.serialize(this.xml);
+
+        } catch(IOException ie) {
+            ie.printStackTrace();
+        }
+        
+        return out.toString();
+    }
+    
+    /**
+     * Stores this teletype in XML.
+     * @return if the teletype was successfully stored into the xml file.
+     */
+    @Override
+    public boolean saveToXML(File file) {
+        
+        // Almacenar en un fichero
+        
+        this.createXMLTree();
+        
+        try{
+            
+            OutputFormat format = new OutputFormat(this.xml);
+            format.setIndenting(true);
+            
+            XMLSerializer serializerTofile = new XMLSerializer(
+                new FileOutputStream(file)
+                , format);
+            serializerTofile.serialize(this.xml);
+            
+            return true;
+        } catch(IOException ie) {
+            ie.printStackTrace();
+        }
+        
+        return false;
+    }
+
+    /**
+     * Stores this teletype in XML.
+     * @return if the teletype was successfully stored into the xml file.
+     */
+    @Override
+    public boolean saveToXML(String filePath) {
+       
+        // Almacenar en un fichero
+        
+        this.createXMLTree();
+        
+        try{
+            
+            OutputFormat format = new OutputFormat(this.xml);
+            format.setIndenting(true);
+            XMLSerializer serializerTofile = new XMLSerializer(
+                new FileOutputStream(
+                    new File(filePath))
+                , format);
+            serializerTofile.serialize(this.xml);
+            
+            return true;
+        } catch(IOException ie) {
+            ie.printStackTrace();
+        }
+        
+        return false;
+    }
+    
+    /** 
+     * Equals. Known if 2 object are the same.
+     * @param wn a webnews
+     * @return true if they are the same object, false otherwise.
+     */
+    public boolean equals(WebNews wn){        
+        // Comparamos y devolvemos si son iguales o no.
+        return this.getId().equals(wn.getId());
+    }
+    
+    @Override
+    public String toString(){
+        // Devolvemos un string con los datos de la noticia web.
+        return "WebNews ID: " + this.getId() + "\n  Headline: " + 
+                this.getHeadline() + "\n  Body: " + this.getBody() + 
+                "\n  Journalist: " + this.getAuthor() + "\n  Pictures" + 
+                this.getPictures() + "\n  URL: " + this.url + "\n  Keywords" +
+                this.keywords;
     }
 }

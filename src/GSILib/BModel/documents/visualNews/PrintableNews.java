@@ -175,7 +175,7 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
     }
     
     /**
-     * Gets this journalist in XML string.
+     * Gets this PrintableNews in XML string.
      * @return the xml string of this teletype.
      */
     @Override
