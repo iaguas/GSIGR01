@@ -33,7 +33,7 @@ public class Teletype extends Document implements XMLRepresentable{
     // XML Engine
     private org.w3c.dom.Document xml;
     // XML Store Mode
-    static final String XMLStoreMode = "relational"; // {"full","relational"}
+    static final String XMLStoreMode = "full"; // {"full","relational"}
     
     /**
      * Class constructor that makes an object with headline, body and author.
@@ -94,14 +94,15 @@ public class Teletype extends Document implements XMLRepresentable{
         if (this.XMLStoreMode.equals("relational")){
             
             // Para una raiz Journalist, introducimos su id como atributo
+            
             Element xmlTeletypeJournalist = xml.createElement("Journalist");
             xmlTeletypeJournalist.setAttribute("id", this.getAuthor().getId());
             xmlTeletype.appendChild(xmlTeletypeJournalist);
-            
         }
         else if(this.XMLStoreMode.equals("full")){
             
             // Para una raiz Teletype, introducimos otra raiz Journalist
+            
             xmlTeletype.appendChild(this.getAuthor().getElement(xml));
         }
         else{

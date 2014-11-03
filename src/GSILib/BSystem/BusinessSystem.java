@@ -369,7 +369,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
     @Override
     public Photographer getAuthor(Picture p) {
         // Retornamos el autor de una imagen.
-        return p.getAutor();
+        return p.getAuthor();
     }
  
     /**
@@ -917,7 +917,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
             Picture picture = (Picture) pair.getValue();
             // Rellenar la tabla
             //sheetPictures.setValueAt(pair.getKey(), 0, numPicture);
-            sheetPictures.setValueAt(picture.getAutor().getId(), 0, numPicture);
+            sheetPictures.setValueAt(picture.getAuthor().getId(), 0, numPicture);
             sheetPictures.setValueAt(picture.getUrl(), 1, numPicture);
             numPicture++;  
         }

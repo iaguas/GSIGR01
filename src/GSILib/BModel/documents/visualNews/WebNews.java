@@ -6,6 +6,7 @@
 
 package GSILib.BModel.documents.visualNews;
 
+import GSILib.BModel.Picture;
 import GSILib.BModel.documents.VisualNews;
 import GSILib.BModel.workers.Journalist;
 import GSILib.Serializable.XMLRepresentable;
@@ -175,6 +176,33 @@ public class WebNews extends VisualNews implements XMLRepresentable{
         
         xmlWebNews.appendChild(xmlWebNewsKeywords);
         
+        // Para una raiz WebNews, introducimos otra raiz Pictures
+        
+        Element xmlWebNewsPictures = xml.createElement("Pictures");
+        
+        if (this.XMLStoreMode.equals("relational")){
+            for(Picture picture : this.getPictures()){
+                
+                // Para una raiz Pictures, introducimos su url como atributo
+                
+                Element xmlWebNewsPicture = xml.createElement("Picture");
+                xmlWebNewsPicture.setAttribute("url", picture.getUrl());
+                xmlWebNewsPictures.appendChild(xmlWebNewsPicture);
+            }
+        }
+        else if(this.XMLStoreMode.equals("full")){
+            for(Picture picture : this.getPictures()){
+                
+                // Para una raiz Pictures, introducimos otra raiz Picture
+                
+                xmlWebNewsPictures.appendChild(picture.getElement(xml));
+            }
+        }
+        else{
+            System.err.print("unrecognized method");
+        }
+        xmlWebNews.appendChild(xmlWebNewsPictures);
+        
         return xmlWebNews;
     }
     
@@ -275,10 +303,12 @@ public class WebNews extends VisualNews implements XMLRepresentable{
     @Override
     public String toString(){
         // Devolvemos un string con los datos de la noticia web.
-        return "WebNews ID: " + this.getId() + "\n  Headline: " + 
-                this.getHeadline() + "\n  Body: " + this.getBody() + 
-                "\n  Journalist: " + this.getAuthor() + "\n  Pictures" + 
-                this.getPictures() + "\n  URL: " + this.url + "\n  Keywords" +
-                this.keywords;
+        return "+ WebNews ID: " + this.getId() + "\n"
+                + "|- Headline: " + this.getHeadline() + "\n"
+                + "|- Body: " + this.getBody() + "\n"
+                + "|- Journalist: " + this.getAuthor() + "\n"
+                + "|- Pictures" + this.getPictures() + "\n"
+                + "|- URL: " + this.url + "\n"
+                + "|- Keywords" + this.keywords + "\n";
     }
 }

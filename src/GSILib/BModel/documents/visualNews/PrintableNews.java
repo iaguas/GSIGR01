@@ -6,6 +6,7 @@
 
 package GSILib.BModel.documents.visualNews;
 
+import GSILib.BModel.Picture;
 import GSILib.BModel.documents.VisualNews;
 import GSILib.BModel.workers.Journalist;
 import GSILib.Serializable.XMLRepresentable;
@@ -135,6 +136,7 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
         if (this.XMLStoreMode.equals("relational")){
             
             // Para una raiz Journalist, introducimos su id como atributo
+            
             Element xmlPrintableNewsJournalist = xml.createElement("Journalist");
             xmlPrintableNewsJournalist.setAttribute("id", this.getAuthor().getId());
             xmlPrintableNews.appendChild(xmlPrintableNewsJournalist);
@@ -142,6 +144,7 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
         else if(this.XMLStoreMode.equals("full")){
             
             // Para una raiz Teletype, introducimos otra raiz Journalist
+            
             xmlPrintableNews.appendChild(this.getAuthor().getElement(xml));
         }
         else{
@@ -154,7 +157,9 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
         
         if (this.XMLStoreMode.equals("relational")){
             for(Journalist reviewer : this.reviewers){
-                // Para una raiz Journalist, introducimos su id como atributo
+                
+                // Para una raiz Reviewers, introducimos su id como atributo
+                
                 Element xmlPrintableNewsReviewer = xml.createElement("Journalist");
                 xmlPrintableNewsReviewer.setAttribute("id", reviewer.getId());
                 xmlPrintableNewsReviewers.appendChild(xmlPrintableNewsReviewer);
@@ -162,7 +167,9 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
         }
         else if(this.XMLStoreMode.equals("full")){
             for(Journalist reviewer : this.reviewers){
-                // Para una raiz Teletype, introducimos otra raiz Journalist
+                
+                // Para una raiz Reviewers, introducimos otra raiz Journalist
+                
                 xmlPrintableNewsReviewers.appendChild(reviewer.getElement(xml));
             }
         }
@@ -170,6 +177,33 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
             System.err.print("unrecognized method");
         }
         xmlPrintableNews.appendChild(xmlPrintableNewsReviewers);
+        
+        // Para una raiz PrintableNews, introducimos otra raiz Pictures
+        
+        Element xmlPrintableNewsPictures = xml.createElement("Pictures");
+        
+        if (this.XMLStoreMode.equals("relational")){
+            for(Picture picture : this.getPictures()){
+                
+                // Para una raiz Pictures, introducimos su url como atributo
+                
+                Element xmlPrintableNewsPicture = xml.createElement("Picture");
+                xmlPrintableNewsPicture.setAttribute("url", picture.getUrl());
+                xmlPrintableNewsPictures.appendChild(xmlPrintableNewsPicture);
+            }
+        }
+        else if(this.XMLStoreMode.equals("full")){
+            for(Picture picture : this.getPictures()){
+                
+                // Para una raiz Pictures, introducimos otra raiz Picture
+                
+                xmlPrintableNewsPictures.appendChild(picture.getElement(xml));
+            }
+        }
+        else{
+            System.err.print("unrecognized method");
+        }
+        xmlPrintableNews.appendChild(xmlPrintableNewsPictures);
         
         return xmlPrintableNews;
     }
