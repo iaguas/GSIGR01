@@ -234,20 +234,6 @@ public class Photographer extends Worker implements XMLRepresentable{
                 + "|- Name: " + this.getName() + "\n"
                 + "|- BirthDate: " + this.getBirthDate() + "\n"
                 + "|- Regular residence: " + this.regularResidence + "\n"
-                + "|- Holiday residence: " + this.holidayResidence;
-
-    @Override
-    public String toXML() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean saveToXML(File f) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean saveToXML(String filePath) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                + "|- Holiday residence: " + this.holidayResidence + "\n";
     }
 }

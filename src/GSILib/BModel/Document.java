@@ -19,7 +19,7 @@ import java.util.List;
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-public class Document{
+public abstract class Document{
     
     // Atributos de la clase
     private Integer id; // ID único.

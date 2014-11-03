@@ -271,12 +271,11 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
     @Override
     public String toString(){
         // Devolvemos un string con los datos de la noticia imprimible.
-        return "PrintableNews ID: " + this.getId() + "\n  Headline: " + 
-                this.getHeadline() + "\n  Body: " + this.getBody() + 
-                "\n  Journalist: " + this.getAuthor() + "\n  Pictures" + 
-                this.getPictures() + "\n  Reviewers: " + this.reviewers;
+        return "+ PrintableNews ID: " + this.getId() + "\n"
+                + "|- Headline: " + this.getHeadline() + "\n"
+                + "|- Body: " + this.getBody() + "\n"
+                + "|- Journalist: " + this.getAuthor() + "\n"
+                + "|- Pictures" + this.getPictures() + "\n"
+                + "|- Reviewers: " + this.reviewers + "\n";
     }
-    
-    
-    
 }

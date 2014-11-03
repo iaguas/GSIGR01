@@ -17,7 +17,7 @@ import java.io.Serializable;
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-public class Worker implements Serializable, XMLRepresentable{
+public abstract class Worker implements Serializable, XMLRepresentable{
    
     private String id, name, birthDate;
     
@@ -27,7 +27,7 @@ public class Worker implements Serializable, XMLRepresentable{
      * @param name The name of the worker.
      * @param birthDate The birth dathe of the worker.
      */
-    public Worker(String id, String name, String birthDate){
+    protected Worker(String id, String name, String birthDate){
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;

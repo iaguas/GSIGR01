@@ -19,7 +19,7 @@ import java.util.List;
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-public class VisualNews extends Document{
+public abstract class VisualNews extends Document{
     
     // Atributo de la clase
     private List<Picture> pictures = new ArrayList<>(); // Imágenes adosadas a las noticias.
@@ -53,13 +53,6 @@ public class VisualNews extends Document{
         if (this.pictures.isEmpty())
             return null;
         return this.pictures.toArray(new Picture[this.pictures.size()]);
-    }  
-
-    public String toString(){
-        // Devolvemos un string con los datos del teletipo.
-        return "VisualNews ID: " + this.getId() + "\n  Headline: " + this.getHeadline()
-                + "\n  Body: " + this.getBody() + "\n  Journalist: " +
-                this.getAuthor() + "Pictures: " + this.pictures;
     }
     
     /** 
@@ -70,5 +63,15 @@ public class VisualNews extends Document{
     public boolean equals(VisualNews vn){
         // Comparamos y devolvemos si son iguales o no.
         return this.getId().equals(vn.getId());
+    }
+    
+    @Override
+    public String toString(){
+        // Devolvemos un string con los datos del teletipo.
+        return "+ VisualNews ID: " + this.getId() + "\n"
+                + "|- Headline: " + this.getHeadline()+ "\n"
+                + "|- Body: " + this.getBody() + "\n"
+                + "|- Journalist: " + this.getAuthor() + "\n"
+                + "|- Pictures: " + this.pictures + "\n";
     }
 }
