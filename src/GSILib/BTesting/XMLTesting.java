@@ -5,6 +5,7 @@
 package GSILib.BTesting;
 
 import GSILib.BModel.documents.Teletype;
+import GSILib.BModel.documents.visualNews.PrintableNews;
 import GSILib.BModel.workers.Journalist;
 import GSILib.BModel.workers.Photographer;
 import java.util.ArrayList;
@@ -17,22 +18,33 @@ public class XMLTesting {
     
     public static void main(String args[]) {
         
-        ArrayList interests = new ArrayList();
+        ArrayList interestsOfAlvaro = new ArrayList();
         
-        interests.add("Discutir");
-        interests.add("Tocar las narices");
-        interests.add("Jugar al CS");
+        interestsOfAlvaro.add("Discutir");
+        interestsOfAlvaro.add("Tocar las narices");
+        interestsOfAlvaro.add("Jugar al CS");
 
-        Journalist journalist = new Journalist("8", "Alvaro Octal", "27/12/1993", interests);
+        Journalist journalistAlvaro = new Journalist("8", "Alvaro Octal", "27/12/1993", interestsOfAlvaro);
         
-        System.out.println(journalist.saveToXML("journalist.xml"));
+        ArrayList interestsOfMEV = new ArrayList();
+        
+        interestsOfMEV.add("Comer pasta");
+        interestsOfMEV.add("beber cerveza");
+        
+        Journalist journalistMEV = new Journalist("5", "MEV", "01/01/01", interestsOfMEV);
+        
+        System.out.println(journalistAlvaro.saveToXML("journalist.xml"));
         
         Photographer photographer = new Photographer("12", "Arguitxu Arzcarrena", "01/01/1990", "Bilbao", "Carpa");
         
         System.out.println(photographer.saveToXML("photographer.xml"));
         
-        Teletype teletype = new Teletype("Anonymous hackea la web de AEDE", "Se conoce el grupo de burdos patanes fueron owneados", journalist);
+        Teletype teletype = new Teletype("Anonymous hackea la web de AEDE", "Se conoce el grupo de burdos patanes fueron owneados", journalistAlvaro);
         
         System.out.println(teletype.saveToXML("teletype.xml"));
+        
+        PrintableNews printableNews = new PrintableNews("255Tbps: World’s fastest network could carry all of the internet’s traffic on a single fiber", "A joint group of researchers from the Netherlands and the US have smashed the world speed record for a fiber network, pushing 255 terabits per second down a single strand of glass fiber. This is equivalent to around 32 terabytes per second — enough to transfer a 1GB movie in 31.25 microseconds (0.03 milliseconds), or alternatively, the entire contents of your 1TB hard drive in about 31 milliseconds.", journalistAlvaro);
+        printableNews.addReviewer(journalistMEV);
+        System.out.println(printableNews.toXML());
     }
 }
