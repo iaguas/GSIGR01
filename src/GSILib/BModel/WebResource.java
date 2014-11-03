@@ -16,7 +16,7 @@ import GSILib.BModel.workers.Photographer;
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 
-public interface WebResource {
+public interface WebResource{
     
     /**
      * Adds a key word to the list of the associated WebNews

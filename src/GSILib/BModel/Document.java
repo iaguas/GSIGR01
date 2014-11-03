@@ -7,6 +7,8 @@
 package GSILib.BModel;
 
 import GSILib.BModel.workers.Journalist;
+import GSILib.Serializable.XMLRepresentable;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
