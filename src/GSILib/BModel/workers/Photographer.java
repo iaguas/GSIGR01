@@ -7,6 +7,8 @@
 package GSILib.BModel.workers;
 
 import GSILib.BModel.Worker;
+import GSILib.Serializable.XMLRepresentable;
+import java.io.File;
 
 /**
  * This is the class Photographer.
@@ -15,7 +17,7 @@ import GSILib.BModel.Worker;
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-public class Photographer extends Worker{
+public class Photographer extends Worker implements XMLRepresentable{
     private String regularResidence, holidayResidence;
     
     /**
@@ -68,5 +70,20 @@ public class Photographer extends Worker{
     public boolean equals(Photographer p){
         // Comparamos y devolvemos si son iguales o no.
         return this.getId().equals(p.getId());
+    }
+
+    @Override
+    public String toXML() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean saveToXML(File f) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean saveToXML(String filePath) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
