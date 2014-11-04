@@ -10,7 +10,9 @@ import GSILib.BModel.documents.visualNews.PrintableNews;
 import GSILib.BModel.documents.visualNews.WebNews;
 import GSILib.BModel.workers.Journalist;
 import GSILib.BModel.workers.Photographer;
+import GSILib.BSystem.BusinessSystem;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -78,6 +80,28 @@ public class XMLTesting {
         webNews.addPicture(pictureBlue);
         
         System.out.println(webNews.saveToXML("webNews.xml"));
+        
+        // Nuevo BusinessSystem
+        
+        BusinessSystem bs = new BusinessSystem();
+        
+        bs.addJournalist(journalistAlvaro);
+        bs.addJournalist(journalistMEV);
+        
+        bs.addPhotographer(photographer);
+        
+        bs.addPicture(pictureRed);
+        bs.addPicture(pictureBlue);
+        
+        bs.insertNews(printableNews);
+        bs.insertNews(teletype);
+        bs.insertNews(webNews);
+        
+        Date date = new Date(2014,11,4);
+        bs.createNewspaper(date);
+        bs.addNewsToIssue(bs.getNewspaper(date), printableNews);
+       
+        System.out.print(bs.saveToXML("businessSystem.xml"));
         
     }
 }

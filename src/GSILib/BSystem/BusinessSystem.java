@@ -17,10 +17,14 @@ import GSILib.BModel.*;
 import GSILib.BModel.workers.*;
 import GSILib.BModel.documents.*;
 import GSILib.BModel.documents.visualNews.*;
+import GSILib.Serializable.XMLRepresentable;
 import GSILib.persistence.*;
 /* Estos, en cambio, son solo cosa de la implementación, que no debe conocerse */
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,9 +35,16 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.apache.xml.serialize.OutputFormat;
+import org.apache.xml.serialize.XMLSerializer;
 import org.jopendocument.dom.OOUtils;
 import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
+import org.w3c.dom.Element;
+import org.w3c.dom.Text;
 
 /**
  * This is the class BusinessSystem.
@@ -42,7 +53,7 @@ import org.jopendocument.dom.spreadsheet.SpreadSheet;
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-public class BusinessSystem implements EditorialOffice, ODSPersistent{
+public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepresentable{
     
     // Colecciones de objetos propias del sistema.
     private final HashMap<String, Worker> workers = new HashMap<>(); // Trabajadores (periodistas y fotografos)
@@ -52,6 +63,9 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
 
     // Clase para dar el ID a las noticias (de cualquier tipo) de forma única.
     private final AtomicInteger atomicInteger = new AtomicInteger();
+    
+    // XML Engine
+    private org.w3c.dom.Document xml;
     
     @Override
     public boolean addJournalist(Journalist jr){
@@ -954,5 +968,230 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent{
             System.err.printf("No se pudo guardar el archivo.\n");
         }
         return true;
-    }   
+    }  
+    
+    // TODO : JavaDoc 
+    // Esta funcion simplemente calcula el arbol XML
+    private void createXMLTree(){
+        
+        //get an instance of factory
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        try {
+            //get an instance of builder
+            DocumentBuilder db = dbf.newDocumentBuilder();
+
+            //create an instance of DOM
+            this.xml = db.newDocument();
+        }catch(ParserConfigurationException pce) {
+            //dump it
+            System.out.println("Error while trying to instantiate DocumentBuilder " + pce);
+            System.exit(1);
+        }
+        
+        // Añadimos a la raiz un solo elemento
+
+        this.xml.appendChild(this.getElement(this.xml));
+    }
+    
+    /**
+     * Helper method which creates a XML element <BusinessSystem>
+     * @return XML element snippet representing a BusinessSystem
+     */
+    public Element getElement(org.w3c.dom.Document xml){
+
+        Element xmlBS = xml.createElement("BusinessSystem");
+        
+        // Para una raiz BusinessSystem, introducimos otra raiz Workers
+        
+        Element xmlBSWorkers = xml.createElement("Workers");
+        
+        Iterator iteratorWorkers = this.workers.entrySet().iterator();
+        while (iteratorWorkers.hasNext()) {
+            
+            Map.Entry worker = (Map.Entry)iteratorWorkers.next();
+            // Se guardan los periodistas
+            if (worker.getValue().getClass().getName().equals("GSILib.BModel.workers.Journalist")){
+                
+                // Para una raiz Workers, introducimos otra raiz Journalist
+                
+                Journalist journalist = (Journalist) worker.getValue();
+                
+                xmlBSWorkers.appendChild(journalist.getElement(this.xml));
+            }
+            else if (worker.getValue().getClass().getName().equals("GSILib.BModel.workers.Photographer")){
+                
+                // Para una raiz Workers, introducimos otra raiz Photographer
+                
+                Photographer photographer = (Photographer) worker.getValue();
+                
+                xmlBSWorkers.appendChild(photographer.getElement(this.xml));
+            }
+            else{
+                System.err.print("Unrecognised Class.\n");
+            }
+        }
+        
+        xmlBS.appendChild(xmlBSWorkers);
+
+        // Para una raiz BusinessSystem, introducimos otra raiz Documents
+        
+        Element xmlBSDocuments = xml.createElement("Documents");
+        
+        for(Document document : this.documents){
+            
+            // Para una raiz Documents, introducimos los elementos xml
+            
+            if (document.getClass().getName().equals("GSILib.BModel.documents.Teletype")){
+                
+                // Para una raiz Documents, introducimos otra raiz Teletype
+                
+                Teletype teletype = (Teletype) document;
+                
+                xmlBSDocuments.appendChild(teletype.getElement(this.xml));
+            }
+            else if (document.getClass().getName().equals("GSILib.BModel.documents.visualNews.WebNews")){
+                
+                // Para una raiz Documents, introducimos otra raiz WebNews
+                
+                WebNews webNews = (WebNews) document;
+                
+                xmlBSDocuments.appendChild(webNews.getElement(this.xml));
+            }
+            else if (document.getClass().getName().equals("GSILib.BModel.documents.visualNews.PrintableNews")){
+                
+                // Para una raiz Documents, introducimos otra raiz PrintableNews
+                
+                PrintableNews printableNews = (PrintableNews) document;
+                
+                xmlBSDocuments.appendChild(printableNews.getElement(this.xml));
+            } 
+            else{
+                System.err.print("Unrecognised Class.\n");
+            }
+        }
+        
+        xmlBS.appendChild(xmlBSDocuments);
+        
+        // Para una raiz BusinessSystem, introducimos otra raiz Workers
+        
+        Element xmlBSPictures = xml.createElement("Pictures");
+        
+        Iterator iteratorPictures = this.pictures.entrySet().iterator();
+        while (iteratorPictures.hasNext()) {
+            
+            Map.Entry entry = (Map.Entry)iteratorPictures.next();
+                
+            // Para una raiz Pictures, introducimos otra raiz Picture
+
+            Picture picture = (Picture) entry.getValue();
+
+            xmlBSPictures.appendChild(picture.getElement(this.xml));
+        }
+        
+        xmlBS.appendChild(xmlBSPictures);
+        
+        // Para una raiz BusinessSystem, introducimos otra raiz Newspapers
+        
+        Element xmlBSNewspapers = xml.createElement("Newspapers");
+        
+        Iterator iteratorNewspapers = this.newspapers.entrySet().iterator();
+        while (iteratorNewspapers.hasNext()) {
+            
+            Map.Entry entry = (Map.Entry)iteratorNewspapers.next();
+                
+            // Para una raiz Pictures, introducimos otra raiz Newspaper
+
+            Newspaper newspaper = (Newspaper) entry.getValue();
+
+            xmlBSNewspapers.appendChild(newspaper.getElement(this.xml));
+        }
+        
+        xmlBS.appendChild(xmlBSNewspapers);
+        
+        return xmlBS;
+    }
+    
+    /**
+     * Gets this journalist in XML string.
+     * @return the xml string of this journalist.
+     */
+    @Override
+    public String toXML() {
+        
+        // Almacenar en una variable
+        
+        this.createXMLTree();
+        
+        Writer out = new StringWriter();
+        try{
+            OutputFormat format = new OutputFormat(this.xml);
+            format.setIndenting(true);
+            
+            XMLSerializer serializerToString = new XMLSerializer(out , format);
+            serializerToString.serialize(this.xml);
+
+        } catch(IOException ie) {
+            ie.printStackTrace();
+        }
+        
+        return out.toString();
+    }
+    
+    /**
+     * Stores this journalist in XML.
+     * @return if the journalist was successfully stored into the xml file.
+     */
+    @Override
+    public boolean saveToXML(File file) {
+        
+        // Almacenar en un fichero
+        
+        this.createXMLTree();
+        
+        try{
+            
+            OutputFormat format = new OutputFormat(this.xml);
+            format.setIndenting(true);
+            
+            XMLSerializer serializerTofile = new XMLSerializer(
+                new FileOutputStream(file)
+                , format);
+            serializerTofile.serialize(this.xml);
+            
+            return true;
+        } catch(IOException ie) {
+            ie.printStackTrace();
+        }
+        
+        return false;
+    }
+
+    /**
+     * Stores this journalist in XML.
+     * @return if the journalist was successfully stored into the xml file.
+     */
+    @Override
+    public boolean saveToXML(String filePath) {
+       
+        // Almacenar en un fichero
+        
+        this.createXMLTree();
+        
+        try{
+            
+            OutputFormat format = new OutputFormat(this.xml);
+            format.setIndenting(true);
+            XMLSerializer serializerTofile = new XMLSerializer(
+                new FileOutputStream(
+                    new File(filePath))
+                , format);
+            serializerTofile.serialize(this.xml);
+            
+            return true;
+        } catch(IOException ie) {
+            ie.printStackTrace();
+        }
+        
+        return false;
+    }
 }
