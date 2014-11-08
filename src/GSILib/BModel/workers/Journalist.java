@@ -7,10 +7,12 @@
 package GSILib.BModel.workers;
 
 import GSILib.BModel.Worker;
+import GSILib.Serializable.XMLHandler;
 import GSILib.Serializable.XMLRepresentable;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -22,7 +24,11 @@ import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  * This is the class Journalist.
@@ -36,8 +42,43 @@ public class Journalist extends Worker implements XMLRepresentable{
     
     // Atributo de la clase
     private List<String> interests = new ArrayList<>(); // Lista de intereses.
-    // XML Engine
-    private org.w3c.dom.Document xml;
+    
+    /**
+     * Class constructor
+     * @param xmlJournalist This is a xml String which represents a Jorunalist
+     * @param patata
+     * @param hola
+     * @throws org.xml.sax.SAXException
+     */
+    public Journalist(String journalistFromXML) throws SAXException{
+        
+        // Creamos un worker nulo
+        
+        super();
+        
+        // Instanciamos el motor de XML
+        
+        XMLHandler xml = new XMLHandler();
+        
+        xml.engine = xml.getDocument(journalistFromXML);
+        
+        Element xmlJournalist = (Element) xml.engine.getElementsByTagName("Journalist").item(0);
+        
+        // Rellenamos los datos del worker nulo
+        
+        super.setId(xmlJournalist.getAttribute("id"));
+        super.setName(xmlJournalist.getElementsByTagName("Name").item(0).getTextContent());
+        super.setBirthDate(xmlJournalist.getElementsByTagName("BirthDate").item(0).getTextContent());
+        
+        NodeList interestsNodes = (NodeList) xml.engine.getElementsByTagName("Interests").item(0);
+
+        for (int i = 0; i < interestsNodes.getLength(); i++) {
+            Node interestNode = interestsNodes.item(i);
+            if (interestNode.getNodeType() == Node.ELEMENT_NODE) {
+                this.interests.add(interestNode.getTextContent());
+            }
+        } 
+    }
     
     /**
      * Class constructor
@@ -61,29 +102,6 @@ public class Journalist extends Worker implements XMLRepresentable{
         if(this.interests.isEmpty())
             return null;
         return this.interests.toArray(new String[this.interests.size()]);
-    }
-    
-    // TODO : JavaDoc 
-    // Esta funcion simplemente calcula el arbol XML
-    private void createXMLTree(){
-        
-        //get an instance of factory
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        try {
-            //get an instance of builder
-            DocumentBuilder db = dbf.newDocumentBuilder();
-
-            //create an instance of DOM
-            this.xml = db.newDocument();
-        }catch(ParserConfigurationException pce) {
-            //dump it
-            System.out.println("Error while trying to instantiate DocumentBuilder " + pce);
-            System.exit(1);
-        }
-        
-        // Añadimos a la raiz un solo elemento
-
-        this.xml.appendChild(this.getElement(this.xml));
     }
     
     /**
@@ -137,17 +155,17 @@ public class Journalist extends Worker implements XMLRepresentable{
     @Override
     public String toXML() {
         
-        // Almacenar en una variable
+        // Instanciamos el motor de XML
         
-        this.createXMLTree();
+        XMLHandler xml = new XMLHandler();
         
         Writer out = new StringWriter();
         try{
-            OutputFormat format = new OutputFormat(this.xml);
+            OutputFormat format = new OutputFormat(xml.engine);
             format.setIndenting(true);
             
             XMLSerializer serializerToString = new XMLSerializer(out , format);
-            serializerToString.serialize(this.xml);
+            serializerToString.serialize(this.getElement(xml.engine));
 
         } catch(IOException ie) {
             ie.printStackTrace();
@@ -163,19 +181,19 @@ public class Journalist extends Worker implements XMLRepresentable{
     @Override
     public boolean saveToXML(File file) {
         
-        // Almacenar en un fichero
+        // Instanciamos el motor de XML
         
-        this.createXMLTree();
+        XMLHandler xml = new XMLHandler();
         
         try{
             
-            OutputFormat format = new OutputFormat(this.xml);
+            OutputFormat format = new OutputFormat(xml.engine);
             format.setIndenting(true);
             
             XMLSerializer serializerTofile = new XMLSerializer(
                 new FileOutputStream(file)
                 , format);
-            serializerTofile.serialize(this.xml);
+            serializerTofile.serialize(this.getElement(xml.engine));
             
             return true;
         } catch(IOException ie) {
@@ -192,19 +210,19 @@ public class Journalist extends Worker implements XMLRepresentable{
     @Override
     public boolean saveToXML(String filePath) {
        
-        // Almacenar en un fichero
+        // Instanciamos el motor de XML
         
-        this.createXMLTree();
+        XMLHandler xml = new XMLHandler();
         
         try{
             
-            OutputFormat format = new OutputFormat(this.xml);
+            OutputFormat format = new OutputFormat(xml.engine);
             format.setIndenting(true);
             XMLSerializer serializerTofile = new XMLSerializer(
                 new FileOutputStream(
                     new File(filePath))
                 , format);
-            serializerTofile.serialize(this.xml);
+            serializerTofile.serialize(this.getElement(xml.engine));
             
             return true;
         } catch(IOException ie) {

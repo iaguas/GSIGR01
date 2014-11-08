@@ -32,6 +32,13 @@ public abstract class Worker implements Serializable, XMLRepresentable{
         this.name = name;
         this.birthDate = birthDate;
     }
+    
+    /**
+     * Class constructor of an empty worker.
+     */
+    protected Worker(){
+        // Constructor nulo
+    }
         
     /**
      * Sets an ID for a Worker.
@@ -39,6 +46,22 @@ public abstract class Worker implements Serializable, XMLRepresentable{
      */ 
     public void setId(String id){
         this.id = id;
+    }
+    
+    /**
+     * Sets an Name for a Worker.
+     * @param name desired worker name
+     */ 
+    public void setName(String name){
+        this.name = name;
+    }
+    
+    /**
+     * Sets an BirthDate for a Worker.
+     * @param birthDate desired worker birthDate
+     */ 
+    public void setBirthDate(String birthDate){
+        this.birthDate = birthDate;
     }
     
     /**

@@ -7,6 +7,7 @@
 package GSILib.BModel.workers;
 
 import GSILib.BModel.Worker;
+import GSILib.Serializable.XMLHandler;
 import GSILib.Serializable.XMLRepresentable;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -30,8 +31,6 @@ import org.w3c.dom.Text;
  */
 public class Photographer extends Worker implements XMLRepresentable{
     private String regularResidence, holidayResidence;
-    // XML Engine
-    private org.w3c.dom.Document xml;
     
     /**
      * Class constructor
@@ -65,29 +64,6 @@ public class Photographer extends Worker implements XMLRepresentable{
     public String getHolidayResidence(){
         // Devolvemos la residencia vacacional.
         return this.holidayResidence;
-    }
-    
-    // TODO : JavaDoc 
-    // Esta funcion simplemente calcula el arbol XML
-    private void createXMLTree(){
-        
-        //get an instance of factory
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        try {
-            //get an instance of builder
-            DocumentBuilder db = dbf.newDocumentBuilder();
-
-            //create an instance of DOM
-            this.xml = db.newDocument();
-        }catch(ParserConfigurationException pce) {
-            //dump it
-            System.out.println("Error while trying to instantiate DocumentBuilder " + pce);
-            System.exit(1);
-        }
-        
-        // Añadimos a la raiz un solo elemento
-
-        this.xml.appendChild(this.getElement(this.xml));
     }
     
     /**
@@ -134,23 +110,23 @@ public class Photographer extends Worker implements XMLRepresentable{
     }
     
     /**
-     * Gets this photographer in XML string.
-     * @return the xml string of this photographer.
+     * Gets this journalist in XML string.
+     * @return the xml string of this journalist.
      */
     @Override
     public String toXML() {
         
-        // Almacenar en una variable
+        // Instanciamos el motor de XML
         
-        this.createXMLTree();
+        XMLHandler xml = new XMLHandler();
         
         Writer out = new StringWriter();
         try{
-            OutputFormat format = new OutputFormat(this.xml);
+            OutputFormat format = new OutputFormat(xml.engine);
             format.setIndenting(true);
             
             XMLSerializer serializerToString = new XMLSerializer(out , format);
-            serializerToString.serialize(this.xml);
+            serializerToString.serialize(this.getElement(xml.engine));
 
         } catch(IOException ie) {
             ie.printStackTrace();
@@ -160,25 +136,25 @@ public class Photographer extends Worker implements XMLRepresentable{
     }
     
     /**
-     * Stores this photographer in XML.
-     * @return if the photographer was successfully stored into the xml file.
+     * Stores this journalist in XML.
+     * @return if the journalist was successfully stored into the xml file.
      */
     @Override
     public boolean saveToXML(File file) {
         
-        // Almacenar en un fichero
+        // Instanciamos el motor de XML
         
-        this.createXMLTree();
+        XMLHandler xml = new XMLHandler();
         
         try{
             
-            OutputFormat format = new OutputFormat(this.xml);
+            OutputFormat format = new OutputFormat(xml.engine);
             format.setIndenting(true);
             
             XMLSerializer serializerTofile = new XMLSerializer(
                 new FileOutputStream(file)
                 , format);
-            serializerTofile.serialize(this.xml);
+            serializerTofile.serialize(this.getElement(xml.engine));
             
             return true;
         } catch(IOException ie) {
@@ -189,25 +165,25 @@ public class Photographer extends Worker implements XMLRepresentable{
     }
 
     /**
-     * Stores this photographer in XML.
-     * @return if the photographer was successfully stored into the xml file.
+     * Stores this journalist in XML.
+     * @return if the journalist was successfully stored into the xml file.
      */
     @Override
     public boolean saveToXML(String filePath) {
        
-        // Almacenar en un fichero
+        // Instanciamos el motor de XML
         
-        this.createXMLTree();
+        XMLHandler xml = new XMLHandler();
         
         try{
             
-            OutputFormat format = new OutputFormat(this.xml);
+            OutputFormat format = new OutputFormat(xml.engine);
             format.setIndenting(true);
             XMLSerializer serializerTofile = new XMLSerializer(
                 new FileOutputStream(
                     new File(filePath))
                 , format);
-            serializerTofile.serialize(this.xml);
+            serializerTofile.serialize(this.getElement(xml.engine));
             
             return true;
         } catch(IOException ie) {

@@ -41,24 +41,24 @@ public class XMLTesting {
         
         Journalist journalistMEV = new Journalist("5", "MEV", "01/01/01", interestsOfMEV);
         
-        System.out.println(journalistAlvaro.saveToXML("journalist.xml"));
+        System.out.println(journalistAlvaro.saveToXML("xml/journalist.xml"));
         
         // Nuevo Photographer
         
         Photographer photographer = new Photographer("12", "Arguitxu Arzcarrena", "01/01/1990", "Bilbao", "Carpa");
         
-        System.out.println(photographer.saveToXML("photographer.xml"));
+        System.out.println(photographer.saveToXML("xml/photographer.xml"));
         
         // Nuevo Teletype
         
         Teletype teletype = new Teletype("Anonymous hackea la web de AEDE", "Se conoce el grupo de burdos patanes fueron owneados", journalistAlvaro);
         
-        System.out.println(teletype.saveToXML("teletype.xml"));
+        System.out.println(teletype.saveToXML("xml/teletype.xml"));
         
         // Nueva Picture
         
         Picture pictureRed = new Picture("http://images.example.com/testRed.png", photographer);
-        System.out.println(pictureRed.saveToXML("picture.xml"));
+        System.out.println(pictureRed.saveToXML("xml/picture.xml"));
         
         Picture pictureBlue = new Picture("http://images.example.com/testBlue.png", photographer);
         
@@ -69,7 +69,7 @@ public class XMLTesting {
         printableNews.addPicture(pictureRed);
         printableNews.addPicture(pictureBlue);
         
-        System.out.println(printableNews.saveToXML("printableNews.xml"));
+        System.out.println(printableNews.saveToXML("xml/printableNews.xml"));
         
         // Nueva WebNews
         
@@ -79,7 +79,7 @@ public class XMLTesting {
         webNews.addPicture(pictureRed);
         webNews.addPicture(pictureBlue);
         
-        System.out.println(webNews.saveToXML("webNews.xml"));
+        System.out.println(webNews.saveToXML("xml/webNews.xml"));
         
         // Nuevo BusinessSystem
         
@@ -101,7 +101,7 @@ public class XMLTesting {
         bs.createNewspaper(date);
         bs.addNewsToIssue(bs.getNewspaper(date), printableNews);
        
-        System.out.print(bs.saveToXML("businessSystem.xml"));
+        System.out.print(bs.saveToXML("xml/businessSystem.xml"));
         
     }
 }

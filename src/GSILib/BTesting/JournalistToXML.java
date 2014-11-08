@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -157,19 +159,25 @@ public class JournalistToXML{
             throw new RuntimeException(e);
         }
     }
-    public static void main(String args[]) {
+    public static void main(String args[]) throws SAXException {
         
-        // Las funciones de arriba son inutiles ya
+        // Nuevo Journalist
         
-        ArrayList interests = new ArrayList();
+        ArrayList interestsOfPirata = new ArrayList();
         
-        interests.add("Discutir");
-        interests.add("Tocar las narices");
-        interests.add("Jugar al CS");
-
-        Journalist journalist = new Journalist("8", "Alvaro Octal", "27/12/1993", interests);
+        interestsOfPirata.add("Comer pasta");
+        interestsOfPirata.add("beber cerveza");
+        interestsOfPirata.add("Cantar canciones");
+        interestsOfPirata.add("trifulcas de bar");
         
-        System.out.println(journalist.saveToXML("test.xml"));
+        Journalist journalistPirata= new Journalist("2", "Pirata", "01/01/01", interestsOfPirata);
+        
+        System.out.println(journalistPirata.saveToXML("xml/test.xml"));
+        
+        Journalist journalistPirataCopia = new Journalist(journalistPirata.toXML());
+        
+        System.out.print(journalistPirataCopia.toString());
+        
     }
     
 }

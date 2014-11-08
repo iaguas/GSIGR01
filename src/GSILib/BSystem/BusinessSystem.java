@@ -17,6 +17,7 @@ import GSILib.BModel.*;
 import GSILib.BModel.workers.*;
 import GSILib.BModel.documents.*;
 import GSILib.BModel.documents.visualNews.*;
+import GSILib.Serializable.XMLHandler;
 import GSILib.Serializable.XMLRepresentable;
 import GSILib.persistence.*;
 /* Estos, en cambio, son solo cosa de la implementación, que no debe conocerse */
@@ -63,9 +64,6 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
 
     // Clase para dar el ID a las noticias (de cualquier tipo) de forma única.
     private final AtomicInteger atomicInteger = new AtomicInteger();
-    
-    // XML Engine
-    private org.w3c.dom.Document xml;
     
     @Override
     public boolean addJournalist(Journalist jr){
@@ -970,29 +968,6 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
         return true;
     }  
     
-    // TODO : JavaDoc 
-    // Esta funcion simplemente calcula el arbol XML
-    private void createXMLTree(){
-        
-        //get an instance of factory
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        try {
-            //get an instance of builder
-            DocumentBuilder db = dbf.newDocumentBuilder();
-
-            //create an instance of DOM
-            this.xml = db.newDocument();
-        }catch(ParserConfigurationException pce) {
-            //dump it
-            System.out.println("Error while trying to instantiate DocumentBuilder " + pce);
-            System.exit(1);
-        }
-        
-        // Añadimos a la raiz un solo elemento
-
-        this.xml.appendChild(this.getElement(this.xml));
-    }
-    
     /**
      * Helper method which creates a XML element <BusinessSystem>
      * @return XML element snippet representing a BusinessSystem
@@ -1016,7 +991,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
                 
                 Journalist journalist = (Journalist) worker.getValue();
                 
-                xmlBSWorkers.appendChild(journalist.getElement(this.xml));
+                xmlBSWorkers.appendChild(journalist.getElement(xml));
             }
             else if (worker.getValue().getClass().getName().equals("GSILib.BModel.workers.Photographer")){
                 
@@ -1024,7 +999,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
                 
                 Photographer photographer = (Photographer) worker.getValue();
                 
-                xmlBSWorkers.appendChild(photographer.getElement(this.xml));
+                xmlBSWorkers.appendChild(photographer.getElement(xml));
             }
             else{
                 System.err.print("Unrecognised Class.\n");
@@ -1047,7 +1022,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
                 
                 Teletype teletype = (Teletype) document;
                 
-                xmlBSDocuments.appendChild(teletype.getElement(this.xml));
+                xmlBSDocuments.appendChild(teletype.getElement(xml));
             }
             else if (document.getClass().getName().equals("GSILib.BModel.documents.visualNews.WebNews")){
                 
@@ -1055,7 +1030,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
                 
                 WebNews webNews = (WebNews) document;
                 
-                xmlBSDocuments.appendChild(webNews.getElement(this.xml));
+                xmlBSDocuments.appendChild(webNews.getElement(xml));
             }
             else if (document.getClass().getName().equals("GSILib.BModel.documents.visualNews.PrintableNews")){
                 
@@ -1063,7 +1038,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
                 
                 PrintableNews printableNews = (PrintableNews) document;
                 
-                xmlBSDocuments.appendChild(printableNews.getElement(this.xml));
+                xmlBSDocuments.appendChild(printableNews.getElement(xml));
             } 
             else{
                 System.err.print("Unrecognised Class.\n");
@@ -1085,7 +1060,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
 
             Picture picture = (Picture) entry.getValue();
 
-            xmlBSPictures.appendChild(picture.getElement(this.xml));
+            xmlBSPictures.appendChild(picture.getElement(xml));
         }
         
         xmlBS.appendChild(xmlBSPictures);
@@ -1103,7 +1078,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
 
             Newspaper newspaper = (Newspaper) entry.getValue();
 
-            xmlBSNewspapers.appendChild(newspaper.getElement(this.xml));
+            xmlBSNewspapers.appendChild(newspaper.getElement(xml));
         }
         
         xmlBS.appendChild(xmlBSNewspapers);
@@ -1118,17 +1093,17 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
     @Override
     public String toXML() {
         
-        // Almacenar en una variable
+        // Instanciamos el motor de XML
         
-        this.createXMLTree();
+        XMLHandler xml = new XMLHandler();
         
         Writer out = new StringWriter();
         try{
-            OutputFormat format = new OutputFormat(this.xml);
+            OutputFormat format = new OutputFormat(xml.engine);
             format.setIndenting(true);
             
             XMLSerializer serializerToString = new XMLSerializer(out , format);
-            serializerToString.serialize(this.xml);
+            serializerToString.serialize(this.getElement(xml.engine));
 
         } catch(IOException ie) {
             ie.printStackTrace();
@@ -1144,19 +1119,19 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
     @Override
     public boolean saveToXML(File file) {
         
-        // Almacenar en un fichero
+        // Instanciamos el motor de XML
         
-        this.createXMLTree();
+        XMLHandler xml = new XMLHandler();
         
         try{
             
-            OutputFormat format = new OutputFormat(this.xml);
+            OutputFormat format = new OutputFormat(xml.engine);
             format.setIndenting(true);
             
             XMLSerializer serializerTofile = new XMLSerializer(
                 new FileOutputStream(file)
                 , format);
-            serializerTofile.serialize(this.xml);
+            serializerTofile.serialize(this.getElement(xml.engine));
             
             return true;
         } catch(IOException ie) {
@@ -1173,19 +1148,19 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
     @Override
     public boolean saveToXML(String filePath) {
        
-        // Almacenar en un fichero
+        // Instanciamos el motor de XML
         
-        this.createXMLTree();
+        XMLHandler xml = new XMLHandler();
         
         try{
             
-            OutputFormat format = new OutputFormat(this.xml);
+            OutputFormat format = new OutputFormat(xml.engine);
             format.setIndenting(true);
             XMLSerializer serializerTofile = new XMLSerializer(
                 new FileOutputStream(
                     new File(filePath))
                 , format);
-            serializerTofile.serialize(this.xml);
+            serializerTofile.serialize(this.getElement(xml.engine));
             
             return true;
         } catch(IOException ie) {
