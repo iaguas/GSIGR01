@@ -31,8 +31,6 @@ import org.w3c.dom.Text;
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class Teletype extends Document implements XMLRepresentable{
-    // XML Store Mode
-    static final String XMLStoreMode = "full"; // {"full","relational"}
     
     /**
      * Class constructor that makes an object with headline, body and author.
@@ -49,33 +47,33 @@ public class Teletype extends Document implements XMLRepresentable{
      * Helper method which creates a XML element <Teletype>
      * @return XML element snippet representing a teletype
      */
-    public Element getElement(org.w3c.dom.Document xml){
+    public Element getElement(XMLHandler xml){
 
-        Element xmlTeletype = xml.createElement("Teletype");
+        Element xmlTeletype = xml.engine.createElement("Teletype");
 
         // Para una raiz Teletype, introducimos otra raiz Headline
         
-        Element xmlTeletypeHeadline = xml.createElement("Headline");
-        Text teletypeHeadline = xml.createTextNode(this.getHeadline());
+        Element xmlTeletypeHeadline = xml.engine.createElement("Headline");
+        Text teletypeHeadline = xml.engine.createTextNode(this.getHeadline());
         xmlTeletypeHeadline.appendChild(teletypeHeadline);
         xmlTeletype.appendChild(xmlTeletypeHeadline);
 
         // Para una raiz Teletype, introducimos otra raiz Body
         
-        Element xmlTeletypeBody = xml.createElement("Body");
-        Text teletypeBody = xml.createTextNode(this.getBody());
+        Element xmlTeletypeBody = xml.engine.createElement("Body");
+        Text teletypeBody = xml.engine.createTextNode(this.getBody());
         xmlTeletypeBody.appendChild(teletypeBody);
         xmlTeletype.appendChild(xmlTeletypeBody);
         
-        if (this.XMLStoreMode.equals("relational")){
+        if (xml.storeMode.equals("relational")){
             
             // Para una raiz Journalist, introducimos su id como atributo
             
-            Element xmlTeletypeJournalist = xml.createElement("Journalist");
+            Element xmlTeletypeJournalist = xml.engine.createElement("Journalist");
             xmlTeletypeJournalist.setAttribute("id", this.getAuthor().getId());
             xmlTeletype.appendChild(xmlTeletypeJournalist);
         }
-        else if(this.XMLStoreMode.equals("full")){
+        else if(xml.storeMode.equals("full")){
             
             // Para una raiz Teletype, introducimos otra raiz Journalist
             
@@ -105,7 +103,7 @@ public class Teletype extends Document implements XMLRepresentable{
             format.setIndenting(true);
             
             XMLSerializer serializerToString = new XMLSerializer(out , format);
-            serializerToString.serialize(this.getElement(xml.engine));
+            serializerToString.serialize(this.getElement(xml));
 
         } catch(IOException ie) {
             ie.printStackTrace();
@@ -133,7 +131,7 @@ public class Teletype extends Document implements XMLRepresentable{
             XMLSerializer serializerTofile = new XMLSerializer(
                 new FileOutputStream(file)
                 , format);
-            serializerTofile.serialize(this.getElement(xml.engine));
+            serializerTofile.serialize(this.getElement(xml));
             
             return true;
         } catch(IOException ie) {
@@ -162,7 +160,7 @@ public class Teletype extends Document implements XMLRepresentable{
                 new FileOutputStream(
                     new File(filePath))
                 , format);
-            serializerTofile.serialize(this.getElement(xml.engine));
+            serializerTofile.serialize(this.getElement(xml));
             
             return true;
         } catch(IOException ie) {

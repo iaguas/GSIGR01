@@ -20,6 +20,8 @@ import org.xml.sax.SAXException;
 public final class XMLHandler {
     // XML Engine
     public org.w3c.dom.Document engine;
+    // XML Store Mode
+    public final String storeMode = "full"; // {"full","relational"}
     
     // TODO : JavaDoc 
     // Esta funcion simplemente calcula el arbol XML

@@ -38,8 +38,6 @@ public class WebNews extends VisualNews implements XMLRepresentable{
     // Atributos de la clase.
     private String url; // URL identificable de la clase.
     private List<String> keywords = new ArrayList<>(); // Palabras clave identificables.
-    // XML Store Mode
-    static final String XMLStoreMode = "full"; // {"full","relational"}
     
     /**
      * Class constructor that makes an object with headline, body, author and URL.
@@ -94,41 +92,41 @@ public class WebNews extends VisualNews implements XMLRepresentable{
      * Helper method which creates a XML element <WebNews>
      * @return XML element snippet representing a webNews
      */
-    public Element getElement(org.w3c.dom.Document xml){
+    public Element getElement(XMLHandler xml){
 
-        Element xmlWebNews = xml.createElement("WebNews");
+        Element xmlWebNews = xml.engine.createElement("WebNews");
 
         // Para una raiz WebNews, introducimos otra raiz Headline
         
-        Element xmlWebNewsHeadline = xml.createElement("Headline");
-        Text webNewsHeadline = xml.createTextNode(this.getHeadline());
+        Element xmlWebNewsHeadline = xml.engine.createElement("Headline");
+        Text webNewsHeadline = xml.engine.createTextNode(this.getHeadline());
         xmlWebNewsHeadline.appendChild(webNewsHeadline);
         xmlWebNews.appendChild(xmlWebNewsHeadline);
 
         // Para una raiz WebNews, introducimos otra raiz Body
         
-        Element xmlWebNewsBody = xml.createElement("Body");
-        Text webNewsBody = xml.createTextNode(this.getBody());
+        Element xmlWebNewsBody = xml.engine.createElement("Body");
+        Text webNewsBody = xml.engine.createTextNode(this.getBody());
         xmlWebNewsBody.appendChild(webNewsBody);
         xmlWebNews.appendChild(xmlWebNewsBody);
         
         // Para una raiz WebNews, introducimos otra raiz Body
         
-        Element xmlWebNewsUrl = xml.createElement("Url");
-        Text webNewsUrl = xml.createTextNode(this.getUrl());
+        Element xmlWebNewsUrl = xml.engine.createElement("Url");
+        Text webNewsUrl = xml.engine.createTextNode(this.getUrl());
         xmlWebNewsUrl.appendChild(webNewsUrl);
         xmlWebNews.appendChild(xmlWebNewsUrl);
         
         // Para una raiz WebNews, introducimos otra raiz Journalist
         
-        if (this.XMLStoreMode.equals("relational")){
+        if (xml.storeMode.equals("relational")){
             
             // Para una raiz Journalist, introducimos su id como atributo
-            Element xmlWebNewsJournalist = xml.createElement("Journalist");
+            Element xmlWebNewsJournalist = xml.engine.createElement("Journalist");
             xmlWebNewsJournalist.setAttribute("id", this.getAuthor().getId());
             xmlWebNews.appendChild(xmlWebNewsJournalist);
         }
-        else if(this.XMLStoreMode.equals("full")){
+        else if(xml.storeMode.equals("full")){
             
             // Para una raiz Teletype, introducimos otra raiz Journalist
             xmlWebNews.appendChild(this.getAuthor().getElement(xml));
@@ -139,13 +137,13 @@ public class WebNews extends VisualNews implements XMLRepresentable{
         
         // Para una raiz WebNews, introducimos otra raiz Keywords
         
-        Element xmlWebNewsKeywords = xml.createElement("Keywords");
+        Element xmlWebNewsKeywords = xml.engine.createElement("Keywords");
         for(String keyword : this.keywords){
             
             // Para una raiz Keywords, introducimos las keyword
             
-            Element xmlWebNewsKeyword = xml.createElement("Keyword");
-            Text webNewsKeyword = xml.createTextNode(keyword);
+            Element xmlWebNewsKeyword = xml.engine.createElement("Keyword");
+            Text webNewsKeyword = xml.engine.createTextNode(keyword);
             xmlWebNewsKeyword.appendChild(webNewsKeyword);
             xmlWebNewsKeywords.appendChild(xmlWebNewsKeyword);
         }
@@ -154,19 +152,19 @@ public class WebNews extends VisualNews implements XMLRepresentable{
         
         // Para una raiz WebNews, introducimos otra raiz Pictures
         
-        Element xmlWebNewsPictures = xml.createElement("Pictures");
+        Element xmlWebNewsPictures = xml.engine.createElement("Pictures");
         
-        if (this.XMLStoreMode.equals("relational")){
+        if (xml.storeMode.equals("relational")){
             for(Picture picture : this.getPictures()){
                 
                 // Para una raiz Pictures, introducimos su url como atributo
                 
-                Element xmlWebNewsPicture = xml.createElement("Picture");
+                Element xmlWebNewsPicture = xml.engine.createElement("Picture");
                 xmlWebNewsPicture.setAttribute("url", picture.getUrl());
                 xmlWebNewsPictures.appendChild(xmlWebNewsPicture);
             }
         }
-        else if(this.XMLStoreMode.equals("full")){
+        else if(xml.storeMode.equals("full")){
             for(Picture picture : this.getPictures()){
                 
                 // Para una raiz Pictures, introducimos otra raiz Picture
@@ -199,7 +197,7 @@ public class WebNews extends VisualNews implements XMLRepresentable{
             format.setIndenting(true);
             
             XMLSerializer serializerToString = new XMLSerializer(out , format);
-            serializerToString.serialize(this.getElement(xml.engine));
+            serializerToString.serialize(this.getElement(xml));
 
         } catch(IOException ie) {
             ie.printStackTrace();
@@ -227,7 +225,7 @@ public class WebNews extends VisualNews implements XMLRepresentable{
             XMLSerializer serializerTofile = new XMLSerializer(
                 new FileOutputStream(file)
                 , format);
-            serializerTofile.serialize(this.getElement(xml.engine));
+            serializerTofile.serialize(this.getElement(xml));
             
             return true;
         } catch(IOException ie) {
@@ -256,7 +254,7 @@ public class WebNews extends VisualNews implements XMLRepresentable{
                 new FileOutputStream(
                     new File(filePath))
                 , format);
-            serializerTofile.serialize(this.getElement(xml.engine));
+            serializerTofile.serialize(this.getElement(xml));
             
             return true;
         } catch(IOException ie) {

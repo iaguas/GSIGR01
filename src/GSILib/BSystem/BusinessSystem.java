@@ -972,13 +972,13 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
      * Helper method which creates a XML element <BusinessSystem>
      * @return XML element snippet representing a BusinessSystem
      */
-    public Element getElement(org.w3c.dom.Document xml){
+    public Element getElement(XMLHandler xml){
 
-        Element xmlBS = xml.createElement("BusinessSystem");
+        Element xmlBS = xml.engine.createElement("BusinessSystem");
         
         // Para una raiz BusinessSystem, introducimos otra raiz Workers
         
-        Element xmlBSWorkers = xml.createElement("Workers");
+        Element xmlBSWorkers = xml.engine.createElement("Workers");
         
         Iterator iteratorWorkers = this.workers.entrySet().iterator();
         while (iteratorWorkers.hasNext()) {
@@ -1010,7 +1010,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
 
         // Para una raiz BusinessSystem, introducimos otra raiz Documents
         
-        Element xmlBSDocuments = xml.createElement("Documents");
+        Element xmlBSDocuments = xml.engine.createElement("Documents");
         
         for(Document document : this.documents){
             
@@ -1049,7 +1049,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
         
         // Para una raiz BusinessSystem, introducimos otra raiz Workers
         
-        Element xmlBSPictures = xml.createElement("Pictures");
+        Element xmlBSPictures = xml.engine.createElement("Pictures");
         
         Iterator iteratorPictures = this.pictures.entrySet().iterator();
         while (iteratorPictures.hasNext()) {
@@ -1067,7 +1067,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
         
         // Para una raiz BusinessSystem, introducimos otra raiz Newspapers
         
-        Element xmlBSNewspapers = xml.createElement("Newspapers");
+        Element xmlBSNewspapers = xml.engine.createElement("Newspapers");
         
         Iterator iteratorNewspapers = this.newspapers.entrySet().iterator();
         while (iteratorNewspapers.hasNext()) {
@@ -1103,7 +1103,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
             format.setIndenting(true);
             
             XMLSerializer serializerToString = new XMLSerializer(out , format);
-            serializerToString.serialize(this.getElement(xml.engine));
+            serializerToString.serialize(this.getElement(xml));
 
         } catch(IOException ie) {
             ie.printStackTrace();
@@ -1131,7 +1131,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
             XMLSerializer serializerTofile = new XMLSerializer(
                 new FileOutputStream(file)
                 , format);
-            serializerTofile.serialize(this.getElement(xml.engine));
+            serializerTofile.serialize(this.getElement(xml));
             
             return true;
         } catch(IOException ie) {
@@ -1160,7 +1160,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
                 new FileOutputStream(
                     new File(filePath))
                 , format);
-            serializerTofile.serialize(this.getElement(xml.engine));
+            serializerTofile.serialize(this.getElement(xml));
             
             return true;
         } catch(IOException ie) {

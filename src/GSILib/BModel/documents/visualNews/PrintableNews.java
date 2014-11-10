@@ -34,8 +34,6 @@ import org.w3c.dom.Text;
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class PrintableNews extends VisualNews implements XMLRepresentable{
-    // XML Store Mode
-    static final String XMLStoreMode = "full"; // {"full","relational"}
     
     // Atributo de la clase.
     private List<Journalist> reviewers = new ArrayList<>(); // Revisores de la noticia.
@@ -89,35 +87,35 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
      * Helper method which creates a XML element <PrintableNews>
      * @return XML element snippet representing a printableNews
      */
-    public Element getElement(org.w3c.dom.Document xml){
+    public Element getElement(XMLHandler xml){
 
-        Element xmlPrintableNews = xml.createElement("PrintableNews");
+        Element xmlPrintableNews = xml.engine.createElement("PrintableNews");
 
         // Para una raiz PrintableNews, introducimos otra raiz Headline
         
-        Element xmlPrintableNewsHeadline = xml.createElement("Headline");
-        Text printableNewsHeadline = xml.createTextNode(this.getHeadline());
+        Element xmlPrintableNewsHeadline = xml.engine.createElement("Headline");
+        Text printableNewsHeadline = xml.engine.createTextNode(this.getHeadline());
         xmlPrintableNewsHeadline.appendChild(printableNewsHeadline);
         xmlPrintableNews.appendChild(xmlPrintableNewsHeadline);
 
         // Para una raiz PrintableNews, introducimos otra raiz Body
         
-        Element xmlPrintableNewsBody = xml.createElement("Body");
-        Text printableNewsBody = xml.createTextNode(this.getBody());
+        Element xmlPrintableNewsBody = xml.engine.createElement("Body");
+        Text printableNewsBody = xml.engine.createTextNode(this.getBody());
         xmlPrintableNewsBody.appendChild(printableNewsBody);
         xmlPrintableNews.appendChild(xmlPrintableNewsBody);
         
         // Para una raiz PrintableNews, introducimos otra raiz Journalist
         
-        if (this.XMLStoreMode.equals("relational")){
+        if (xml.storeMode.equals("relational")){
             
             // Para una raiz Journalist, introducimos su id como atributo
             
-            Element xmlPrintableNewsJournalist = xml.createElement("Journalist");
+            Element xmlPrintableNewsJournalist = xml.engine.createElement("Journalist");
             xmlPrintableNewsJournalist.setAttribute("id", this.getAuthor().getId());
             xmlPrintableNews.appendChild(xmlPrintableNewsJournalist);
         }
-        else if(this.XMLStoreMode.equals("full")){
+        else if(xml.storeMode.equals("full")){
             
             // Para una raiz Teletype, introducimos otra raiz Journalist
             
@@ -129,19 +127,19 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
         
         // Para una raiz PrintableNews, introducimos otra raiz Reviewers
         
-        Element xmlPrintableNewsReviewers = xml.createElement("Reviewers");
+        Element xmlPrintableNewsReviewers = xml.engine.createElement("Reviewers");
         
-        if (this.XMLStoreMode.equals("relational")){
+        if (xml.storeMode.equals("relational")){
             for(Journalist reviewer : this.reviewers){
                 
                 // Para una raiz Reviewers, introducimos su id como atributo
                 
-                Element xmlPrintableNewsReviewer = xml.createElement("Journalist");
+                Element xmlPrintableNewsReviewer = xml.engine.createElement("Journalist");
                 xmlPrintableNewsReviewer.setAttribute("id", reviewer.getId());
                 xmlPrintableNewsReviewers.appendChild(xmlPrintableNewsReviewer);
             }
         }
-        else if(this.XMLStoreMode.equals("full")){
+        else if(xml.storeMode.equals("full")){
             for(Journalist reviewer : this.reviewers){
                 
                 // Para una raiz Reviewers, introducimos otra raiz Journalist
@@ -156,19 +154,19 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
         
         // Para una raiz PrintableNews, introducimos otra raiz Pictures
         
-        Element xmlPrintableNewsPictures = xml.createElement("Pictures");
+        Element xmlPrintableNewsPictures = xml.engine.createElement("Pictures");
         
-        if (this.XMLStoreMode.equals("relational")){
+        if (xml.storeMode.equals("relational")){
             for(Picture picture : this.getPictures()){
                 
                 // Para una raiz Pictures, introducimos su url como atributo
                 
-                Element xmlPrintableNewsPicture = xml.createElement("Picture");
+                Element xmlPrintableNewsPicture = xml.engine.createElement("Picture");
                 xmlPrintableNewsPicture.setAttribute("url", picture.getUrl());
                 xmlPrintableNewsPictures.appendChild(xmlPrintableNewsPicture);
             }
         }
-        else if(this.XMLStoreMode.equals("full")){
+        else if(xml.storeMode.equals("full")){
             for(Picture picture : this.getPictures()){
                 
                 // Para una raiz Pictures, introducimos otra raiz Picture
@@ -201,7 +199,7 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
             format.setIndenting(true);
             
             XMLSerializer serializerToString = new XMLSerializer(out , format);
-            serializerToString.serialize(this.getElement(xml.engine));
+            serializerToString.serialize(this.getElement(xml));
 
         } catch(IOException ie) {
             ie.printStackTrace();
@@ -229,7 +227,7 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
             XMLSerializer serializerTofile = new XMLSerializer(
                 new FileOutputStream(file)
                 , format);
-            serializerTofile.serialize(this.getElement(xml.engine));
+            serializerTofile.serialize(this.getElement(xml));
             
             return true;
         } catch(IOException ie) {
@@ -258,7 +256,7 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
                 new FileOutputStream(
                     new File(filePath))
                 , format);
-            serializerTofile.serialize(this.getElement(xml.engine));
+            serializerTofile.serialize(this.getElement(xml));
             
             return true;
         } catch(IOException ie) {

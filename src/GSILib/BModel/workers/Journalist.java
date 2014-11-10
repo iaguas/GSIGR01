@@ -45,9 +45,21 @@ public class Journalist extends Worker implements XMLRepresentable{
     
     /**
      * Class constructor
-     * @param xmlJournalist This is a xml String which represents a Jorunalist
-     * @param patata
-     * @param hola
+     * @param id This is an unique ID of the worker.
+     * @param name The name of the worker.
+     * @param birthDate The birth dathe of the worker.
+     * @param interests Is a list of a keyword of interest of a Journalist.
+     */
+    public Journalist(String id, String name, String birthDate, ArrayList interests){
+        // Utilizamos el constructor de la superclase
+        super(id, name, birthDate);
+        // Introducimos los intereses en esta clase, que es quien los contiene.
+        this.interests = interests;
+    }
+    
+    /**
+     * Class constructor
+     * @param journalistFromXML This is a xml String which represents a Jorunalist
      * @throws org.xml.sax.SAXException
      */
     public Journalist(String journalistFromXML) throws SAXException{
@@ -81,20 +93,6 @@ public class Journalist extends Worker implements XMLRepresentable{
     }
     
     /**
-     * Class constructor
-     * @param id This is an unique ID of the worker.
-     * @param name The name of the worker.
-     * @param birthDate The birth dathe of the worker.
-     * @param interests Is a list of a keyword of interest of a Journalist.
-     */
-    public Journalist(String id, String name, String birthDate, ArrayList interests){
-        // Utilizamos el constructor de la superclase
-        super(id, name, birthDate);
-        // Introducimos los intereses en esta clase, que es quien los contiene.
-        this.interests = interests;
-    }
-    
-    /**
      * Gets the interest of a journalist
      * @return the array of interests
      */
@@ -108,9 +106,9 @@ public class Journalist extends Worker implements XMLRepresentable{
      * Helper method which creates a XML element <Journalist>
      * @return XML element snippet representing a journalist
      */
-    public Element getElement(org.w3c.dom.Document xml){
+    public Element getElement(XMLHandler xml){
 
-        Element xmlJournalist = xml.createElement("Journalist");
+        Element xmlJournalist = xml.engine.createElement("Journalist");
         
         // Para una raiz Journalist, introducimos su id como atributo
         
@@ -118,28 +116,28 @@ public class Journalist extends Worker implements XMLRepresentable{
 
         // Para una raiz Journalist, introducimos otra raiz Name
         
-        Element xmlJournalistName = xml.createElement("Name");
-        Text journalistName = xml.createTextNode(this.getName());
+        Element xmlJournalistName = xml.engine.createElement("Name");
+        Text journalistName = xml.engine.createTextNode(this.getName());
         xmlJournalistName.appendChild(journalistName);
         xmlJournalist.appendChild(xmlJournalistName);
 
         // Para una raiz Journalist, introducimos otra raiz BirthDate
         
-        Element xmlJournalistBirthDate = xml.createElement("BirthDate");
-        Text journalistBirthDate = xml.createTextNode(this.getBirthDate());
+        Element xmlJournalistBirthDate = xml.engine.createElement("BirthDate");
+        Text journalistBirthDate = xml.engine.createTextNode(this.getBirthDate());
         xmlJournalistBirthDate.appendChild(journalistBirthDate);
         xmlJournalist.appendChild(xmlJournalistBirthDate);
         
         // Para una raiz Journalist, introducimos otra raiz Interests
         
         String[] interests = this.getInterests();
-        Element xmlJournalistInterests = xml.createElement("Interests");
+        Element xmlJournalistInterests = xml.engine.createElement("Interests");
         for(String interest : interests){
             
             // Para una raiz Interests, introducimos otra raiz Interest
             
-            Element xmlJournalistInterest = xml.createElement("Interest");
-            Text journalistInterest = xml.createTextNode(interest);
+            Element xmlJournalistInterest = xml.engine.createElement("Interest");
+            Text journalistInterest = xml.engine.createTextNode(interest);
             xmlJournalistInterest.appendChild(journalistInterest);      
             xmlJournalistInterests.appendChild(xmlJournalistInterest);
         }
@@ -165,7 +163,7 @@ public class Journalist extends Worker implements XMLRepresentable{
             format.setIndenting(true);
             
             XMLSerializer serializerToString = new XMLSerializer(out , format);
-            serializerToString.serialize(this.getElement(xml.engine));
+            serializerToString.serialize(this.getElement(xml));
 
         } catch(IOException ie) {
             ie.printStackTrace();
@@ -193,7 +191,7 @@ public class Journalist extends Worker implements XMLRepresentable{
             XMLSerializer serializerTofile = new XMLSerializer(
                 new FileOutputStream(file)
                 , format);
-            serializerTofile.serialize(this.getElement(xml.engine));
+            serializerTofile.serialize(this.getElement(xml));
             
             return true;
         } catch(IOException ie) {
@@ -222,7 +220,7 @@ public class Journalist extends Worker implements XMLRepresentable{
                 new FileOutputStream(
                     new File(filePath))
                 , format);
-            serializerTofile.serialize(this.getElement(xml.engine));
+            serializerTofile.serialize(this.getElement(xml));
             
             return true;
         } catch(IOException ie) {

@@ -37,8 +37,6 @@ public class Newspaper implements XMLRepresentable{
     // Atributos de la clase.
     private Date date = new Date(); // Fecha de publicación del periodico.
     private List<PrintableNews> news; // Lista de noticias publicadas.
-    // XML Store Mode
-    static final String XMLStoreMode = "full"; // {"full","relational"}
     
     /**
      * Class constructor of a void newspaper.
@@ -109,25 +107,25 @@ public class Newspaper implements XMLRepresentable{
      * Helper method which creates a XML element <Newspaper>
      * @return XML element snippet representing a newspaper
      */
-    public Element getElement(org.w3c.dom.Document xml){
+    public Element getElement(XMLHandler xml){
 
-        Element xmlNewspaper = xml.createElement("Newspaper");
+        Element xmlNewspaper = xml.engine.createElement("Newspaper");
 
         // Para una raiz Newspaper, introducimos su date como atributo
         
         xmlNewspaper.setAttribute("date", this.getDate().toString());
         
-        if (this.XMLStoreMode.equals("relational")){
+        if (xml.storeMode.equals("relational")){
             for(PrintableNews printableNews : this.getPrintableNews()){
                 
                 // Para una raiz Newspaper, introducimos otra raiz PrintableNews
                 
-                Element xmlNewspaperPrintableNews = xml.createElement("PrintableNews");
+                Element xmlNewspaperPrintableNews = xml.engine.createElement("PrintableNews");
                 xmlNewspaperPrintableNews.setAttribute("id", printableNews.getId().toString());
                 xmlNewspaper.appendChild(xmlNewspaperPrintableNews);
             }
         }
-        else if(this.XMLStoreMode.equals("full")){
+        else if(xml.storeMode.equals("full")){
             for(PrintableNews printableNews : this.news){
 
                 // Para una raiz Newspaper, introducimos otra raiz PrintableNews
@@ -159,7 +157,7 @@ public class Newspaper implements XMLRepresentable{
             format.setIndenting(true);
             
             XMLSerializer serializerToString = new XMLSerializer(out , format);
-            serializerToString.serialize(this.getElement(xml.engine));
+            serializerToString.serialize(this.getElement(xml));
 
         } catch(IOException ie) {
             ie.printStackTrace();
@@ -187,7 +185,7 @@ public class Newspaper implements XMLRepresentable{
             XMLSerializer serializerTofile = new XMLSerializer(
                 new FileOutputStream(file)
                 , format);
-            serializerTofile.serialize(this.getElement(xml.engine));
+            serializerTofile.serialize(this.getElement(xml));
             
             return true;
         } catch(IOException ie) {
@@ -216,7 +214,7 @@ public class Newspaper implements XMLRepresentable{
                 new FileOutputStream(
                     new File(filePath))
                 , format);
-            serializerTofile.serialize(this.getElement(xml.engine));
+            serializerTofile.serialize(this.getElement(xml));
             
             return true;
         } catch(IOException ie) {

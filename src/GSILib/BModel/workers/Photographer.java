@@ -20,7 +20,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
+import org.xml.sax.SAXException;
 
 /**
  * This is the class Photographer.
@@ -49,6 +52,37 @@ public class Photographer extends Worker implements XMLRepresentable{
     }
     
     /**
+     * Class constructor
+     * @param journalistFromXML This is a xml String which represents a Jorunalist
+     * @throws org.xml.sax.SAXException
+     */
+    public Photographer(String photographerFromXML) throws SAXException{
+        
+        // Creamos un worker nulo
+        
+        super();
+        
+        // Instanciamos el motor de XML
+        
+        XMLHandler xml = new XMLHandler();
+        
+        xml.engine = xml.getDocument(photographerFromXML);
+        
+        Element xmlPhotographer = (Element) xml.engine.getElementsByTagName("Photographer").item(0);
+        
+        // Rellenamos los datos del worker nulo
+        
+        super.setId(xmlPhotographer.getAttribute("id"));
+        super.setName(xmlPhotographer.getElementsByTagName("Name").item(0).getTextContent());
+        super.setBirthDate(xmlPhotographer.getElementsByTagName("BirthDate").item(0).getTextContent());
+        
+        this.regularResidence = xmlPhotographer.getElementsByTagName("RegularResidence").item(0).getTextContent();
+        this.holidayResidence = xmlPhotographer.getElementsByTagName("HolidayResidence").item(0).getTextContent();
+        
+        
+    }
+    
+    /**
      * Gets the regular residence of the associated photographer
      * @return the regular residence of the associated photographer
      */
@@ -70,9 +104,9 @@ public class Photographer extends Worker implements XMLRepresentable{
      * Helper method which creates a XML element <Photographer>
      * @return XML element snippet representing a photographer
      */
-    public Element getElement(org.w3c.dom.Document xml){
+    public Element getElement(XMLHandler xml){
 
-        Element xmlPhotographer = xml.createElement("Photographer");
+        Element xmlPhotographer = xml.engine.createElement("Photographer");
         
         // Para una raiz Photographer, introducimos su id como atributo
         
@@ -80,29 +114,29 @@ public class Photographer extends Worker implements XMLRepresentable{
 
         // Para una raiz Photographer, introducimos otra raiz Name
         
-        Element xmlPhotographerName = xml.createElement("Name");
-        Text photographerName = xml.createTextNode(this.getName());
+        Element xmlPhotographerName = xml.engine.createElement("Name");
+        Text photographerName = xml.engine.createTextNode(this.getName());
         xmlPhotographerName.appendChild(photographerName);
         xmlPhotographer.appendChild(xmlPhotographerName);
 
         // Para una raiz Photographer, introducimos otra raiz BirthDate
         
-        Element xmlPhotographerBirthDate = xml.createElement("BirthDate");
-        Text photographerBirthDate = xml.createTextNode(this.getBirthDate());
+        Element xmlPhotographerBirthDate = xml.engine.createElement("BirthDate");
+        Text photographerBirthDate = xml.engine.createTextNode(this.getBirthDate());
         xmlPhotographerBirthDate.appendChild(photographerBirthDate);
         xmlPhotographer.appendChild(xmlPhotographerBirthDate);
         
         // Para una raiz Photographer, introducimos otra raiz RegularResidence
         
-        Element xmlPhotographerRegularResidence = xml.createElement("RegularResidence");
-        Text photographerRegularResidence = xml.createTextNode(this.getRegularResidence());
+        Element xmlPhotographerRegularResidence = xml.engine.createElement("RegularResidence");
+        Text photographerRegularResidence = xml.engine.createTextNode(this.getRegularResidence());
         xmlPhotographerRegularResidence.appendChild(photographerRegularResidence);
         xmlPhotographer.appendChild(xmlPhotographerRegularResidence);
         
         // Para una raiz Photographer, introducimos otra raiz HolidayResidence
         
-        Element xmlPhotographerHolidayResidence = xml.createElement("HolidayResidence");
-        Text photographerHolidayResidence = xml.createTextNode(this.getHolidayResidence());
+        Element xmlPhotographerHolidayResidence = xml.engine.createElement("HolidayResidence");
+        Text photographerHolidayResidence = xml.engine.createTextNode(this.getHolidayResidence());
         xmlPhotographerHolidayResidence.appendChild(photographerHolidayResidence);
         xmlPhotographer.appendChild(xmlPhotographerHolidayResidence);
         
@@ -126,7 +160,7 @@ public class Photographer extends Worker implements XMLRepresentable{
             format.setIndenting(true);
             
             XMLSerializer serializerToString = new XMLSerializer(out , format);
-            serializerToString.serialize(this.getElement(xml.engine));
+            serializerToString.serialize(this.getElement(xml));
 
         } catch(IOException ie) {
             ie.printStackTrace();
@@ -154,7 +188,7 @@ public class Photographer extends Worker implements XMLRepresentable{
             XMLSerializer serializerTofile = new XMLSerializer(
                 new FileOutputStream(file)
                 , format);
-            serializerTofile.serialize(this.getElement(xml.engine));
+            serializerTofile.serialize(this.getElement(xml));
             
             return true;
         } catch(IOException ie) {
@@ -183,7 +217,7 @@ public class Photographer extends Worker implements XMLRepresentable{
                 new FileOutputStream(
                     new File(filePath))
                 , format);
-            serializerTofile.serialize(this.getElement(xml.engine));
+            serializerTofile.serialize(this.getElement(xml));
             
             return true;
         } catch(IOException ie) {

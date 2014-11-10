@@ -33,8 +33,6 @@ public class Picture implements XMLRepresentable{
     // Atributos de la clase
     private String url; // Identificador único, la URL.
     private Photographer author; // Fotografo autor de la foto.
-    // XML Store Mode
-    static final String XMLStoreMode = "full"; // {"full","relational"}
     
     /**
      * Class constructor in which you have to put the URL and the photographer.
@@ -71,9 +69,9 @@ public class Picture implements XMLRepresentable{
      * Helper method which creates a XML element <Photographer>
      * @return XML element snippet representing a photographer
      */
-    public Element getElement(org.w3c.dom.Document xml){
+    public Element getElement(XMLHandler xml){
 
-        Element xmlPicture = xml.createElement("Picture");
+        Element xmlPicture = xml.engine.createElement("Picture");
         
         // Para una raiz Picture, introducimos su url como atributo
         
@@ -81,16 +79,16 @@ public class Picture implements XMLRepresentable{
         
         // Para una raiz Picture, introducimos otra raiz Photographer
 
-        if (this.XMLStoreMode.equals("relational")){
+        if (xml.storeMode.equals("relational")){
             
             // Para una raiz Photographer, introducimos su id como atributo
             
-            Element xmlPicturePhotographer = xml.createElement("Photographer");
+            Element xmlPicturePhotographer = xml.engine.createElement("Photographer");
             xmlPicturePhotographer.setAttribute("id", this.getAuthor().getId());
             xmlPicture.appendChild(xmlPicturePhotographer);
             
         }
-        else if(this.XMLStoreMode.equals("full")){
+        else if(xml.storeMode.equals("full")){
             
             // Para una raiz Picture, introducimos otra raiz Photographer
             
@@ -120,7 +118,7 @@ public class Picture implements XMLRepresentable{
             format.setIndenting(true);
             
             XMLSerializer serializerToString = new XMLSerializer(out , format);
-            serializerToString.serialize(this.getElement(xml.engine));
+            serializerToString.serialize(this.getElement(xml));
 
         } catch(IOException ie) {
             ie.printStackTrace();
@@ -148,7 +146,7 @@ public class Picture implements XMLRepresentable{
             XMLSerializer serializerTofile = new XMLSerializer(
                 new FileOutputStream(file)
                 , format);
-            serializerTofile.serialize(this.getElement(xml.engine));
+            serializerTofile.serialize(this.getElement(xml));
             
             return true;
         } catch(IOException ie) {
@@ -177,7 +175,7 @@ public class Picture implements XMLRepresentable{
                 new FileOutputStream(
                     new File(filePath))
                 , format);
-            serializerTofile.serialize(this.getElement(xml.engine));
+            serializerTofile.serialize(this.getElement(xml));
             
             return true;
         } catch(IOException ie) {
