@@ -5,6 +5,11 @@
  * Each line should be prefixed with  * 
  */
 
+/* REFERENCIA
+https://docs.oracle.com/cd/E17276_01/html/gsg_xml/java/exceptions.html
+https://docs.oracle.com/javase/tutorial/jaxp/properties/error.html
+*/
+
 package GSILib.persistence;
 
 import java.io.IOException;
