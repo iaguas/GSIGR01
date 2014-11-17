@@ -8,6 +8,7 @@ package GSILib.BModel;
 
 import GSILib.BModel.documents.visualNews.PrintableNews;
 import GSILib.BModel.workers.Journalist;
+import GSILib.BModel.workers.Photographer;
 import GSILib.Serializable.XMLHandler;
 import GSILib.Serializable.XMLRepresentable;
 import java.io.File;
@@ -24,7 +25,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
+import org.xml.sax.SAXException;
 
 /**
  * This is the class Newspaper.
@@ -36,14 +40,63 @@ public class Newspaper implements XMLRepresentable{
     
     // Atributos de la clase.
     private Date date = new Date(); // Fecha de publicación del periodico.
-    private List<PrintableNews> news; // Lista de noticias publicadas.
+    private List<PrintableNews> news = new ArrayList<>(); // Lista de noticias publicadas.
     
     /**
      * Class constructor of a void newspaper.
      */
     public Newspaper(){
-        // Creamos un periodico vacio.
-        this.news = new ArrayList<>();
+        
+        // Constructor nulo
+        
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
+    public Newspaper(String newspaperFromXML) throws SAXException{
+        
+        // Instanciamos el motor de XML
+        
+        XMLHandler xml = new XMLHandler(newspaperFromXML);
+        
+        Element xmlNewspaper = (Element) xml.engine.getElementsByTagName("Newspaper").item(0);
+        
+        // Cargamos los valores del Elemento
+        
+        this.loadFromElement(xmlNewspaper);
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
+    public Newspaper(Element xmlNewspaper){
+        
+        // Cargamos los valores del Elemento
+        
+        this.loadFromElement(xmlNewspaper);
+         
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
+    protected void loadFromElement(Element xmlNewspaper){
+        
+        // Picture rellena sus datos
+        
+        this.date = new Date(Long.parseLong(xmlNewspaper.getAttribute("date")));
+        
+        // Crea las PrintableNews y las añade
+        
+        NodeList printableNewsNodes = xmlNewspaper.getElementsByTagName("PrintableNews");
+
+        for (int i = 0; i < printableNewsNodes.getLength(); i++) {
+            Node printableNewsNode = printableNewsNodes.item(i);
+            
+            this.news.add(new PrintableNews((Element) printableNewsNode));
+            
+        }
     }
     
     /**
@@ -113,7 +166,7 @@ public class Newspaper implements XMLRepresentable{
 
         // Para una raiz Newspaper, introducimos su date como atributo
         
-        xmlNewspaper.setAttribute("date", this.getDate().toString());
+        xmlNewspaper.setAttribute("date", String.valueOf(this.getDate().getTime()));
         
         if (xml.storeMode.equals("relational")){
             for(PrintableNews printableNews : this.getPrintableNews()){

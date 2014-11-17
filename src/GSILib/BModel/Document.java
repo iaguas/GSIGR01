@@ -12,6 +12,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * This is the class Document. 
@@ -38,6 +41,36 @@ public abstract class Document{
         this.headline = headline;
         this.body = body;
         this.journalists.add(journalist);
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
+    protected Document(){
+        
+        // Constructor nulo
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */ 
+    protected void loadFromElement(Element xmlDocument){
+        
+        // Document rellena sus datos
+        
+        this.headline = xmlDocument.getAttribute("headline");
+        this.body = xmlDocument.getAttribute("body");
+ 
+        // Crea los Journalists y los añade
+        
+        NodeList journalistsNodes = xmlDocument.getElementsByTagName("Journalist");
+
+        for (int i = 0; i < journalistsNodes.getLength(); i++) {
+            Node journalistNode = journalistsNodes.item(i);
+            
+            this.journalists.add(new Journalist((Element) journalistNode));
+            
+        } 
     }
     
     /**

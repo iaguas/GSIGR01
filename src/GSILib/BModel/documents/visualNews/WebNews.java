@@ -25,7 +25,10 @@ import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
+import org.xml.sax.SAXException;
 
 /**
  * This is the class WebNews.
@@ -51,6 +54,64 @@ public class WebNews extends VisualNews implements XMLRepresentable{
         super(headline, body, journalist);
         // Añadimos l
         this.url = url;
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
+    public WebNews(String webNewsFromXML) throws SAXException{
+        
+        // Creamos una VisualNews nula
+        
+        super();
+        
+        // Instanciamos el motor de XML
+        
+        XMLHandler xml = new XMLHandler(webNewsFromXML);
+        
+        Element xmlWebNews = (Element) xml.engine.getElementsByTagName("WebNews").item(0);
+        
+        // Cargamos los valores del Elemento
+        
+        this.loadFromElement(xmlWebNews);
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
+    public WebNews(Element xmlWebNews){
+        
+        // Creamos una VisualNews nula
+        
+        super();
+        
+        // Cargamos los valores del Elemento
+        
+        this.loadFromElement(xmlWebNews);
+         
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
+    protected void loadFromElement(Element xmlWebNews){
+        
+        // VisualNews rellena sus datos
+        
+        super.loadFromElement(xmlWebNews);
+        
+        // WebNews rellena sus datos
+        
+        this.url = xmlWebNews.getAttribute("url");
+        
+        NodeList keywordsNodes = ((Element) xmlWebNews.getElementsByTagName("keywords").item(0)).getElementsByTagName("keyword");
+
+        for (int i = 0; i < keywordsNodes.getLength(); i++) {
+            Node keywordNode = keywordsNodes.item(i);
+            if (keywordNode.getNodeType() == Node.ELEMENT_NODE) {
+                this.keywords.add(keywordNode.getTextContent());
+            }
+        }
     }
     
     /**
@@ -96,26 +157,17 @@ public class WebNews extends VisualNews implements XMLRepresentable{
 
         Element xmlWebNews = xml.engine.createElement("WebNews");
 
-        // Para una raiz WebNews, introducimos otra raiz Headline
+        // Para una raiz PrintableNews, introducimos su headline como atributo
         
-        Element xmlWebNewsHeadline = xml.engine.createElement("Headline");
-        Text webNewsHeadline = xml.engine.createTextNode(this.getHeadline());
-        xmlWebNewsHeadline.appendChild(webNewsHeadline);
-        xmlWebNews.appendChild(xmlWebNewsHeadline);
+        xmlWebNews.setAttribute("headline", this.getHeadline());
 
-        // Para una raiz WebNews, introducimos otra raiz Body
+        // Para una raiz PrintableNews, introducimos su body como atributo
         
-        Element xmlWebNewsBody = xml.engine.createElement("Body");
-        Text webNewsBody = xml.engine.createTextNode(this.getBody());
-        xmlWebNewsBody.appendChild(webNewsBody);
-        xmlWebNews.appendChild(xmlWebNewsBody);
+        xmlWebNews.setAttribute("body", this.getBody());
         
-        // Para una raiz WebNews, introducimos otra raiz Body
+        // Para una raiz PrintableNews, introducimos su url como atributo
         
-        Element xmlWebNewsUrl = xml.engine.createElement("Url");
-        Text webNewsUrl = xml.engine.createTextNode(this.getUrl());
-        xmlWebNewsUrl.appendChild(webNewsUrl);
-        xmlWebNews.appendChild(xmlWebNewsUrl);
+        xmlWebNews.setAttribute("url", this.getUrl());
         
         // Para una raiz WebNews, introducimos otra raiz Journalist
         
@@ -137,12 +189,12 @@ public class WebNews extends VisualNews implements XMLRepresentable{
         
         // Para una raiz WebNews, introducimos otra raiz Keywords
         
-        Element xmlWebNewsKeywords = xml.engine.createElement("Keywords");
+        Element xmlWebNewsKeywords = xml.engine.createElement("keywords");
         for(String keyword : this.keywords){
             
             // Para una raiz Keywords, introducimos las keyword
             
-            Element xmlWebNewsKeyword = xml.engine.createElement("Keyword");
+            Element xmlWebNewsKeyword = xml.engine.createElement("keyword");
             Text webNewsKeyword = xml.engine.createTextNode(keyword);
             xmlWebNewsKeyword.appendChild(webNewsKeyword);
             xmlWebNewsKeywords.appendChild(xmlWebNewsKeyword);
@@ -281,7 +333,7 @@ public class WebNews extends VisualNews implements XMLRepresentable{
                 + "|- Headline: " + this.getHeadline() + "\n"
                 + "|- Body: " + this.getBody() + "\n"
                 + "|- Journalist: " + this.getAuthor() + "\n"
-                + "|- Pictures" + this.getPictures() + "\n"
+                + "|- Pictures" + this.pictures + "\n"
                 + "|- URL: " + this.url + "\n"
                 + "|- Keywords" + this.keywords + "\n";
     }

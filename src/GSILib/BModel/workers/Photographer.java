@@ -64,22 +64,44 @@ public class Photographer extends Worker implements XMLRepresentable{
         
         // Instanciamos el motor de XML
         
-        XMLHandler xml = new XMLHandler();
-        
-        xml.engine = xml.getDocument(photographerFromXML);
+        XMLHandler xml = new XMLHandler(photographerFromXML);
         
         Element xmlPhotographer = (Element) xml.engine.getElementsByTagName("Photographer").item(0);
         
-        // Rellenamos los datos del worker nulo
+        // Cargamos los valores del Elemento
         
-        super.setId(xmlPhotographer.getAttribute("id"));
-        super.setName(xmlPhotographer.getElementsByTagName("Name").item(0).getTextContent());
-        super.setBirthDate(xmlPhotographer.getElementsByTagName("BirthDate").item(0).getTextContent());
+        this.loadFromElement(xmlPhotographer);
         
-        this.regularResidence = xmlPhotographer.getElementsByTagName("RegularResidence").item(0).getTextContent();
-        this.holidayResidence = xmlPhotographer.getElementsByTagName("HolidayResidence").item(0).getTextContent();
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
+    public Photographer(Element xmlPhotographer){
         
+        // Creamos un worker nulo
         
+        super();
+        
+        // Cargamos los valores del Elemento
+        
+        this.loadFromElement(xmlPhotographer);
+         
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
+    protected void loadFromElement(Element xmlPhotographer){
+        
+        // Worker rellena sus datos
+        
+        super.loadFromElement(xmlPhotographer);
+        
+        // Photographer rellena sus datos
+        
+        this.regularResidence = xmlPhotographer.getAttribute("regularResidence");
+        this.holidayResidence = xmlPhotographer.getAttribute("holidayResidence");
     }
     
     /**
@@ -112,33 +134,21 @@ public class Photographer extends Worker implements XMLRepresentable{
         
         xmlPhotographer.setAttribute("id", this.getId());
 
-        // Para una raiz Photographer, introducimos otra raiz Name
+        // Para una raiz Photographer, introducimos su name como atrubuto
         
-        Element xmlPhotographerName = xml.engine.createElement("Name");
-        Text photographerName = xml.engine.createTextNode(this.getName());
-        xmlPhotographerName.appendChild(photographerName);
-        xmlPhotographer.appendChild(xmlPhotographerName);
+        xmlPhotographer.setAttribute("name", this.getName());
 
-        // Para una raiz Photographer, introducimos otra raiz BirthDate
+        // Para una raiz Photographer, introducimos su birthDate como atributo
         
-        Element xmlPhotographerBirthDate = xml.engine.createElement("BirthDate");
-        Text photographerBirthDate = xml.engine.createTextNode(this.getBirthDate());
-        xmlPhotographerBirthDate.appendChild(photographerBirthDate);
-        xmlPhotographer.appendChild(xmlPhotographerBirthDate);
+        xmlPhotographer.setAttribute("birthDate", this.getBirthDate());
         
-        // Para una raiz Photographer, introducimos otra raiz RegularResidence
+        // Para una raiz Photographer, introducimos su regularResidence como atributo
         
-        Element xmlPhotographerRegularResidence = xml.engine.createElement("RegularResidence");
-        Text photographerRegularResidence = xml.engine.createTextNode(this.getRegularResidence());
-        xmlPhotographerRegularResidence.appendChild(photographerRegularResidence);
-        xmlPhotographer.appendChild(xmlPhotographerRegularResidence);
+        xmlPhotographer.setAttribute("regularResidence", this.getRegularResidence());
         
-        // Para una raiz Photographer, introducimos otra raiz HolidayResidence
+        // Para una raiz Photographer, introducimos su holidayResidence como atributo
         
-        Element xmlPhotographerHolidayResidence = xml.engine.createElement("HolidayResidence");
-        Text photographerHolidayResidence = xml.engine.createTextNode(this.getHolidayResidence());
-        xmlPhotographerHolidayResidence.appendChild(photographerHolidayResidence);
-        xmlPhotographer.appendChild(xmlPhotographerHolidayResidence);
+        xmlPhotographer.setAttribute("holidayResidence", this.getHolidayResidence());
         
         return xmlPhotographer;
     }

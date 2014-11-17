@@ -70,26 +70,49 @@ public class Journalist extends Worker implements XMLRepresentable{
         
         // Instanciamos el motor de XML
         
-        XMLHandler xml = new XMLHandler();
-        
-        xml.engine = xml.getDocument(journalistFromXML);
+        XMLHandler xml = new XMLHandler(journalistFromXML);
         
         Element xmlJournalist = (Element) xml.engine.getElementsByTagName("Journalist").item(0);
         
-        // Rellenamos los datos del worker nulo
+        // Cargamos los valores del Elemento
         
-        super.setId(xmlJournalist.getAttribute("id"));
-        super.setName(xmlJournalist.getElementsByTagName("Name").item(0).getTextContent());
-        super.setBirthDate(xmlJournalist.getElementsByTagName("BirthDate").item(0).getTextContent());
+        this.loadFromElement(xmlJournalist);
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
+    public Journalist(Element xmlJournalist){
         
-        NodeList interestsNodes = (NodeList) xml.engine.getElementsByTagName("Interests").item(0);
+        // Creamos un worker nulo
+        
+        super();
+        
+        // Cargamos los valores del Elemento
+        
+        this.loadFromElement(xmlJournalist);
+         
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
+    protected void loadFromElement(Element xmlJournalist){
+        
+        // Worker rellena sus datos
+        
+        super.loadFromElement(xmlJournalist);
+        
+        // Journalist rellena sus datos
+        
+        NodeList interestsNodes = (NodeList) xmlJournalist.getElementsByTagName("interest");
 
         for (int i = 0; i < interestsNodes.getLength(); i++) {
             Node interestNode = interestsNodes.item(i);
             if (interestNode.getNodeType() == Node.ELEMENT_NODE) {
                 this.interests.add(interestNode.getTextContent());
             }
-        } 
+        }
     }
     
     /**
@@ -114,34 +137,26 @@ public class Journalist extends Worker implements XMLRepresentable{
         
         xmlJournalist.setAttribute("id", this.getId());
 
-        // Para una raiz Journalist, introducimos otra raiz Name
+        // Para una raiz Journalist, introducimos su name como atributo
         
-        Element xmlJournalistName = xml.engine.createElement("Name");
-        Text journalistName = xml.engine.createTextNode(this.getName());
-        xmlJournalistName.appendChild(journalistName);
-        xmlJournalist.appendChild(xmlJournalistName);
+        xmlJournalist.setAttribute("name", this.getName());
 
-        // Para una raiz Journalist, introducimos otra raiz BirthDate
+        // Para una raiz Journalist, introducimos su birthdate como atributo
         
-        Element xmlJournalistBirthDate = xml.engine.createElement("BirthDate");
-        Text journalistBirthDate = xml.engine.createTextNode(this.getBirthDate());
-        xmlJournalistBirthDate.appendChild(journalistBirthDate);
-        xmlJournalist.appendChild(xmlJournalistBirthDate);
+        xmlJournalist.setAttribute("birthDate", this.getBirthDate());
         
-        // Para una raiz Journalist, introducimos otra raiz Interests
+        // Para una raiz Journalist, introducimos n raices interest
         
         String[] interests = this.getInterests();
-        Element xmlJournalistInterests = xml.engine.createElement("Interests");
         for(String interest : interests){
             
             // Para una raiz Interests, introducimos otra raiz Interest
             
-            Element xmlJournalistInterest = xml.engine.createElement("Interest");
+            Element xmlJournalistInterest = xml.engine.createElement("interest");
             Text journalistInterest = xml.engine.createTextNode(interest);
             xmlJournalistInterest.appendChild(journalistInterest);      
-            xmlJournalistInterests.appendChild(xmlJournalistInterest);
+            xmlJournalist.appendChild(xmlJournalistInterest);
         }
-        xmlJournalist.appendChild(xmlJournalistInterests);
         
         return xmlJournalist;
     }

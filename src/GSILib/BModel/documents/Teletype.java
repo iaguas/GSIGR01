@@ -21,7 +21,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
+import org.xml.sax.SAXException;
 
 /**
  * This is the class Teletype.
@@ -44,6 +47,51 @@ public class Teletype extends Document implements XMLRepresentable{
     }
     
     /**
+     * TODO: JavaDoc
+     */
+    public Teletype(String teletypeFromXML) throws SAXException{
+        
+        // Creamos un Document nulo
+        
+        super();
+        
+        // Instanciamos el motor de XML
+        
+        XMLHandler xml = new XMLHandler(teletypeFromXML);
+        
+        Element xmlTeletype = (Element) xml.engine.getElementsByTagName("Teletype").item(0);
+        
+        // Cargamos los valores del Elemento
+        
+        this.loadFromElement(xmlTeletype);
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
+    public Teletype(Element xmlTeletype){
+        
+        // Creamos un Document nulo
+        
+        super();
+        
+        // Cargamos los valores del Elemento
+        
+        this.loadFromElement(xmlTeletype);
+         
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
+    protected void loadFromElement(Element xmlTeletype){
+        
+        // Document rellena sus datos
+        
+        super.loadFromElement(xmlTeletype);
+    }
+    
+    /**
      * Helper method which creates a XML element <Teletype>
      * @return XML element snippet representing a teletype
      */
@@ -53,17 +101,11 @@ public class Teletype extends Document implements XMLRepresentable{
 
         // Para una raiz Teletype, introducimos otra raiz Headline
         
-        Element xmlTeletypeHeadline = xml.engine.createElement("Headline");
-        Text teletypeHeadline = xml.engine.createTextNode(this.getHeadline());
-        xmlTeletypeHeadline.appendChild(teletypeHeadline);
-        xmlTeletype.appendChild(xmlTeletypeHeadline);
+        xmlTeletype.setAttribute("headline", this.getHeadline());
 
         // Para una raiz Teletype, introducimos otra raiz Body
         
-        Element xmlTeletypeBody = xml.engine.createElement("Body");
-        Text teletypeBody = xml.engine.createTextNode(this.getBody());
-        xmlTeletypeBody.appendChild(teletypeBody);
-        xmlTeletype.appendChild(xmlTeletypeBody);
+        xmlTeletype.setAttribute("body", this.getBody());
         
         if (xml.storeMode.equals("relational")){
             

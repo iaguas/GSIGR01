@@ -9,6 +9,7 @@ package GSILib.BModel;
 import GSILib.Serializable.XMLRepresentable;
 import java.io.File;
 import java.io.Serializable;
+import org.w3c.dom.Element;
 
 /**
  * This is the class Worker, which includes Journalist and Photographer.
@@ -62,6 +63,16 @@ public abstract class Worker implements Serializable, XMLRepresentable{
      */ 
     public void setBirthDate(String birthDate){
         this.birthDate = birthDate;
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */ 
+    protected void loadFromElement(Element xmlWorker){
+        
+        this.id = xmlWorker.getAttribute("id");
+        this.name = xmlWorker.getAttribute("name");
+        this.birthDate = xmlWorker.getAttribute("birthDate");
     }
     
     /**

@@ -24,7 +24,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
+import org.xml.sax.SAXException;
 
 /**
  * This is the class PrintableNews.
@@ -47,6 +50,62 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
     public PrintableNews(String headline, String body, Journalist journalist) {
         // Llamamos al constructor de la superclase.
         super(headline, body, journalist);
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
+    public PrintableNews(String printableNewsFromXML) throws SAXException{
+        
+        // Creamos una VisualNews nula
+        
+        super();
+        
+        // Instanciamos el motor de XML
+        
+        XMLHandler xml = new XMLHandler(printableNewsFromXML);
+        
+        Element xmlPrintableNews = (Element) xml.engine.getElementsByTagName("PrintableNews").item(0);
+        
+        // Cargamos los valores del Elemento
+        
+        this.loadFromElement(xmlPrintableNews);
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
+    public PrintableNews(Element xmlPrintableNews){
+        
+        // Creamos una VisualNews nula
+        
+        super();
+        
+        // Cargamos los valores del Elemento
+        
+        this.loadFromElement(xmlPrintableNews);
+         
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
+    protected void loadFromElement(Element xmlPrintableNews){
+        
+        // VisualNews rellena sus datos
+        
+        super.loadFromElement(xmlPrintableNews);
+        
+        // PrintableNews rellena sus datos
+        
+        NodeList reviewersNodes = ((Element) xmlPrintableNews.getElementsByTagName("Reviewers").item(0)).getElementsByTagName("Journalist");
+
+        for (int i = 0; i < reviewersNodes.getLength(); i++) {
+            Node reviewerNode = reviewersNodes.item(i);
+            
+            this.reviewers.add(new Journalist((Element) reviewerNode));
+            
+        } 
     }
     
     /**
@@ -91,19 +150,13 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
 
         Element xmlPrintableNews = xml.engine.createElement("PrintableNews");
 
-        // Para una raiz PrintableNews, introducimos otra raiz Headline
+        // Para una raiz PrintableNews, introducimos su headline como atributo
         
-        Element xmlPrintableNewsHeadline = xml.engine.createElement("Headline");
-        Text printableNewsHeadline = xml.engine.createTextNode(this.getHeadline());
-        xmlPrintableNewsHeadline.appendChild(printableNewsHeadline);
-        xmlPrintableNews.appendChild(xmlPrintableNewsHeadline);
+        xmlPrintableNews.setAttribute("headline", this.getHeadline());
 
-        // Para una raiz PrintableNews, introducimos otra raiz Body
+        // Para una raiz PrintableNews, introducimos su body como atributo
         
-        Element xmlPrintableNewsBody = xml.engine.createElement("Body");
-        Text printableNewsBody = xml.engine.createTextNode(this.getBody());
-        xmlPrintableNewsBody.appendChild(printableNewsBody);
-        xmlPrintableNews.appendChild(xmlPrintableNewsBody);
+        xmlPrintableNews.setAttribute("body", this.getBody());
         
         // Para una raiz PrintableNews, introducimos otra raiz Journalist
         
@@ -283,7 +336,7 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
                 + "|- Headline: " + this.getHeadline() + "\n"
                 + "|- Body: " + this.getBody() + "\n"
                 + "|- Journalist: " + this.getAuthor() + "\n"
-                + "|- Pictures" + this.getPictures() + "\n"
+                + "|- Pictures" + this.pictures + "\n"
                 + "|- Reviewers: " + this.reviewers + "\n";
     }
 }

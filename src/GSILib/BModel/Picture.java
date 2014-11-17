@@ -20,7 +20,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
+import org.xml.sax.SAXException;
 
 /**
  * This is the class Picture.
@@ -43,6 +46,45 @@ public class Picture implements XMLRepresentable{
         // Introducimos los datos suministrados por el constructor.
         this.url = url;
         this.author = photographer;
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
+    public Picture(String pictureFromXML) throws SAXException{
+        
+        // Instanciamos el motor de XML
+        
+        XMLHandler xml = new XMLHandler(pictureFromXML);
+        
+        Element xmlPicture = (Element) xml.engine.getElementsByTagName("Picture").item(0);
+        
+        // Cargamos los valores del Elemento
+        
+        this.loadFromElement(xmlPicture);
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
+    public Picture(Element xmlPicture){
+        
+        // Cargamos los valores del Elemento
+        
+        this.loadFromElement(xmlPicture);
+         
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
+    protected void loadFromElement(Element xmlPicture){
+        
+        // Picture rellena sus datos
+        
+        this.url = xmlPicture.getAttribute("url");
+        
+        this.author = new Photographer((Element) xmlPicture.getElementsByTagName("Photographer").item(0));
     }
     
     /**
@@ -198,6 +240,7 @@ public class Picture implements XMLRepresentable{
     @Override
     public String toString(){
         // Devolvemos un string con los datos de la imagen.
-        return "Picture URL: " + this.getUrl();
+        return "+ Picture URL: " + this.getUrl() + "\n"
+                + "|- Photographer: " + this.getAuthor() + "\n";
     }
 }

@@ -24,9 +24,29 @@ public final class XMLHandler {
     public final String storeMode = "full"; // {"full","relational"}
     
     // TODO : JavaDoc 
-    // Esta funcion simplemente calcula el arbol XML
-    public XMLHandler(){
+    public XMLHandler(String in) throws SAXException {
         
+        this.loadDocument();
+        
+        try {
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            InputSource is = new InputSource(new StringReader(in));
+            this.engine = db.parse(is);
+        } catch (ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        } catch (SAXException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public XMLHandler(){
+        this.loadDocument();
+    }
+    
+    protected void loadDocument(){
         //get an instance of factory
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
@@ -39,23 +59,6 @@ public final class XMLHandler {
             //dump it
             System.out.println("Error while trying to instantiate DocumentBuilder " + pce);
             System.exit(1);
-        }
-    }
-    
-    // XML to Document
-    
-    public Document getDocument(String in) throws SAXException {
-        try {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            InputSource is = new InputSource(new StringReader(in));
-            return db.parse(is);
-        } catch (ParserConfigurationException e) {
-            throw new RuntimeException(e);
-        } catch (SAXException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 }

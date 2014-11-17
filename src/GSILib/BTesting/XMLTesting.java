@@ -4,6 +4,7 @@
  */
 package GSILib.BTesting;
 
+import GSILib.BModel.Newspaper;
 import GSILib.BModel.Picture;
 import GSILib.BModel.documents.Teletype;
 import GSILib.BModel.documents.visualNews.PrintableNews;
@@ -27,7 +28,7 @@ public class XMLTesting {
         System.out.println("***  Store  ***");
         System.out.println("---------------");
         
-        System.out.println("\n+ BSystem");
+        System.out.println("\n+ BModel");
         
         // Nuevo Joournalist
         
@@ -65,7 +66,7 @@ public class XMLTesting {
         Teletype teletype = new Teletype("Anonymous hackea la web de AEDE", "Se conoce el grupo de burdos patanes fueron owneados", journalistAlvaro);
         
         if (teletype.saveToXML("xml/teletype.xml"))
-            System.out.println("|- [done] teletype-xml");
+            System.out.println("|- [done] teletype.xml");
         
         // Nueva Picture
         
@@ -96,6 +97,15 @@ public class XMLTesting {
         if (webNews.saveToXML("xml/webNews.xml"))
             System.out.println("|- [done] webNews.xml");
         
+        // Nuevo Newspaper
+        
+        Newspaper newspaper = new Newspaper();
+        newspaper.addNews(printableNews);
+        if (newspaper.saveToXML("xml/newspaper.xml"))
+            System.out.println("|- [done] newspaper.xml");
+        
+        System.out.println("|\n+ BSystem");
+        
         // Nuevo BusinessSystem
         
         BusinessSystem bs = new BusinessSystem();
@@ -112,7 +122,7 @@ public class XMLTesting {
         bs.insertNews(teletype);
         bs.insertNews(webNews);
         
-        Date date = new Date(2014,11,4);
+        Date date = new Date(10000000);
         bs.createNewspaper(date);
         bs.addNewsToIssue(bs.getNewspaper(date), printableNews);
         
@@ -125,15 +135,47 @@ public class XMLTesting {
         System.out.println("*** Lectura ***");
         System.out.println("---------------");
         
-        // Leer Periodista
+        // Leer Journalist
         
         System.out.println("\nJournalist:\n");
         
         System.out.print(new Journalist(journalistAlvaro.toXML()));
         
+        // Leer Photographer
+        
         System.out.println("\nPhotographer:\n");
         
         System.out.print(new Photographer(photographer.toXML()));
+        
+        // Leer Picture
+        
+        System.out.println("\nPicture:\n");
+        
+        System.out.print(new Picture(pictureRed.toXML()));
+        
+        // Leer Teletype
+        
+        System.out.println("\nTeletype:\n");
+        
+        System.out.print(new Teletype(teletype.toXML()));
+        
+        // Leer PrintableNews
+        
+        System.out.println("\nPrintableNews:\n");
+        
+        System.out.print(new PrintableNews(printableNews.toXML()));
+        
+        // Leer WebNews
+        
+        System.out.println("\nWebNews:\n");
+        
+        System.out.print(new WebNews(webNews.toXML()));
+        
+        // Leer Newspaper
+        
+        System.out.println("\nNewspaper:\n");
+        
+        System.out.print(new Newspaper(newspaper.toXML()));
         
     }
 }

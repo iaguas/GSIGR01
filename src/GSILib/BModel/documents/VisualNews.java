@@ -11,6 +11,9 @@ import GSILib.BModel.Picture;
 import GSILib.BModel.workers.Journalist;
 import java.util.ArrayList;
 import java.util.List;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * This is the class VisualNews.
@@ -22,7 +25,7 @@ import java.util.List;
 public abstract class VisualNews extends Document{
     
     // Atributo de la clase
-    private List<Picture> pictures = new ArrayList<>(); // Imágenes adosadas a las noticias.
+    protected List<Picture> pictures = new ArrayList<>(); // Imágenes adosadas a las noticias.
     
     /**
      * Class constructor that makes an object with headline, body and author.
@@ -33,6 +36,36 @@ public abstract class VisualNews extends Document{
     protected VisualNews(String headline, String body, Journalist journalist){
         // Llamamos al constructor de la superclase.
         super(headline, body, journalist);
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
+    protected VisualNews(){
+        
+        // Creamos un Document nulo
+        
+        super();
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */ 
+    protected void loadFromElement(Element xmlVisualNews){
+        
+        super.loadFromElement(xmlVisualNews);
+       
+        // VisualNews rellena sus datos
+        
+        NodeList picturesNodes = ((Element) xmlVisualNews.getElementsByTagName("Pictures").item(0)).getElementsByTagName("Picture");
+
+        for (int i = 0; i < picturesNodes.getLength(); i++) {
+       
+            Node pictureNode = picturesNodes.item(i);
+            
+            this.pictures.add(new Picture((Element) pictureNode));
+            
+        } 
     }
     
     /**
