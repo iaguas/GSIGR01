@@ -61,9 +61,10 @@ public class Journalist extends Worker implements XMLRepresentable{
     /**
      * Class constructor
      * @param journalistFromXML This is a xml String which represents a Jorunalist
+     * @throws GSILib.persistence.XMLParsingException
      * @throws org.xml.sax.SAXException
      */
-    public Journalist(String journalistFromXML) throws SAXException, XMLParsingException{
+    /*public Journalist(String journalistFromXML) throws SAXException{
         
         // Creamos un worker nulo
         
@@ -73,8 +74,31 @@ public class Journalist extends Worker implements XMLRepresentable{
         
         XMLHandler xml = new XMLHandler(journalistFromXML);
         
-        // Instanciamos un objeto de la clase XMLParsingException
-        XMLParsingException xmlparse = new XMLParsingException(journalistFromXML);
+        Element xmlJournalist = (Element) xml.engine.getElementsByTagName("Journalist").item(0);
+        
+        // Cargamos los valores del Elemento
+        
+        this.loadFromElement(xmlJournalist);
+    }*/
+    public Journalist(String journalistFromXML) throws XMLParsingException{
+        
+        // Creamos un worker nulo
+        
+        super();
+        
+        // Instanciamos el motor de XML
+        
+        XMLHandler xml = null;
+        
+        // Comprobamos la correcta creación de una instancia de XMLHandler 
+        // mediante la excepción de XMLParsingException
+        try{
+            xml = new XMLHandler(journalistFromXML);
+        }
+        catch (SAXException e){
+            throw new XMLParsingException("prueba");
+        }
+        
         
         Element xmlJournalist = (Element) xml.engine.getElementsByTagName("Journalist").item(0);
         
@@ -93,24 +117,7 @@ public class Journalist extends Worker implements XMLRepresentable{
         // Cargamos los valores del Elemento        
         this.loadFromElement(xmlJournalist);
     }*/
-    
-    /*public Journalist(String journalistFromXML) throws SAXException{
         
-        // Creamos un worker nulo
-        
-        super();
-        
-        // Instanciamos el motor de XML
-        
-        XMLHandler xml = new XMLHandler(journalistFromXML);
-        
-        Element xmlJournalist = (Element) xml.engine.getElementsByTagName("Journalist").item(0);
-        
-        // Cargamos los valores del Elemento
-        
-        this.loadFromElement(xmlJournalist);
-    }*/
-    
     /**
      * TODO: JavaDoc
      */
@@ -129,6 +136,7 @@ public class Journalist extends Worker implements XMLRepresentable{
     /**
      * TODO: JavaDoc
      */
+    // Este método no lanza ninguna excepción
     protected void loadFromElement(Element xmlJournalist){
         
         // Worker rellena sus datos

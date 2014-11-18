@@ -32,9 +32,9 @@ public abstract class Document{
     
     /**
      * Class constructor for a document with headline, body and author.
-     * @param headline headline of the notice that you want to save.
-     * @param body all text of the notice.
-     * @param journalist worker who has written the notice.
+     * @param headline headline of the news that you want to save.
+     * @param body all text of the news.
+     * @param journalist worker who has written the news.
      */
     protected Document(String headline, String body, Journalist journalist){
         // Construimos la clase con los datos básicos de esta.
@@ -44,7 +44,7 @@ public abstract class Document{
     }
     
     /**
-     * TODO: JavaDoc
+     * Empty class constructor
      */
     protected Document(){
         
@@ -52,7 +52,9 @@ public abstract class Document{
     }
     
     /**
-     * TODO: JavaDoc
+     * Imports list of Journalists from the Element gathered from an XML Document
+     * containing Journalist node list
+     * @param xmlDocument Element type containing "Journalist" tagged nodes
      */ 
     protected void loadFromElement(Element xmlDocument){
         
