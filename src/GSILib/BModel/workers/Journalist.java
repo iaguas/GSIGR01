@@ -9,6 +9,7 @@ package GSILib.BModel.workers;
 import GSILib.BModel.Worker;
 import GSILib.Serializable.XMLHandler;
 import GSILib.Serializable.XMLRepresentable;
+import GSILib.persistence.XMLParsingException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -62,7 +63,38 @@ public class Journalist extends Worker implements XMLRepresentable{
      * @param journalistFromXML This is a xml String which represents a Jorunalist
      * @throws org.xml.sax.SAXException
      */
-    public Journalist(String journalistFromXML) throws SAXException{
+    public Journalist(String journalistFromXML) throws SAXException, XMLParsingException{
+        
+        // Creamos un worker nulo
+        
+        super();
+        
+        // Instanciamos el motor de XML
+        
+        XMLHandler xml = new XMLHandler(journalistFromXML);
+        
+        // Instanciamos un objeto de la clase XMLParsingException
+        XMLParsingException xmlparse = new XMLParsingException(journalistFromXML);
+        
+        Element xmlJournalist = (Element) xml.engine.getElementsByTagName("Journalist").item(0);
+        
+        // Cargamos los valores del Elemento
+
+        this.loadFromElement(xmlJournalist);
+    }
+    /*public Journalist(String journalistFromXML) throws XMLParsingException{
+         // Creamos un worker nulo
+         super();
+        // Instanciamos el motor de XML
+        XMLHandler xml = new XMLHandler(journalistFromXML);        
+        // Instanciamos la excepción que manejará los errores        
+        XMLParsing         
+        Element xmlJournalist = (Element) xml.engine.getElementsByTagName("Journalist").item(0);        
+        // Cargamos los valores del Elemento        
+        this.loadFromElement(xmlJournalist);
+    }*/
+    
+    /*public Journalist(String journalistFromXML) throws SAXException{
         
         // Creamos un worker nulo
         
@@ -77,7 +109,7 @@ public class Journalist extends Worker implements XMLRepresentable{
         // Cargamos los valores del Elemento
         
         this.loadFromElement(xmlJournalist);
-    }
+    }*/
     
     /**
      * TODO: JavaDoc
