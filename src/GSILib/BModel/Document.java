@@ -76,6 +76,21 @@ public abstract class Document{
     }
     
     /**
+     * TODO: JavaDoc
+     */
+    protected void loadFromElement(Element xmlDocument, Journalist journalist){
+        
+        // Document rellena sus datos
+        
+        this.headline = xmlDocument.getAttribute("headline");
+        this.body = xmlDocument.getAttribute("body");
+ 
+        // Crea los Journalists y los añade
+        
+        this.journalists.add(journalist);
+    }
+    
+    /**
      * Adds a journalist to the office.
      * @param jr The journalist to be added.
      * @return true if it was correctly added, false if it was null or already existing.

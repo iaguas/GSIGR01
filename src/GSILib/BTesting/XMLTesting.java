@@ -12,9 +12,12 @@ import GSILib.BModel.documents.visualNews.WebNews;
 import GSILib.BModel.workers.Journalist;
 import GSILib.BModel.workers.Photographer;
 import GSILib.BSystem.BusinessSystem;
+import GSILib.persistence.XMLParsingException;
 import java.util.ArrayList;
 import java.util.Date;
 import org.xml.sax.SAXException;
+import java.io.File;
+import java.io.IOException;
 
 /**
  *
@@ -22,7 +25,7 @@ import org.xml.sax.SAXException;
  */
 public class XMLTesting {
     
-    public static void main(String args[]) throws SAXException {
+    public static void main(String args[]) throws SAXException, XMLParsingException, IOException {
         
         System.out.println("---------------");
         System.out.println("***  Store  ***");
@@ -177,5 +180,10 @@ public class XMLTesting {
         
         System.out.print(new Newspaper(newspaper.toXML()));
         
+        // Leer Bussiness System
+        
+        System.out.println("\nBusiness System:\n");
+        BusinessSystem bs2 = BusinessSystem.loadFromFileXML(new File("xml/businessSystem.xml"));
+        System.out.println(bs2.toXML());
     }
 }

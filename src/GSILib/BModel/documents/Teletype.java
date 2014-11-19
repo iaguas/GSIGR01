@@ -84,6 +84,16 @@ public class Teletype extends Document implements XMLRepresentable{
     /**
      * TODO: JavaDoc
      */
+    public Teletype(Element xmlTeletype, Journalist journalist) throws SAXException{
+     
+        // Document rellena sus datos
+        
+        super.loadFromElement(xmlTeletype, journalist);
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
     protected void loadFromElement(Element xmlTeletype){
         
         // Document rellena sus datos

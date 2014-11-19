@@ -90,6 +90,21 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
     /**
      * TODO: JavaDoc
      */
+    public PrintableNews(Element xmlPrintableNews, Journalist journalist){
+        
+        // Creamos una VisualNews nula
+        
+        super();
+        
+        // Cargamos los valores del Elemento
+        
+        this.loadFromElement(xmlPrintableNews, journalist);
+         
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
     protected void loadFromElement(Element xmlPrintableNews){
         
         // VisualNews rellena sus datos

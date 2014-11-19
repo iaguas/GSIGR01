@@ -78,6 +78,19 @@ public class Picture implements XMLRepresentable{
     /**
      * TODO: JavaDoc
      */
+    public Picture(Element xmlPicture, Photographer photographer){
+        
+        // Picture rellena sus datos
+        
+        this.url = xmlPicture.getAttribute("url");
+        
+        this.author = photographer;
+         
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
     protected void loadFromElement(Element xmlPicture){
         
         // Picture rellena sus datos

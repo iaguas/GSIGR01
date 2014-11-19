@@ -69,6 +69,14 @@ public abstract class VisualNews extends Document{
     }
     
     /**
+     * TODO: JavaDoc
+     */ 
+    protected void loadFromElement(Element xmlVisualNews, Journalist journalist){
+        
+        super.loadFromElement(xmlVisualNews, journalist);
+    }
+    
+    /**
      * Adds a picture to the associated visual news
      * @param picture desired picture to add
      */

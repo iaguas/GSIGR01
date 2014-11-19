@@ -24,8 +24,11 @@ import GSILib.persistence.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,7 +48,10 @@ import org.jopendocument.dom.OOUtils;
 import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
+import org.xml.sax.SAXException;
 
 /**
  * This is the class BusinessSystem.
@@ -1170,13 +1176,87 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
         return false;
     }
 
-    /*public static BusinessSystem loadFromFileXML(File f) throws XMLParsingException{
+    /**
+     * TODO: JavaDoc
+     */
+    public static BusinessSystem loadFromFileXML(File file) throws XMLParsingException, IOException, SAXException{
 
-        return null;
+        // Creamos el BusinessSystem
+        
+        BusinessSystem bs = new BusinessSystem();
+        
+        // Obtenemos el string de XML
+        
+        String businessSystemFromXML = new String(Files.readAllBytes(Paths.get(file.toString())));
+        
+        // Obtenemos el elemento XML
+        
+        XMLHandler xml = null;
+        
+        try{
+            xml = new XMLHandler(businessSystemFromXML);
+        }
+        catch (SAXException e){
+            throw new XMLParsingException("prueba");
+        }
+        
+        Element xmlBS = (Element) xml.engine.getElementsByTagName("BusinessSystem").item(0);
+        
+        // Cargamos los Journalists
+        
+        NodeList journalistsNodes = (NodeList) ((Element) xmlBS.getElementsByTagName("Workers").item(0)).getElementsByTagName("Journalist");
+
+        for (int i = 0; i < journalistsNodes.getLength(); i++) {
+            
+            // Cargamos un Journalist
+            
+            bs.addJournalist(new Journalist((Element) journalistsNodes.item(i)));
+        }
+        
+        // Cargamos los Photographers
+        
+        NodeList photographersNodes = (NodeList) ((Element) xmlBS.getElementsByTagName("Workers").item(0)).getElementsByTagName("Photographer");
+
+        for (int i = 0; i < photographersNodes.getLength(); i++) {
+            
+            // Cargamos un Photographer
+            
+            bs.addPhotographer(new Photographer((Element) photographersNodes.item(i)));
+        }
+        
+        // Cargamos los Teletypes
+        
+        NodeList teletypesNodes = (NodeList) ((Element) xmlBS.getElementsByTagName("Documents").item(0)).getElementsByTagName("Teletype");
+
+        for (int i = 0; i < teletypesNodes.getLength(); i++) {
+            
+            // Obtenemos el Journalist
+            
+            Journalist journalist = bs.findJournalist(((Element) ((Element) teletypesNodes.item(i)).getElementsByTagName("Journalist").item(0)).getAttribute("id"));
+            
+            // Cargamos un Teletype
+            
+            bs.insertNews(new Teletype((Element) teletypesNodes.item(i), journalist));
+        }
+        
+        // Cargamos las Pictures
+        
+        NodeList picturesNodes = (NodeList) ((Element) xmlBS.getElementsByTagName("Pictures").item(0)).getElementsByTagName("Picture");
+
+        for (int i = 0; i < picturesNodes.getLength(); i++) {
+            
+            // Obtenemos el Photographer
+            
+            Photographer photographer = bs.findPhotographer(((Element) ((Element) picturesNodes.item(i)).getElementsByTagName("Photographer").item(0)).getAttribute("id"));
+            
+            bs.addPicture(new Picture((Element) picturesNodes.item(i), photographer));
+        }
+        return bs;
     }
     
     public boolean saveToFileXML(File f){
         
-    }*/
+        return false;
+    }
 
 }
