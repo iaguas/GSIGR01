@@ -47,7 +47,7 @@ public class Teletype extends Document implements XMLRepresentable{
     }
     
     /**
-     * Constructor which obtains Element type object from and XML Document containing "Teletype"
+     * Constructor which obtains Element type object from an XML Document containing "Teletype"
      * tagged nodes, which are Teletype type objects.
      * @param teletypeFromXML XML document to parse, which contains nodes 
      * corresponding to the class Teletype

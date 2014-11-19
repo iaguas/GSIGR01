@@ -23,7 +23,12 @@ public final class XMLHandler {
     // XML Store Mode
     public final String storeMode = "full"; // {"full","relational"}
     
-    // TODO : JavaDoc 
+    /**
+     * Constructor which manages the reading of an XML file by obtaining the XML
+     * node tree
+     * @param in XML file string
+     * @throws SAXException exception derived from XML file reading
+     */
     public XMLHandler(String in) throws SAXException {
         
         this.loadDocument();

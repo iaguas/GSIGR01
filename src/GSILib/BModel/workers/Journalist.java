@@ -33,7 +33,7 @@ import org.xml.sax.SAXException;
 
 /**
  * This is the class Journalist.
- * He represent a worker who writes Document into de system. He has ID, name,
+ * It represents a worker who writes Document into the system. It has ID, name,
  * birthDate and, especialy, interest.
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
@@ -119,7 +119,9 @@ public class Journalist extends Worker implements XMLRepresentable{
     }*/
         
     /**
-     * TODO: JavaDoc
+     * Constructor which obtains the attribute values from Element type object
+     * extracted from and XML file containing Journalist; inherits Worker attributes.
+     * @param xmlJournalist Element type object which contains useful data
      */
     public Journalist(Element xmlJournalist){
         
@@ -134,7 +136,9 @@ public class Journalist extends Worker implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Lowest rank method which obtains the atribute values for Journalist from an
+     * XML Element. 
+     * @param xmlJournalist Element type which contains useful data (interest(s))
      */
     // Este método no lanza ninguna excepción
     protected void loadFromElement(Element xmlJournalist){

@@ -57,7 +57,11 @@ public class WebNews extends VisualNews implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Constructor which obtains Element type object from an XML Document containing "WebNews"
+     * tagged nodes, which are WebNews type objects.
+     * @param webNewsFromXML XML document to parse, which contains nodes 
+     * corresponding to the class WebNews
+     * @exception SAXException exception derived from XML file reading
      */
     public WebNews(String webNewsFromXML) throws SAXException{
         
@@ -77,7 +81,9 @@ public class WebNews extends VisualNews implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Constructor which imports a Element type object, which contains a 
+     * WebNews type object data; inherits VisualNews object type's attributes.
+     * @param xmlWebNews Element type object which contains useful data
      */
     public WebNews(Element xmlWebNews){
         
@@ -92,7 +98,9 @@ public class WebNews extends VisualNews implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Lowest rank method which obtains the atribute values for WebNews from an
+     * XML Element. 
+     * @param xmlWebNews Element type which contains useful data (url and keyword(s))
      */
     protected void loadFromElement(Element xmlWebNews){
         

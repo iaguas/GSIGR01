@@ -1177,7 +1177,13 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
     }
 
     /**
-     * TODO: JavaDoc
+     * Main method which imports a BusinessSystem from an XML file which contains
+     * complete data of all the classes which conform the business system.
+     * @param file XML type file
+     * @exception XMLParsingException, IOException, SAXException cover all the
+     * spectrum of posible exceptions that might occur on the reading of the XML
+     * file, including file and data consistency
+     * 
      */
     public static BusinessSystem loadFromFileXML(File file) throws XMLParsingException, IOException, SAXException{
 

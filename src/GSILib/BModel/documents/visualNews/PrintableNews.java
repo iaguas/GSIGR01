@@ -53,7 +53,11 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Constructor which obtains Element type object from and XML Document containing "PrintableNews"
+     * tagged nodes, which are PrintableNews type objects; inherits VisualNews attributes.
+     * @param printableNewsFromXML XML document to parse, which contains nodes 
+     * corresponding to the class PrintableNews
+     * @exception SAXException exception derived from XML file reading
      */
     public PrintableNews(String printableNewsFromXML) throws SAXException{
         
@@ -73,7 +77,9 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Constructor which obtains the attribute values from Element type object
+     * extracted from and XML file containing PrintableNews; inherits VisualNews attributes.
+     * @param xmlPrintableNews Element type object which contains useful data
      */
     public PrintableNews(Element xmlPrintableNews){
         
@@ -88,7 +94,11 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Constructor which obtains the attribute values from Element type object
+     * extracted from and XML file containing PrintableNews, and associates the
+     * desired Journalist to associate.
+     * @param xmlPrintableNews Element type object which contains useful data
+     * @param journalist Journalist to associate to PrintableNews
      */
     public PrintableNews(Element xmlPrintableNews, Journalist journalist){
         
@@ -103,7 +113,9 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Imports list of reviewers and journalists from the Element gathered from 
+     * an XML Document, which are asociated to each PrintableNews
+     * @param xmlPrintableNews Element type containing "PrintableNews" tagged nodes
      */
     protected void loadFromElement(Element xmlPrintableNews){
         

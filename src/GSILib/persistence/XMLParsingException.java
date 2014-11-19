@@ -25,11 +25,11 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
- * TODO: Comentar esta clase
- */
-/**
- *
- * @author linux1
+ * This is the class XMLParsingException.
+ * This class handles those cases which can't be handled by the exceptions that
+ * classes throw
+ * @version 1.0
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class XMLParsingException extends Exception{
     
