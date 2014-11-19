@@ -8,8 +8,8 @@ package GSILib.BModel;
 
 import GSILib.BModel.workers.Journalist;
 import GSILib.Serializable.XMLRepresentable;
+import GSILib.persistence.XMLParsingException;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.w3c.dom.Element;
@@ -22,7 +22,7 @@ import org.w3c.dom.NodeList;
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-public abstract class Document{
+public abstract class Document implements XMLRepresentable{
     
     // Atributos de la clase
     private Integer id; // ID único.
@@ -192,5 +192,20 @@ public abstract class Document{
         return "Document ID: " + this.getId() + "\n  Headline: " + this.getHeadline()
                 + "\n  Body: " + this.getBody() + "\n  Journalist: " +
                 this.getAuthor();    
+    }
+    
+    @Override
+    public String toXML() throws XMLParsingException {
+        throw new XMLParsingException("This method is not supported in this class.");
+    }
+
+    @Override
+    public boolean saveToXML(File f) throws XMLParsingException {
+        throw new XMLParsingException("This method is not supported in this class.");
+    }
+
+    @Override
+    public boolean saveToXML(String filePath) throws XMLParsingException {
+        throw new XMLParsingException("This method is not supported in this class.");
     }
 }

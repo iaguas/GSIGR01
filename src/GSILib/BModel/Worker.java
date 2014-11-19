@@ -7,6 +7,7 @@
 package GSILib.BModel;
 
 import GSILib.Serializable.XMLRepresentable;
+import GSILib.persistence.XMLParsingException;
 import java.io.File;
 import java.io.Serializable;
 import org.w3c.dom.Element;
@@ -117,17 +118,17 @@ public abstract class Worker implements Serializable, XMLRepresentable{
     }
 
     @Override
-    public String toXML() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String toXML() throws XMLParsingException {
+        throw new XMLParsingException("This method is not supported in this class.");
     }
 
     @Override
-    public boolean saveToXML(File f) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean saveToXML(File f)  throws XMLParsingException {
+        throw new XMLParsingException("This method is not supported in this class.");
     }
 
     @Override
-    public boolean saveToXML(String filePath) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean saveToXML(String filePath) throws XMLParsingException {
+        throw new XMLParsingException("This method is not supported in this class.");
     }
 }
