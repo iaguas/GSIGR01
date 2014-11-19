@@ -1324,9 +1324,11 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
         
         return bs;
     }
-    
-    public boolean saveToFileXML(File f){
+    /**
+     *  TODO: JavaDoc
+     */
+    public boolean saveToFileXML(File file){
         
-        return false;
+        return this.saveToXML(file);
     }
 }
