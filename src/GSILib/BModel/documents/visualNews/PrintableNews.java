@@ -96,9 +96,9 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
         
         super();
         
-        // Cargamos los valores del Elemento
+        // VisualNews rellena sus datos
         
-        this.loadFromElement(xmlPrintableNews, journalist);
+        super.loadFromElement(xmlPrintableNews, journalist);
          
     }
     
@@ -225,7 +225,7 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
         Element xmlPrintableNewsPictures = xml.engine.createElement("Pictures");
         
         if (xml.storeMode.equals("relational")){
-            for(Picture picture : this.getPictures()){
+            for(Picture picture : this.pictures){
                 
                 // Para una raiz Pictures, introducimos su url como atributo
                 
@@ -235,7 +235,7 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
             }
         }
         else if(xml.storeMode.equals("full")){
-            for(Picture picture : this.getPictures()){
+            for(Picture picture : this.pictures){
                 
                 // Para una raiz Pictures, introducimos otra raiz Picture
                 
