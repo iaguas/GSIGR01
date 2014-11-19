@@ -1331,7 +1331,9 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
         return bs;
     }
     /**
-     *  TODO: JavaDoc
+     * Auxiliary method to store a file type to an XML
+     * @param file file desired to store
+     * @return true if correctly stored, false otherwise
      */
     public boolean saveToFileXML(File file){
         

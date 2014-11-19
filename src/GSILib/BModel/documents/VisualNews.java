@@ -17,7 +17,7 @@ import org.w3c.dom.NodeList;
 
 /**
  * This is the class VisualNews.
- * This is an abstraction of a PrintableNews and Webnews that is a Document with
+ * This is an abstraction of a PrintableNews and WebNews that is a Document with
  * pictures.
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
@@ -28,10 +28,11 @@ public abstract class VisualNews extends Document {
     protected List<Picture> pictures = new ArrayList<>(); // Imágenes adosadas a las noticias.
     
     /**
-     * Class constructor that makes an object with headline, body and author.
-     * @param headline headline of the notice that you want to save.
-     * @param body all text of the notice.
-     * @param journalist worker who has written the notice.
+     * Class constructor that makes an object with inherited 
+     * headline, body and author from Document.
+     * @param headline headline of the news that you want to save.
+     * @param body all text of the news.
+     * @param journalist worker who has written the news.
      */
     protected VisualNews(String headline, String body, Journalist journalist){
         // Llamamos al constructor de la superclase.
@@ -39,7 +40,7 @@ public abstract class VisualNews extends Document {
     }
     
     /**
-     * Empty class constructor
+     * Empty class constructor.
      */
     protected VisualNews(){
         

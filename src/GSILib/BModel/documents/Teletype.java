@@ -36,10 +36,11 @@ import org.xml.sax.SAXException;
 public class Teletype extends Document implements XMLRepresentable{
     
     /**
-     * Class constructor that makes an object with headline, body and author.
-     * @param headline headline of the notice that you want to save.
-     * @param body all text of the notice.
-     * @param journalist worker who has written the notice.
+     * Class constructor that makes an object inheriting 
+     * headline, body and author from Document.
+     * @param headline headline of the news that you want to save.
+     * @param body all text of the news.
+     * @param journalist worker who has written the news.
      */
     public Teletype(String headline, String body, Journalist journalist){
         // Llamamos al constructor de la clase padre.
@@ -71,8 +72,8 @@ public class Teletype extends Document implements XMLRepresentable{
     }
     
     /**
-     * Imports list of pictures from the Element gathered from an XML Document
-     * containing Picture node list; Document type atributes are inherited
+     * Imports teletypes from the Element gathered from an XML Document
+     * containing Teletype node list; Document type atributes are inherited
      * @param xmlTeletype Element type containing "Teletype" tagged nodes
      */
     public Teletype(Element xmlTeletype){

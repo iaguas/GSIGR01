@@ -75,7 +75,9 @@ public class Photographer extends Worker implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Imports photographers from the Element gathered from an XML Document
+     * containing Photographer node list; Worker type atributes are inherited
+     * @param xmlPhotographer Element type containing "Photographer" tagged nodes
      */
     public Photographer(Element xmlPhotographer){
         
@@ -90,7 +92,10 @@ public class Photographer extends Worker implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Lowest rank method which obtains the atribute values for Photographer from an
+     * XML Element. 
+     * @param xmlPhotographer Element type which contains useful data 
+     * (regularResidence and holidayResidence)
      */
     protected void loadFromElement(Element xmlPhotographer){
         

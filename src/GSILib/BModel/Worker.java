@@ -33,7 +33,7 @@ public abstract class Worker implements Serializable {
     }
     
     /**
-     * Class constructor of an empty worker.
+     * Empty class constructor.
      */
     protected Worker(){
         // Constructor nulo

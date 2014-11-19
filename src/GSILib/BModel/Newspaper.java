@@ -32,7 +32,7 @@ import org.xml.sax.SAXException;
 
 /**
  * This is the class Newspaper.
- * It represent a set of PrintableNews which form a newspaper. There is once by day.
+ * It represents a set of PrintableNews which from a newspaper. There is one by day.
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
@@ -43,7 +43,7 @@ public class Newspaper implements XMLRepresentable{
     private List<PrintableNews> news = new ArrayList<>(); // Lista de noticias publicadas.
     
     /**
-     * Class constructor of a void newspaper.
+     * Empty class constructor.
      */
     public Newspaper(){
         
