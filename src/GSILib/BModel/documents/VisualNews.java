@@ -9,9 +9,6 @@ package GSILib.BModel.documents;
 import GSILib.BModel.Document;
 import GSILib.BModel.Picture;
 import GSILib.BModel.workers.Journalist;
-import GSILib.Serializable.XMLRepresentable;
-import GSILib.persistance.XMLParsingException;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import org.w3c.dom.Element;
@@ -25,7 +22,7 @@ import org.w3c.dom.NodeList;
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-public abstract class VisualNews extends Document implements XMLRepresentable {
+public abstract class VisualNews extends Document {
     
     // Atributo de la clase
     protected List<Picture> pictures = new ArrayList<>(); // Imágenes adosadas a las noticias.
@@ -123,20 +120,5 @@ public abstract class VisualNews extends Document implements XMLRepresentable {
                 + "|- Body: " + this.getBody() + "\n"
                 + "|- Journalist: " + this.getAuthor() + "\n"
                 + "|- Pictures: " + this.pictures + "\n";
-    }
-    
-    @Override
-    public String toXML() throws XMLParsingException {
-        throw new XMLParsingException("This method is not supported in this class.");
-    }
-
-    @Override
-    public boolean saveToXML(File f)  throws XMLParsingException {
-        throw new XMLParsingException("This method is not supported in this class.");
-    }
-
-    @Override
-    public boolean saveToXML(String filePath) throws XMLParsingException {
-        throw new XMLParsingException("This method is not supported in this class.");
     }
 }

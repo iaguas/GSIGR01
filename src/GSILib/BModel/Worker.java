@@ -6,9 +6,6 @@
 
 package GSILib.BModel;
 
-import GSILib.Serializable.XMLRepresentable;
-import GSILib.persistence.XMLParsingException;
-import java.io.File;
 import java.io.Serializable;
 import org.w3c.dom.Element;
 
@@ -19,7 +16,7 @@ import org.w3c.dom.Element;
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-public abstract class Worker implements Serializable, XMLRepresentable{
+public abstract class Worker implements Serializable {
    
     private String id, name, birthDate;
     
@@ -119,18 +116,4 @@ public abstract class Worker implements Serializable, XMLRepresentable{
         return this.getId().equals(w.getId());
     }
 
-    @Override
-    public String toXML() throws XMLParsingException {
-        throw new XMLParsingException("This method is not supported in this class.");
-    }
-
-    @Override
-    public boolean saveToXML(File f)  throws XMLParsingException {
-        throw new XMLParsingException("This method is not supported in this class.");
-    }
-
-    @Override
-    public boolean saveToXML(String filePath) throws XMLParsingException {
-        throw new XMLParsingException("This method is not supported in this class.");
-    }
 }

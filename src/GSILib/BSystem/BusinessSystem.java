@@ -1093,8 +1093,8 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
     }
     
     /**
-     * Gets this journalist in XML string.
-     * @return the xml string of this journalist.
+     * Gets this businessSystem in XML string.
+     * @return the xml string of this businessSystem.
      */
     @Override
     public String toXML() {
@@ -1120,7 +1120,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
     
     /**
      * Stores this journalist in XML.
-     * @return if the journalist was successfully stored into the xml file.
+     * @return if the businessSystem was successfully stored into the xml file.
      */
     @Override
     public boolean saveToXML(File file) {
@@ -1148,8 +1148,8 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
     }
 
     /**
-     * Stores this journalist in XML.
-     * @return if the journalist was successfully stored into the xml file.
+     * Stores this businessSystem in XML.
+     * @return if the businessSystem was successfully stored into the xml file.
      */
     @Override
     public boolean saveToXML(String filePath) {
@@ -1278,7 +1278,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
 
             for (int j = 0; j < printableNewsPicturesNodes.getLength(); j++) {
                 
-                printableNews.addPicture(bs.getPicture(((Element) printableNewsPicturesNodes.item(i)).getAttribute("url")));
+                printableNews.addPicture(bs.getPicture(((Element) printableNewsPicturesNodes.item(j)).getAttribute("url")));
             }
             
             // Cargamos las sus reviewers
@@ -1287,20 +1287,54 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
 
             for (int j = 0; j < printableNewsReviewersNodes.getLength(); j++) {
                 
-                printableNews.addReviewer(bs.findJournalist(((Element) printableNewsReviewersNodes.item(i)).getAttribute("id")));
+                printableNews.addReviewer(bs.findJournalist(((Element) printableNewsReviewersNodes.item(j)).getAttribute("id")));
             }
             
             bs.insertNews(printableNews);
         }
         
+        // Cargamos las WebNews
         
+        NodeList webNewsNodes = (NodeList) ((Element) xmlBS.getElementsByTagName("Documents").item(0)).getElementsByTagName("WebNews");
+
+        for (int i = 0; i < webNewsNodes.getLength(); i++) {
+            
+            // Obtenemos el Journalist
+            
+            Journalist journalist = bs.findJournalist(((Element) ((Element) printableNewsNodes.item(i)).getElementsByTagName("Journalist").item(0)).getAttribute("id"));
+            
+            // Cargamos un WebNews
+            
+            WebNews webNews = new WebNews((Element) webNewsNodes.item(i), journalist);
+            
+            // Cargamos las sus Pictures
+        
+            NodeList webNewsPicturesNodes = (NodeList) ((Element) ((Element) webNewsNodes.item(i)).getElementsByTagName("Pictures").item(0)).getElementsByTagName("Picture");
+
+            for (int j = 0; j < webNewsPicturesNodes.getLength(); j++) {
+                
+                webNews.addPicture(bs.getPicture(((Element) webNewsPicturesNodes.item(j)).getAttribute("url")));
+            }
+            
+            // Cargamos las sus keywords
+        
+            NodeList webNewsKeywordsNodes = (NodeList) ((Element) ((Element) webNewsNodes.item(i)).getElementsByTagName("keywords").item(0)).getElementsByTagName("keyword");
+
+            for (int j = 0; j < webNewsKeywordsNodes.getLength(); j++) {
+                
+                webNews.addKeyWord(((Element) webNewsKeywordsNodes.item(j)).getTextContent());
+            }
+            
+            bs.insertNews(webNews);
+        }
         
         return bs;
     }
-    
-    public boolean saveToFileXML(File f){
+    /**
+     *  TODO: JavaDoc
+     */
+    public boolean saveToFileXML(File file){
         
-        return false;
+        return this.saveToXML(file);
     }
-
 }
