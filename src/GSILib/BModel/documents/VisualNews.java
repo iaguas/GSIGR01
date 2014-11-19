@@ -42,7 +42,7 @@ public abstract class VisualNews extends Document implements XMLRepresentable {
     }
     
     /**
-     * TODO: JavaDoc
+     * Empty class constructor
      */
     protected VisualNews(){
         
@@ -52,7 +52,9 @@ public abstract class VisualNews extends Document implements XMLRepresentable {
     }
     
     /**
-     * TODO: JavaDoc
+     * Imports visual news from the Element gathered from an XML Document
+     * containing VisualNews node list.
+     * @param xmlVisualNews Element type containing "VisualNews" tagged nodes
      */ 
     protected void loadFromElement(Element xmlVisualNews){
         
@@ -72,7 +74,11 @@ public abstract class VisualNews extends Document implements XMLRepresentable {
     }
     
     /**
-     * TODO: JavaDoc
+     * Imports visual news from the Element gathered from an XML Document
+     * containing VisualNews; the desired Journalist is associated
+     * @param xmlVisualNews Element type containing "VisualNews" tagged nodes
+     * @param journalist Journalist which is desired to associate with the 
+     * VisualNews
      */ 
     protected void loadFromElement(Element xmlVisualNews, Journalist journalist){
         

@@ -48,8 +48,12 @@ public class Picture implements XMLRepresentable{
         this.author = photographer;
     }
     
-    /**
-     * TODO: JavaDoc
+   /**
+     * Constructor which obtains Element type object from and XML Document containing "Picture"
+     * tagged nodes, which are Picture type objects.
+     * @param pictureFromXML XML document to parse, which contains nodes 
+     * corresponding to the class Picture
+     * @exception SAXException exception derived from XML file reading
      */
     public Picture(String pictureFromXML) throws SAXException{
         
@@ -65,7 +69,9 @@ public class Picture implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Imports list of pictures from the Element gathered from an XML Document
+     * containing Picture node list.
+     * @param xmlPicture Element type containing "Picture" tagged nodes
      */
     public Picture(Element xmlPicture){
         
@@ -76,7 +82,11 @@ public class Picture implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Constructor which obtains Element type object from and XML Document containing "Picture"
+     * tagged nodes, which are Picture type objects.
+     * @param xmlPicture Element type object, which contains useful data (url) 
+     * @param photographer Photographer type object which is going to be asociated
+     * to the Picture (to its "author" field)
      */
     public Picture(Element xmlPicture, Photographer photographer){
         
@@ -89,7 +99,10 @@ public class Picture implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Lowest rank method which obtains the atribute values for Picture from an
+     * XML Element. 
+     * @param xmlPicture Element type which contains useful data (url and author
+     * (Photographer))
      */
     protected void loadFromElement(Element xmlPicture){
         

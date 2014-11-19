@@ -76,7 +76,11 @@ public abstract class Document implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Lowest rank method which obtains the atribute values for Document from an
+     * XML Element, and adds the participating Journalists as well. 
+     * @param xmlDocument Element type which contains useful data (headline and 
+     * body)
+     * @param journalist parsed Journalist type object ready to add to the system
      */
     protected void loadFromElement(Element xmlDocument, Journalist journalist){
         

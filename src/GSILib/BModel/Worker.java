@@ -67,7 +67,9 @@ public abstract class Worker implements Serializable, XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Lowest rank method which obtains the atribute values for Worker from an
+     * XML Element. 
+     * @param xmlWorker Element type which contains useful data (id, name and birthdate)
      */ 
     protected void loadFromElement(Element xmlWorker){
         
