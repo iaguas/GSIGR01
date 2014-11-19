@@ -1224,6 +1224,19 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
             bs.addPhotographer(new Photographer((Element) photographersNodes.item(i)));
         }
         
+        // Cargamos las Pictures
+        
+        NodeList picturesNodes = (NodeList) ((Element) xmlBS.getElementsByTagName("Pictures").item(0)).getElementsByTagName("Picture");
+
+        for (int i = 0; i < picturesNodes.getLength(); i++) {
+            
+            // Obtenemos el Photographer
+            
+            Photographer photographer = bs.findPhotographer(((Element) ((Element) picturesNodes.item(i)).getElementsByTagName("Photographer").item(0)).getAttribute("id"));
+            
+            bs.addPicture(new Picture((Element) picturesNodes.item(i), photographer));
+        }
+        
         // Cargamos los Teletypes
         
         NodeList teletypesNodes = (NodeList) ((Element) xmlBS.getElementsByTagName("Documents").item(0)).getElementsByTagName("Teletype");
@@ -1239,18 +1252,43 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
             bs.insertNews(new Teletype((Element) teletypesNodes.item(i), journalist));
         }
         
-        // Cargamos las Pictures
+        // Cargamos las PrintableNews
         
-        NodeList picturesNodes = (NodeList) ((Element) xmlBS.getElementsByTagName("Pictures").item(0)).getElementsByTagName("Picture");
+        NodeList printableNewsNodes = (NodeList) ((Element) xmlBS.getElementsByTagName("Documents").item(0)).getElementsByTagName("PrintableNews");
 
-        for (int i = 0; i < picturesNodes.getLength(); i++) {
+        for (int i = 0; i < printableNewsNodes.getLength(); i++) {
             
-            // Obtenemos el Photographer
+            // Obtenemos el Journalist
             
-            Photographer photographer = bs.findPhotographer(((Element) ((Element) picturesNodes.item(i)).getElementsByTagName("Photographer").item(0)).getAttribute("id"));
+            Journalist journalist = bs.findJournalist(((Element) ((Element) printableNewsNodes.item(i)).getElementsByTagName("Journalist").item(0)).getAttribute("id"));
             
-            bs.addPicture(new Picture((Element) picturesNodes.item(i), photographer));
+            // Cargamos un PrintableNews
+            
+            PrintableNews printableNews = new PrintableNews((Element) printableNewsNodes.item(i), journalist);
+            
+            // Cargamos las sus Pictures
+        
+            NodeList printableNewsPicturesNodes = (NodeList) ((Element) ((Element) printableNewsNodes.item(i)).getElementsByTagName("Pictures").item(0)).getElementsByTagName("Picture");
+
+            for (int j = 0; j < printableNewsPicturesNodes.getLength(); j++) {
+                
+                printableNews.addPicture(bs.getPicture(((Element) printableNewsPicturesNodes.item(i)).getAttribute("url")));
+            }
+            
+            // Cargamos las sus reviewers
+        
+            NodeList printableNewsReviewersNodes = (NodeList) ((Element) ((Element) printableNewsNodes.item(i)).getElementsByTagName("Reviewers").item(0)).getElementsByTagName("Journalist");
+
+            for (int j = 0; j < printableNewsReviewersNodes.getLength(); j++) {
+                
+                printableNews.addReviewer(bs.findJournalist(((Element) printableNewsReviewersNodes.item(i)).getAttribute("id")));
+            }
+            
+            bs.insertNews(printableNews);
         }
+        
+        
+        
         return bs;
     }
     

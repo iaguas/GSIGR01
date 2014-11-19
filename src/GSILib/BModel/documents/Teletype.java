@@ -47,7 +47,11 @@ public class Teletype extends Document implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Constructor which obtains Element type object from and XML Document containing "Teletype"
+     * tagged nodes, which are Teletype type objects.
+     * @param teletypeFromXML XML document to parse, which contains nodes 
+     * corresponding to the class Teletype
+     * @exception SAXException exception derived from XML file reading
      */
     public Teletype(String teletypeFromXML) throws SAXException{
         
@@ -67,7 +71,9 @@ public class Teletype extends Document implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Imports list of pictures from the Element gathered from an XML Document
+     * containing Picture node list; Document type atributes are inherited
+     * @param xmlTeletype Element type containing "Teletype" tagged nodes
      */
     public Teletype(Element xmlTeletype){
         
@@ -82,7 +88,13 @@ public class Teletype extends Document implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Constructor which obtains Element type object from and XML Document containing "Teletype"
+     * tagged nodes -which are Teletype type objects-, and the Journalist which 
+     * is desired to associate.
+     * @param xmlTeletype Element type object which contains nodes 
+     * corresponding to the class Teletype
+     * @param journalist Journalist which is to associate
+     * @exception SAXException exception derived from XML file reading
      */
     public Teletype(Element xmlTeletype, Journalist journalist) throws SAXException{
      
@@ -92,7 +104,9 @@ public class Teletype extends Document implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Imports teletypes from the Element gathered from an XML Document
+     * containing Picture node list.
+     * @param xmlTeletype Element type containing "Teletype" tagged nodes
      */
     protected void loadFromElement(Element xmlTeletype){
         
