@@ -94,6 +94,21 @@ public class WebNews extends VisualNews implements XMLRepresentable{
     /**
      * TODO: JavaDoc
      */
+    public WebNews(Element xmlWebNews, Journalist journalist){
+        
+        // Creamos una VisualNews nula
+        
+        super();
+        
+        // VisualNews rellena sus datos
+        
+        super.loadFromElement(xmlWebNews, journalist);
+         
+    }
+    
+    /**
+     * TODO: JavaDoc
+     */
     protected void loadFromElement(Element xmlWebNews){
         
         // VisualNews rellena sus datos

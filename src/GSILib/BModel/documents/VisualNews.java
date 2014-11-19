@@ -115,5 +115,10 @@ public abstract class VisualNews extends Document {
     @Override
     public String toString(){
         // Devolvemos un string con los datos del teletipo.
+        return "+ VisualNews ID: " + this.getId() + "\n"
+                + "|- Headline: " + this.getHeadline()+ "\n"
+                + "|- Body: " + this.getBody() + "\n"
+                + "|- Journalist: " + this.getAuthor() + "\n"
+                + "|- Pictures: " + this.pictures + "\n";
     }
 }
