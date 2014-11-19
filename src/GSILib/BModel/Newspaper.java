@@ -53,7 +53,7 @@ public class Newspaper implements XMLRepresentable{
     
     /**
      * Obtains Element type object from and XML Document containing "Newspaper"
-     * tagged nodes, which are Newspaper type objects
+     * tagged nodes, which are Newspaper type objects.
      * @param newspaperFromXML XML document to parse, which contains nodes corresponding to the class Newspaper
      */
     public Newspaper(String newspaperFromXML) throws SAXException{
@@ -70,7 +70,9 @@ public class Newspaper implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Imports list of Newspapers from the Element gathered from an XML Document
+     * containing Newspaper node list.
+     * @param xmlNewspaper Element type containing "Newspaper" tagged nodes
      */
     public Newspaper(Element xmlNewspaper){
         
@@ -81,7 +83,10 @@ public class Newspaper implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Lowest rank method which obtains the atribute values for Newspaper from an
+     * XML Element. 
+     * @param xmlNewspaper Element type which contains useful data (dates and a 
+     * list of PrintableNews)
      */
     protected void loadFromElement(Element xmlNewspaper){
         
