@@ -1169,4 +1169,14 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
         
         return false;
     }
+
+    /*public static BusinessSystem loadFromFileXML(File f) throws XMLParsingException{
+
+        return null;
+    }
+    
+    public boolean saveToFileXML(File f){
+        
+    }*/
+
 }
