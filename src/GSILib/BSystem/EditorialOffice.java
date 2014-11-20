@@ -9,6 +9,8 @@ import GSILib.BModel.*;
 import GSILib.BModel.workers.*;
 import GSILib.BModel.documents.*;
 import GSILib.BModel.documents.visualNews.*;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.util.Date;
 
 /**
@@ -17,7 +19,7 @@ import java.util.Date;
  *		basic information in the System
  * @author carlos.lopez
  */
-public interface EditorialOffice {
+public interface EditorialOffice{
     
     
     /*

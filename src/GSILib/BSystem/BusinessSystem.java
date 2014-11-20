@@ -63,10 +63,12 @@ import org.xml.sax.SAXException;
 public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepresentable{
     
     // Colecciones de objetos propias del sistema.
-    private final HashMap<String, Worker> workers = new HashMap<>(); // Trabajadores (periodistas y fotografos)
-    private final List<Document> documents = new ArrayList<>(); // Documentos (todos los tipos de noticias)
-    private final HashMap<String, Picture> pictures = new HashMap<>(); // Imagenes
-    private final LinkedHashMap<Date, Newspaper> newspapers = new LinkedHashMap<>(); // Periodicos
+    protected final HashMap<String, Worker> workers = new HashMap<>(); // Trabajadores (periodistas y fotografos)
+    protected final List<Document> documents = new ArrayList<>(); // Documentos (todos los tipos de noticias)
+    protected final HashMap<String, Picture> pictures = new HashMap<>(); // Imagenes
+    protected final LinkedHashMap<Date, Newspaper> newspapers = new LinkedHashMap<>(); // Periodicos
+    
+    protected final int minReviewers = 6;
 
     // Clase para dar el ID a las noticias (de cualquier tipo) de forma única.
     private final AtomicInteger atomicInteger = new AtomicInteger();

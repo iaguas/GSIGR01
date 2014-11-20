@@ -64,7 +64,7 @@ public class Journalist extends Worker implements XMLRepresentable{
      * @throws GSILib.persistence.XMLParsingException
      * @throws org.xml.sax.SAXException
      */
-    /*public Journalist(String journalistFromXML) throws SAXException{
+    public Journalist(String journalistFromXML) throws SAXException{
         
         // Creamos un worker nulo
         
@@ -79,44 +79,7 @@ public class Journalist extends Worker implements XMLRepresentable{
         // Cargamos los valores del Elemento
         
         this.loadFromElement(xmlJournalist);
-    }*/
-    public Journalist(String journalistFromXML) throws XMLParsingException{
-        
-        // Creamos un worker nulo
-        
-        super();
-        
-        // Instanciamos el motor de XML
-        
-        XMLHandler xml = null;
-        
-        // Comprobamos la correcta creación de una instancia de XMLHandler 
-        // mediante la excepción de XMLParsingException
-        try{
-            xml = new XMLHandler(journalistFromXML);
-        }
-        catch (SAXException e){
-            throw new XMLParsingException("prueba");
-        }
-        
-        
-        Element xmlJournalist = (Element) xml.engine.getElementsByTagName("Journalist").item(0);
-        
-        // Cargamos los valores del Elemento
-
-        this.loadFromElement(xmlJournalist);
     }
-    /*public Journalist(String journalistFromXML) throws XMLParsingException{
-         // Creamos un worker nulo
-         super();
-        // Instanciamos el motor de XML
-        XMLHandler xml = new XMLHandler(journalistFromXML);        
-        // Instanciamos la excepción que manejará los errores        
-        XMLParsing         
-        Element xmlJournalist = (Element) xml.engine.getElementsByTagName("Journalist").item(0);        
-        // Cargamos los valores del Elemento        
-        this.loadFromElement(xmlJournalist);
-    }*/
         
     /**
      * Constructor which obtains the attribute values from Element type object
