@@ -1,8 +1,8 @@
 
 package GSILib.connect;
 
-import GSILib.BModel.Journalist;
-import GSILib.BModel.PrintableNews;
+import GSILib.BModel.workers.Journalist;
+import GSILib.BModel.documents.visualNews.PrintableNews;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 

@@ -1,7 +1,7 @@
 package GSILib.connect;
 
-import GSILib.BModel.Journalist;
-import GSILib.BModel.Photographer;
+import GSILib.BModel.workers.Journalist;
+import GSILib.BModel.workers.Photographer;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
