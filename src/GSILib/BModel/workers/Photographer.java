@@ -12,6 +12,7 @@ import GSILib.Serializable.XMLRepresentable;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.StringWriter;
 import java.io.Writer;
 import javax.xml.parsers.DocumentBuilder;
@@ -32,7 +33,7 @@ import org.xml.sax.SAXException;
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-public class Photographer extends Worker implements XMLRepresentable{
+public class Photographer extends Worker implements XMLRepresentable, Serializable{
     private String regularResidence, holidayResidence;
     
     /**
@@ -241,6 +242,17 @@ public class Photographer extends Worker implements XMLRepresentable{
         
         return false;
     }
+    
+    /* TODO: Javadoc */
+    public void setRegularResidence(String rr){
+        this.regularResidence = rr;
+    }
+    
+    /* TODO: Javadoc */
+    public void setHolidayResidence(String hr){
+        this.holidayResidence = hr;
+    }
+    
     
     /** 
      * Equals. Known if 2 object are the same.

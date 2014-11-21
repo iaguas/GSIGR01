@@ -13,22 +13,17 @@ import GSILib.persistence.XMLParsingException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.StringReader;
+import java.io.Serializable;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
@@ -39,7 +34,7 @@ import org.xml.sax.SAXException;
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 
-public class Journalist extends Worker implements XMLRepresentable{
+public class Journalist extends Worker implements XMLRepresentable, Serializable {
     
     // Atributo de la clase
     private List<String> interests = new ArrayList<>(); // Lista de intereses.
@@ -306,5 +301,15 @@ public class Journalist extends Worker implements XMLRepresentable{
                 + "|- Name: " + this.getName() + "\n"
                 + "|- BirthDate: " + this.getBirthDate() + "\n"
                 + "|- Interests: " + this.interests + "\n";
+    }
+    
+    /* TODO: Javadoc */
+    public void setInterests(ArrayList<String> interests){
+        // Borro lo que había en la lista si contenia algo.
+        if(! this.interests.isEmpty())
+            this.interests.clear();
+        
+        // Pueblo de nuevo la lista con los argumentos pasados.
+        this.interests.addAll(interests);
     }
 }
