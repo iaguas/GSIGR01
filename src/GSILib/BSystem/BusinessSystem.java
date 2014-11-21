@@ -4,12 +4,6 @@
  * Universidad Pública de Navarra - curso 2014-15
  */
 
-    /* NOTA:
-    A la entrega de esta práctica se añaden ambos ejercicios extra.
-    Se dejan las clases SSTest05 a 08 para la prueba de todos los métodos 
-    implementados que no disponían de clases de test.
-    */
-
 package GSILib.BSystem;
 
 /* Aunque ya están en la interface, se introducen también aquí */

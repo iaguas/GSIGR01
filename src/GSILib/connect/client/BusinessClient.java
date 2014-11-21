@@ -1,7 +1,9 @@
-/*
- * Esto es una prueba
- * Each line should be prefixed with  * 
+/* 
+ * Práctica 04 - Grupo 01
+ * Gestión de Sistemas de Información
+ * Universidad Pública de Navarra - curso 2014-15
  */
+
 package GSILib.connect.client;
 
 import GSILib.BModel.workers.Journalist;
@@ -24,7 +26,7 @@ public class BusinessClient {
     
     public static void main(String[] args) {
         
-        // Step 1- Reading from the keyboard the address of the remote machine
+        // Leemos por teclado a ip
         
         System.out.print("Please input the addess of the machine: ");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -32,15 +34,13 @@ public class BusinessClient {
         try {
             remoteMachine = br.readLine();
         } catch (IOException ioe) {
-            System.out.println("Exception when reading : "+ioe.getMessage());
+            System.out.println("Exception when reading : " + ioe.getMessage());
             remoteMachine="localhost";
         }
         
         System.out.println("---------------");
-        System.out.println("***  Store  ***");
+        System.out.println("***   RMI   ***");
         System.out.println("---------------");
-        
-        System.out.println("\n+ BModel");
         
         // Nuevo Joournalist
         
@@ -52,15 +52,23 @@ public class BusinessClient {
 
         Journalist journalistAlvaro = new Journalist("8", "Alvaro Octal", "27/12/1993", interestsOfAlvaro);
         
+        // RMI stuff
+        
         try {
-            // Step 2-  Connecting to the remote registry
+            // Nos conectamos
+            
             Registry registry = LocateRegistry.getRegistry(remoteMachine);
-            // Step 3- Linking the remote object as if it was a local one
-            HumanRecGateway editorial = (HumanRecGateway) registry.lookup("Human");
-            // Step 4- Just using the object!
-            System.out.println("Añadiendo Journalist... " + editorial.addWorker(journalistAlvaro));
+            
+            // Enlazamos el objeto remoto como local
+            
+            HumanRecGateway human = (HumanRecGateway) registry.lookup("Human");
+            
+            // Done! start coding
+            
+            System.out.println("Añadiendo Journalist... " + human.addWorker(journalistAlvaro));
         } catch (RemoteException | NotBoundException ex) {
-            System.out.println("Exception in connection : "+ex.getMessage());
+            
+            System.out.println("Exception in connection : " + ex.getMessage());
         }
     }
 }

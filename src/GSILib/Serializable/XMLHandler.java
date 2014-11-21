@@ -1,7 +1,9 @@
-/*
- * Esto es una prueba
- * Each line should be prefixed with  * 
+/* 
+ * Práctica 03 - Grupo 01
+ * Gestión de Sistemas de Información
+ * Universidad Pública de Navarra - curso 2014-15
  */
+
 package GSILib.Serializable;
 
 import java.io.IOException;

@@ -1,13 +1,16 @@
-/*
- * Esto es una prueba
- * Each line should be prefixed with  * 
+/* 
+ * Práctica 04 - Grupo 01
+ * Gestión de Sistemas de Información
+ * Universidad Pública de Navarra - curso 2014-15
  */
+
 package GSILib.connect.server;
 
 import GSILib.BSystem.BusinessSystem;
 import GSILib.BSystem.EditorialOffice;
 import GSILib.BSystem.PublicBusinessSystem;
 import GSILib.connect.HumanRecGateway;
+import GSILib.connect.ValidationGateway;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -23,33 +26,44 @@ public class BusinessServer {
     
     public static void main(String[] args) throws RemoteException  {
         
-        // Step 1- creating a Security Manager
-        //  Comment if having troubles in publishing the object
-        //  "Comment" equals "Comment under your own responsability"
+        // Creamos el security manager
+        
+        /*  Da problemas
         if (System.getSecurityManager() == null) {
             System.setSecurityManager(new SecurityManager());
-        }
+        }*/
         
-        // Step 2- Create the object and make a publishable out of it.
-        //  Note that it is stub what we can publish, not cm itself.
+        // Creamos el objeto remoto
+        
         PublicBusinessSystem pbs = new PublicBusinessSystem();
-        HumanRecGateway stubHuman = (HumanRecGateway) UnicastRemoteObject.exportObject(pbs,0);
         
-        // Step 3- We create a registry at the desired port and we publish the object,
-        //  which will be accessibe (in terms of the interface) under the tag
-        //   "AwesomeCalculator"
+        Remote remote = UnicastRemoteObject.exportObject(pbs,0);
+        HumanRecGateway stubHuman = (HumanRecGateway) remote;
+        ValidationGateway stubValidation = (ValidationGateway) remote;
+        
+        // Publicamos los interfaces
+        
         try{
-            System.out.println("About to create the registry");
-            Registry reg = LocateRegistry.createRegistry(RMI_PORT);
-            System.out.println("Registry create");
-            reg.rebind("Human", stubHuman);
-            System.out.println("Stub rebind done");
+            
+            // Creamos el registry
+            
+            System.out.print("Creating registry...");
+            Registry registry = LocateRegistry.createRegistry(RMI_PORT);
+            System.out.println(" [done]");
+       
+            // Lanzamos el registry Human
+            
+            System.out.print("Launching registry...");
+            registry.rebind("Human", stubHuman);
+            System.out.println(" [done]");
+            
+            // Lanzamos el registry Validation
+            
+            System.out.print("Launching registry...");
+            registry.rebind("Validation", stubValidation);
+            System.out.println(" [done]");
         }catch(RemoteException re){
-             System.out.println("RMI Error in publishing the stub: "+re.getMessage());
+            System.out.println("RMI Error in publishing the stub: " + re.getMessage());
         }
-        
-        // Note that the object stays published (and accessible) when this method
-        //  "finishes". They key in understanding this is that rebind properly 
-        //  creates an execution thread (listening for connections).
     }
 }
