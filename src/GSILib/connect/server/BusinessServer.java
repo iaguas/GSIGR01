@@ -6,8 +6,6 @@
 
 package GSILib.connect.server;
 
-import GSILib.BSystem.BusinessSystem;
-import GSILib.BSystem.EditorialOffice;
 import GSILib.BSystem.PublicBusinessSystem;
 import GSILib.connect.HumanRecGateway;
 import GSILib.connect.ValidationGateway;
@@ -53,14 +51,14 @@ public class BusinessServer {
        
             // Lanzamos el registry Human
             
-            System.out.print("Launching registry...");
-            registry.rebind("Human", stubHuman);
+            System.out.print("Launching (Human) registry...");
+            registry.rebind("HRGateway", stubHuman);
             System.out.println(" [done]");
             
             // Lanzamos el registry Validation
             
-            System.out.print("Launching registry...");
-            registry.rebind("Validation", stubValidation);
+            System.out.print("Launching (Validation) registry...");
+            registry.rebind("VLGateway", stubValidation);
             System.out.println(" [done]");
         }catch(RemoteException re){
             System.out.println("RMI Error in publishing the stub: " + re.getMessage());

@@ -7,11 +7,11 @@
 package GSILib.connect.client;
 
 import GSILib.BModel.workers.Journalist;
-import GSILib.BSystem.EditorialOffice;
 import GSILib.connect.HumanRecGateway;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.rmi.ConnectException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -26,16 +26,46 @@ public class BusinessClient {
     
     public static void main(String[] args) {
         
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
         // Leemos por teclado a ip
         
-        System.out.print("Please input the addess of the machine: ");
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Introduzca la ip del servidor: ");
         String remoteMachine;
         try {
             remoteMachine = br.readLine();
+            if (remoteMachine.equals(""))
+                remoteMachine = "localhost";
         } catch (IOException ioe) {
-            System.out.println("Exception when reading : " + ioe.getMessage());
+            System.out.println("Exception when reading: " + ioe.getMessage());
             remoteMachine="localhost";
+        }
+        
+        // Leemos por teclado el puerto
+        
+        System.out.print("Introduzca el puerto de servidor: ");
+        int port;
+        try{
+            port = Integer.parseInt(br.readLine());
+        } catch (NumberFormatException nfe){
+            port = 1099;
+        } catch (IOException ioe){
+            System.out.println("Exception en la lectura: " + ioe.getMessage());
+            port = 1099;
+        }
+        
+        // Leemos por teclado el tag
+        
+        System.out.print("Introduzca el tag del objeto remoto: ");
+        String tag;
+        try{
+            tag = br.readLine();
+            if (tag.equals(""))
+                tag = "null";
+        }
+        catch (IOException ioe){
+            System.out.println("Exception en la lectura: " + ioe.getMessage());
+            tag = "null";
         }
         
         System.out.println("---------------");
@@ -57,18 +87,21 @@ public class BusinessClient {
         try {
             // Nos conectamos
             
-            Registry registry = LocateRegistry.getRegistry(remoteMachine);
+            Registry registry = LocateRegistry.getRegistry(remoteMachine, port);
             
             // Enlazamos el objeto remoto como local
-            
-            HumanRecGateway human = (HumanRecGateway) registry.lookup("Human");
+           
+            HumanRecGateway human = (HumanRecGateway) registry.lookup(tag);
             
             // Done! start coding
             
             System.out.println("Añadiendo Journalist... " + human.addWorker(journalistAlvaro));
-        } catch (RemoteException | NotBoundException ex) {
-            
-            System.out.println("Exception in connection : " + ex.getMessage());
+        } catch (ConnectException ex){
+            System.err.println("No se pudo encontrar el servidor: " + remoteMachine + ":" + port);
+        } catch (RemoteException ex) {
+            System.err.println("Exception in connection : " + ex.getMessage());
+        } catch (NotBoundException ex){
+            System.err.println("No se pudo encontrar el tag: " + tag);
         }
     }
 }
