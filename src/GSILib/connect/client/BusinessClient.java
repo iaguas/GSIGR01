@@ -24,6 +24,54 @@ import java.util.ArrayList;
  */
 public class BusinessClient {
     
+    private String remoteMachine, tag;
+    private int port;
+   
+    /**
+     * TODO: JavaDoc
+     * @param remoteMachine
+     * @param port
+     * @param tag 
+     */
+    public BusinessClient(String remoteMachine, int port, String tag){
+        
+        System.out.println("---------------");
+        System.out.println("***   RMI   ***");
+        System.out.println("---------------");
+        
+        // Nuevo Joournalist
+        
+        ArrayList interestsOfAlvaro = new ArrayList();
+        
+        interestsOfAlvaro.add("Discutir");
+        interestsOfAlvaro.add("Tocar las narices");
+        interestsOfAlvaro.add("Jugar al CS");
+
+        Journalist journalistAlvaro = new Journalist("8", "Alvaro Octal", "27/12/1993", interestsOfAlvaro);
+        
+        // RMI stuff
+        
+        try {
+            // Nos conectamos
+            
+            Registry registry = LocateRegistry.getRegistry(remoteMachine, port);
+            
+            // Enlazamos el objeto remoto como local
+           
+            HumanRecGateway human = (HumanRecGateway) registry.lookup(tag);
+            
+            // Done! start coding
+            
+            System.out.println("Añadiendo Journalist... " + human.addWorker(journalistAlvaro));
+        } catch (ConnectException ex){
+            System.err.println("No se pudo encontrar el servidor: " + remoteMachine + ":" + port);
+        } catch (RemoteException ex) {
+            System.err.println("Exception in connection : " + ex.getMessage());
+        } catch (NotBoundException ex){
+            System.err.println("No se pudo encontrar el tag: " + tag);
+        }
+    }
+    
     public static void main(String[] args) {
         
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -68,40 +116,8 @@ public class BusinessClient {
             tag = "null";
         }
         
-        System.out.println("---------------");
-        System.out.println("***   RMI   ***");
-        System.out.println("---------------");
+        // Creamos un cliente
         
-        // Nuevo Joournalist
-        
-        ArrayList interestsOfAlvaro = new ArrayList();
-        
-        interestsOfAlvaro.add("Discutir");
-        interestsOfAlvaro.add("Tocar las narices");
-        interestsOfAlvaro.add("Jugar al CS");
-
-        Journalist journalistAlvaro = new Journalist("8", "Alvaro Octal", "27/12/1993", interestsOfAlvaro);
-        
-        // RMI stuff
-        
-        try {
-            // Nos conectamos
-            
-            Registry registry = LocateRegistry.getRegistry(remoteMachine, port);
-            
-            // Enlazamos el objeto remoto como local
-           
-            HumanRecGateway human = (HumanRecGateway) registry.lookup(tag);
-            
-            // Done! start coding
-            
-            System.out.println("Añadiendo Journalist... " + human.addWorker(journalistAlvaro));
-        } catch (ConnectException ex){
-            System.err.println("No se pudo encontrar el servidor: " + remoteMachine + ":" + port);
-        } catch (RemoteException ex) {
-            System.err.println("Exception in connection : " + ex.getMessage());
-        } catch (NotBoundException ex){
-            System.err.println("No se pudo encontrar el tag: " + tag);
-        }
+        BusinessClient businessClient = new BusinessClient(remoteMachine, port, tag);
     }
 }
