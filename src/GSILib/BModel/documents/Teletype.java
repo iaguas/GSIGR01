@@ -52,7 +52,7 @@ public class Teletype extends Document implements XMLRepresentable{
      * tagged nodes, which are Teletype type objects.
      * @param teletypeFromXML XML document to parse, which contains nodes 
      * corresponding to the class Teletype
-     * @exception SAXException exception derived from XML file reading
+     * @throws SAXException exception derived from XML file reading
      */
     public Teletype(String teletypeFromXML) throws SAXException{
         
@@ -95,7 +95,7 @@ public class Teletype extends Document implements XMLRepresentable{
      * @param xmlTeletype Element type object which contains nodes 
      * corresponding to the class Teletype
      * @param journalist Journalist which is to associate
-     * @exception SAXException exception derived from XML file reading
+     * @throws SAXException exception derived from XML file reading
      */
     public Teletype(Element xmlTeletype, Journalist journalist) throws SAXException{
      

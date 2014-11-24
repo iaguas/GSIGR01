@@ -53,7 +53,7 @@ public class Picture implements XMLRepresentable{
      * tagged nodes, which are Picture type objects.
      * @param pictureFromXML XML document to parse, which contains nodes 
      * corresponding to the class Picture
-     * @exception SAXException exception derived from XML file reading
+     * @throws SAXException exception derived from XML file reading
      */
     public Picture(String pictureFromXML) throws SAXException{
         

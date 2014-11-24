@@ -33,18 +33,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.jopendocument.dom.OOUtils;
 import org.jopendocument.dom.spreadsheet.Sheet;
 import org.jopendocument.dom.spreadsheet.SpreadSheet;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 
 /**
@@ -1176,7 +1171,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
      * Main method which imports a BusinessSystem from an XML file which contains
      * complete data of all the classes which conform the business system.
      * @param file XML type file
-     * @exception XMLParsingException, IOException, SAXException cover all the
+     * @throws XMLParsingException, IOException, SAXException cover all the
      * spectrum of posible exceptions that might occur on the reading of the XML
      * file, including file and data consistency
      * 

@@ -7,7 +7,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
- * This inteface offers an acces for listing and validating news in our Editorial System.
+ * This inteface offers an access for listing and validating news in our Editorial System.
  * @author carlos.lopez
  */
 public interface ValidationGateway extends Remote{
