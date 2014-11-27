@@ -44,14 +44,13 @@ public class BusinessServer {
         
         // Creamos el objeto remoto
         
-        PublicBusinessSystem pbs = new PublicBusinessSystem();
         PublicHumanRecGw phg = new PublicHumanRecGw(pbs);
         PublicValidationGw pvg = new PublicValidationGw(pbs);
         
-        Remote remote1 = UnicastRemoteObject.exportObject(phg,0);
-        Remote remote2 = UnicastRemoteObject.exportObject(pvg,0);
-        HumanRecGateway stubHuman = (HumanRecGateway) remote1;
-        ValidationGateway stubValidation = (ValidationGateway) remote2;
+        Remote remoteHuman = UnicastRemoteObject.exportObject(phg,0);
+        Remote remoteValidation = UnicastRemoteObject.exportObject(pvg,0);
+        this.stubHuman = (HumanRecGateway) remoteHuman;
+        this.stubValidation = (ValidationGateway) remoteValidation;
         
         // Publicamos los interfaces
         
@@ -71,9 +70,9 @@ public class BusinessServer {
             
             // Lanzamos el registry Validation
             
-            /*System.out.print("Launching (Validation) registry...");
+            System.out.print("Launching (Validation) registry...");
             this.registry.rebind("VLGateway", this.stubValidation);
-            System.out.println(" [done]");*/
+            System.out.println(" [done]");
         }catch(RemoteException re){
             System.out.println("RMI Error in publishing the stub: " + re.getMessage());
         }
