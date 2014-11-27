@@ -57,7 +57,7 @@ public class PrintableNews extends VisualNews implements XMLRepresentable{
      * tagged nodes, which are PrintableNews type objects; inherits VisualNews attributes.
      * @param printableNewsFromXML XML document to parse, which contains nodes 
      * corresponding to the class PrintableNews
-     * @exception SAXException exception derived from XML file reading
+     * @throws SAXException exception derived from XML file reading
      */
     public PrintableNews(String printableNewsFromXML) throws SAXException{
         

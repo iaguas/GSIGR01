@@ -40,7 +40,6 @@ public class PublicBusinessSystem extends BusinessSystem implements HumanRecGate
         // Asignamos todos los campos del nuevo periodista al viejo.
         j.setName(jn.getName());
         j.setBirthDate(jn.getBirthDate());
-        j.setId(jn.getId());
         j.setInterests(new ArrayList<>(Arrays.asList(jn.getInterests())));
         
         // Si hemos llegado hasta aquí es que todo ha ido bien. 
@@ -54,7 +53,6 @@ public class PublicBusinessSystem extends BusinessSystem implements HumanRecGate
         // Asignamos todos los campos del nuevo periodista al viejo.
         p.setName(pg.getName());
         p.setBirthDate(pg.getBirthDate());
-        p.setId(pg.getId());
         p.setRegularResidence(pg.getRegularResidence());
         p.setHolidayResidence(pg.getHolidayResidence());
 

@@ -61,7 +61,7 @@ public class WebNews extends VisualNews implements XMLRepresentable{
      * tagged nodes, which are WebNews type objects.
      * @param webNewsFromXML XML document to parse, which contains nodes 
      * corresponding to the class WebNews
-     * @exception SAXException exception derived from XML file reading
+     * @throws SAXException exception derived from XML file reading
      */
     public WebNews(String webNewsFromXML) throws SAXException{
         
