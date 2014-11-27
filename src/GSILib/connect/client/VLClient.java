@@ -89,7 +89,9 @@ public class VLClient {
         System.out.println("Opcion: " + option);
         
         System.out.println("Retrieving list of news...");
-        for (PrintableNews printableNews : validation.getPendingNews()){
+        
+        PrintableNews[] printableNewsArray = validation.getPendingNews();
+        for (PrintableNews printableNews : printableNewsArray){
             System.out.println(printableNews.toXML());
         }
     }

@@ -80,6 +80,13 @@ public class BusinessServer {
         }
     }
     
+    /**
+     * TODO: JavaDoc
+     * @param args
+     * @throws RemoteException
+     * @throws IOException
+     * @throws SAXException 
+     */
     public static void main(String[] args) throws RemoteException, IOException, SAXException  {
         
         PublicBusinessSystem pbs = new PublicBusinessSystem();
@@ -90,7 +97,7 @@ public class BusinessServer {
         
         if (args.length == 1){
             
-            // Si existe configuracion
+            // Existe configuracion
             
             ConfigHandler configHandler = new ConfigHandler(args[0]);
             server = new BusinessServer(configHandler.getPort(), configHandler.getHRTag(), configHandler.getVLTag(), pbs);

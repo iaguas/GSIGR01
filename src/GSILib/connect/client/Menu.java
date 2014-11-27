@@ -34,8 +34,13 @@ public class Menu {
             "  5. Salir\n" +
             "  Opción: "
         );
-     
-        return Integer.parseInt(keyboard.readLine());
+        
+        try{
+            return Integer.parseInt(keyboard.readLine());
+        }
+        catch(NumberFormatException ex){
+            return 0;
+        }
     }
     
     /**
@@ -54,6 +59,11 @@ public class Menu {
             "  Opción: "                
         );
      
-        return Integer.parseInt(keyboard.readLine());
+        try{    
+            return Integer.parseInt(keyboard.readLine());
+        }
+        catch(NumberFormatException ex){
+            return 0;
+        }
     }
 }

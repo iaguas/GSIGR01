@@ -70,17 +70,29 @@ public class PublicBusinessSystem extends BusinessSystem implements HumanRecGate
     public PrintableNews[] getPendingNews(Integer numReviewers) throws RemoteException {
         
         List<PrintableNews> pendingNews = new ArrayList();
+        int reviewers;
         
         for(Document document : super.documents){
-            if (document.getClass().getName().equals("GSILib.BModel.documents.PrintableNews")){
+            if (document.getClass().getName().equals("GSILib.BModel.documents.visualNews.PrintableNews")){
+                
+                // Tratamos solo las PrintableNews
+                
                 PrintableNews printableNews = (PrintableNews) document;
                 
-                if(printableNews.getReviewers().length < super.minReviewers){
+                if(printableNews.getReviewers() == null)
+                    reviewers = 0;
+                else
+                    reviewers = printableNews.getReviewers().length;
+                
+                if(reviewers < numReviewers){
                     pendingNews.add(printableNews);
+                    System.out.println(printableNews.toXML());
                 }
             }
         }
         
+        if (pendingNews.isEmpty())
+            return null;
         return pendingNews.toArray(new PrintableNews[pendingNews.size()]);
     }
 
