@@ -27,13 +27,15 @@ import org.xml.sax.SAXException;
  */
 public class BusinessServer {
 
-    private static int RMI_PORT=1099;
+    private static int RMI_PORT = 1099;
+    private static String HRTag = "HRGateway";
+    private static String VLTag = "VLGateway";
     
     private HumanRecGateway stubHuman;
     private ValidationGateway stubValidation;
     private Registry registry;
     
-    public BusinessServer(int port, PublicBusinessSystem pbs) throws RemoteException{
+    public BusinessServer(int port, String HRTag, String VLTag, PublicBusinessSystem pbs) throws RemoteException{
         
         // Creamos el security manager
         
@@ -65,13 +67,13 @@ public class BusinessServer {
             // Lanzamos el registry Human
             
             System.out.print("Launching (Human) registry...");
-            this.registry.rebind("HRGateway", this.stubHuman);
+            this.registry.rebind(HRTag, this.stubHuman);
             System.out.println(" [done]");
             
             // Lanzamos el registry Validation
             
             System.out.print("Launching (Validation) registry...");
-            this.registry.rebind("VLGateway", this.stubValidation);
+            this.registry.rebind(VLTag, this.stubValidation);
             System.out.println(" [done]");
         }catch(RemoteException re){
             System.out.println("RMI Error in publishing the stub: " + re.getMessage());
@@ -91,13 +93,13 @@ public class BusinessServer {
             // Si existe configuracion
             
             ConfigHandler configHandler = new ConfigHandler(args[0]);
-            server = new BusinessServer(configHandler.getPort(), pbs);
+            server = new BusinessServer(configHandler.getPort(), configHandler.getHRTag(), configHandler.getVLTag(), pbs);
         }
         else if(args.length == 0){
             
             // Configuracion por defecto
             
-            server = new BusinessServer(RMI_PORT, pbs);
+            server = new BusinessServer(RMI_PORT, HRTag, VLTag, pbs);
         }
         else{
             
@@ -109,7 +111,7 @@ public class BusinessServer {
         
         // Nuevo Journalist
         
-        /*ArrayList interestsOfAlvaro = new ArrayList();
+        ArrayList interestsOfAlvaro = new ArrayList();
         
         interestsOfAlvaro.add("Discutir");
         interestsOfAlvaro.add("Tocar las narices");
@@ -119,6 +121,5 @@ public class BusinessServer {
         
         pbs.addJournalist(journalistAlvaro);
         pbs.insertNews(new PrintableNews("255Tbps: World’s fastest network could carry all of the internet’s traffic on a single fiber", "A joint group of researchers from the Netherlands and the US have smashed the world speed record for a fiber network, pushing 255 terabits per second down a single strand of glass fiber. This is equivalent to around 32 terabytes per second — enough to transfer a 1GB movie in 31.25 microseconds (0.03 milliseconds), or alternatively, the entire contents of your 1TB hard drive in about 31 milliseconds.", journalistAlvaro));
-        */
     }
 }

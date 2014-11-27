@@ -7,18 +7,12 @@
 package GSILib.connect.client;
 
 import GSILib.BModel.documents.visualNews.PrintableNews;
-import GSILib.BModel.workers.Journalist;
-import GSILib.connect.HumanRecGateway;
 import GSILib.connect.ValidationGateway;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import static java.lang.System.exit;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.util.ArrayList;
 
 /**
  *
@@ -68,7 +62,7 @@ public class VLClient {
         try{
             tag = br.readLine();
             if (tag.equals(""))
-                tag = "null";
+                tag = "VLGateway";
         }
         catch (IOException ioe){
             System.out.println("Exception en la lectura: " + ioe.getMessage());

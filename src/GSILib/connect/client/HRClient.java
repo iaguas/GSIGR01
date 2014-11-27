@@ -65,7 +65,7 @@ public class HRClient {
         try{
             tag = br.readLine();
             if (tag.equals(""))
-                tag = "null";
+                tag = "HRGateway";
         }
         catch (IOException ioe){
             System.out.println("Exception en la lectura: " + ioe.getMessage());

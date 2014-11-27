@@ -22,6 +22,7 @@ import org.xml.sax.SAXException;
 public class ConfigHandler {
     
     private int port;
+    private String HRTag, VLTag;
     
     /**
      * TODO: JavaDoc
@@ -36,6 +37,8 @@ public class ConfigHandler {
         
         Element xmlConfig = (Element) xml.engine.getElementsByTagName("Config").item(0);
         this.port = Integer.parseInt(xmlConfig.getAttribute("port"));
+        this.HRTag = xmlConfig.getAttribute("HRTag");
+        this.VLTag = xmlConfig.getAttribute("VLTag");
     }
     
     /**
@@ -44,5 +47,21 @@ public class ConfigHandler {
      */
     public int getPort(){
         return this.port;
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @return 
+     */
+    public String getHRTag(){
+        return this.HRTag;
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @return 
+     */
+    public String getVLTag(){
+        return this.VLTag;
     }
 }

@@ -14,6 +14,7 @@ import GSILib.Serializable.XMLRepresentable;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ import org.xml.sax.SAXException;
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-public class PrintableNews extends VisualNews implements XMLRepresentable{
+public class PrintableNews extends VisualNews implements XMLRepresentable, Serializable{
     
     // Atributo de la clase.
     private List<Journalist> reviewers = new ArrayList<>(); // Revisores de la noticia.
