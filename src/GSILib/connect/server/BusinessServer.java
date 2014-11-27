@@ -44,9 +44,14 @@ public class BusinessServer {
         
         // Creamos el objeto remoto
         
-        Remote remote = UnicastRemoteObject.exportObject(pbs,0);
-        this.stubHuman = (HumanRecGateway) remote;
-        this.stubValidation = (ValidationGateway) remote;
+        PublicBusinessSystem pbs = new PublicBusinessSystem();
+        PublicHumanRecGw phg = new PublicHumanRecGw(pbs);
+        PublicValidationGw pvg = new PublicValidationGw(pbs);
+        
+        Remote remote1 = UnicastRemoteObject.exportObject(phg,0);
+        Remote remote2 = UnicastRemoteObject.exportObject(pvg,0);
+        HumanRecGateway stubHuman = (HumanRecGateway) remote1;
+        ValidationGateway stubValidation = (ValidationGateway) remote2;
         
         // Publicamos los interfaces
         
