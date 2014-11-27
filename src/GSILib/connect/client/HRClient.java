@@ -4,15 +4,18 @@
  */
 package GSILib.connect.client;
 
+import GSILib.BModel.workers.Journalist;
 import GSILib.BSystem.PublicBusinessSystem;
 import GSILib.connect.HumanRecGateway;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import static java.lang.System.exit;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 
 /**
  *
@@ -21,83 +24,83 @@ import java.rmi.registry.Registry;
 public class HRClient {
     private static int RMI_PORT=1099;
     
-    public static void main(String args[]) throws RemoteException{
-        // TODO: retirar éste código
-        /* // Instanciamos el lector de teclado 
-        Scanner keyboard = new Scanner(System.in);
-        // Todavía por decidir cuales serán los datos de entrada y en qué
-        // formatos recogerlos
-        System.out.println("Bienvenido al servicio BusinessSystem de acceso remoto");
-        System.out.println("Introduzca los valores requeridos para acceder al sistema");
+    /**
+     * TODO: JavaDoc
+     * @param args 
+     */
+    public static void main(String[] args) throws RemoteException {
         
-        System.out.println("Dirección del servidor: ");
-        String direccion = keyboard.nextLine();
-        // Puerto de escucha de conexiones
-        System.out.println("Puerto del servidor: ");
-        int puerto = keyboard.nextInt();
-        
-        System.out.println("Tag del objeto remoto: ");
-        String tag = keyboard.nextLine();
-        
-        // Comprobación de conexión correcta
-        */
-        // Todavía por decidir cuales serán los datos de entrada y en qué
-        // formatos recogerlos
-        System.out.println("Bienvenido al servicio BusinessSystem de acceso remoto");
-        System.out.println("Introduzca los valores requeridos para acceder al sistema");
-        
-        System.out.println("Dirección del servidor: ");
-        // Inicializamos un BufferedReader para la lectura por teclado
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        // Leemos por teclado a ip
+        
+        System.out.print("Introduzca la ip del servidor: ");
         String remoteMachine;
-        try{
+        try {
             remoteMachine = br.readLine();
-        }
-        catch (IOException ioe){
-            System.out.println("Exception en la lectura" + ioe.getMessage());
-            // Asignamos la máquina local como la máquina remota por defecto
+            if (remoteMachine.equals(""))
+                remoteMachine = "localhost";
+        } catch (IOException ioe) {
+            System.out.println("Exception when reading: " + ioe.getMessage());
             remoteMachine="localhost";
         }
         
-        // Puerto de escucha de conexiones
-        System.out.println("Puerto del servidor: ");
+        // Leemos por teclado el puerto
+        
+        System.out.print("Introduzca el puerto de servidor: ");
         int port;
         try{
             port = Integer.parseInt(br.readLine());
-        }
-        catch (IOException ioe){
-            System.out.println("Exception en la lectura" + ioe.getMessage());
-            // Asignamos el puerto por defecto 1099
+        } catch (NumberFormatException nfe){
+            port = 1099;
+        } catch (IOException ioe){
+            System.out.println("Exception en la lectura: " + ioe.getMessage());
             port = 1099;
         }
         
-        System.out.println("Tag del objeto remoto: ");
+        // Leemos por teclado el tag
+        
+        System.out.print("Introduzca el tag del objeto remoto: ");
         String tag;
         try{
             tag = br.readLine();
+            if (tag.equals(""))
+                tag = "null";
         }
         catch (IOException ioe){
-            System.out.println("Exception en la lectura" + ioe.getMessage());
-            // Asignamos el tag por defecto como nulo
+            System.out.println("Exception en la lectura: " + ioe.getMessage());
             tag = "null";
         }
         
-        // Comprobamos poder hacer la conexión
-        try{
-            // Conectando al registro remoto
-            Registry registry = LocateRegistry.getRegistry(remoteMachine);
-            // Enlazando objeto remoto como si fuera local
-            HumanRecGateway comp = (HumanRecGateway) registry.lookup(tag);
-            // Usar el objeto: realizar las operaciones deseadas
-            // TODO: introducir las funcionalidades que pueda ejecutar esta clase
-            // (métodos de PublicBusinessSystem)
-            //System.out.println("5 plus 6 is " + comp.sum(5,6));
-        } 
-        catch (RemoteException | NotBoundException ex) {
-            System.out.println("Exception in connection : "+ex.getMessage());
+        // Creamos un cliente
+        
+        RMIClient client = new RMIClient(remoteMachine, port, tag);
+        
+        HumanRecGateway human = (HumanRecGateway) client.getRemoteObject();
+        
+        if (human == null){
+            System.err.println("No se pudo encontrar un objeto remoto (" + remoteMachine + ":" + port + "-" + tag + ")");
+            exit(0);
         }
         
+        System.out.println("---------------");
+        System.out.println("*** Testing ***");
+        System.out.println("---------------");
         
+        // Nuevo Journalist
+        
+        ArrayList interestsOfAlvaro = new ArrayList();
+        
+        interestsOfAlvaro.add("Discutir");
+        interestsOfAlvaro.add("Tocar las narices");
+        interestsOfAlvaro.add("Jugar al CS");
+
+        Journalist journalistAlvaro = new Journalist("8", "Alvaro", "27/12/1993", interestsOfAlvaro);
+        
+        System.out.println("Añadiendo Journalist [" + human.addWorker(journalistAlvaro) + "]");
+        
+        journalistAlvaro.setName("Alvaro Octal");
+        
+        System.out.println("Actualizando Journalist [" + human.updateWorker(journalistAlvaro) + "]");
     }
-    
 }
