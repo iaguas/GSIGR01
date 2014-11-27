@@ -82,6 +82,8 @@ public class HRClient{
         
         */
         
+        MenuHRClient.display();
+        
         // Nuevo Journalist
         
         ArrayList interestsOfAlvaro = new ArrayList();

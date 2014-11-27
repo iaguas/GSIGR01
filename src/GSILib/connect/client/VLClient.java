@@ -7,7 +7,6 @@
 package GSILib.connect.client;
 
 import GSILib.BModel.documents.visualNews.PrintableNews;
-import GSILib.BModel.workers.Journalist;
 import GSILib.connect.ValidationGateway;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +16,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.ArrayList;
 
 /**
  *
@@ -74,14 +72,16 @@ public class VLClient {
         System.out.println("---------------");
         
         /* Existen las siguientes opciones para el cliente que se conecte 
-        mediante este stub:
-        1. Corregir una noticia, subiendo una nueva que la sustituya
-        2. Asociar un Journalist a un PrintableNews
-        3. Mostrar las noticias cumpla alguna condición
-            3.1. Que no alcance el mínimo número de reviewers
-            3.2. Que tenga, a lo sumo, un cierto número de clientes pasado por parámetro
-        
-        */
+       mediante este stub:
+       1. Corregir una noticia, subiendo una nueva que la sustituya
+       2. Asociar un Journalist a un PrintableNews
+       3. Mostrar las noticias cumpla alguna condición
+           3.1. Que no alcance el mínimo número de reviewers
+           3.2. Que tenga, a lo sumo, un cierto número de reviewers pasado por parámetro
+
+       */
+        MenuVLClient.display();
+
         
         // Nueva noticia para actualizar noticia antigua
         PrintableNews pn_vieja = new PrintableNews("old_headline","Esto es una noticia vieja de prueba",null);
