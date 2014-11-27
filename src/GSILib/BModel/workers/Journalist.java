@@ -9,7 +9,6 @@ package GSILib.BModel.workers;
 import GSILib.BModel.Worker;
 import GSILib.Serializable.XMLHandler;
 import GSILib.Serializable.XMLRepresentable;
-import GSILib.persistence.XMLParsingException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -56,7 +55,6 @@ public class Journalist extends Worker implements XMLRepresentable, Serializable
     /**
      * Class constructor
      * @param journalistFromXML This is a xml String which represents a Jorunalist
-     * @throws GSILib.persistence.XMLParsingException
      * @throws org.xml.sax.SAXException
      */
     public Journalist(String journalistFromXML) throws SAXException{
