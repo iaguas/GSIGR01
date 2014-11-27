@@ -7,12 +7,15 @@
 package GSILib.connect.client;
 
 import GSILib.BModel.documents.visualNews.PrintableNews;
+import GSILib.BModel.workers.Journalist;
 import GSILib.connect.ValidationGateway;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import static java.lang.System.exit;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
@@ -20,6 +23,8 @@ import java.rmi.RemoteException;
  */
 public class VLClient {
     private static int RMI_PORT=1099;
+    private static Scanner keyboard;
+    
     
     /**
      * TODO: JavaDoc
@@ -87,6 +92,58 @@ public class VLClient {
         int option = Menu.getVLOption();
         
         System.out.println("Opcion: " + option);
+        
+        // Journalist ejemplo para las primeras dos opciones
+        ArrayList interestsOfExample = new ArrayList();
+        
+        interestsOfExample.add("Discutir");
+        interestsOfExample.add("Tocar las narices");
+        interestsOfExample.add("Jugar al CS");
+
+        Journalist jourExample = new Journalist("99", "Pepito", "25/11/1993", interestsOfExample);
+        // Y sino, recorrer los Journalist en busca de un objeto que coincida en id. ¿Ésto se puede hacer?
+        
+        // Ésta es una de las opciones
+        switch (option){
+            case 1:
+                System.out.print("Introduzca la id de la noticia a corregir: ");
+                int idnot = keyboard.nextInt();
+                keyboard.nextLine();
+                System.out.print("Escriba la nueva cabecera: ");
+                String head = keyboard.nextLine();
+                System.out.print("Escriba el nuevo cuerpo de la noticia: ");
+                String body = keyboard.nextLine();
+                PrintableNews editPrintableNews = new PrintableNews(head,body,jourExample);
+                editPrintableNews.setId(idnot);
+                if(validation.correctNews(editPrintableNews)){
+                    System.out.println("PrintableNews con id " + idnot + " ha sido añadido con éxito!");
+                }
+            case 2:
+                System.out.print("Introduzca la id para el noticia: ");
+                int idnotasoc = keyboard.nextInt();
+                keyboard.nextLine();
+                /*
+                System.out.print("Introduzca la id para el periodista: ");
+                String idjourasoc = keyboard.nextLine();*/
+                // ¿¿Cómo recorremos los PrintableNews??                
+                //PrintableNews asocPrintableNews = new PrintableNews(head,body,jourExample);
+                //if(validation.validateNews(asocPrintableNews,jourExample)){
+                //    System.out.println("Photographer con id " + idphoto + " ha sido añadido con éxito!");
+                //}
+            case 3: 
+                System.out.println("Recuperando lista de noticias...");
+                for (PrintableNews printableNews : validation.getPendingNews()){
+                    System.out.println(printableNews.toXML());
+                }
+            case 4:
+                System.out.print("Introduzca el número máximo de revisores por noticia: ");
+                int cota = keyboard.nextInt();
+                keyboard.nextLine();
+                System.out.println("Recuperando lista de noticias con cota de revisores...");
+                for (PrintableNews printableNews : validation.getPendingNews(cota)){
+                    System.out.println(printableNews.toXML());
+                }
+        }
         
         System.out.println("Retrieving list of news...");
         

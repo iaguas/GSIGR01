@@ -5,6 +5,7 @@
 package GSILib.connect.client;
 
 import GSILib.BModel.workers.Journalist;
+import GSILib.BModel.workers.Photographer;
 import GSILib.BSystem.PublicBusinessSystem;
 import GSILib.connect.HumanRecGateway;
 import java.io.BufferedReader;
@@ -16,6 +17,8 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  *
@@ -23,6 +26,7 @@ import java.util.ArrayList;
  */
 public class HRClient {
     private static int RMI_PORT=1099;
+    private static Scanner keyboard;
     
     /**
      * TODO: JavaDoc
@@ -91,6 +95,91 @@ public class HRClient {
         
         System.out.println("Opcion: " + option);
         
+       // Ésta es una de las opciones
+        switch (option){
+            case 1:
+                System.out.print("Introduzca la id para el periodista: ");
+                String idjour = keyboard.nextLine();
+                System.out.print("Introduzca el nombre: ");
+                String journame = keyboard.nextLine();
+                System.out.print("Introduzca la fecha de nacimiento: ");
+                String jourbd = keyboard.nextLine();
+                System.out.println("Introduzca el/los interes(es) (deje en vacio para terminar): \n");
+                String inter = "not_empty";
+                ArrayList interests = new ArrayList<>();
+                int cont = 1;
+                // Condición: variable inter, no vacio
+                while(!"".equals(inter)){
+                    System.out.print("Interes " + cont + ": ");
+                    inter = keyboard.nextLine();
+                    if(!"".equals(inter)){
+                        interests.add(inter);
+                        cont++;
+                    }
+                }
+                Journalist newJournalist = new Journalist(idjour,journame,jourbd,interests);
+                System.out.println("Añadiendo Journalist...");
+                if(human.addWorker(newJournalist)){
+                    System.out.println("Journalist con id " + idjour + " ha sido añadido con éxito!");
+                }
+            case 2:
+                System.out.print("Introduzca la id para el fotógrafo: ");
+                String idphoto = keyboard.nextLine();
+                System.out.print("Introduzca el nombre: ");
+                String photoname = keyboard.nextLine();
+                System.out.print("Introduzca la fecha de nacimiento: ");
+                String photobd = keyboard.nextLine();
+                System.out.print("Introduzca el lugar de residencia habitual: ");
+                String resiregu = keyboard.nextLine();
+                System.out.print("Introduzca el lugar de residencia de vacaciones: ");
+                String resivac = keyboard.nextLine();
+                Photographer newPhotographer = new Photographer(idphoto,photoname,photobd,resiregu,resivac);
+                if(human.addWorker(newPhotographer)){
+                    System.out.println("Photographer con id " + idphoto + " ha sido añadido con éxito!");
+                }
+            case 3: 
+                System.out.print("Introduzca la id del periodista a modificar: ");
+                String ideditjour = keyboard.nextLine();
+                System.out.println("A continuación, introduzca todos los campos nuevos: ");
+                System.out.print("Introduzca el nombre: ");
+                String editjourname = keyboard.nextLine();
+                System.out.print("Introduzca la fecha de nacimiento: ");
+                String editjourbd = keyboard.nextLine();
+                System.out.println("Introduzca el/los interes(es) (deje en vacio para terminar): \n");
+                String editinter = "not_empty";
+                ArrayList editinterests = new ArrayList<>();
+                int editcont = 1;
+                // Condición: variable inter, no vacio
+                while(!"".equals(editinter)){
+                    System.out.print("Interes " + editcont + ": ");
+                    inter = keyboard.nextLine();
+                    if(!"".equals(inter)){
+                        editinterests.add(inter);
+                        editcont++;
+                    }
+                }
+                Journalist editJournalist = new Journalist(ideditjour,editjourname,editjourbd,editinterests);
+                System.out.println("Actualizando Journalist...");
+                if(human.updateWorker(editJournalist)){
+                    System.out.println("Journalist con id " + ideditjour + " ha sido añadido con éxito!");
+                }
+            case 4:
+                System.out.print("Introduzca la id del fotógrafo a modificar: ");
+                String ideditphoto = keyboard.nextLine();
+                System.out.println("A continuación, introduzca todos los campos nuevos: ");
+                System.out.print("Introduzca el nombre: ");
+                String editphotoname = keyboard.nextLine();
+                System.out.print("Introduzca la fecha de nacimiento: ");
+                String editphotobd = keyboard.nextLine();
+                System.out.print("Introduzca el lugar de residencia habitual: ");
+                String editresiregu = keyboard.nextLine();
+                System.out.print("Introduzca el lugar de residencia de vacaciones: ");
+                String editresivac = keyboard.nextLine();
+                Photographer editPhotographer = new Photographer(ideditphoto,editphotoname,editphotobd,editresiregu,editresivac);
+                if(human.updateWorker(editPhotographer)){
+                    System.out.println("Photographer con id " + ideditphoto + " ha sido añadido con éxito!");
+                }                     
+        }
         // Nuevo Journalist
         
         ArrayList interestsOfAlvaro = new ArrayList();
