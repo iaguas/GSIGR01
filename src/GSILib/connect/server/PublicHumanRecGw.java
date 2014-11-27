@@ -12,26 +12,32 @@ import java.rmi.RemoteException;
  */
 
 
-public class PublicHumanRecGw extends PublicBusinessSystem implements HumanRecGateway{
+public class PublicHumanRecGw implements HumanRecGateway{
 
+    PublicBusinessSystem pbs = new PublicBusinessSystem();
+    
+    public PublicHumanRecGw(PublicBusinessSystem pbs){
+        this.pbs = pbs;
+    }
+    
     @Override
     public Boolean addWorker(Journalist jn) throws RemoteException {
-        return this.addWorker(jn);
+        return pbs.addWorker(jn);
     }
 
     @Override
     public Boolean addWorker(Photographer pg) throws RemoteException {
-        return this.addWorker(pg);
+        return pbs.addWorker(pg);
     }
 
     @Override
     public Boolean updateWorker(Journalist jn) throws RemoteException {
-        return this.updateWorker(jn);
+        return pbs.updateWorker(jn);
     }
 
     @Override
     public Boolean updateWorker(Photographer pg) throws RemoteException {
-        return this.updateWorker(pg);
+        return pbs.updateWorker(pg);
     }
     
 }

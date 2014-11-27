@@ -12,25 +12,31 @@ import java.rmi.RemoteException;
  */
 
 
-public class PublicValidationGw extends PublicBusinessSystem implements ValidationGateway {
+public class PublicValidationGw implements ValidationGateway {
+    
+    PublicBusinessSystem pbs = new PublicBusinessSystem();
+    
+    public PublicValidationGw(PublicBusinessSystem pbs){
+        this.pbs = pbs;
+    }
     
     @Override
     public PrintableNews[] getPendingNews() throws RemoteException{
-        return this.getPendingNews();
+        return pbs.getPendingNews();
     }
     
     @Override
     public PrintableNews[] getPendingNews(Integer numReviewers)  throws RemoteException{
-        return this.getPendingNews(numReviewers);
+        return pbs.getPendingNews(numReviewers);
     }
    
     @Override
     public boolean correctNews(PrintableNews pn)  throws RemoteException{
-        return this.correctNews(pn);
+        return pbs.correctNews(pn);
     }
     
     @Override
     public boolean validateNews(PrintableNews pn,Journalist jn)  throws RemoteException{
-        return this.validateNews(pn, jn);
+        return pbs.validateNews(pn, jn);
     }
 }
