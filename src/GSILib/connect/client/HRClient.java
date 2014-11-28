@@ -29,8 +29,9 @@ public class HRClient {
     private static Scanner keyboard;
     
     /**
-     * TODO: JavaDoc
-     * @param args 
+     * This is the main method for the HumanResourceClient stub
+     * @param args
+     * @throws RemoteException, IOException that handle RMI associated errors
      */
     public static void main(String[] args) throws RemoteException, IOException {
         

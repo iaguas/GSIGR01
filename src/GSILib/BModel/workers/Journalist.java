@@ -264,7 +264,10 @@ public class Journalist extends Worker implements XMLRepresentable, Serializable
                 + "|- Interests: " + this.interests + "\n";
     }
     
-    /* TODO: Javadoc */
+    /**
+     * Sets the interests for a Journalist
+     * @param interests List of interests to asociate with a Journalist
+     */
     public void setInterests(ArrayList<String> interests){
         // Borro lo que había en la lista si contenia algo.
         if(! this.interests.isEmpty())

@@ -19,9 +19,9 @@ public class Menu {
     private static BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
     
     /**
-     * TODO: JavaDoc
-     * @return
-     * @throws IOException 
+     * This is the static method which shows the option menu for the HumanResourceClient stub
+     * @return number of the desired option
+     * @throws IOException for the option reading from the keyboard
      */
     public static int getHROption() throws IOException{
         System.out.println("-- Acciones --");
@@ -44,8 +44,9 @@ public class Menu {
     }
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * This is the static method which shows the option menu for the ValidationClient stub
+     * @return number of the desired option
+     * @throws IOException for the option reading from the keyboard
      */
     public static int getVLOption() throws IOException{
         System.out.println("-- Acciones --");
