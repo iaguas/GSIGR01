@@ -1,5 +1,3 @@
-/* TODO: javadoc y comentarios */
-
 /*
  * Esto es una prueba
  * Each line should be prefixed with  * 

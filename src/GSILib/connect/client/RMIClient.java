@@ -30,10 +30,7 @@ public class RMIClient {
     private Remote remote;
    
     /**
-     * TODO: JavaDoc
-     * @param remoteMachine
-     * @param port
-     * @param tag 
+     * Empty class constructor
      */
     public RMIClient(){
         
@@ -41,11 +38,11 @@ public class RMIClient {
     }
     
     /**
-     * TODO: JavaDoc
-     * @param remoteMachine
-     * @param port
-     * @param tag
-     * @throws RemoteException 
+     * This constructor creates a RMI session for a client
+     * @param remoteMachine Address for the remote machine
+     * @param port Connection port
+     * @param tag Tag for the desired client stub
+     * @throws RemoteException handles errors on RMI session creation
      */
     public RMIClient(String remoteMachine, int port, String tag) throws RemoteException{
         
@@ -53,11 +50,11 @@ public class RMIClient {
         this.lookup(tag);
     }
     /**
-     * TODO: JavaDoc
-     * @param remoteMachine
-     * @param port
-     * @return
-     * @throws RemoteException 
+     * This method allows to establish a generic RMI session (without tag)
+     * @param remoteMachine Address for the remote machine
+     * @param port Connection port
+     * @return True if connection made correctly, false otherwise
+     * @throws RemoteException handles errors associated with RMI
      */
     public boolean conect(String remoteMachine, int port) throws RemoteException{
         
@@ -70,20 +67,19 @@ public class RMIClient {
     }
     
     /**
-     * TODO: JavaDoc
-     * @param remoteMachine
-     * @return
-     * @throws RemoteException 
+     * This method allows to establish a generic RMI session (without tag, using default port)
+     * @param remoteMachine Address for the remote machine
+     * @return True if connection made correctly, false otherwise
+     * @throws RemoteException handles errors associated with RMI
      */
     public boolean conect(String remoteMachine) throws RemoteException{
         return this.conect(remoteMachine, 1099);
     }
     
     /**
-     * TODO: JavaDoc
-     * @param tag
-     * @return
-     * @throws RemoteException 
+     * This method ensures the correct selection of the tag
+     * @param tag Tag for the desired client stub
+     * @throws RemoteException will handle errors related to bad tag selection
      */
     public Remote lookup(String tag) throws RemoteException{
         try{
@@ -97,8 +93,8 @@ public class RMIClient {
     }
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Returns a Remote type object
+     * @return Remote type object
      */
     public Remote getRemoteObject(){
         return this.remote;

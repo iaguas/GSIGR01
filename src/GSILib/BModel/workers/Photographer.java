@@ -243,12 +243,18 @@ public class Photographer extends Worker implements XMLRepresentable, Serializab
         return false;
     }
     
-    /* TODO: Javadoc */
+    /**
+     * Sets the regular residence for a Photographer
+     * @param rr Regular residence address
+     */
     public void setRegularResidence(String rr){
         this.regularResidence = rr;
     }
     
-    /* TODO: Javadoc */
+    /**
+     * Sets the holiday residence for a Photographer
+     * @param hr Holiday residence address
+     */
     public void setHolidayResidence(String hr){
         this.holidayResidence = hr;
     }

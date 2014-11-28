@@ -81,11 +81,11 @@ public class BusinessServer {
     }
     
     /**
-     * TODO: JavaDoc
+     * This is the main method for the BusinessServer, which is the server RMI uses
      * @param args
-     * @throws RemoteException
-     * @throws IOException
-     * @throws SAXException 
+     * @throws RemoteException handles errors associated to RMI
+     * @throws IOException handles errors associated to IO reading
+     * @throws SAXException handles errors associated to XML handling
      */
     public static void main(String[] args) throws RemoteException, IOException, SAXException  {
         

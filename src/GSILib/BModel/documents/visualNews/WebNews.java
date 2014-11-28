@@ -115,7 +115,9 @@ public class WebNews extends VisualNews implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
+     * Imports list of url and list of keywords from the Element gathered from 
+     * an XML Document, which are asociated to each WebNews
+     * @param xmlWebNews Element type containing "WebNews" tagged nodes
      */
     protected void loadFromElement(Element xmlWebNews){
         

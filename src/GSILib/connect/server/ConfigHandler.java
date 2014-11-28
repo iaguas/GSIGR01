@@ -25,10 +25,10 @@ public class ConfigHandler {
     private String HRTag, VLTag;
     
     /**
-     * TODO: JavaDoc
-     * @param path
-     * @throws IOException
-     * @throws SAXException 
+     * Constructor which gets RMI configuration from an XML document
+     * @param path Path of the XML file to read
+     * @throws IOException handles errors asociated to IO
+     * @throws SAXException handles errors asociated to XML Handling
      */
     public ConfigHandler(String path) throws IOException, SAXException{
         String ConfigFromXML = new String(Files.readAllBytes(Paths.get(path)));
@@ -42,24 +42,24 @@ public class ConfigHandler {
     }
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Gets connection port
+     * @return port
      */
     public int getPort(){
         return this.port;
     }
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Gets connection HR tag
+     * @return HRTag
      */
     public String getHRTag(){
         return this.HRTag;
     }
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Gets connection VL tag
+     * @return VLTag
      */
     public String getVLTag(){
         return this.VLTag;
