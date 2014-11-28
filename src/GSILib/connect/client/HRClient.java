@@ -138,7 +138,7 @@ public class HRClient {
                 
             case 4:
                 
-                // Leemos el Journalist por teclado
+                // Leemos el Photographer por teclado
                 
                 System.out.println("-- Actualizar Photographer --");
                 Photographer photographerToUpdate = ReadFromKeyboard.newPhotographer();
