@@ -100,7 +100,8 @@ public class HRClient {
         switch (option){
             case 1:
                 System.out.print("Introduzca la id para el periodista: ");
-                String idjour = keyboard.nextLine();
+                String idjour = "";
+                idjour = keyboard.nextLine();
                 System.out.print("Introduzca el nombre: ");
                 String journame = keyboard.nextLine();
                 System.out.print("Introduzca la fecha de nacimiento: ");

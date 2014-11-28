@@ -6,6 +6,7 @@
 
 package GSILib.connect.client;
 
+import GSILib.BModel.Newspaper;
 import GSILib.BModel.documents.visualNews.PrintableNews;
 import GSILib.BModel.workers.Journalist;
 import GSILib.connect.ValidationGateway;
@@ -15,6 +16,7 @@ import java.io.InputStreamReader;
 import static java.lang.System.exit;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -27,8 +29,9 @@ public class VLClient {
     
     
     /**
-     * TODO: JavaDoc
-     * @param args 
+     * This is the main method for the ValidationClient stub
+     * @param args
+     * @throws RemoteException, IOException that handle RMI associated errors
      */
     public static void main(String[] args) throws RemoteException, IOException {
         
@@ -119,12 +122,12 @@ public class VLClient {
                     System.out.println("PrintableNews con id " + idnot + " ha sido añadido con éxito!");
                 }
             case 2:
-                System.out.print("Introduzca la id para el noticia: ");
-                int idnotasoc = keyboard.nextInt();
-                keyboard.nextLine();
-                /*
-                System.out.print("Introduzca la id para el periodista: ");
-                String idjourasoc = keyboard.nextLine();*/
+                /*System.out.print("Introduzca la id para la noticia: ");
+                int idNotasoc = keyboard.nextInt();
+                keyboard.nextLine();*/
+                System.out.print("Introduzca la id para el periodista revisor: ");
+                String idJourasoc = keyboard.nextLine();
+                Journalist asocJournalist = validation.findJournalist(idJourasoc);
                 // ¿¿Cómo recorremos los PrintableNews??                
                 //PrintableNews asocPrintableNews = new PrintableNews(head,body,jourExample);
                 //if(validation.validateNews(asocPrintableNews,jourExample)){
