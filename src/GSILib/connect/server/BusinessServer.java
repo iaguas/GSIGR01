@@ -91,6 +91,20 @@ public class BusinessServer {
         
         PublicBusinessSystem pbs = new PublicBusinessSystem();
         
+        // Nuevo Journalist
+        
+        ArrayList interestsOfAlvaro = new ArrayList();
+        
+        interestsOfAlvaro.add("Discutir");
+        interestsOfAlvaro.add("Tocar las narices");
+        interestsOfAlvaro.add("Jugar al CS");
+
+        Journalist journalistAlvaro = new Journalist("8", "Alvaro", "27/12/1993", interestsOfAlvaro);
+        
+        pbs.addJournalist(journalistAlvaro);
+        pbs.insertNews(new PrintableNews("255Tbps: World’s fastest network could carry all of the internet’s traffic on a single fiber", "A joint group of researchers from the Netherlands and the US have smashed the world speed record for a fiber network, pushing 255 terabits per second down a single strand of glass fiber. This is equivalent to around 32 terabytes per second — enough to transfer a 1GB movie in 31.25 microseconds (0.03 milliseconds), or alternatively, the entire contents of your 1TB hard drive in about 31 milliseconds.", journalistAlvaro));
+    
+        
         // Cargamos el servidor
         
         BusinessServer server = null;
@@ -116,19 +130,6 @@ public class BusinessServer {
             
             System.err.println("Invalid number of arguments");
             exit(0);
-        }
-        
-        // Nuevo Journalist
-        
-        ArrayList interestsOfAlvaro = new ArrayList();
-        
-        interestsOfAlvaro.add("Discutir");
-        interestsOfAlvaro.add("Tocar las narices");
-        interestsOfAlvaro.add("Jugar al CS");
-
-        Journalist journalistAlvaro = new Journalist("8", "Alvaro", "27/12/1993", interestsOfAlvaro);
-        
-        pbs.addJournalist(journalistAlvaro);
-        pbs.insertNews(new PrintableNews("255Tbps: World’s fastest network could carry all of the internet’s traffic on a single fiber", "A joint group of researchers from the Netherlands and the US have smashed the world speed record for a fiber network, pushing 255 terabits per second down a single strand of glass fiber. This is equivalent to around 32 terabytes per second — enough to transfer a 1GB movie in 31.25 microseconds (0.03 milliseconds), or alternatively, the entire contents of your 1TB hard drive in about 31 milliseconds.", journalistAlvaro));
+        }    
     }
 }

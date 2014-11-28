@@ -25,7 +25,6 @@ import java.util.Scanner;
  */
 public class VLClient {
     private static int RMI_PORT=1099;
-    private static Scanner keyboard;
     
     
     /**
@@ -35,14 +34,14 @@ public class VLClient {
      */
     public static void main(String[] args) throws RemoteException, IOException {
         
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
         
         // Leemos por teclado a ip
         
         System.out.print("Introduzca la ip del servidor: ");
         String remoteMachine;
         try {
-            remoteMachine = br.readLine();
+            remoteMachine = keyboard.readLine();
             if (remoteMachine.equals(""))
                 remoteMachine = "localhost";
         } catch (IOException ioe) {
@@ -55,7 +54,7 @@ public class VLClient {
         System.out.print("Introduzca el puerto de servidor: ");
         int port;
         try{
-            port = Integer.parseInt(br.readLine());
+            port = Integer.parseInt(keyboard.readLine());
         } catch (NumberFormatException nfe){
             port = 1099;
         } catch (IOException ioe){
@@ -68,7 +67,7 @@ public class VLClient {
         System.out.print("Introduzca el tag del objeto remoto: ");
         String tag;
         try{
-            tag = br.readLine();
+            tag = keyboard.readLine();
             if (tag.equals(""))
                 tag = "VLGateway";
         }
@@ -94,24 +93,9 @@ public class VLClient {
         
         int option = Menu.getVLOption();
         
-        System.out.println("Opcion: " + option);
-        
-        // Journalist ejemplo para las primeras dos opciones
-        
-        ArrayList interestsOfExample = new ArrayList();
-        
-        interestsOfExample.add("Discutir");
-        interestsOfExample.add("Tocar las narices");
-        interestsOfExample.add("Jugar al CS");
-
-        Journalist jourExample = new Journalist("99", "Pepito", "25/11/1993", interestsOfExample);
-        
-        // Y sino, recorrer los Journalist en busca de un objeto que coincida en id. ¿Ésto se puede hacer?
-        
-        // Ésta es una de las opciones
         switch (option){
             case 1:
-                System.out.print("Introduzca la id de la noticia a corregir: ");
+                /*System.out.print("Introduzca la id de la noticia a corregir: ");
                 int idnot = keyboard.nextInt();
                 keyboard.nextLine();
                 System.out.print("Escriba la nueva cabecera: ");
@@ -122,11 +106,12 @@ public class VLClient {
                 editPrintableNews.setId(idnot);
                 if(validation.correctNews(editPrintableNews)){
                     System.out.println("PrintableNews con id " + idnot + " ha sido añadido con éxito!");
-                }
+                }*/
+                break;
             case 2:
                 /*System.out.print("Introduzca la id para la noticia: ");
                 int idNotasoc = keyboard.nextInt();
-                keyboard.nextLine();*/
+                keyboard.nextLine();
                 System.out.print("Introduzca la id para el periodista revisor: ");
                 String idJourasoc = keyboard.nextLine();
                 Journalist asocJournalist = validation.findJournalist(idJourasoc);
@@ -134,20 +119,33 @@ public class VLClient {
                 //PrintableNews asocPrintableNews = new PrintableNews(head,body,jourExample);
                 //if(validation.validateNews(asocPrintableNews,jourExample)){
                 //    System.out.println("Photographer con id " + idphoto + " ha sido añadido con éxito!");
-                //}
+                //}*/
+                break;
             case 3: 
+                
+                // Pedimos la lista de PrintableNews
+                
                 System.out.println("Recuperando lista de noticias...");
+                
                 for (PrintableNews printableNews : validation.getPendingNews()){
                     System.out.println(printableNews.toXML());
                 }
+                break;
+                
             case 4:
-                System.out.print("Introduzca el número máximo de revisores por noticia: ");
-                int cota = keyboard.nextInt();
-                keyboard.nextLine();
+                
+                // Leemos la cota por teclado
+                
+                System.out.print("Introduzca el minimo de revisores por noticia: ");
+                int cota = Integer.parseInt(keyboard.readLine());
+                
+                // Pedimos la lista de PrintableNews
+                
                 System.out.println("Recuperando lista de noticias con cota de revisores...");
                 for (PrintableNews printableNews : validation.getPendingNews(cota)){
                     System.out.println(printableNews.toXML());
                 }
+                break;
         }
     }
 }

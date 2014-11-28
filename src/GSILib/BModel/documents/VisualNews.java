@@ -9,6 +9,7 @@ package GSILib.BModel.documents;
 import GSILib.BModel.Document;
 import GSILib.BModel.Picture;
 import GSILib.BModel.workers.Journalist;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import org.w3c.dom.Element;
@@ -22,7 +23,7 @@ import org.w3c.dom.NodeList;
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-public abstract class VisualNews extends Document {
+public abstract class VisualNews extends Document implements Serializable {
     
     // Atributo de la clase
     protected List<Picture> pictures = new ArrayList<>(); // Imágenes adosadas a las noticias.

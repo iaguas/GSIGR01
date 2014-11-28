@@ -13,8 +13,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import static java.lang.System.exit;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  *
@@ -22,8 +20,6 @@ import java.util.Scanner;
  */
 public class HRClient {
     private static int RMI_PORT=1099;
-    private static Scanner keyboard;
-    private static Object ReadFromKeyBoard;
     
     /**
      * This is the main method for the HumanResourceClient stub
@@ -32,14 +28,14 @@ public class HRClient {
      */
     public static void main(String[] args) throws RemoteException, IOException {
         
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
         
         // Leemos por teclado a ip
         
         System.out.print("Introduzca la ip del servidor: ");
         String remoteMachine;
         try {
-            remoteMachine = br.readLine();
+            remoteMachine = keyboard.readLine();
             if (remoteMachine.equals(""))
                 remoteMachine = "localhost";
         } catch (IOException ioe) {
@@ -52,7 +48,7 @@ public class HRClient {
         System.out.print("Introduzca el puerto de servidor: ");
         int port;
         try{
-            port = Integer.parseInt(br.readLine());
+            port = Integer.parseInt(keyboard.readLine());
         } catch (NumberFormatException nfe){
             port = 1099;
         } catch (IOException ioe){
@@ -65,7 +61,7 @@ public class HRClient {
         System.out.print("Introduzca el tag del objeto remoto: ");
         String tag;
         try{
-            tag = br.readLine();
+            tag = keyboard.readLine();
             if (tag.equals(""))
                 tag = "HRGateway";
         }

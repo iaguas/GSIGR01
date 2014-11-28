@@ -7,6 +7,7 @@
 package GSILib.BModel;
 
 import GSILib.BModel.workers.Journalist;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import org.w3c.dom.Element;
@@ -19,13 +20,13 @@ import org.w3c.dom.NodeList;
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-public abstract class Document {
+public abstract class Document implements Serializable{
     
     // Atributos de la clase
     private Integer id; // ID único.
     private String headline, body; // Titular y texto de la noticia.
-    protected List<Journalist> journalists = new ArrayList<>(); // Lista de periodistas.
-    private List<String> prizes = new ArrayList<>(); // Lista de premios.
+    protected List<Journalist> journalists = new ArrayList(); // Lista de periodistas.
+    private List<String> prizes = new ArrayList(); // Lista de premios.
     
     /**
      * Class constructor for a document with headline, body and author.
