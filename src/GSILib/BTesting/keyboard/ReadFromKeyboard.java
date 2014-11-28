@@ -1,0 +1,89 @@
+/*
+ * Esto es una prueba
+ * Each line should be prefixed with  * 
+ */
+package GSILib.BTesting.keyboard;
+
+import GSILib.BModel.workers.Journalist;
+import GSILib.BModel.workers.Photographer;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ *
+ * @author Alvaro
+ */
+public class ReadFromKeyboard {
+    private static BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
+    
+    /**
+     * TODO: JavaDoc
+     * @return
+     * @throws IOException 
+     */
+    public static Journalist newJournalist() throws IOException{
+        
+        // Leemos el id
+        
+        System.out.print("id: ");
+        String id = keyboard.readLine();
+        
+        // Leemos el name
+        
+        System.out.print("Introduzca el nombre: ");
+        String name = keyboard.readLine();
+        
+        // Leemos el birthDate
+        
+        System.out.print("Introduzca la fecha de nacimiento: ");
+        String birthDate = keyboard.readLine();
+        
+        // Leemos los interests
+        
+        System.out.print("Introduzca los intereses separados por comas: ");
+        String interestsString = keyboard.readLine();
+        ArrayList<String> interests = new ArrayList();
+        interests.addAll(Arrays.asList(interestsString.split("\\s*,\\s*")));
+        
+        return new Journalist(id,name,birthDate, interests); 
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @return
+     * @throws IOException 
+     */
+    public static Photographer newPhotographer() throws IOException{
+        
+        // Leemos el id
+        
+        System.out.print("id: ");
+        String id = keyboard.readLine();
+        
+        // Leemos el name
+        
+        System.out.print("Introduzca el nombre: ");
+        String name = keyboard.readLine();
+        
+        // Leemos el birthDate
+        
+        System.out.print("Introduzca la fecha de nacimiento: ");
+        String birthDate = keyboard.readLine();
+        
+        // Leemos el regularResidence
+        
+        System.out.print("Introduzca la residencia habitual: ");
+        String regularResidence = keyboard.readLine();
+        
+        // Leemos el birthDate
+        
+        System.out.print("Introduzca la residencia vacacional: ");
+        String holidayResidence = keyboard.readLine();
+                
+        return new Photographer(id, name, birthDate, regularResidence, holidayResidence);
+    }
+}

@@ -86,7 +86,6 @@ public class PublicBusinessSystem extends BusinessSystem implements HumanRecGate
                 
                 if(reviewers < numReviewers){
                     pendingNews.add(printableNews);
-                    System.out.println(printableNews.toXML());
                 }
             }
         }

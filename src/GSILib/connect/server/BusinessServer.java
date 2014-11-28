@@ -99,7 +99,9 @@ public class BusinessServer {
             
             // Existe configuracion
             
+            System.out.print("Loading stored config...");
             ConfigHandler configHandler = new ConfigHandler(args[0]);
+            System.out.println(" [done]");
             server = new BusinessServer(configHandler.getPort(), configHandler.getHRTag(), configHandler.getVLTag(), pbs);
         }
         else if(args.length == 0){

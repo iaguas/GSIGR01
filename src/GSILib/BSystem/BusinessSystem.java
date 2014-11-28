@@ -55,7 +55,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
     protected final HashMap<String, Worker> workers = new HashMap<>(); // Trabajadores (periodistas y fotografos)
     protected final List<Document> documents = new ArrayList<>(); // Documentos (todos los tipos de noticias)
     protected final HashMap<String, Picture> pictures = new HashMap<>(); // Imagenes
-    public final LinkedHashMap<Date, Newspaper> newspapers = new LinkedHashMap<>(); // Periodicos
+    protected final LinkedHashMap<Date, Newspaper> newspapers = new LinkedHashMap<>(); // Periodicos
     
     protected final int minReviewers = 6;
 

@@ -6,18 +6,14 @@ package GSILib.connect.client;
 
 import GSILib.BModel.workers.Journalist;
 import GSILib.BModel.workers.Photographer;
-import GSILib.BSystem.PublicBusinessSystem;
+import GSILib.BTesting.keyboard.ReadFromKeyboard;
 import GSILib.connect.HumanRecGateway;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import static java.lang.System.exit;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -27,6 +23,7 @@ import java.util.Scanner;
 public class HRClient {
     private static int RMI_PORT=1099;
     private static Scanner keyboard;
+    private static Object ReadFromKeyBoard;
     
     /**
      * This is the main method for the HumanResourceClient stub
@@ -96,105 +93,62 @@ public class HRClient {
         
         System.out.println("Opcion: " + option);
         
-       // Ésta es una de las opciones
         switch (option){
             case 1:
-                System.out.print("Introduzca la id para el periodista: ");
-                String idjour = keyboard.nextLine();
-                System.out.print("Introduzca el nombre: ");
-                String journame = keyboard.nextLine();
-                System.out.print("Introduzca la fecha de nacimiento: ");
-                String jourbd = keyboard.nextLine();
-                System.out.println("Introduzca el/los interes(es) (deje en vacio para terminar): \n");
-                String inter = "not_empty";
-                ArrayList interests = new ArrayList<>();
-                int cont = 1;
-                // Condición: variable inter, no vacio
-                while(!"".equals(inter)){
-                    System.out.print("Interes " + cont + ": ");
-                    inter = keyboard.nextLine();
-                    if(!"".equals(inter)){
-                        interests.add(inter);
-                        cont++;
-                    }
-                }
-                Journalist newJournalist = new Journalist(idjour,journame,jourbd,interests);
-                System.out.println("Añadiendo Journalist...");
-                if(human.addWorker(newJournalist)){
-                    System.out.println("Journalist con id " + idjour + " ha sido añadido con éxito!");
-                }
+                
+                // Leemos el Journalist por teclado
+                
+                System.out.println("-- Nuevo Journalist --");
+                Journalist journalist = ReadFromKeyboard.newJournalist();
+                
+                System.out.print("Añadiendo Journalist...");
+                if(human.addWorker(journalist))
+                    System.out.println(" [done]");
+                else
+                    System.out.println(" [fail]");
+                break;
+                
             case 2:
-                System.out.print("Introduzca la id para el fotógrafo: ");
-                String idphoto = keyboard.nextLine();
-                System.out.print("Introduzca el nombre: ");
-                String photoname = keyboard.nextLine();
-                System.out.print("Introduzca la fecha de nacimiento: ");
-                String photobd = keyboard.nextLine();
-                System.out.print("Introduzca el lugar de residencia habitual: ");
-                String resiregu = keyboard.nextLine();
-                System.out.print("Introduzca el lugar de residencia de vacaciones: ");
-                String resivac = keyboard.nextLine();
-                Photographer newPhotographer = new Photographer(idphoto,photoname,photobd,resiregu,resivac);
-                if(human.addWorker(newPhotographer)){
-                    System.out.println("Photographer con id " + idphoto + " ha sido añadido con éxito!");
-                }
+                
+                // Leemos el Photographer por teclado
+                
+                System.out.println("-- Nuevo Photographer --");
+                Photographer photographer = ReadFromKeyboard.newPhotographer();
+                
+                System.out.print("Añadiendo Photographer...");
+                if(human.addWorker(photographer))
+                    System.out.println(" [done]");
+                else
+                    System.out.println(" [fail]");
+                break;
+                
             case 3: 
-                System.out.print("Introduzca la id del periodista a modificar: ");
-                String ideditjour = keyboard.nextLine();
-                System.out.println("A continuación, introduzca todos los campos nuevos: ");
-                System.out.print("Introduzca el nombre: ");
-                String editjourname = keyboard.nextLine();
-                System.out.print("Introduzca la fecha de nacimiento: ");
-                String editjourbd = keyboard.nextLine();
-                System.out.println("Introduzca el/los interes(es) (deje en vacio para terminar): \n");
-                String editinter = "not_empty";
-                ArrayList editinterests = new ArrayList<>();
-                int editcont = 1;
-                // Condición: variable inter, no vacio
-                while(!"".equals(editinter)){
-                    System.out.print("Interes " + editcont + ": ");
-                    inter = keyboard.nextLine();
-                    if(!"".equals(inter)){
-                        editinterests.add(inter);
-                        editcont++;
-                    }
-                }
-                Journalist editJournalist = new Journalist(ideditjour,editjourname,editjourbd,editinterests);
-                System.out.println("Actualizando Journalist...");
-                if(human.updateWorker(editJournalist)){
-                    System.out.println("Journalist con id " + ideditjour + " ha sido añadido con éxito!");
-                }
+                
+                // Leemos el Journalist por teclado
+                
+                System.out.println("-- Actualizar Journalist --");
+                Journalist journalistToUpdate = ReadFromKeyboard.newJournalist();
+                
+                System.out.print("Actualizando Journalist...");
+                if(human.updateWorker(journalistToUpdate))
+                    System.out.println(" [done]");
+                else
+                    System.out.println(" [fail]");
+                break;
+                
             case 4:
-                System.out.print("Introduzca la id del fotógrafo a modificar: ");
-                String ideditphoto = keyboard.nextLine();
-                System.out.println("A continuación, introduzca todos los campos nuevos: ");
-                System.out.print("Introduzca el nombre: ");
-                String editphotoname = keyboard.nextLine();
-                System.out.print("Introduzca la fecha de nacimiento: ");
-                String editphotobd = keyboard.nextLine();
-                System.out.print("Introduzca el lugar de residencia habitual: ");
-                String editresiregu = keyboard.nextLine();
-                System.out.print("Introduzca el lugar de residencia de vacaciones: ");
-                String editresivac = keyboard.nextLine();
-                Photographer editPhotographer = new Photographer(ideditphoto,editphotoname,editphotobd,editresiregu,editresivac);
-                if(human.updateWorker(editPhotographer)){
-                    System.out.println("Photographer con id " + ideditphoto + " ha sido añadido con éxito!");
-                }                     
+                
+                // Leemos el Journalist por teclado
+                
+                System.out.println("-- Actualizar Photographer --");
+                Photographer photographerToUpdate = ReadFromKeyboard.newPhotographer();
+                
+                System.out.print("Actualizando Photographer...");
+                if(human.updateWorker(photographerToUpdate))
+                    System.out.println(" [done]");
+                else
+                    System.out.println(" [fail]");
+                break;
         }
-        // Nuevo Journalist
-        
-        ArrayList interestsOfAlvaro = new ArrayList();
-        
-        interestsOfAlvaro.add("Discutir");
-        interestsOfAlvaro.add("Tocar las narices");
-        interestsOfAlvaro.add("Jugar al CS");
-
-        Journalist journalistAlvaro = new Journalist("8", "Alvaro", "27/12/1993", interestsOfAlvaro);
-        
-        System.out.println("Añadiendo Journalist [" + human.addWorker(journalistAlvaro) + "]");
-        
-        journalistAlvaro.setName("Alvaro Octal");
-        
-        System.out.println("Actualizando Journalist [" + human.updateWorker(journalistAlvaro) + "]");
     }
 }

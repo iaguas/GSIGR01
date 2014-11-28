@@ -94,6 +94,7 @@ public class VLClient {
         System.out.println("Opcion: " + option);
         
         // Journalist ejemplo para las primeras dos opciones
+        
         ArrayList interestsOfExample = new ArrayList();
         
         interestsOfExample.add("Discutir");
@@ -101,6 +102,7 @@ public class VLClient {
         interestsOfExample.add("Jugar al CS");
 
         Journalist jourExample = new Journalist("99", "Pepito", "25/11/1993", interestsOfExample);
+        
         // Y sino, recorrer los Journalist en busca de un objeto que coincida en id. ¿Ésto se puede hacer?
         
         // Ésta es una de las opciones
@@ -143,13 +145,6 @@ public class VLClient {
                 for (PrintableNews printableNews : validation.getPendingNews(cota)){
                     System.out.println(printableNews.toXML());
                 }
-        }
-        
-        System.out.println("Retrieving list of news...");
-        
-        PrintableNews[] printableNewsArray = validation.getPendingNews();
-        for (PrintableNews printableNews : printableNewsArray){
-            System.out.println(printableNews.toXML());
         }
     }
 }

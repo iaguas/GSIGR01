@@ -32,7 +32,6 @@ import org.xml.sax.SAXException;
  * @version 1.0
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-
 public class Journalist extends Worker implements XMLRepresentable, Serializable {
     
     // Atributo de la clase
