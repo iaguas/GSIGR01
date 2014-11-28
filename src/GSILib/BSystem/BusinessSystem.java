@@ -55,7 +55,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
     protected final HashMap<String, Worker> workers = new HashMap<>(); // Trabajadores (periodistas y fotografos)
     protected final List<Document> documents = new ArrayList<>(); // Documentos (todos los tipos de noticias)
     protected final HashMap<String, Picture> pictures = new HashMap<>(); // Imagenes
-    protected final LinkedHashMap<Date, Newspaper> newspapers = new LinkedHashMap<>(); // Periodicos
+    public final LinkedHashMap<Date, Newspaper> newspapers = new LinkedHashMap<>(); // Periodicos
     
     protected final int minReviewers = 6;
 
@@ -339,6 +339,30 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
         WebNews[] arrayWebNews = list.toArray(new WebNews[list.size()]);
         return arrayWebNews;
     }
+    
+    /**
+     * This method returns a PrintableNews from Newspaper by its ID
+     * @param idPn The id of the PrintableNews to find
+     * @return The PrintableNews with the given id; otherwise, returns null
+     */
+    //@Override
+    public PrintableNews getPrintableNewsById(int idPn){
+        Newspaper newspaper;
+        Iterator iteratorNewspapers = this.newspapers.entrySet().iterator();
+        while (iteratorNewspapers.hasNext()) {            
+            newspaper = (Newspaper) iteratorNewspapers.next();
+            PrintableNews[] printableNews = newspaper.getPrintableNews();
+            if (printableNews != null){
+                for (int i=0; i<printableNews.length; i++){
+                    if(printableNews[i].getId() == idPn){
+                        return printableNews[i];
+                    }
+                }
+            } 
+        }
+        return null;
+    }
+       
 
     @Override
     public boolean createNewspaper(Date d) {
