@@ -19,7 +19,7 @@ import java.rmi.RemoteException;
  * @author Iñaki
  */
 public class HRClient {
-    private static int RMI_PORT=1099;
+    private static final int RMI_PORT=1099;
     
     /**
      * This is the main method for the HumanResourceClient stub

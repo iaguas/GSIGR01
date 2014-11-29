@@ -6,19 +6,12 @@
 
 package GSILib.connect.client;
 
-import GSILib.BModel.workers.Journalist;
-import GSILib.connect.HumanRecGateway;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import static java.lang.System.exit;
 import java.rmi.ConnectException;
 import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.ArrayList;
 
 /**
  *
@@ -79,15 +72,14 @@ public class RMIClient {
     /**
      * This method ensures the correct selection of the tag
      * @param tag Tag for the desired client stub
+     * @return A new remote object with you can use as a client.
      * @throws RemoteException will handle errors related to bad tag selection
      */
     public Remote lookup(String tag) throws RemoteException{
         try{
             this.remote = this.registry.lookup(tag);
             return this.remote;
-        } catch (NotBoundException ex){
-            return null;
-        } catch (RemoteException ex){
+        } catch (NotBoundException | RemoteException ex){
             return null;
         }
     }

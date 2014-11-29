@@ -6,25 +6,20 @@
 
 package GSILib.connect.client;
 
-import GSILib.BModel.Newspaper;
 import GSILib.BModel.documents.visualNews.PrintableNews;
-import GSILib.BModel.workers.Journalist;
 import GSILib.connect.ValidationGateway;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import static java.lang.System.exit;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Scanner;
 
 /**
  *
  * @author Iñaki
  */
 public class VLClient {
-    private static int RMI_PORT=1099;
+    private static final int RMI_PORT=1099;
     
     
     /**
