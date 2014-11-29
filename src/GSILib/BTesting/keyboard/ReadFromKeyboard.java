@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  *
@@ -21,9 +20,9 @@ public class ReadFromKeyboard {
     private static BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
     
     /**
-     * TODO: JavaDoc
-     * @return
-     * @throws IOException 
+     * Creates a Journalist from data read from keyboard
+     * @return a Journalist
+     * @throws IOException handles IO errors 
      */
     public static Journalist newJournalist() throws IOException{
         
@@ -49,13 +48,13 @@ public class ReadFromKeyboard {
         ArrayList<String> interests = new ArrayList();
         interests.addAll(Arrays.asList(interestsString.split("\\s*,\\s*")));
         
-        return new Journalist(id,name,birthDate, interests); 
+        return new Journalist(id,name,birthDate,interests); 
     }
     
     /**
-     * TODO: JavaDoc
-     * @return
-     * @throws IOException 
+     * Creates a Photographer from data read from keyboard
+     * @return a Journalist
+     * @throws IOException handles IO errors 
      */
     public static Photographer newPhotographer() throws IOException{
         
@@ -85,5 +84,5 @@ public class ReadFromKeyboard {
         String holidayResidence = keyboard.readLine();
                 
         return new Photographer(id, name, birthDate, regularResidence, holidayResidence);
-    }
+    }  
 }
