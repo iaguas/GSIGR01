@@ -19,11 +19,15 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
- *
- * @author Iñaki
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class VLClient {
-    private static final int RMI_PORT=1099;
+    
+    // Valores por defecto
+    
+    private static final String RMI_HOST = "localhost";
+    private static final int RMI_PORT = 1099;
+    private static final String RMI_TAG = "VLGateway";
     
     /**
      * This is the main method for the ValidationClient stub
@@ -41,10 +45,10 @@ public class VLClient {
         try {
             remoteMachine = keyboard.readLine();
             if (remoteMachine.equals(""))
-                remoteMachine = "localhost";
+                remoteMachine = RMI_HOST;
         } catch (IOException ioe) {
             System.out.println("Exception when reading: " + ioe.getMessage());
-            remoteMachine="localhost";
+            remoteMachine = "null";
         }
         
         // Leemos por teclado el puerto
@@ -54,10 +58,10 @@ public class VLClient {
         try{
             port = Integer.parseInt(keyboard.readLine());
         } catch (NumberFormatException nfe){
-            port = 1099;
+            port = RMI_PORT;
         } catch (IOException ioe){
             System.out.println("Exception en la lectura: " + ioe.getMessage());
-            port = 1099;
+            port = RMI_PORT;
         }
         
         // Leemos por teclado el tag
@@ -67,7 +71,7 @@ public class VLClient {
         try{
             tag = keyboard.readLine();
             if (tag.equals(""))
-                tag = "VLGateway";
+                tag = RMI_TAG;
         }
         catch (IOException ioe){
             System.out.println("Exception en la lectura: " + ioe.getMessage());

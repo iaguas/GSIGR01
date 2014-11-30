@@ -16,11 +16,15 @@ import static java.lang.System.exit;
 import java.rmi.RemoteException;
 
 /**
- *
- * @author Iñaki
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class HRClient {
-    private static final int RMI_PORT=1099;
+    
+    // Valores por defecto
+    
+    private static final String RMI_HOST = "localhost";
+    private static final int RMI_PORT = 1099;
+    private static final String RMI_TAG = "HRGateway";
     
     /**
      * This is the main method for the HumanResourceClient stub
@@ -38,10 +42,10 @@ public class HRClient {
         try {
             remoteMachine = keyboard.readLine();
             if (remoteMachine.equals(""))
-                remoteMachine = "localhost";
+                remoteMachine = RMI_HOST;
         } catch (IOException ioe) {
             System.out.println("Exception when reading: " + ioe.getMessage());
-            remoteMachine="localhost";
+            remoteMachine = "null";
         }
         
         // Leemos por teclado el puerto
@@ -51,10 +55,10 @@ public class HRClient {
         try{
             port = Integer.parseInt(keyboard.readLine());
         } catch (NumberFormatException nfe){
-            port = 1099;
+            port = RMI_PORT;
         } catch (IOException ioe){
             System.out.println("Exception en la lectura: " + ioe.getMessage());
-            port = 1099;
+            port = RMI_PORT;
         }
         
         // Leemos por teclado el tag
@@ -64,7 +68,7 @@ public class HRClient {
         try{
             tag = keyboard.readLine();
             if (tag.equals(""))
-                tag = "HRGateway";
+                tag = RMI_TAG;
         }
         catch (IOException ioe){
             System.out.println("Exception en la lectura: " + ioe.getMessage());

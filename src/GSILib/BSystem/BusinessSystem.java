@@ -6,7 +6,6 @@
 
 package GSILib.BSystem;
 
-/* Aunque ya están en la interface, se introducen también aquí */
 import GSILib.BModel.*;
 import GSILib.BModel.workers.*;
 import GSILib.BModel.documents.*;
@@ -14,11 +13,9 @@ import GSILib.BModel.documents.visualNews.*;
 import GSILib.Serializable.XMLHandler;
 import GSILib.Serializable.XMLRepresentable;
 import GSILib.persistence.*;
-/* Estos, en cambio, son solo cosa de la implementación, que no debe conocerse */
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.file.Files;
@@ -338,31 +335,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
         // Devolvemos la tabla de webnews
         WebNews[] arrayWebNews = list.toArray(new WebNews[list.size()]);
         return arrayWebNews;
-    }
-    
-    /**
-     * This method returns a PrintableNews from Newspaper by its ID
-     * @param idPn The id of the PrintableNews to find
-     * @return The PrintableNews with the given id; otherwise, returns null
-     */
-    //@Override
-    public PrintableNews getPrintableNewsById(int idPn){
-        Newspaper newspaper;
-        Iterator iteratorNewspapers = this.newspapers.entrySet().iterator();
-        while (iteratorNewspapers.hasNext()) {            
-            newspaper = (Newspaper) iteratorNewspapers.next();
-            PrintableNews[] printableNews = newspaper.getPrintableNews();
-            if (printableNews != null){
-                for (int i=0; i<printableNews.length; i++){
-                    if(printableNews[i].getId() == idPn){
-                        return printableNews[i];
-                    }
-                }
-            } 
-        }
-        return null;
-    }
-       
+    }  
 
     @Override
     public boolean createNewspaper(Date d) {
