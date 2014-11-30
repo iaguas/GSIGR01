@@ -91,7 +91,7 @@ public class ReadFromKeyboard {
         
         // Leemos el id
         
-        System.out.println("tip: el log del servidor lanzará un id que existe");
+        System.out.println("tip: la consola del servidor lanzará un id de noticia que existe.");
         System.out.print("id: ");
         int id = Integer.parseInt(keyboard.readLine());
         

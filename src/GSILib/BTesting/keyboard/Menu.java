@@ -29,7 +29,7 @@ public class Menu {
             "  1. Añadir un periodista (journalist)\n" +
             "  2. Añadir un fotógrafo (photographer)\n" +
             "  3. Actualizar un periodista (journalist)\n" +
-            "  4. Actualizar un trabajador (worker)\n" + 
+            "  4. Actualizar un fotógrafo (photographer)\n" + 
             "  0. Salir\n" +
             "  Opción: "
         );
