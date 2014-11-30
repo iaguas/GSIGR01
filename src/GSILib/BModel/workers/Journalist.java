@@ -147,14 +147,16 @@ public class Journalist extends Worker implements XMLRepresentable, Serializable
         // Para una raiz Journalist, introducimos n raices interest
         
         String[] interests = this.getInterests();
-        for(String interest : interests){
-            
-            // Para una raiz Interests, introducimos otra raiz Interest
-            
-            Element xmlJournalistInterest = xml.engine.createElement("interest");
-            Text journalistInterest = xml.engine.createTextNode(interest);
-            xmlJournalistInterest.appendChild(journalistInterest);      
-            xmlJournalist.appendChild(xmlJournalistInterest);
+        if (interests != null){
+            for(String interest : interests){
+
+                // Para una raiz Interests, introducimos otra raiz Interest
+
+                Element xmlJournalistInterest = xml.engine.createElement("interest");
+                Text journalistInterest = xml.engine.createTextNode(interest);
+                xmlJournalistInterest.appendChild(journalistInterest);      
+                xmlJournalist.appendChild(xmlJournalistInterest);
+            }
         }
         
         return xmlJournalist;

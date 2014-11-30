@@ -18,6 +18,7 @@ import java.io.Serializable;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
@@ -341,6 +342,12 @@ public class PrintableNews extends VisualNews implements XMLRepresentable, Seria
         }
         
         return false;
+    }
+    
+    public void copyValuesFrom(PrintableNews newPritableNews){
+        if (newPritableNews.getReviewers() != null)
+            this.reviewers.addAll(Arrays.asList(newPritableNews.getReviewers()));
+        super.copyValuesFrom(newPritableNews);
     }
     
     /** 

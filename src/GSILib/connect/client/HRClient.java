@@ -4,6 +4,7 @@
  */
 package GSILib.connect.client;
 
+import GSILib.BTesting.keyboard.Menu;
 import GSILib.BModel.workers.Journalist;
 import GSILib.BModel.workers.Photographer;
 import GSILib.BTesting.keyboard.ReadFromKeyboard;
@@ -85,66 +86,75 @@ public class HRClient {
         System.out.println("*** Testing ***");
         System.out.println("---------------");
         
-        int option = Menu.getHROption();
-        
-        System.out.println("Opcion: " + option);
-        
-        switch (option){
-            case 1:
-                
-                // Leemos el Journalist por teclado
-                
-                System.out.println("-- Nuevo Journalist --");
-                Journalist journalist = ReadFromKeyboard.newJournalist();
-                
-                System.out.print("Añadiendo Journalist...");
-                if(human.addWorker(journalist))
-                    System.out.println(" [done]");
-                else
-                    System.out.println(" [fail]");
-                break;
-                
-            case 2:
-                
-                // Leemos el Photographer por teclado
-                
-                System.out.println("-- Nuevo Photographer --");
-                Photographer photographer = ReadFromKeyboard.newPhotographer();
-                
-                System.out.print("Añadiendo Photographer...");
-                if(human.addWorker(photographer))
-                    System.out.println(" [done]");
-                else
-                    System.out.println(" [fail]");
-                break;
-                
-            case 3: 
-                
-                // Leemos el Journalist por teclado
-                
-                System.out.println("-- Actualizar Journalist --");
-                Journalist journalistToUpdate = ReadFromKeyboard.newJournalist();
-                
-                System.out.print("Actualizando Journalist...");
-                if(human.updateWorker(journalistToUpdate))
-                    System.out.println(" [done]");
-                else
-                    System.out.println(" [fail]");
-                break;
-                
-            case 4:
-                
-                // Leemos el Photographer por teclado
-                
-                System.out.println("-- Actualizar Photographer --");
-                Photographer photographerToUpdate = ReadFromKeyboard.newPhotographer();
-                
-                System.out.print("Actualizando Photographer...");
-                if(human.updateWorker(photographerToUpdate))
-                    System.out.println(" [done]");
-                else
-                    System.out.println(" [fail]");
-                break;
+        boolean exit = false;
+        while(! exit){
+            
+            int option = Menu.getHROption();
+            
+            switch (option){
+                case 1:
+
+                    // Leemos el Journalist por teclado
+
+                    System.out.println("-- Nuevo Journalist --");
+                    Journalist journalist = ReadFromKeyboard.newJournalist();
+
+                    System.out.print("Añadiendo Journalist...");
+                    if(human.addWorker(journalist))
+                        System.out.println(" [done]");
+                    else
+                        System.out.println(" [fail]");
+                    break;
+
+                case 2:
+
+                    // Leemos el Photographer por teclado
+
+                    System.out.println("-- Nuevo Photographer --");
+                    Photographer photographer = ReadFromKeyboard.newPhotographer();
+
+                    System.out.print("Añadiendo Photographer...");
+                    if(human.addWorker(photographer))
+                        System.out.println(" [done]");
+                    else
+                        System.out.println(" [fail]");
+                    break;
+
+                case 3: 
+
+                    // Leemos el Journalist por teclado
+
+                    System.out.println("-- Actualizar Journalist --");
+                    Journalist journalistToUpdate = ReadFromKeyboard.newJournalist();
+
+                    System.out.print("Actualizando Journalist...");
+                    if(human.updateWorker(journalistToUpdate))
+                        System.out.println(" [done]");
+                    else
+                        System.out.println(" [fail]");
+                    break;
+
+                case 4:
+
+                    // Leemos el Photographer por teclado
+
+                    System.out.println("-- Actualizar Photographer --");
+                    Photographer photographerToUpdate = ReadFromKeyboard.newPhotographer();
+
+                    System.out.print("Actualizando Photographer...");
+                    if(human.updateWorker(photographerToUpdate))
+                        System.out.println(" [done]");
+                    else
+                        System.out.println(" [fail]");
+                    break;
+
+                case 0:
+
+                    // Salimos del programa
+
+                    exit = true;
+                    break;
+            }
         }
     }
 }

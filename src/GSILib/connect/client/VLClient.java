@@ -6,13 +6,17 @@
 
 package GSILib.connect.client;
 
+import GSILib.BTesting.keyboard.Menu;
 import GSILib.BModel.documents.visualNews.PrintableNews;
+import GSILib.BModel.workers.Journalist;
+import GSILib.BTesting.keyboard.ReadFromKeyboard;
 import GSILib.connect.ValidationGateway;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import static java.lang.System.exit;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,7 +24,6 @@ import java.rmi.RemoteException;
  */
 public class VLClient {
     private static final int RMI_PORT=1099;
-    
     
     /**
      * This is the main method for the ValidationClient stub
@@ -86,61 +89,93 @@ public class VLClient {
         System.out.println("*** Testing ***");
         System.out.println("---------------");
         
-        int option = Menu.getVLOption();
+        // Nuevo Journalist
         
-        switch (option){
-            case 1:
-                /*System.out.print("Introduzca la id de la noticia a corregir: ");
-                int idnot = keyboard.nextInt();
-                keyboard.nextLine();
-                System.out.print("Escriba la nueva cabecera: ");
-                String head = keyboard.nextLine();
-                System.out.print("Escriba el nuevo cuerpo de la noticia: ");
-                String body = keyboard.nextLine();
-                PrintableNews editPrintableNews = new PrintableNews(head,body,jourExample);
-                editPrintableNews.setId(idnot);
-                if(validation.correctNews(editPrintableNews)){
-                    System.out.println("PrintableNews con id " + idnot + " ha sido añadido con éxito!");
-                }*/
-                break;
-            case 2:
-                /*System.out.print("Introduzca la id para la noticia: ");
-                int idNotasoc = keyboard.nextInt();
-                keyboard.nextLine();
-                System.out.print("Introduzca la id para el periodista revisor: ");
-                String idJourasoc = keyboard.nextLine();
-                Journalist asocJournalist = validation.findJournalist(idJourasoc);
-                // ¿¿Cómo recorremos los PrintableNews??                
-                //PrintableNews asocPrintableNews = new PrintableNews(head,body,jourExample);
-                //if(validation.validateNews(asocPrintableNews,jourExample)){
-                //    System.out.println("Photographer con id " + idphoto + " ha sido añadido con éxito!");
-                //}*/
-                break;
-            case 3: 
-                
-                // Pedimos la lista de PrintableNews
-                
-                System.out.println("Recuperando lista de noticias...");
-                
-                for (PrintableNews printableNews : validation.getPendingNews()){
-                    System.out.println(printableNews.toXML());
-                }
-                break;
-                
-            case 4:
-                
-                // Leemos la cota por teclado
-                
-                System.out.print("Introduzca el minimo de revisores por noticia: ");
-                int cota = Integer.parseInt(keyboard.readLine());
-                
-                // Pedimos la lista de PrintableNews
-                
-                System.out.println("Recuperando lista de noticias con cota de revisores...");
-                for (PrintableNews printableNews : validation.getPendingNews(cota)){
-                    System.out.println(printableNews.toXML());
-                }
-                break;
+        ArrayList interestsOfAlvaro = new ArrayList();
+        
+        interestsOfAlvaro.add("Discutir");
+        interestsOfAlvaro.add("Tocar las narices");
+        interestsOfAlvaro.add("Jugar al CS");
+
+        Journalist journalistAlvaro = new Journalist("8", "Alvaro", "27/12/1993", interestsOfAlvaro);
+        
+        // Nuevo Journalist
+        
+        ArrayList interestsOfPirata = new ArrayList();
+        
+        interestsOfPirata.add("Trifulcas de bar");
+        interestsOfPirata.add("Cantar conciones");
+        interestsOfPirata.add("Adorar a MEV");
+
+        Journalist journalistPirata = new Journalist("42", "Pirata", "01/01/1970", interestsOfPirata);
+        
+        boolean exit = false;
+        while(! exit){
+            
+            int option = Menu.getVLOption();
+            
+            switch (option){
+                case 1:
+
+                    // Corregir una PrintableNews
+
+                    PrintableNews printableNews = ReadFromKeyboard.newPrintableNews(journalistAlvaro);
+
+                    System.out.print("Updating PrintableNews...");
+                    if (validation.correctNews(printableNews))
+                        System.out.println(" [done]");
+                    else
+                        System.out.println(" [fail]");
+
+                    break;
+
+                case 2:
+
+                    // Añadimos un Journalist como reviewer de una PrintableNews
+
+                    printableNews = ReadFromKeyboard.newPrintableNews(journalistAlvaro);
+
+                    System.out.print("Adding Reviewer...");
+                    if (validation.validateNews(printableNews, journalistPirata))
+                        System.out.println(" [done]");
+                    else
+                        System.out.println(" [fail]");
+
+                    break;
+
+                case 3: 
+
+                    // Pedimos la lista de PrintableNews
+
+                    System.out.println("Recuperando lista de noticias...");
+
+                    for (PrintableNews singlePrintableNews : validation.getPendingNews()){
+                        System.out.println(singlePrintableNews.toXML());
+                    }
+                    break;
+
+                case 4:
+
+                    // Leemos la cota por teclado
+
+                    System.out.print("Introduzca el minimo de revisores por noticia: ");
+                    int cota = Integer.parseInt(keyboard.readLine());
+
+                    // Pedimos la lista de PrintableNews
+
+                    System.out.println("Recuperando lista de noticias con cota de revisores...");
+                    for (PrintableNews singlePrintableNews : validation.getPendingNews(cota)){
+                        System.out.println(singlePrintableNews.toXML());
+                    }
+                    break;
+                  
+                case 0:
+                    
+                    // Salimos del programa
+                    
+                    exit = true;
+                    break;
+            }
         }
     }
 }

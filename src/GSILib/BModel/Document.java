@@ -6,6 +6,7 @@
 
 package GSILib.BModel;
 
+import GSILib.BModel.documents.visualNews.PrintableNews;
 import GSILib.BModel.workers.Journalist;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -178,6 +179,15 @@ public abstract class Document implements Serializable{
         return this.body;
     }
     
+    /**
+     * TODO JavaDoc
+     * @param newDocument 
+     */
+    protected void copyValuesFrom(Document newDocument){
+        this.body = newDocument.getBody();
+        this.headline = newDocument.getHeadline();
+    }
+    
     /** 
      * Equals. Known if 2 object are the same.
      * @param d a document.
@@ -195,5 +205,4 @@ public abstract class Document implements Serializable{
                 + "\n  Body: " + this.getBody() + "\n  Journalist: " +
                 this.getAuthor();    
     }
-
 }

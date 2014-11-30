@@ -15,6 +15,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
+import java.util.Objects;
  
 /**
  *
@@ -97,24 +98,33 @@ public class PublicBusinessSystem extends BusinessSystem implements HumanRecGate
 
     @Override
     public boolean correctNews(PrintableNews printableNews) throws RemoteException {
-        printableNews.getId();
-        int i = -1;
+        int i = 0;
         boolean found = false;
         while(i < super.documents.size() && !found){
+            if (super.documents.get(i).getClass().getName().equals("GSILib.BModel.documents.visualNews.PrintableNews")){
+                if (Objects.equals(super.documents.get(i).getId(), printableNews.getId())){
+                    ((PrintableNews) super.documents.get(i)).copyValuesFrom(printableNews);
+                    found = true;
+                }
+            }
             i++;
-            if (super.documents.get(i).getId() == printableNews.getId())
-                found = true;
         }
-        if (found){
-            super.documents.set(i, printableNews);
-            return true;
-        }
-        return false;                
+        return found;                
     }
 
     @Override
     public boolean validateNews(PrintableNews printableNews, Journalist journalist) throws RemoteException {
-        return printableNews.addReviewer(journalist);
+        int i = 0;
+        boolean found = false;
+        while(i < super.documents.size() && !found){
+            if (super.documents.get(i).getClass().getName().equals("GSILib.BModel.documents.visualNews.PrintableNews")){
+                if (Objects.equals(super.documents.get(i).getId(), printableNews.getId())){
+                    ((PrintableNews) super.documents.get(i)).addReviewer(journalist);
+                    found = true;
+                }
+            }
+            i++;
+        }
+        return found;  
     }
-    
 }

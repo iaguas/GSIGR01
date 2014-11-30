@@ -11,6 +11,7 @@ import GSILib.BModel.Picture;
 import GSILib.BModel.workers.Journalist;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -104,6 +105,15 @@ public abstract class VisualNews extends Document implements Serializable {
         return this.pictures.toArray(new Picture[this.pictures.size()]);
     }
     
+    /**
+     * TODO: JavaDoc
+     * @param newVisualNews 
+     */
+    protected void copyValuesFrom(VisualNews newVisualNews){
+        if (newVisualNews.getPictures() != null)
+            this.pictures.addAll(Arrays.asList(newVisualNews.getPictures()));
+        super.copyValuesFrom(newVisualNews);
+    }
     /** 
      * Equals. Known if 2 object are the same.
      * @param vn a teletype

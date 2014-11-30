@@ -4,12 +4,11 @@
  * Universidad Pública de Navarra - curso 2014-15
  */
 
-package GSILib.connect.client;
+package GSILib.BTesting.keyboard;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Scanner;
 
 /**
  *
@@ -31,7 +30,7 @@ public class Menu {
             "  2. Añadir un fotógrafo (photographer)\n" +
             "  3. Actualizar un periodista (journalist)\n" +
             "  4. Actualizar un trabajador (worker)\n" + 
-            "  5. Salir\n" +
+            "  0. Salir\n" +
             "  Opción: "
         );
         
@@ -56,8 +55,8 @@ public class Menu {
             "  2. Asociar un Journalist a un PrintableNews\n" +
             "  3. Mostrar noticias que no alcancen número min. de revisores\n" +
             "  4. Mostrar noticias que tengan menos revisores que el valor indicado\n" +
-            "  5. Salir\n" +
-            "  Opción: "                
+            "  0. Salir\n" +
+            "  Opción: "
         );
      
         try{    

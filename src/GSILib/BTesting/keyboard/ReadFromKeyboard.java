@@ -4,6 +4,7 @@
  */
 package GSILib.BTesting.keyboard;
 
+import GSILib.BModel.documents.visualNews.PrintableNews;
 import GSILib.BModel.workers.Journalist;
 import GSILib.BModel.workers.Photographer;
 import java.io.BufferedReader;
@@ -85,4 +86,27 @@ public class ReadFromKeyboard {
                 
         return new Photographer(id, name, birthDate, regularResidence, holidayResidence);
     }  
+    
+    public static PrintableNews newPrintableNews(Journalist journalist) throws IOException{
+        
+        // Leemos el id
+        
+        System.out.println("tip: el log del servidor lanzará un id que existe");
+        System.out.print("id: ");
+        int id = Integer.parseInt(keyboard.readLine());
+        
+        // Leemos la headline
+        
+        System.out.print("Introduzca la headline: ");
+        String headline = keyboard.readLine();
+        
+        // Leemos el body
+        
+        System.out.print("Introduzca el body: ");
+        String body = keyboard.readLine();
+        
+        PrintableNews printableNews = new PrintableNews(headline, body, journalist);
+        printableNews.setId(id);
+        return printableNews;
+    }
 }
