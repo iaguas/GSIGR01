@@ -19,6 +19,8 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 /**
+ * This is a class that shows how to utilize the RMIClient with the Validation 
+ * Gateway
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class VLClient {

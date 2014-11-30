@@ -16,6 +16,8 @@ import static java.lang.System.exit;
 import java.rmi.RemoteException;
 
 /**
+ * This is a class that shows how to utilize the RMIClient with the HumanRec 
+ * Gateway
  * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class HRClient {
