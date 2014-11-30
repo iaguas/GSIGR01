@@ -22,8 +22,9 @@ import java.util.ArrayList;
 import org.xml.sax.SAXException;
 
 /**
- *
- * @author Alvaro
+ * This class implements a RMI Server in order to use the interfaces Validation
+ * y HumanRec with BusinessSystem (public one).
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class BusinessServer {
 
@@ -39,7 +40,7 @@ public class BusinessServer {
         
         // Creamos el security manager
         
-        /*  Da problemas
+        /*  Da problemas en los ordenadores de la uni
         if (System.getSecurityManager() == null) {
             System.setSecurityManager(new SecurityManager());
         }*/

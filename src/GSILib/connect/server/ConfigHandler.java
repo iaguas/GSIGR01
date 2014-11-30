@@ -6,18 +6,16 @@
 
 package GSILib.connect.server;
 
-import GSILib.BModel.workers.Journalist;
 import GSILib.Serializable.XMLHandler;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 /**
- *
- * @author Alvaro
+ * This class makes posible introuduce the configuration information to BusinessServer.
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class ConfigHandler {
     

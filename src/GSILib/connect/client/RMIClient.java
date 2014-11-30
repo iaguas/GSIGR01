@@ -14,8 +14,9 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 /**
- *
- * @author Alvaro
+ * This class implements a RMI client as general in order to be able to use with 
+ * any registry. It makes it possible returning a remote object.
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class RMIClient {
     

@@ -7,8 +7,8 @@ import GSILib.connect.ValidationGateway;
 import java.rmi.RemoteException;
  
 /**
- *
- * @author inigo
+ * This class implements the methods of ValidationGateway interface.
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 
 

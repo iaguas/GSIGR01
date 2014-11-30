@@ -7,8 +7,8 @@ import GSILib.connect.HumanRecGateway;
 import java.rmi.RemoteException;
 
 /**
- *
- * @author inigo
+ * This class implements the methods of HumanRecGateway interface.
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 
 
