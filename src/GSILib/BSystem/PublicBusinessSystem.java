@@ -35,30 +35,33 @@ public class PublicBusinessSystem extends BusinessSystem implements HumanRecGate
     }
 
     @Override
-    public Boolean updateWorker(Journalist jn) throws RemoteException {
-        // Rescatamos el periodista que queremos cambiar.
-        Journalist j = this.findJournalist(jn.getId());
-        // Asignamos todos los campos del nuevo periodista al viejo.
-        j.setName(jn.getName());
-        j.setBirthDate(jn.getBirthDate());
-        j.setInterests(new ArrayList<>(Arrays.asList(jn.getInterests())));
+    public Boolean updateWorker(Journalist newJournalist) throws RemoteException {
         
-        // Si hemos llegado hasta aquí es que todo ha ido bien. 
-        return true;
+        // Buscamos el Journalist
+        
+        Journalist journalist = this.findJournalist(newJournalist.getId());
+        
+        if (journalist != null){
+            journalist.copyValuesFrom(newJournalist);
+            return true;
+        }
+        
+        return false;
     }
 
     @Override
-    public Boolean updateWorker(Photographer pg) throws RemoteException {
-        // Rescatamos el periodista que queremos cambiar.
-        Photographer p = this.findPhotographer(pg.getId());
-        // Asignamos todos los campos del nuevo periodista al viejo.
-        p.setName(pg.getName());
-        p.setBirthDate(pg.getBirthDate());
-        p.setRegularResidence(pg.getRegularResidence());
-        p.setHolidayResidence(pg.getHolidayResidence());
-
-        // Si hemos llegado hasta aquí es que todo ha ido bien. 
-        return true;    
+    public Boolean updateWorker(Photographer newPhotographer) throws RemoteException {
+        
+        // Buscamos el Photographer
+        
+        Photographer photographer = this.findPhotographer(newPhotographer.getId());
+        
+        if (photographer != null){
+            photographer.copyValuesFrom(newPhotographer);
+            return true;
+        }
+        
+        return false;
     }
 
     @Override

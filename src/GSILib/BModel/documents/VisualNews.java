@@ -110,9 +110,9 @@ public abstract class VisualNews extends Document implements Serializable {
      * @param newVisualNews 
      */
     protected void copyValuesFrom(VisualNews newVisualNews){
+        super.copyValuesFrom(newVisualNews);
         if (newVisualNews.getPictures() != null)
             this.pictures.addAll(Arrays.asList(newVisualNews.getPictures()));
-        super.copyValuesFrom(newVisualNews);
     }
     /** 
      * Equals. Known if 2 object are the same.

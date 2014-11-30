@@ -99,6 +99,15 @@ public abstract class Worker implements Serializable {
         return this.birthDate;
     }
     
+    /**
+     * TODO: JavaDoc
+     * @return 
+     */
+    protected void copyValuesFrom(Worker newWorker){
+        this.name = newWorker.getName();
+        this.birthDate = newWorker.getBirthDate();
+    }
+    
     @Override
     public String toString(){
         // Devolvemos un string con los datos del trabajador.

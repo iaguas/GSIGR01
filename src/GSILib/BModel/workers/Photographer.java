@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.Arrays;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -259,6 +260,11 @@ public class Photographer extends Worker implements XMLRepresentable, Serializab
         this.holidayResidence = hr;
     }
     
+    public void copyValuesFrom(Photographer newPhotographer){
+        super.copyValuesFrom(newPhotographer);
+        this.regularResidence = newPhotographer.getRegularResidence();
+        this.holidayResidence = newPhotographer.getHolidayResidence();
+    }
     
     /** 
      * Equals. Known if 2 object are the same.

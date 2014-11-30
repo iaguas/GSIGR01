@@ -16,6 +16,7 @@ import java.io.Serializable;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
@@ -244,6 +245,16 @@ public class Journalist extends Worker implements XMLRepresentable, Serializable
         }
         
         return false;
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @param newJournalist 
+     */
+    public void copyValuesFrom(Journalist newJournalist){
+        super.copyValuesFrom(newJournalist);
+        if (newJournalist.getInterests() != null)
+            this.interests.addAll(Arrays.asList(newJournalist.getInterests()));
     }
     
     /** 
