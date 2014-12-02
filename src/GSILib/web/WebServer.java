@@ -1,5 +1,5 @@
 /* 
- * Práctica 04 - Grupo 01
+ * Práctica 05 - Grupo 01
  * Gestión de Sistemas de Información
  * Universidad Pública de Navarra - curso 2014-15
  */
@@ -77,30 +77,43 @@ public class WebServer {
                 //  Leemos el mensaje del cliente
                 //------------------------------------------------------------------------------
 
-                String requestString = this.socketIn.readLine();
+                System.out.println("---------------");
+                System.out.println("*** Request ***");
+                System.out.println("---------------");
+                
+                String inputLine;
+                StringBuilder requestString = new StringBuilder();
+                
+                try {
+                    while ((inputLine = this.socketIn.readLine()) != null && inputLine.length() > 0) {
+                        requestString.append(inputLine + "\n");
+                    }
+                }
+                catch (IOException e) {
+                    System.err.println("Error: " + e);
+                }
                 
                 //------------------------------------------------------------------------------
                 //  Tratamos el protocolo
                 //------------------------------------------------------------------------------
 
-                Request request = new Request(requestString);
-                
-                System.out.println(requestString);
-                System.out.println(request.getOrder());
-                System.out.println(request.getFile());
-                System.out.println(request.getMode());
+                Request request = new Request(requestString.toString());
                 
                 //------------------------------------------------------------------------------
                 //  Respondemos al cliente
                 //------------------------------------------------------------------------------
                 
-                this.socketOut.print("HTTP/1.1 200 OK\n" +
-                                    "Date: Fri, 31 Dec 2003 23:59:59 GMT\n" +
-                                    "Content-Type: text/html\n" +
-                                    "Content-Length: 1221\n" +
-                                    "<html>" +
-                                    "<body>hola</body>" +
-                                    "</html>");
+                System.out.println("----------------");
+                System.out.println("*** Response ***");
+                System.out.println("----------------");
+        
+                Response response = new Response(request.getMode(), 200);
+                
+                response.setHTML("<html><body>hola</body></html>");
+                
+                System.out.println(response);
+                
+                this.socketOut.println(response);
             }
             catch(IOException ex) {
                 System.out.println("IOException capturada en run()");
