@@ -8,7 +8,6 @@ package GSILib.BModel;
 
 import GSILib.BModel.documents.visualNews.PrintableNews;
 import GSILib.BModel.workers.Journalist;
-import GSILib.BModel.workers.Photographer;
 import GSILib.Serializable.XMLHandler;
 import GSILib.Serializable.XMLRepresentable;
 import java.io.File;
@@ -16,18 +15,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
+import java.util.Locale;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 
 /**
@@ -40,6 +37,7 @@ public class Newspaper implements XMLRepresentable{
     
     // Atributos de la clase.
     private Date date = new Date(); // Fecha de publicación del periodico.
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH);
     private List<PrintableNews> news = new ArrayList<>(); // Lista de noticias publicadas.
     
     /**
@@ -159,9 +157,9 @@ public class Newspaper implements XMLRepresentable{
      * Returns publication date of a newspaper.
      * @return A date in which the newspaper has been published.
      */
-    public Date getDate(){
-        // Devuelve la fecha del periodico.
-        return this.date;
+    public String getDate(){
+        
+        return this.simpleDateFormat.format(this.date);
     }
     
     /**
@@ -174,7 +172,7 @@ public class Newspaper implements XMLRepresentable{
 
         // Para una raiz Newspaper, introducimos su date como atributo
         
-        xmlNewspaper.setAttribute("date", String.valueOf(this.getDate().getTime()));
+        xmlNewspaper.setAttribute("date", this.getDate());
         
         if (xml.storeMode.equals("relational")){
             for(PrintableNews printableNews : this.getPrintableNews()){
@@ -299,5 +297,34 @@ public class Newspaper implements XMLRepresentable{
     public boolean equals(Newspaper n){
         // Comparamos y devolvemos si es el mismo periodico o no.
         return this.getDate().equals(n.getDate());
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @return 
+     */
+    public String getHTMLPage(){
+        String html = "<html>";
+        
+        //------------------------------------------------------------------------------
+        //  Header
+        //------------------------------------------------------------------------------
+        
+        html = html.concat("<head><b>" + this.getDate() + "</b></head>");
+        
+        //------------------------------------------------------------------------------
+        //  Body
+        //------------------------------------------------------------------------------
+        
+        html = html.concat("<body><ul>");
+        
+        for(PrintableNews printableNews : this.news){
+            html = html.concat("<li>" + printableNews.getHeadline() + "</li>");
+        }
+        
+        html = html.concat("</ul></body>");
+        html = html.concat("</html>");
+            
+        return html;
     }
 }

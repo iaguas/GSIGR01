@@ -355,15 +355,16 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
     
     @Override
     public Newspaper[] getNewspapers(){
-        // Declaramos una lista de periódicos vacia.
-        ArrayList<Newspaper> newspaperList = new ArrayList<>();
-        // Recorremos todas las periódicos
-        for (Map.Entry e : newspapers.entrySet()) {
-            newspaperList.add((Newspaper) e.getValue());
-        }
-        // Convertimos la lista a tabla y la devolvemos.
-        Newspaper[] newspaps = newspaperList.toArray(new Newspaper[newspaperList.size()]);
-        return newspaps;
+        
+        // Creamos una lista de Newspapers
+        
+        ArrayList<Newspaper> newspapers = new ArrayList<Newspaper>(this.newspapers.values());
+        
+        // Devolvemos un array
+        
+        if (newspapers.isEmpty())
+            return null;
+        return newspapers.toArray(new Newspaper[newspapers.size()]);
     }
 
     @Override
