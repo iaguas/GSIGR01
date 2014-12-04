@@ -253,6 +253,12 @@ public interface EditorialOffice{
     public Newspaper getNewspaper(Date d);
     
     /**
+     * Returns all the Newspapers.
+     * @return An array with the Newspapers of BusinessSystem.
+     */
+    public Newspaper[] getNewspapers();
+    
+    /**
      * Deletes the newspaper from a specified date.
      * @param d The date for which the newspaper must be deleted
      * @return true if newspaper is deleted correctly

@@ -352,6 +352,19 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
         // Recogemos un periodico en función a su fecha.
         return this.newspapers.get(d);
     }
+    
+    @Override
+    public Newspaper[] getNewspapers(){
+        // Declaramos una lista de periódicos vacia.
+        ArrayList<Newspaper> newspaperList = new ArrayList<>();
+        // Recorremos todas las periódicos
+        for (Map.Entry e : newspapers.entrySet()) {
+            newspaperList.add((Newspaper) e.getValue());
+        }
+        // Convertimos la lista a tabla y la devolvemos.
+        Newspaper[] newspaps = newspaperList.toArray(new Newspaper[newspaperList.size()]);
+        return newspaps;
+    }
 
     @Override
     public boolean deleteNewspaper(Date d) {
