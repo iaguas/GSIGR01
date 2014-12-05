@@ -230,6 +230,24 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
         Document[] docs = documentsOfAJournalist.toArray(new Document[documentsOfAJournalist.size()]);
         return docs;
     }
+    
+    @Override
+    public PrintableNews[] getPrintableNewsFromAuthor(Journalist j){
+        // Inicializamos un array en el que almacenaremos los printable news del periodista
+        PrintableNews[] pn = null;
+        // Recuperamos el array de documentos de un periodista
+        Document[] docOfJour = getDocuments(j);
+        // Usamos un índice para almacenar los PrintableNews
+        int numNews = 0;
+        // Recorremos los documentos buscando PrintableNews
+        for(Document d: docOfJour){
+            // Se obtienen los documentos del tipo deseado
+            if(d.getClass().getName().equals("GSILib.BModel.documents.visualNews.PrintableNews")){
+                pn[numNews]=(PrintableNews) d;
+            }
+        }
+        return pn;  
+    }
 
     @Override
     public boolean addReviewer(PrintableNews pn, Journalist rw) {
@@ -361,12 +379,12 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
         ArrayList<Newspaper> newspapers = new ArrayList<Newspaper>(this.newspapers.values());
         
         // Devolvemos un array
-        
+                     
         if (newspapers.isEmpty())
             return null;
         return newspapers.toArray(new Newspaper[newspapers.size()]);
     }
-
+    
     @Override
     public boolean deleteNewspaper(Date d) {
         // Eliminamos el periodico de una fecha.

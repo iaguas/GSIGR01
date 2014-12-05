@@ -162,6 +162,13 @@ public interface EditorialOffice{
     public Document[] getDocuments(Journalist j);
     
     /**
+     * Retrives all the PrintableNews in the system written by a journalist (variant of getDocuments(j) method)
+     * @param j Journalist to be inquired
+     * @return An array of printable news
+     */
+    public PrintableNews[] getPrintableNewsFromAuthor(Journalist j);
+    
+    /**
      * Adds a journalist as reviewer of an existing news. If the news or the journalist did not exist 
 	 *		in the system the operation must have no effect and return false.
      * @param pn	The printable news to which we are adding a reviewer.

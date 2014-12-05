@@ -157,7 +157,7 @@ public class PrintableNews extends VisualNews implements XMLRepresentable, Seria
     }
     
     /**
-     * Gets a list of reviewer (journalists) from the associated printable news
+     * Gets a list of reviewer(s) (journalists) from the associated printable news
      * @return the list of reviewers from the associated printable news
      */
     public Journalist[] getReviewers(){            
@@ -369,5 +369,16 @@ public class PrintableNews extends VisualNews implements XMLRepresentable, Seria
                 + "|- Journalist: " + this.getAuthor() + "\n"
                 + "|- Pictures" + this.pictures + "\n"
                 + "|- Reviewers: " + this.reviewers + "\n";
+    }
+    
+    /**
+     * Returns the headline, body and author of a PrintableNews
+     * @return A String
+     */
+    public String toStringHBJ(){
+        // Devolvemos un string con la cabecera, cuerpo y autor de un PrintableNews
+        return "+ |- Headline: " + this.getHeadline() + "\n"
+                + "|- Body: " + this.getBody() + "\n"
+                + "|- Journalist: " + this.getAuthor() + "\n";
     }
 }
