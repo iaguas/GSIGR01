@@ -8,6 +8,7 @@ package GSILib.WebServer.Modelers;
 
 import GSILib.BModel.Newspaper;
 import GSILib.BModel.documents.visualNews.PrintableNews;
+import GSILib.BModel.documents.visualNews.WebNews;
 import GSILib.BSystem.BusinessSystem;
 import GSILib.BTesting.UselessDataTesting;
 import static java.lang.System.exit;
@@ -56,7 +57,7 @@ public class ContentHandler {
 
                 if (newspaper != null){
 
-                    // El newspaper exite
+                    // El Newspaper exite
 
                     this.webPage = new WebPage("Newspaper | " + newspaper.getDate(), newspaper.getHTMLBody());
                 }
@@ -70,6 +71,32 @@ public class ContentHandler {
                 this.webPage = new WebPage("Has pedido los Newspapers", "Pero aun no servimos Newspapers");
 
                 // El cliente pide los Newspapers
+
+
+            }
+            else if(this.pathHandler.getMode().equals("SingleWebNews")){
+
+                // El cliente pide una WebNews
+                
+                WebNews webNews = this.bs.getWebNews(this.pathHandler.getWebNewsURL());
+
+                if (webNews != null){
+
+                    // La WebNews exite
+
+                    this.webPage = new WebPage("WebNews | " + webNews.getHeadline(), webNews.getHTMLBody());
+                }
+                else{
+
+                    // 404
+                }
+                
+            }
+            else if(this.pathHandler.getMode().equals("WebNews")){
+
+                this.webPage = new WebPage("Has pedido las WebNews", "Pero aun no servimos WebNews");
+
+                // El cliente pide las WebNews
 
 
             }

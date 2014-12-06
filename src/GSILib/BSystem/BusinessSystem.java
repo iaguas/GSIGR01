@@ -316,23 +316,49 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
 
     @Override
     public WebResource getWebResource(String URL) {
-        // Creamos una instancia de webnews.
-        WebNews wn = new WebNews("void","void",new Journalist("void", "void", "void", null),"void");
-        // Comprobamos que estamos hablando de la foto.
-        if(this.pictures.containsKey(URL))
+        
+        if(this.pictures.containsKey(URL)){
             // Devolvemos la foto solicitada.
             return (WebResource) pictures.get(URL);
-        else 
-            // Recorremos los documentos buscando las webnews.
-            for(Document d: documents)
-                // Buscamos solo los documentos de tipo webnews.
-                if (d.getClass().getName().equals("GSILib.BModel.documents.visualNews.WebNews")){
-                    wn = (WebNews) d;
+        }
+        else {
+            
+            WebNews webNews;
+            
+            for(Document document: documents){
+                if (document.getClass().getName().equals("GSILib.BModel.documents.visualNews.WebNews")){
+                    
+                    webNews = (WebNews) document;
+                    
                     // Si es la webnews que buscamos, la devolvemos.
-                    if(wn.getUrl().equals(URL))
-                        return (WebResource) wn;
-                }        
+                    if(webNews.getUrl().equals(URL)){
+                        return (WebResource) webNews;
+                    }
+                }  
+            }
+        }
         // Si no encontramos nada, devolvemos null.
+        return null;
+    }
+    
+    @Override
+    public WebNews getWebNews(String URL) {
+            
+        WebNews webNews;
+
+        for(Document document: documents){
+            if (document.getClass().getName().equals("GSILib.BModel.documents.visualNews.WebNews")){
+
+                webNews = (WebNews) document;
+
+                // Si es la webnews que buscamos, la devolvemos.
+                
+                if(webNews.getUrl().equals(URL)){
+                    return webNews;
+                }
+            }  
+        }
+        
         return null;
     }
     

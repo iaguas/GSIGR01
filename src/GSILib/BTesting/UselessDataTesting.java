@@ -6,6 +6,7 @@ package GSILib.BTesting;
 
 import GSILib.BModel.Picture;
 import GSILib.BModel.documents.visualNews.PrintableNews;
+import GSILib.BModel.documents.visualNews.WebNews;
 import GSILib.BModel.workers.Journalist;
 import GSILib.BModel.workers.Photographer;
 import GSILib.BSystem.BusinessSystem;
@@ -72,6 +73,12 @@ public class UselessDataTesting {
         bs.createNewspaper(currentDate);
         bs.addNewsToIssue(bs.getNewspaper(currentDate), printableNewsFiber);
         bs.addNewsToIssue(bs.getNewspaper(currentDate), printableNewsBFHL);
+        
+        // Nueva WebNews
+        
+        WebNews webNewsSnake = new WebNews("Snake quiere un trozo del pastel", "Snake quiere un trozo del pastel de Call of Duty y lo demuestra con el tráiler de Metal Gear Online", journalistPirata);
+        bs.insertNews(webNewsSnake);
+        System.out.println(webNewsSnake.getUrl());
         
         return bs;
     }

@@ -238,6 +238,12 @@ public interface EditorialOffice{
      */
     public PrintableNews getPrintableNews(int printableNewsID);
     
+    /**
+     * TODO: JavaDoc
+     * @param URL
+     * @return 
+     */
+    public WebNews getWebNews(String URL);
 	
     /**
      * Returns all the WebNews in the system indexed by (an exact) keyword,

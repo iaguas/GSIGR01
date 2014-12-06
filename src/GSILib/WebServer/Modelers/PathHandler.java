@@ -15,17 +15,18 @@ import java.util.regex.Pattern;
  */
 public class PathHandler {
     
-    private String path, mode = null; // mode = {"PrintableNews" | "Newspaper" | "Newspapers" | "null"}
+    private String path, mode = null; // mode = {"PrintableNews" | "Newspaper" | "Newspapers" | "SingleWebNews" | "WebNews" | "null"}
     
     // Patterns
     
     private final String printableNewsPattern = "\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/";
     private final String newspaperPattern = "\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/";
-    private final String newspapersPattern = "\\/([^\\/]+)\\/";
+    private final String webNewsPattern = "\\/([^\\/]+)\\/([^\\/]+)\\/";
+    private final String directoryPattern = "\\/([^\\/]+)\\/";
     
     // Directories
     
-    private String year, month, day, printableNewsID;
+    private String year, month, day, printableNewsID, webNewsURL;
     
     
     /**
@@ -38,39 +39,73 @@ public class PathHandler {
         
         // Filtramos y clasificamos segun lo que pide
      
-        Matcher matcher = Pattern.compile(this.printableNewsPattern).matcher(this.path);
+        
+        Matcher matcher = Pattern.compile("\\/newspapers\\/").matcher(this.path);
         if (matcher.find()) {
-
-            // Pide una PrintableNews
             
-            this.mode = "PrintableNews";
+            // Pide algo del arbol de Newspaper
             
-            this.year = matcher.group(2);
-            this.month = matcher.group(3);
-            this.day = matcher.group(4);
-            this.printableNewsID = matcher.group(5);
-        }
-        else{
-            
-            matcher = Pattern.compile(this.newspaperPattern).matcher(this.path);
+            matcher = Pattern.compile(this.printableNewsPattern).matcher(this.path);
             if (matcher.find()) {
-                
-                // Pide un Newspaper
-            
-                this.mode = "Newspaper";
+
+                // Pide una PrintableNews
+
+                this.mode = "PrintableNews";
 
                 this.year = matcher.group(2);
                 this.month = matcher.group(3);
                 this.day = matcher.group(4);
+                this.printableNewsID = matcher.group(5);
             }
             else{
+
+                matcher = Pattern.compile(this.newspaperPattern).matcher(this.path);
+                if (matcher.find()) {
+
+                    // Pide un Newspaper
+
+                    this.mode = "Newspaper";
+
+                    this.year = matcher.group(2);
+                    this.month = matcher.group(3);
+                    this.day = matcher.group(4);
+                }
+                else{
+
+                    matcher = Pattern.compile(this.directoryPattern).matcher(this.path);
+                    if (matcher.find()) {
+
+                        // Pide los Newspapers
+
+                        this.mode = "Newspapers";
+                    }
+                }
+            }
+        }
+        else{
+            matcher = Pattern.compile("\\/webnews\\/").matcher(this.path);
+            if (matcher.find()) {
+            
+                // Pide algo del arbol de WebNews
                 
-                matcher = Pattern.compile(this.newspapersPattern).matcher(this.path);
+                matcher = Pattern.compile(this.webNewsPattern).matcher(this.path);
                 if (matcher.find()) {
                     
-                    // Pide los Newspapers
+                    // Pide una WebNews
+                    
+                    this.webNewsURL = matcher.group(2);
+                    
+                    this.mode = "SingleWebNews";
+                }
+                else{
 
-                    this.mode = "Newspapers";
+                    matcher = Pattern.compile(this.directoryPattern).matcher(this.path);
+                    if (matcher.find()) {
+
+                        // Pide las WebNews
+
+                        this.mode = "WebNews";
+                    }
                 }
             }
         }
@@ -102,5 +137,9 @@ public class PathHandler {
      */
     public String getPrintableNewsID(){
         return this.printableNewsID;
+    }
+    
+    public String getWebNewsURL(){
+        return this.webNewsURL;
     }
 }

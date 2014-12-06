@@ -16,6 +16,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.text.Normalizer;
+import java.text.Normalizer.Form;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
@@ -54,6 +56,20 @@ public class WebNews extends VisualNews implements XMLRepresentable{
         super(headline, body, journalist);
         // Añadimos l
         this.url = url;
+    }
+    
+    /**
+     * Class constructor that makes an object with headline, body, author and URL.
+     * @param headline headline of the notice that you want to save.
+     * @param body all text of the notice.
+     * @param journalist worker who has written the notice.
+     * @param url URL that's a unique identifier of the notice.
+     */
+    public WebNews(String headline, String body, Journalist journalist) {
+        // Llamamos al constructor de la superclase.
+        super(headline, body, journalist);
+        // calculamos la url
+        this.url = this.getSEOFriendlyURL(headline);
     }
     
     /**
@@ -172,6 +188,17 @@ public class WebNews extends VisualNews implements XMLRepresentable{
     public String getUrl(){
         // Devolvemos la URL
         return this.url;
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @param url
+     * @return 
+     */
+    private String getSEOFriendlyURL(String url){
+        return Normalizer.normalize(url.toLowerCase(), Form.NFD)
+        .replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
+        .replaceAll("[^\\p{Alnum}]+", "-");
     }
     
     /**
@@ -361,5 +388,16 @@ public class WebNews extends VisualNews implements XMLRepresentable{
                 + "|- Pictures" + this.pictures + "\n"
                 + "|- URL: " + this.url + "\n"
                 + "|- Keywords" + this.keywords + "\n";
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @return 
+     */
+    public String getHTMLBody(){
+        
+        String html = "<h2>" + this.getHeadline() + "</h2><hr><ul>";
+            
+        return html.concat("<p>" + this.getBody() + "</p>");
     }
 }
