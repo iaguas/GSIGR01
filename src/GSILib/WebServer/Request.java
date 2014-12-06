@@ -19,7 +19,7 @@ public class Request {
     private String request;
     
     private String pattern = "(GET|HEAD|POST|PUT|DELETE|TRACE|OPTIONS|CONNECT) ([^\\ ]+) ([^\\\n]+)";
-    private String order, file, mode;
+    private String order, path, mode;
     
     /**
      * TODO: JavaDoc
@@ -36,7 +36,7 @@ public class Request {
             // Peticion valida
             
             this.order = matcher.group(1);
-            this.file = matcher.group(2);
+            this.path = matcher.group(2);
             this.mode = matcher.group(3);
         }
         else{
@@ -59,8 +59,8 @@ public class Request {
      * TODO: JavaDoc
      * @return 
      */
-    public String getFile(){
-        return this.file;
+    public String getPath(){
+        return this.path;
     }
     
     /**

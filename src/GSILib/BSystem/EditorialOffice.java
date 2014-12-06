@@ -260,6 +260,13 @@ public interface EditorialOffice{
     public Newspaper getNewspaper(Date d);
     
     /**
+     * Retrieves the newspaper associated with a given date
+     * @param d The string of a date
+     * @return The instance of JournalIssue for that date, or null if it does not exist.
+     */
+    public Newspaper getNewspaper(String d);
+    
+    /**
      * Returns all the Newspapers.
      * @return An array with the Newspapers of BusinessSystem.
      */

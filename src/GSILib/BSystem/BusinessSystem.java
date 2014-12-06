@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.xml.serialize.OutputFormat;
@@ -52,7 +53,9 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
     protected final HashMap<String, Worker> workers = new HashMap<>(); // Trabajadores (periodistas y fotografos)
     protected final List<Document> documents = new ArrayList<>(); // Documentos (todos los tipos de noticias)
     protected final HashMap<String, Picture> pictures = new HashMap<>(); // Imagenes
-    protected final LinkedHashMap<Date, Newspaper> newspapers = new LinkedHashMap<>(); // Periodicos
+    protected final LinkedHashMap<String, Newspaper> newspapers = new LinkedHashMap<>(); // Periodicos
+    
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
     
     protected final int minReviewers = 6;
 
@@ -356,19 +359,33 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
     }  
 
     @Override
-    public boolean createNewspaper(Date d) {
-        // Creamos un periodico vacío.
-        Newspaper n = new Newspaper();
-        // Creamos un periodico con fecha d.
-        n = this.newspapers.put(d, n);
+    public boolean createNewspaper(Date date) {
+        
+        Newspaper newspaper = new Newspaper(date);
+        
+        // Añadimos a la lista
+        
+        this.newspapers.put(newspaper.getDate(), newspaper);
+        
         // Retornamos el resultado de la creación.
-        return !this.newspapers.containsKey(d);
+        
+        return ! this.newspapers.containsKey(this.simpleDateFormat.format(date));
     }
 
     @Override
-    public Newspaper getNewspaper(Date d) {
+    public Newspaper getNewspaper(Date date) {
+        
         // Recogemos un periodico en función a su fecha.
-        return this.newspapers.get(d);
+        
+        return this.getNewspaper(this.simpleDateFormat.format(date));
+    }
+    
+    @Override
+    public Newspaper getNewspaper(String date) {
+        
+        // Recogemos un periodico en función a su fecha.
+        
+        return this.newspapers.get(date);
     }
     
     @Override

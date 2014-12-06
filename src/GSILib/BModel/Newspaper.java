@@ -36,8 +36,8 @@ import org.xml.sax.SAXException;
 public class Newspaper implements XMLRepresentable{
     
     // Atributos de la clase.
-    private Date date = new Date(); // Fecha de publicación del periodico.
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH);
+    private Date date; // Fecha de publicación del periodico.
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
     private List<PrintableNews> news = new ArrayList<>(); // Lista de noticias publicadas.
     
     /**
@@ -45,8 +45,16 @@ public class Newspaper implements XMLRepresentable{
      */
     public Newspaper(){
         
-        // Constructor nulo
+        this.date = new Date();
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @param date 
+     */
+    public Newspaper(Date date){
         
+        this.date = date;
     }
     
     /**
@@ -303,28 +311,14 @@ public class Newspaper implements XMLRepresentable{
      * TODO: JavaDoc
      * @return 
      */
-    public String getHTMLPage(){
-        String html = "<html>";
+    public String getHTMLBody(){
         
-        //------------------------------------------------------------------------------
-        //  Header
-        //------------------------------------------------------------------------------
-        
-        html = html.concat("<head><b>" + this.getDate() + "</b></head>");
-        
-        //------------------------------------------------------------------------------
-        //  Body
-        //------------------------------------------------------------------------------
-        
-        html = html.concat("<body><ul>");
+        String html = "<h2>Newspaper | " + this.getDate() + "</h2><hr><ul>";
         
         for(PrintableNews printableNews : this.news){
             html = html.concat("<li>" + printableNews.getHeadline() + "</li>");
         }
-        
-        html = html.concat("</ul></body>");
-        html = html.concat("</html>");
             
-        return html;
+        return html.concat("</ul>");
     }
 }

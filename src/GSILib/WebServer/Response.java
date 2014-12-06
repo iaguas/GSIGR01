@@ -32,6 +32,18 @@ public class Response {
         this.date = new Date();
     }
     
+    /**
+     * TODO: JavaDoc
+     * @param mode
+     * @param status
+     * @param html 
+     */
+    public Response(String mode, int status, String html){
+        this.mode = mode;
+        this.status = status;
+        this.html = html;
+        this.date = new Date();
+    }
     //------------------------------------------------------------------------------
     //  SET
     //------------------------------------------------------------------------------
