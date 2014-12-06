@@ -231,6 +231,13 @@ public interface EditorialOffice{
      */
     public WebResource getWebResource(String URL);
     
+    /**
+     * Retrieves a PrintableNews form his ID
+     * @param ID	The printableNewsID
+     * @return 	The element, or null if no element matched the search.
+     */
+    public PrintableNews getPrintableNews(int printableNewsID);
+    
 	
     /**
      * Returns all the WebNews in the system indexed by (an exact) keyword,

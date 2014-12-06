@@ -316,7 +316,7 @@ public class Newspaper implements XMLRepresentable{
         String html = "<h2>Newspaper | " + this.getDate() + "</h2><hr><ul>";
         
         for(PrintableNews printableNews : this.news){
-            html = html.concat("<li>" + printableNews.getHeadline() + "</li>");
+            html = html.concat("<li><a href=\" " + printableNews.getId() + "/\">" + printableNews.getHeadline() + "</a></li>");
         }
             
         return html.concat("</ul>");

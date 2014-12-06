@@ -335,6 +335,22 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
         // Si no encontramos nada, devolvemos null.
         return null;
     }
+    
+    @Override
+    public PrintableNews getPrintableNews(int printableNewsID) {
+        
+        for(Document document: documents){ 
+            
+            if (document.getClass().getName().equals("GSILib.BModel.documents.visualNews.PrintableNews")){
+                
+                if(document.getId() == printableNewsID){
+                    return (PrintableNews) document;
+                }
+            }  
+        }
+        
+        return null;
+    }
 
     @Override
     public WebNews[] getIndexedNews(String keyword) {

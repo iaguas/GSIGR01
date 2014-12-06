@@ -20,6 +20,10 @@ public class UselessDataTesting {
     
     public static BusinessSystem getTestingBusinessSystem(){
         
+        // Nuevo BusinessSystem
+
+        BusinessSystem bs = new BusinessSystem();
+        
         // Nuevo Joournalist
         
         ArrayList interestsOfAlvaro = new ArrayList();
@@ -50,17 +54,24 @@ public class UselessDataTesting {
 
         // Nueva PrintableNews
 
-        PrintableNews printableNews = new PrintableNews("255Tbps: World’s fastest network could carry all of the internet’s traffic on a single fiber", "A joint group of researchers from the Netherlands and the US have smashed the world speed record for a fiber network, pushing 255 terabits per second down a single strand of glass fiber. This is equivalent to around 32 terabytes per second — enough to transfer a 1GB movie in 31.25 microseconds (0.03 milliseconds), or alternatively, the entire contents of your 1TB hard drive in about 31 milliseconds.", journalistAlvaro);
-        printableNews.addReviewer(journalistPirata);
-        printableNews.addPicture(pictureRed);
-        printableNews.addPicture(pictureBlue);
-
-        // Nuevo BusinessSystem
-
-        BusinessSystem bs = new BusinessSystem();
+        PrintableNews printableNewsFiber = new PrintableNews("255Tbps: World’s fastest network could carry all of the internet’s traffic on a single fiber", "A joint group of researchers from the Netherlands and the US have smashed the world speed record for a fiber network, pushing 255 terabits per second down a single strand of glass fiber. This is equivalent to around 32 terabytes per second — enough to transfer a 1GB movie in 31.25 microseconds (0.03 milliseconds), or alternatively, the entire contents of your 1TB hard drive in about 31 milliseconds.", journalistAlvaro);
+        printableNewsFiber.addReviewer(journalistPirata);
+        printableNewsFiber.addPicture(pictureRed);
+        printableNewsFiber.addPicture(pictureBlue);
+        bs.insertNews(printableNewsFiber);
+        
+        // Nueva PrintableNews
+        
+        PrintableNews printableNewsBFHL = new PrintableNews("Battlefield Hardline es contundente con su historia", "Es mentira, lo sabemos, lo saben, y no cuela", journalistAlvaro);
+        bs.insertNews(printableNewsBFHL);
+        
+        // Nuevo Newspaper
+ 
         Date currentDate = new Date();
+        
         bs.createNewspaper(currentDate);
-        bs.addNewsToIssue(bs.getNewspaper(currentDate), printableNews);
+        bs.addNewsToIssue(bs.getNewspaper(currentDate), printableNewsFiber);
+        bs.addNewsToIssue(bs.getNewspaper(currentDate), printableNewsBFHL);
         
         return bs;
     }

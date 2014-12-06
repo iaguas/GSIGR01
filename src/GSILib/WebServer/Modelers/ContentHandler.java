@@ -7,6 +7,7 @@
 package GSILib.WebServer.Modelers;
 
 import GSILib.BModel.Newspaper;
+import GSILib.BModel.documents.visualNews.PrintableNews;
 import GSILib.BSystem.BusinessSystem;
 import GSILib.BTesting.UselessDataTesting;
 import static java.lang.System.exit;
@@ -42,8 +43,10 @@ public class ContentHandler {
             if (this.pathHandler.getMode().equals("PrintableNews")){
 
                 // El cliente pide una PrintableNews
+                
+                PrintableNews printableNews = this.bs.getPrintableNews(Integer.parseInt(this.pathHandler.getPrintableNewsID()));
 
-                this.webPage = new WebPage("Has pedido una PrintableNews", "Pero aun no servimos PrintableNews");
+                this.webPage = new WebPage(printableNews.getHeadline(), printableNews.getHTMLBody());
             }
             else if (this.pathHandler.getMode().equals("Newspaper")){
 

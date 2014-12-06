@@ -52,8 +52,6 @@ public class PathHandler {
         }
         else{
             
-            System.out.println("[not match] " + this.path);
-            
             matcher = Pattern.compile(this.newspaperPattern).matcher(this.path);
             if (matcher.find()) {
                 
@@ -67,17 +65,12 @@ public class PathHandler {
             }
             else{
                 
-                System.out.println("[not match] " + this.path);
-                
                 matcher = Pattern.compile(this.newspapersPattern).matcher(this.path);
                 if (matcher.find()) {
                     
                     // Pide los Newspapers
 
                     this.mode = "Newspapers";
-                }
-                else{
-                    System.out.println("[not match] " + this.path);
                 }
             }
         }
