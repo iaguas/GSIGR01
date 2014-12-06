@@ -342,6 +342,21 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
     }
     
     @Override
+    public WebNews[] getWebNews() {
+        
+        List<WebNews> webNews = new ArrayList();
+        
+        for(Document document : this.documents){
+            if (document.getClass().getName().equals("GSILib.BModel.documents.visualNews.WebNews")){
+                webNews.add((WebNews) document);
+            }
+        }
+        if(webNews.isEmpty())
+            return null;
+        return webNews.toArray(new WebNews[webNews.size()]);
+    }
+    
+    @Override
     public WebNews getWebNews(String URL) {
             
         WebNews webNews;

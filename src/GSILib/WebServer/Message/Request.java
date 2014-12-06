@@ -4,7 +4,7 @@
  * Universidad Pública de Navarra - curso 2014-15
  */
 
-package GSILib.WebServer;
+package GSILib.WebServer.Message;
 
 import static java.lang.System.exit;
 import java.util.regex.Matcher;

@@ -240,6 +240,12 @@ public interface EditorialOffice{
     
     /**
      * TODO: JavaDoc
+     * @return 
+     */
+    public WebNews[] getWebNews();
+    
+    /**
+     * TODO: JavaDoc
      * @param URL
      * @return 
      */

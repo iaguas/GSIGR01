@@ -4,7 +4,7 @@
  * Universidad Pública de Navarra - curso 2014-15
  */
 
-package GSILib.WebServer;
+package GSILib.WebServer.Message;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,8 +16,7 @@ import java.util.Locale;
  */
 public class Response {
     
-    private String mode, contentType = "text/html", html;
-    private int status;
+    private String mode, contentType = "text/html", html, status;
     private Date date;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH);
     
@@ -26,7 +25,7 @@ public class Response {
      * @param mode
      * @param status 
      */
-    public Response(String mode, int status){
+    public Response(String mode, String status){
         this.mode = mode;
         this.status = status;
         this.date = new Date();
@@ -38,12 +37,28 @@ public class Response {
      * @param status
      * @param html 
      */
-    public Response(String mode, int status, String html){
+    public Response(String mode, String status, String html){
         this.mode = mode;
         this.status = status;
         this.html = html;
         this.date = new Date();
     }
+    
+    /**
+     * TODO: JavaDoc
+     * @param mode
+     * @param status
+     * @param html
+     * @param contentType 
+     */
+    public Response(String mode, String status, String html, String contentType){
+        this.mode = mode;
+        this.status = status;
+        this.html = html;
+        this.contentType = contentType;
+        this.date = new Date();
+    }
+    
     //------------------------------------------------------------------------------
     //  SET
     //------------------------------------------------------------------------------
@@ -60,7 +75,7 @@ public class Response {
      * TODO: JavaDoc
      * @param status 
      */
-    public void setStatus(int status){
+    public void setStatus(String status){
         this.status = status;
     }
     
@@ -106,7 +121,7 @@ public class Response {
     
     @Override
     public String toString(){
-        return this.mode + " " + this.status + " OK\n"
+        return this.mode + " " + this.status + "\n"
                 + "Date: " + this.getDate() + "\n"
                 + "Content-Type: " + this.contentType + "\n"
                 + "Content-Length: " + this.getContentLength() + "\n\n"

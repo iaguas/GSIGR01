@@ -78,7 +78,6 @@ public class UselessDataTesting {
         
         WebNews webNewsSnake = new WebNews("Snake quiere un trozo del pastel", "Snake quiere un trozo del pastel de Call of Duty y lo demuestra con el tráiler de Metal Gear Online", journalistPirata);
         bs.insertNews(webNewsSnake);
-        System.out.println(webNewsSnake.getUrl());
         
         return bs;
     }

@@ -6,6 +6,8 @@
 
 package GSILib.WebServer;
 
+import GSILib.WebServer.Message.Request;
+import GSILib.WebServer.Message.Response;
 import GSILib.BModel.Newspaper;
 import GSILib.BModel.Picture;
 import GSILib.BModel.documents.visualNews.PrintableNews;
@@ -13,7 +15,6 @@ import GSILib.BModel.workers.Journalist;
 import GSILib.BModel.workers.Photographer;
 import GSILib.BSystem.BusinessSystem;
 import GSILib.BTesting.UselessDataTesting;
-import GSILib.WebServer.Modelers.ContentHandler;
 import GSILib.WebServer.Modelers.WebPage;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -121,14 +122,14 @@ public class WebServer {
                 
                 ContentHandler contentHandler = new ContentHandler(request.getPath());
         
-                Response response = new Response(request.getMode(), contentHandler.getStatus(), contentHandler.getWebPage().toString());
+                Response response = new Response(request.getMode(), contentHandler.getStatus(), contentHandler.getWebPage().toString(), contentHandler.getContentType());
                 
                 System.out.println(response);
                 
                 this.socketOut.println(response);
             }
             catch(IOException ex) {
-                System.out.println("IOException capturada en run()");
+                System.out.println(ex);
             }
             finally {
 

@@ -119,6 +119,14 @@ public class PathHandler {
      * TODO: JavaDoc
      * @return 
      */
+    public String getPath(){
+        return this.path;
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @return 
+     */
     public String getMode(){
         return this.mode;
     }
@@ -139,6 +147,10 @@ public class PathHandler {
         return this.printableNewsID;
     }
     
+    /**
+     * TODO: JavaDoc
+     * @return 
+     */
     public String getWebNewsURL(){
         return this.webNewsURL;
     }
