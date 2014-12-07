@@ -20,6 +20,7 @@ import java.util.Date;
 import org.xml.sax.SAXException;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 
 /**
  *
@@ -27,7 +28,7 @@ import java.io.IOException;
  */
 public class XMLTesting {
     
-    public static void main(String args[]) throws SAXException, XMLParsingException, IOException {
+    public static void main(String args[]) throws SAXException, XMLParsingException, IOException, ParseException {
         
         System.out.println("---------------");
         System.out.println("***  Store  ***");

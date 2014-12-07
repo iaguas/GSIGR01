@@ -15,15 +15,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 
 /**
@@ -123,6 +117,10 @@ public class Teletype extends Document implements XMLRepresentable{
     public Element getElement(XMLHandler xml){
 
         Element xmlTeletype = xml.engine.createElement("Teletype");
+        
+        // Para una raiz Teletype, introducimos su id como atributo
+        
+        xmlTeletype.setAttribute("id", String.valueOf(super.getId()));
 
         // Para una raiz Teletype, introducimos otra raiz Headline
         

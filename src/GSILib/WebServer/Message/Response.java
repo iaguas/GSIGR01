@@ -6,6 +6,7 @@
 
 package GSILib.WebServer.Message;
 
+import GSILib.WebServer.Modelers.WebPage;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -16,9 +17,10 @@ import java.util.Locale;
  */
 public class Response {
     
-    private String mode, contentType = "text/html", html, status;
+    private String mode, contentType = "text/html", status;
     private Date date;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH);
+    private WebPage webPage;
     
     /**
      * TODO: JavaDoc
@@ -37,10 +39,10 @@ public class Response {
      * @param status
      * @param html 
      */
-    public Response(String mode, String status, String html){
+    public Response(String mode, String status, WebPage webPage){
         this.mode = mode;
         this.status = status;
-        this.html = html;
+        this.webPage = webPage;
         this.date = new Date();
     }
     
@@ -51,10 +53,10 @@ public class Response {
      * @param html
      * @param contentType 
      */
-    public Response(String mode, String status, String html, String contentType){
+    public Response(String mode, String status, WebPage webPage, String contentType){
         this.mode = mode;
         this.status = status;
-        this.html = html;
+        this.webPage = webPage;
         this.contentType = contentType;
         this.date = new Date();
     }
@@ -89,10 +91,10 @@ public class Response {
     
     /**
      * TODO: JavaDoc
-     * @param html 
+     * @param webPage 
      */
-    public void setHTML(String html){
-        this.html = html;
+    public void setWebPage(WebPage webPage){
+        this.webPage = webPage;
     }
     
     //------------------------------------------------------------------------------
@@ -112,7 +114,7 @@ public class Response {
      * @return 
      */
     private int getContentLength(){
-        return this.html.length();
+        return this.webPage.toString().length();
     }
     
     //------------------------------------------------------------------------------
@@ -125,6 +127,6 @@ public class Response {
                 + "Date: " + this.getDate() + "\n"
                 + "Content-Type: " + this.contentType + "\n"
                 + "Content-Length: " + this.getContentLength() + "\n\n"
-                + this.html;
+                + this.webPage;
     }
 }

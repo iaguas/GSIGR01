@@ -175,6 +175,10 @@ public class PrintableNews extends VisualNews implements XMLRepresentable, Seria
 
         Element xmlPrintableNews = xml.engine.createElement("PrintableNews");
 
+        // Para una raiz PrintableNews, introducimos su id como atributo
+        
+        xmlPrintableNews.setAttribute("id", String.valueOf(super.getId()));
+        
         // Para una raiz PrintableNews, introducimos su headline como atributo
         
         xmlPrintableNews.setAttribute("headline", this.getHeadline());

@@ -6,26 +6,18 @@
 
 package GSILib.WebServer;
 
+import GSILib.BSystem.BusinessSystem;
+import GSILib.BTesting.EOTester;
 import GSILib.WebServer.Message.Request;
 import GSILib.WebServer.Message.Response;
-import GSILib.BModel.Newspaper;
-import GSILib.BModel.Picture;
-import GSILib.BModel.documents.visualNews.PrintableNews;
-import GSILib.BModel.workers.Journalist;
-import GSILib.BModel.workers.Photographer;
-import GSILib.BSystem.BusinessSystem;
-import GSILib.BTesting.UselessDataTesting;
-import GSILib.WebServer.Modelers.WebPage;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import static java.lang.System.exit;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
 
 /**
  * TODO: JavaDoc
@@ -33,19 +25,90 @@ import java.util.Iterator;
  */
 public class WebServer {
 
-    private static final int PUERTO = 8080;
+    private static int port = 8080;
+    private static String localDir = "web/";
 
     public static void main(String[] args) throws Exception {
-        System.out.println("[status] Servidor iniciado");
+        
+        //------------------------------------------------------------------------------
+        //  Config (configPath, xmlLoad)
+        //------------------------------------------------------------------------------
 
+        ConfigHandler configHandler;
+        BusinessSystem bs = null;
+        
+        if (args.length == 1){
+            
+            // Config File
+            
+            File file = new File(args[0]);
+            if (file.exists()){
+                configHandler = new ConfigHandler(args[0]);
+                
+                if (configHandler.getPort() != 0){
+                    
+                    // Load Port
+                    
+                    port = configHandler.getPort();
+                }  
+                if (configHandler.getLocalDir() != null){
+                    
+                    // Local Directory
+                    
+                    localDir = configHandler.getLocalDir();
+                }
+                if (configHandler.getLoadDataPath() != null){
+                    
+                    // Load Data
+                    
+                    file = new File(configHandler.getLoadDataPath());
+                    if (file.exists()){
+                        
+                        // Carga un BS desde el XML
+                        
+                        bs = BusinessSystem.loadFromFileXML(file);
+                
+                        System.out.println("[done] Data loaded");
+                    }
+                    else{
+                        System.err.println("LoadData file doesn't exists");
+                        exit(0);
+                    }
+                }
+                else{
+                    
+                    // Load BusinessSystem from testing class
+            
+                    bs = EOTester.getTestingBusinessSystem();
+                }
+                
+                System.out.println("[done] Config loaded");
+            }
+            else{
+                System.err.println("ConfigFile does not exist");
+                exit(0);
+            }
+        }
+        else if (args.length == 0){
+            
+            // Load BusinessSystem from testing class
+            
+            bs = EOTester.getTestingBusinessSystem();
+        }
+        else{
+            System.err.println("Incorrect number of arguments");
+            exit(0);
+        }
+        
         //------------------------------------------------------------------------------
         //  Creamos el socket
         //------------------------------------------------------------------------------
 
-        ServerSocket socket = new ServerSocket(PUERTO);
+        ServerSocket socket = new ServerSocket(port);
+        System.out.println("[status] Servidor iniciado");
         try {
             while (true) {
-                new ClientThread(socket.accept()).start();
+                new ClientThread(socket.accept(), bs, localDir).start();
             }
         }
         finally {
@@ -65,17 +128,24 @@ public class WebServer {
         private Socket socket;
         private BufferedReader socketIn;
         private PrintWriter socketOut;
+        
+        private BusinessSystem bs;
+        private String localDir;
 
-        public ClientThread(Socket socket) {
+        public ClientThread(Socket socket, BusinessSystem bs, String localDir) {
 
             //------------------------------------------------------------------------------
             //  Constructor del socket
             //------------------------------------------------------------------------------
 
             this.socket = socket;
+            this.bs = bs;
+            this.localDir = localDir;
         }
         public void run() {
             try {
+                
+                System.out.println("[status] Cliente conectado");
 
                 //------------------------------------------------------------------------------
                 //  Creamos los objetos para mandar y recibir mensajes
@@ -87,10 +157,6 @@ public class WebServer {
                 //------------------------------------------------------------------------------
                 //  Leemos el mensaje del cliente
                 //------------------------------------------------------------------------------
-
-                System.out.println("---------------");
-                System.out.println("*** Request ***");
-                System.out.println("---------------");
                 
                 String inputLine;
                 StringBuilder requestString = new StringBuilder();
@@ -104,8 +170,6 @@ public class WebServer {
                     System.err.println("Error: " + e);
                 }
                 
-                System.out.println(requestString);
-                
                 //------------------------------------------------------------------------------
                 //  Tratamos el protocolo
                 //------------------------------------------------------------------------------
@@ -116,15 +180,9 @@ public class WebServer {
                 //  Respondemos al cliente
                 //------------------------------------------------------------------------------
                 
-                System.out.println("----------------");
-                System.out.println("*** Response ***");
-                System.out.println("----------------");
-                
-                ContentHandler contentHandler = new ContentHandler(request.getPath());
+                ContentHandler contentHandler = new ContentHandler(request.getPath(), this.bs, this.localDir);
         
-                Response response = new Response(request.getMode(), contentHandler.getStatus(), contentHandler.getWebPage().toString(), contentHandler.getContentType());
-                
-                System.out.println(response);
+                Response response = new Response(request.getMode(), contentHandler.getStatus(), contentHandler.getWebPage(), contentHandler.getContentType());
                 
                 this.socketOut.println(response);
             }
@@ -143,7 +201,7 @@ public class WebServer {
                 catch(IOException exc) {
                     System.out.println("Error al cerrar el socket");
                 }
-                System.out.println("cliente desconectado");
+                System.out.println("[status] Cliente desconectado");
             }
         }
     }

@@ -111,6 +111,9 @@ public class WebNews extends VisualNews implements XMLRepresentable{
         
         this.loadFromElement(xmlWebNews);
          
+        // WebNews rellena sus datos
+        
+        this.loadFromElement(xmlWebNews);
     }
     
     /**
@@ -127,7 +130,10 @@ public class WebNews extends VisualNews implements XMLRepresentable{
         // VisualNews rellena sus datos
         
         super.loadFromElement(xmlWebNews, journalist);
-         
+        
+        // WebNews rellena sus datos
+        
+        this.loadFromElement(xmlWebNews);
     }
     
     /**
@@ -208,6 +214,10 @@ public class WebNews extends VisualNews implements XMLRepresentable{
     public Element getElement(XMLHandler xml){
 
         Element xmlWebNews = xml.engine.createElement("WebNews");
+        
+        // Para una raiz WebNews, introducimos su id como atributo
+        
+        xmlWebNews.setAttribute("id", String.valueOf(super.getId()));
 
         // Para una raiz PrintableNews, introducimos su headline como atributo
         
@@ -269,11 +279,13 @@ public class WebNews extends VisualNews implements XMLRepresentable{
             }
         }
         else if(xml.storeMode.equals("full")){
-            for(Picture picture : this.getPictures()){
-                
-                // Para una raiz Pictures, introducimos otra raiz Picture
-                
-                xmlWebNewsPictures.appendChild(picture.getElement(xml));
+            if (! this.pictures.isEmpty()){
+                for(Picture picture : this.getPictures()){
+
+                    // Para una raiz Pictures, introducimos otra raiz Picture
+
+                    xmlWebNewsPictures.appendChild(picture.getElement(xml));
+                }
             }
         }
         else{

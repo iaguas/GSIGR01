@@ -21,6 +21,7 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -427,6 +428,11 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
         // Retornamos el resultado de la creación.
         
         return ! this.newspapers.containsKey(this.simpleDateFormat.format(date));
+    }
+    
+    @Override
+    public Newspaper insertNewspaper(Newspaper newspaper){
+        return this.newspapers.put(newspaper.getDate(), newspaper);
     }
 
     @Override
@@ -1279,7 +1285,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
      * file, including file and data consistency
      * 
      */
-    public static BusinessSystem loadFromFileXML(File file) throws XMLParsingException, IOException, SAXException{
+    public static BusinessSystem loadFromFileXML(File file) throws XMLParsingException, IOException, SAXException, ParseException{
 
         // Creamos el BusinessSystem
         
@@ -1420,6 +1426,28 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
             }
             
             bs.insertNews(webNews);
+        }
+        
+        // Cargamos los Newspapers
+        
+        NodeList newspapersNodes = (NodeList) ((Element) xmlBS.getElementsByTagName("Newspapers").item(0)).getElementsByTagName("Newspaper");
+
+        for (int i = 0; i < newspapersNodes.getLength(); i++) {
+            
+            // Cargamos un Newspaper
+            
+            Newspaper newspaper = new Newspaper((Element) newspapersNodes.item(i));
+            
+            // Cargamos las PrintableNews
+        
+            NodeList newspapersPrintableNewsNodes = ((Element) newspapersNodes.item(i)).getElementsByTagName("keywords");
+
+            for (int j = 0; j < newspapersPrintableNewsNodes.getLength(); j++) {
+                
+                newspaper.addNews(bs.getPrintableNews(Integer.parseInt(((Element) newspapersPrintableNewsNodes).getAttribute("id"))));
+            }
+            
+            bs.insertNewspaper(newspaper);
         }
         
         return bs;

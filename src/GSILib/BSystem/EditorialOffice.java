@@ -272,6 +272,13 @@ public interface EditorialOffice{
     public boolean createNewspaper(Date d);
     
     /**
+     * TODO: JavaDoc
+     * @param newspaper
+     * @return 
+     */
+    public Newspaper insertNewspaper(Newspaper newspaper);
+    
+    /**
      * Retrieves the newspaper associated with a given date
      * @param d The date
      * @return The instance of JournalIssue for that date, or null if it does not exist.

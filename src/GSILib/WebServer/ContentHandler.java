@@ -10,7 +10,6 @@ import GSILib.BModel.Newspaper;
 import GSILib.BModel.documents.visualNews.PrintableNews;
 import GSILib.BModel.documents.visualNews.WebNews;
 import GSILib.BSystem.BusinessSystem;
-import GSILib.BTesting.UselessDataTesting;
 import GSILib.WebServer.Modelers.PathHandler;
 import GSILib.WebServer.Modelers.WebPage;
 import java.io.File;
@@ -24,26 +23,25 @@ import static java.lang.System.exit;
 public class ContentHandler {
     
     private PathHandler pathHandler;
-    private BusinessSystem bs;
     private WebPage webPage;
     
-    private String directory = "web/";
+    private String localDir;
     private String status = "200 OK";
-    private String contentType = "text/html";
+    private String contentType;
     
-    public ContentHandler(String path) throws IOException{
+    public ContentHandler(String path, BusinessSystem bs, String localDir) throws IOException{
         
         this.pathHandler = new PathHandler(path);
-        this.bs = UselessDataTesting.getTestingBusinessSystem();
+        this.localDir = localDir;
         
         if(this.pathHandler.getMode() == null){
             
             // El cliente pide un fichero local
             
-            File file = new File(this.directory + this.pathHandler.getPath());
+            File file = new File(this.localDir + this.pathHandler.getPath());
             
             if (file.isDirectory()){
-                file = new File(this.directory + this.pathHandler.getPath() + "index.html");
+                file = new File(this.localDir + this.pathHandler.getPath() + "index.html");
             }
             
             if (file.exists()){
@@ -58,7 +56,7 @@ public class ContentHandler {
                 // 404
                 
                 this.status = "404 Not Found";
-                this.webPage = new WebPage(new File(this.directory + "templates/404.html"));
+                this.webPage = new WebPage(new File(this.localDir + "templates/404.html"));
             }
    
         }
@@ -70,7 +68,7 @@ public class ContentHandler {
 
                 // El cliente pide una PrintableNews
                 
-                PrintableNews printableNews = this.bs.getPrintableNews(Integer.parseInt(this.pathHandler.getPrintableNewsID()));
+                PrintableNews printableNews = bs.getPrintableNews(Integer.parseInt(this.pathHandler.getPrintableNewsID()));
 
                 this.webPage = new WebPage(printableNews.getHeadline(), printableNews.getHTMLBody());
             }
@@ -78,7 +76,7 @@ public class ContentHandler {
 
                 // El cliente pide un Newspaper
 
-                Newspaper newspaper = this.bs.getNewspaper(this.pathHandler.getNewspaperDate());
+                Newspaper newspaper = bs.getNewspaper(this.pathHandler.getNewspaperDate());
 
                 if (newspaper != null){
 
@@ -91,7 +89,7 @@ public class ContentHandler {
                     // 404
                 
                     this.status = "404 Not Found";
-                    this.webPage = new WebPage(new File(this.directory + "templates/404.html"));
+                    this.webPage = new WebPage(new File(this.localDir + "templates/404.html"));
                 }
             }
             else if(this.pathHandler.getMode().equals("Newspapers")){
@@ -115,7 +113,7 @@ public class ContentHandler {
 
                 // El cliente pide una WebNews
                 
-                WebNews webNews = this.bs.getWebNews(this.pathHandler.getWebNewsURL());
+                WebNews webNews = bs.getWebNews(this.pathHandler.getWebNewsURL());
 
                 if (webNews != null){
 
@@ -128,7 +126,7 @@ public class ContentHandler {
                     // 404
                 
                     this.status = "404 Not Found";
-                    this.webPage = new WebPage(new File(this.directory + "templates/404.html"));
+                    this.webPage = new WebPage(new File(this.localDir + "templates/404.html"));
                 }
                 
             }

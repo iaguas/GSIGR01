@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,7 +64,7 @@ public class Newspaper implements XMLRepresentable{
      * @param newspaperFromXML XML document to parse, which contains nodes corresponding to the class Newspaper
      * @throws SAXException exception derived from XML file reading
      */
-    public Newspaper(String newspaperFromXML) throws SAXException{
+    public Newspaper(String newspaperFromXML) throws SAXException, ParseException{
         
         // Instanciamos el motor de XML
         
@@ -81,7 +82,7 @@ public class Newspaper implements XMLRepresentable{
      * containing Newspaper node list.
      * @param xmlNewspaper Element type containing "Newspaper" tagged nodes
      */
-    public Newspaper(Element xmlNewspaper){
+    public Newspaper(Element xmlNewspaper) throws ParseException{
         
         // Cargamos los valores del Elemento
         
@@ -95,11 +96,11 @@ public class Newspaper implements XMLRepresentable{
      * @param xmlNewspaper Element type which contains useful data (dates and a 
      * list of PrintableNews)
      */
-    protected void loadFromElement(Element xmlNewspaper){
+    protected void loadFromElement(Element xmlNewspaper) throws ParseException{
         
         // Picture rellena sus datos
         
-        this.date = new Date(Long.parseLong(xmlNewspaper.getAttribute("date")));
+        this.date = this.simpleDateFormat.parse(xmlNewspaper.getAttribute("date"));
         
         // Crea las PrintableNews y las añade
         

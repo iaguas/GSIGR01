@@ -59,6 +59,7 @@ public abstract class Document implements Serializable{
         
         // Document rellena sus datos
         
+        this.id = Integer.parseInt(xmlDocument.getAttribute("id"));
         this.headline = xmlDocument.getAttribute("headline");
         this.body = xmlDocument.getAttribute("body");
  
