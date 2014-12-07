@@ -1,3 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Config port="8080" localDir="web/" loadDataDir="web/webServer.xml">
-</Config>
+<ServerConfigs loadDataDir="web/webServer.xml">
+	<ServerConfig port="8080" localDir="web/"/>
+	<ServerConfig port="8081" localDir="patata/"/>
+	<ServerConfig port="8082" localDir="web/"/>
+</ServerConfigs>
