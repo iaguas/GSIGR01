@@ -4,14 +4,15 @@
  * Universidad Pública de Navarra - curso 2014-15
  */
 
-package GSILib.WebServer;
+package GSILib.net;
 
 import GSILib.BModel.Newspaper;
 import GSILib.BModel.documents.visualNews.PrintableNews;
 import GSILib.BModel.documents.visualNews.WebNews;
+import GSILib.BModel.workers.Journalist;
 import GSILib.BSystem.BusinessSystem;
-import GSILib.WebServer.Modelers.PathHandler;
-import GSILib.WebServer.Modelers.WebPage;
+import GSILib.net.Modelers.PathHandler;
+import GSILib.net.Modelers.WebPage;
 import java.io.File;
 import java.io.IOException;
 import static java.lang.System.exit;
@@ -146,6 +147,57 @@ public class ContentHandler {
                 html = html.concat("</ul>");
                 
                 this.webPage = new WebPage("WebNews", html);
+            }
+            else if(this.pathHandler.getMode().equals("Journalist")){
+
+                // El cliente pide un Journalist
+                
+                Journalist journalist = bs.findJournalist(this.pathHandler.getJournalistID());
+                
+                if (journalist != null){
+                    
+                    // EL Journalist existe
+                    
+                    this.webPage = new WebPage("Journalist | " + journalist.getName(), journalist.getHTMLBody());
+                    
+                    this.webPage.append("<hr><h3>Has written...</h3><br><ul>");
+                    
+                    PrintableNews[] printableNews = bs.getPrintableNewsFromAuthor(journalist);
+                    
+                    if(printableNews != null){
+                        for(PrintableNews singlePrintableNews : printableNews){
+                            this.webPage.append("<li><a href=\"/newspapers/0/0/0/" + singlePrintableNews.getId() + "/\">" + singlePrintableNews.getHeadline() + "</a>");
+                        }
+                    }
+                    else{
+                        this.webPage.append("nothing, fire him");
+                    }
+                    this.webPage.append("</ul>");
+                }
+                else{
+                    
+                    // 404
+                    
+                    this.status = "404 Not Found";
+                    this.webPage = new WebPage(new File(this.localDir + "templates/404.html"));
+                }
+            }
+            else if(this.pathHandler.getMode().equals("Journalists")){
+                
+                // El cliente pide los Journalists
+
+                String html = "<h2>Journalists</h2><hr><ul>";
+
+                Journalist[] journalists = bs.getJournalists();
+                
+                if (journalists != null){
+                    for (Journalist journalist : journalists){
+                        html = html.concat("<li><a href=\" " + journalist.getId() + "/\">" + journalist.getName() + "</a></li>");
+                    }
+                }
+                html = html.concat("</ul>");
+                
+                this.webPage = new WebPage("Journalists", html);
             }
             else{
                 System.err.println("El gestor de contenido encontró un error");

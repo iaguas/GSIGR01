@@ -55,6 +55,12 @@ public interface EditorialOffice{
     public Journalist findJournalist(String ID);
     
     /**
+     * TODO: JavaDoc
+     * @return 
+     */
+    public Journalist[] getJournalists();
+    
+    /**
      * Adds a photographer to the office
      * @param pr the photographer
      * @return true if it was added, false if it was null or already existing

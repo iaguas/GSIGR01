@@ -4,9 +4,9 @@
  * Universidad Pública de Navarra - curso 2014-15
  */
 
-package GSILib.WebServer.Message;
+package GSILib.net.Message;
 
-import GSILib.WebServer.Modelers.WebPage;
+import GSILib.net.Modelers.WebPage;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;

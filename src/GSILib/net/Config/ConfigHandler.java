@@ -4,7 +4,7 @@
  * Universidad Pública de Navarra - curso 2014-15
  */
 
-package GSILib.WebServer.Config;
+package GSILib.net.Config;
 
 import GSILib.Serializable.XMLHandler;
 import java.io.IOException;

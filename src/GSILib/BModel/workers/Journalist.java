@@ -288,4 +288,15 @@ public class Journalist extends Worker implements XMLRepresentable, Serializable
         // Pueblo de nuevo la lista con los argumentos pasados.
         this.interests.addAll(interests);
     }
+    
+    /**
+     * TODO: JavaDoc
+     * @return 
+     */
+    public String getHTMLBody(){
+        
+        String html = "<h2>" + this.getName() + "</h2><hr><ul>";
+            
+        return html.concat("<p>" + this.getBirthDate() + " - " + this.interests + "</p>");
+    }
 }

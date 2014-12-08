@@ -106,6 +106,26 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
             return null;
         }
     }
+    
+    @Override
+    public Journalist[] getJournalists(){
+        
+        // Creamos una nueva lista
+        
+        ArrayList<Journalist> journalists = new ArrayList();
+        
+        for(Worker worker : this.workers.values()){
+            if (worker.getClass().getName().equals("GSILib.BModel.workers.Journalist")){
+                journalists.add((Journalist) worker);
+            }
+        }
+        
+        // Lo devolvemos como un array
+        
+        if(journalists.isEmpty())
+            return null;
+        return journalists.toArray(new Journalist[journalists.size()]);
+    }
 
     @Override
     public boolean addPhotographer(Photographer pr) {
@@ -236,21 +256,23 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
     }
     
     @Override
-    public PrintableNews[] getPrintableNewsFromAuthor(Journalist j){
-        // Inicializamos un array en el que almacenaremos los printable news del periodista
-        PrintableNews[] pn = null;
-        // Recuperamos el array de documentos de un periodista
-        Document[] docOfJour = getDocuments(j);
-        // Usamos un índice para almacenar los PrintableNews
-        int numNews = 0;
-        // Recorremos los documentos buscando PrintableNews
-        for(Document d: docOfJour){
-            // Se obtienen los documentos del tipo deseado
-            if(d.getClass().getName().equals("GSILib.BModel.documents.visualNews.PrintableNews")){
-                pn[numNews]=(PrintableNews) d;
+    public PrintableNews[] getPrintableNewsFromAuthor(Journalist journalist){
+        
+        // Creamos una list de PrintableNews
+        
+        ArrayList<PrintableNews> printableNews = new ArrayList();
+        
+        for(Document document: this.documents){
+            if(document.getClass().getName().equals("GSILib.BModel.documents.visualNews.PrintableNews") && document.getAuthor().equals(journalist)){
+                printableNews.add((PrintableNews) document);
             }
         }
-        return pn;  
+        
+        // Lo devolvemos como un array
+        
+        if(printableNews.isEmpty())
+            return null;
+        return printableNews.toArray(new PrintableNews[printableNews.size()]); 
     }
 
     @Override
@@ -1359,6 +1381,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
             
             // Obtenemos el Photographer
             
+            System.out.println(((Element) ((Element) picturesNodes.item(i)).getElementsByTagName("Photographer").item(0)).getAttribute("id"));
             Photographer photographer = bs.findPhotographer(((Element) ((Element) picturesNodes.item(i)).getElementsByTagName("Photographer").item(0)).getAttribute("id"));
             
             bs.addPicture(new Picture((Element) picturesNodes.item(i), photographer));

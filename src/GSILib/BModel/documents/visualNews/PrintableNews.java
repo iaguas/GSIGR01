@@ -394,6 +394,8 @@ public class PrintableNews extends VisualNews implements XMLRepresentable, Seria
         
         String html = "<h2>" + this.getHeadline() + "</h2><hr><ul>";
             
-        return html.concat("<p>" + this.getBody() + "</p>");
+        html = html.concat("<p>" + this.getBody() + "</p><hr>");
+        
+        return html.concat("<p> by <a href=\"/journalists/" + this.journalists.get(0).getId() + "/\">" + this.journalists.get(0).getName() + "</a></p>");
     }
 }

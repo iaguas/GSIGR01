@@ -410,6 +410,8 @@ public class WebNews extends VisualNews implements XMLRepresentable{
         
         String html = "<h2>" + this.getHeadline() + "</h2><hr><ul>";
             
-        return html.concat("<p>" + this.getBody() + "</p>");
+        html = html.concat("<p>" + this.getBody() + "</p>");
+        
+        return html.concat("<p> by <a href=\"/journalists/" + this.journalists.get(0).getId() + "/\">" + this.journalists.get(0).getName() + "</a></p>");
     }
 }

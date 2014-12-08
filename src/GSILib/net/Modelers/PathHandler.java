@@ -4,7 +4,7 @@
  * Universidad Pública de Navarra - curso 2014-15
  */
 
-package GSILib.WebServer.Modelers;
+package GSILib.net.Modelers;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,18 +15,19 @@ import java.util.regex.Pattern;
  */
 public class PathHandler {
     
-    private String path, mode = null; // mode = {"PrintableNews" | "Newspaper" | "Newspapers" | "SingleWebNews" | "WebNews" | "null"}
+    private String path, mode = null; // mode = {"PrintableNews" | "Newspaper" | "Newspapers" | "SingleWebNews" | "WebNews" | "Journalist" | "Journalists" | "null"}
     
     // Patterns
     
     private final String printableNewsPattern = "\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/";
     private final String newspaperPattern = "\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/";
     private final String webNewsPattern = "\\/([^\\/]+)\\/([^\\/]+)\\/";
+    private final String journalistPattern = "\\/([^\\/]+)\\/([^\\/]+)\\/";
     private final String directoryPattern = "\\/([^\\/]+)\\/";
     
     // Directories
     
-    private String year, month, day, printableNewsID, webNewsURL;
+    private String year, month, day, printableNewsID, webNewsURL, journalistID;
     
     
     /**
@@ -108,6 +109,33 @@ public class PathHandler {
                     }
                 }
             }
+            else{
+                matcher = Pattern.compile("\\/journalists\\/").matcher(this.path);
+                if (matcher.find()) {
+            
+                    // Pide algo del arbol de Journalist
+
+                    matcher = Pattern.compile(this.journalistPattern).matcher(this.path);
+                    if (matcher.find()) {
+
+                        // Pide un Journalist
+
+                        this.journalistID = matcher.group(2);
+
+                        this.mode = "Journalist";
+                    }
+                    else{
+
+                        matcher = Pattern.compile(this.directoryPattern).matcher(this.path);
+                        if (matcher.find()) {
+
+                            // Pide los Journalists
+
+                            this.mode = "Journalists";
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -153,5 +181,13 @@ public class PathHandler {
      */
     public String getWebNewsURL(){
         return this.webNewsURL;
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @return 
+     */
+    public String getJournalistID(){
+        return this.journalistID;
     }
 }

@@ -4,16 +4,13 @@
  * Universidad Pública de Navarra - curso 2014-15
  */
 
-package GSILib.WebServer.Modelers;
+package GSILib.net.Modelers;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
-import static java.lang.System.exit;
 
 /**
  *
@@ -61,6 +58,14 @@ public class WebPage {
         }
         
         this.file = stringBuilder.toString();
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @param html 
+     */
+    public void append(String html){
+        this.body = this.body.concat(html);
     }
     
     //------------------------------------------------------------------------------

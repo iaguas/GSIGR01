@@ -4,14 +4,14 @@
  * Universidad Pública de Navarra - curso 2014-15
  */
 
-package GSILib.WebServer;
+package GSILib.net;
 
-import GSILib.WebServer.Config.ConfigHandler;
+import GSILib.net.Config.ConfigHandler;
 import GSILib.BSystem.BusinessSystem;
 import GSILib.BTesting.EOTester;
-import GSILib.WebServer.Config.ServerConfig;
-import GSILib.WebServer.Message.Request;
-import GSILib.WebServer.Message.Response;
+import GSILib.net.Config.ServerConfig;
+import GSILib.net.Message.Request;
+import GSILib.net.Message.Response;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;

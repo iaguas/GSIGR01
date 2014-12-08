@@ -2,7 +2,7 @@
  * Esto es una prueba
  * Each line should be prefixed with  * 
  */
-package GSILib.WebServer.Config;
+package GSILib.net.Config;
 
 import GSILib.Serializable.XMLHandler;
 import java.io.IOException;
