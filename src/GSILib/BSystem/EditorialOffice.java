@@ -293,6 +293,13 @@ public interface EditorialOffice{
     public Newspaper getNewspaper(String d);
     
     /**
+     * TODO: JavaDoc
+     * @param date
+     * @return 
+     */
+    public Newspaper[] getNewspapersByPartialKey(String date);
+    
+    /**
      * Returns all the Newspapers.
      * @return An array with the Newspapers of BusinessSystem.
      */

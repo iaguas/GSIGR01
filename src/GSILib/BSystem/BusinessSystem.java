@@ -452,6 +452,27 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
     }
     
     @Override
+    public Newspaper[] getNewspapersByPartialKey(String date){
+        
+        // Creamos una lista de Newspapers
+        
+        ArrayList<Newspaper> newspapers = new ArrayList<Newspaper>(this.newspapers.values());
+        ArrayList<Newspaper> newspapersFiltered = new ArrayList<>();
+        
+        for(Newspaper newspaper : newspapers){
+            if(newspaper.getDate().startsWith(date)){
+                newspapersFiltered.add(newspaper);
+            }
+        }
+        
+        // Devolvemos un array
+                     
+        if (newspapersFiltered.isEmpty())
+            return null;
+        return newspapersFiltered.toArray(new Newspaper[newspapersFiltered.size()]);
+    }
+    
+    @Override
     public Newspaper[] getNewspapers(){
         
         // Creamos una lista de Newspapers
