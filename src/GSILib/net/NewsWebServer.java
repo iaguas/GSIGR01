@@ -23,6 +23,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 
 /**
  * TODO: JavaDoc
@@ -180,10 +181,12 @@ public class NewsWebServer {
                 
                 String inputLine;
                 StringBuilder requestString = new StringBuilder();
+                int lines = 0;
                 
                 try {
-                    while ((inputLine = this.socketIn.readLine()) != null && inputLine.length() > 0) {
+                    while ((inputLine = this.socketIn.readLine()) != null && inputLine.length() > 0 && lines < 100) {
                         requestString.append(inputLine + "\n");
+                        lines++;
                     }
                 }
                 catch (IOException e) {
@@ -200,11 +203,23 @@ public class NewsWebServer {
                 //  Respondemos al cliente
                 //------------------------------------------------------------------------------
                 
-                ContentHandler contentHandler = new ContentHandler(request.getPath(), this.bs, this.localDir);
-        
-                Response response = new Response(request.getMode(), contentHandler.getStatus(), contentHandler.getWebPage(), contentHandler.getContentType());
+                if (request.getOrder().equals("GET")){
+                    
+                    // GET Request
+                    
+                    GetHandler getHandler = new GetHandler(request, this.bs, this.localDir);
+                    Response response = new Response(request.getMode(), getHandler.getStatus(), getHandler.getWebPage(), getHandler.getContentType());
+                    this.socketOut.println(response);
+                }
+                else if (request.getOrder().equals("POST")){
+                    
+                    // POST Request
+                    
+                    PostHandler postHandler = new PostHandler(request, this.bs);
+                }
                 
-                this.socketOut.println(response);
+                
+                
             }
             catch(IOException ex) {
                 System.out.println(ex);

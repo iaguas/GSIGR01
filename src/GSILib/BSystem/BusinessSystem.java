@@ -1381,7 +1381,6 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
             
             // Obtenemos el Photographer
             
-            System.out.println(((Element) ((Element) picturesNodes.item(i)).getElementsByTagName("Photographer").item(0)).getAttribute("id"));
             Photographer photographer = bs.findPhotographer(((Element) ((Element) picturesNodes.item(i)).getElementsByTagName("Photographer").item(0)).getAttribute("id"));
             
             bs.addPicture(new Picture((Element) picturesNodes.item(i), photographer));

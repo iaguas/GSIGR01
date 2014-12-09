@@ -11,6 +11,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,7 +24,7 @@ public class WebPage {
     
     private String content = "text/html";
     private String charset = "utf-8";
-    private String title, body;
+    private String title, body, template = "web/templates/bootstrap.html";
     
     private String file;
     
@@ -37,6 +41,20 @@ public class WebPage {
         
         this.title = title;
         this.body = body;
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @param title
+     * @param file
+     * @throws IOException 
+     */
+    public WebPage(String title, File file) throws IOException{
+        
+        this.mode = "html";
+        
+        this.title = title;
+        this.body = this.getTemplate(file.getPath());
     }
     
     /**
@@ -58,6 +76,16 @@ public class WebPage {
         }
         
         this.file = stringBuilder.toString();
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @param path
+     * @return
+     * @throws IOException 
+     */
+    private String getTemplate(String path) throws IOException{
+        return new String(Files.readAllBytes(Paths.get(path)));
     }
     
     /**
@@ -108,15 +136,11 @@ public class WebPage {
     public String toString(){
         
         if (this.mode.equals("html")){
-            return  "<html>\n" +
-                    "   <head>\n" +
-                    "       <meta http-equiv = \"content-type\" content = \"" + this.content + "; charset=" + this.charset + "\"/>\n" +
-                    "       <title>" + this.title + "</title>\n" +
-                    "   </head>\n" +
-                    "   <body>\n" +
-                    "       " + this.body + "\n" +
-                    "   </body>\n" +
-                    "</html>";
+            try {
+                return this.getTemplate(this.template).replace("{{charset}}", this.charset).replace("{{content}}", this.content).replace("{{title}}", this.title).replace("{{body}}", this.body);
+            } catch (IOException ex) {
+                Logger.getLogger(WebPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else if (this.mode.equals("file")){
             return this.file;

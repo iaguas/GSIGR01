@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta charset="{{charset}}">
+        <meta http-equiv="X-UA-Compatible" content="{{content}}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="Alvaro Octal">
 
-        <title>404 - Not Found</title>
+        <title>{{title}}</title>
 
         <!-- Bootstrap core CSS -->
         <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
@@ -27,7 +27,27 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Simple WebPage</a>
+                    <a class="navbar-brand" href="/">Java Web Sever</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/journalists/">Journalists</a></li>
+                        <li><a href="/newspapers/">Newspapers</a></li>
+                        <li><a href="/webnews/">WebNews</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Create <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Workers</li>
+                                <li><a href="/create/journalist/">Journalist</a></li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Documents</li>
+                                <li><a href="/create/newspaper/">Newspaper</a></li>
+                                <li><a href="/create/printablenews/">PrintableNews</a></li>
+                                <li><a href="/create/webnews/">WebNews</a></li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -35,14 +55,7 @@
         <!-- Begin page content -->
 
         <div class="container bs-docs-container" role="main">
-            <div id="defaults-change-alert" class="alert alert-warning alert-dismissible" role="alert">
-                <!--<button type="button" class="close" data-dismiss="alert">
-                    <span aria-hidden="true">×</span>
-                    <span class="sr-only">Close</span>
-                </button>-->
-                <strong>Not Found!</strong> - Error Code (<strong>404</strong>).<br>
-                <p>Looks like the item you were looking for couldn't be found on this server.</p>
-            </div>
+            {{body}}
         </div>
 
         <!-- Footer -->

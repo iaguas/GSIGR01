@@ -168,4 +168,21 @@ public class Request {
             return null;
         }
     }
+    
+    /**
+     * TODO: JavaDoc
+     * @return 
+     */
+    public int countLines(){
+        return this.request.split("\r\n|\r|\n").length;
+    }
+    
+    /**
+     * TODO: Dalete when testing ends
+     * @return 
+     */
+    @Override
+    public String toString(){
+        return this.request;
+    }
 }
