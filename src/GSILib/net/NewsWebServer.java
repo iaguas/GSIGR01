@@ -119,12 +119,13 @@ public class NewsWebServer {
                 }
                 
             }
+            catch(BindException ex){
+                System.err.println("[" +  this.port + "] Unable to create socket with this port");
+            }
             catch(IOException ex) {
                 System.out.println(ex);
             }
         }
-        
-        
     }
     
     /**
@@ -165,8 +166,6 @@ public class NewsWebServer {
          */
         public void run() {
             try {
-                
-                System.out.println("[status] Cliente conectado");
 
                 //------------------------------------------------------------------------------
                 //  Creamos los objetos para mandar y recibir mensajes
@@ -207,6 +206,8 @@ public class NewsWebServer {
                     
                     // GET Request
                     
+                    System.out.print(request.getReduced());
+                    
                     GetHandler getHandler = new GetHandler(request, this.bs, this.localDir);
                     Response response = new Response(request.getMode(), getHandler.getStatus(), getHandler.getWebPage(), getHandler.getContentType());
                     this.socketOut.println(response);
@@ -217,9 +218,6 @@ public class NewsWebServer {
                     
                     PostHandler postHandler = new PostHandler(request, this.bs);
                 }
-                
-                
-                
             }
             catch(IOException ex) {
                 System.out.println(ex);
@@ -236,7 +234,7 @@ public class NewsWebServer {
                 catch(IOException exc) {
                     System.out.println("Error al cerrar el socket");
                 }
-                System.out.println("[status] Cliente desconectado");
+                System.out.println(" [done]");
             }
         }
     }

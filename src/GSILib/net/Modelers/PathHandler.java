@@ -15,15 +15,20 @@ import java.util.regex.Pattern;
  */
 public class PathHandler {
     
-    private String path, mode = null; // mode = {"PrintableNews" | "Newspaper" | "Newspapers" | "SingleWebNews" | "WebNews" | "Journalist" | "Journalists" | "null"}
+    // mode = {"PrintableNews" | "Newspaper" | "Newspapers" | "SingleWebNews" 
+    //       | "WebNews" | "Journalist" | "Journalists" | "CreateJournalist" 
+    //       | "CreateNewspaper" | "CreatePrintableNews" | "CreateWebNews" 
+    //       | "Protected" | "null"}
+    
+    private String path, mode = null; 
     
     // Patterns
     
-    private final String printableNewsPattern = "\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/";
-    private final String newspaperPattern = "\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/";
-    private final String webNewsPattern = "\\/([^\\/]+)\\/([^\\/]+)\\/";
-    private final String journalistPattern = "\\/([^\\/]+)\\/([^\\/]+)\\/";
-    private final String directoryPattern = "\\/([^\\/]+)\\/";
+    private final String printableNewsPattern = "^\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/";
+    private final String newspaperPattern = "^\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/";
+    private final String webNewsPattern = "^\\/([^\\/]+)\\/([^\\/]+)\\/";
+    private final String journalistPattern = "^\\/([^\\/]+)\\/([^\\/]+)\\/";
+    private final String directoryPattern = "^\\/([^\\/]+)\\/";
     
     // Directories
     
@@ -39,10 +44,9 @@ public class PathHandler {
         this.path = path;
         
         // Filtramos y clasificamos segun lo que pide
-     
         
-        Matcher matcher = Pattern.compile("\\/newspapers\\/").matcher(this.path);
-        if (matcher.find()) {
+        Matcher matcher = null;
+        if (Pattern.compile("^\\/newspapers\\/").matcher(this.path).find()) {
             
             // Pide algo del arbol de Newspaper
             
@@ -83,59 +87,88 @@ public class PathHandler {
                 }
             }
         }
-        else{
-            matcher = Pattern.compile("\\/webnews\\/").matcher(this.path);
+        else if(Pattern.compile("^\\/webnews\\/").matcher(this.path).find()){
+
+            // Pide algo del arbol de WebNews
+
+            matcher = Pattern.compile(this.webNewsPattern).matcher(this.path);
             if (matcher.find()) {
-            
-                // Pide algo del arbol de WebNews
-                
-                matcher = Pattern.compile(this.webNewsPattern).matcher(this.path);
-                if (matcher.find()) {
-                    
-                    // Pide una WebNews
-                    
-                    this.webNewsURL = matcher.group(2);
-                    
-                    this.mode = "SingleWebNews";
-                }
-                else{
 
-                    matcher = Pattern.compile(this.directoryPattern).matcher(this.path);
-                    if (matcher.find()) {
+                // Pide una WebNews
 
-                        // Pide las WebNews
+                this.webNewsURL = matcher.group(2);
 
-                        this.mode = "WebNews";
-                    }
-                }
+                this.mode = "SingleWebNews";
             }
             else{
-                matcher = Pattern.compile("\\/journalists\\/").matcher(this.path);
+
+                matcher = Pattern.compile(this.directoryPattern).matcher(this.path);
                 if (matcher.find()) {
-            
-                    // Pide algo del arbol de Journalist
 
-                    matcher = Pattern.compile(this.journalistPattern).matcher(this.path);
-                    if (matcher.find()) {
+                    // Pide las WebNews
 
-                        // Pide un Journalist
-
-                        this.journalistID = matcher.group(2);
-
-                        this.mode = "Journalist";
-                    }
-                    else{
-
-                        matcher = Pattern.compile(this.directoryPattern).matcher(this.path);
-                        if (matcher.find()) {
-
-                            // Pide los Journalists
-
-                            this.mode = "Journalists";
-                        }
-                    }
+                    this.mode = "WebNews";
                 }
             }
+        }
+        else if (Pattern.compile("^\\/journalists\\/").matcher(this.path).find()){
+
+            // Pide algo del arbol de Journalist
+
+            matcher = Pattern.compile(this.journalistPattern).matcher(this.path);
+            if (matcher.find()) {
+
+                // Pide un Journalist
+
+                this.journalistID = matcher.group(2);
+
+                this.mode = "Journalist";
+            }
+            else{
+
+                matcher = Pattern.compile(this.directoryPattern).matcher(this.path);
+                if (matcher.find()) {
+
+                    // Pide los Journalists
+
+                    this.mode = "Journalists";
+                }
+            }
+        }
+        else if (Pattern.compile("^\\/create\\/").matcher(this.path).find()){
+
+            // Pide algo del arbol de Create
+
+            if (Pattern.compile("^\\/create\\/journalist\\/").matcher(this.path).find()) {
+
+                // Pide crear un Journalist
+
+                this.mode = "CreateJournalist";
+            }
+            else if (Pattern.compile("\\/create\\/newspaper\\/").matcher(this.path).find()) {
+
+                // Pide crear un Newspaper
+
+                this.mode = "CreateNewspaper";
+            }
+            else if (Pattern.compile("^\\/create\\/printablenews\\/").matcher(this.path).find()) {
+
+                // Pide crear una PrintableNews
+
+                this.mode = "CreatePrintableNews";
+            }
+            else if (Pattern.compile("^\\/create\\/webnews\\/").matcher(this.path).find()) {
+
+                // Pide crear una WebNews
+
+                this.mode = "CreateWebNews";
+            }
+        }
+        else if (Pattern.compile("^\\/templates\\/").matcher(this.path).find()){
+            
+            // Directorio protegido
+            
+            this.mode = "Protected";
         }
     }
     

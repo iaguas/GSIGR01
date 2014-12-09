@@ -17,6 +17,7 @@ import GSILib.net.Modelers.WebPage;
 import java.io.File;
 import java.io.IOException;
 import static java.lang.System.exit;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  *
@@ -61,13 +62,20 @@ public class GetHandler {
                     this.status = "404 Not Found";
                     this.webPage = new WebPage("404 Not Found", new File(this.localDir + "templates/errors/404.html"));
                 }
-
             }
             else{
 
                 // El cliente pide una pagina virtual
-
-                if (this.pathHandler.getMode().equals("PrintableNews")){
+                
+                if (this.pathHandler.getMode().equals("Protected")){
+                    
+                    // 403
+                    
+                    this.status = "403 Access Denied";
+                    this.webPage = new WebPage("403 Access Denied", new File(this.localDir + "templates/errors/403.html"));
+                    
+                }
+                else if (this.pathHandler.getMode().equals("PrintableNews")){
 
                     // El cliente pide una PrintableNews
 
@@ -126,7 +134,7 @@ public class GetHandler {
                     }
                     else{
 
-                        // 404
+                        // 404 - Not Found
 
                         this.status = "404 Not Found";
                         this.webPage = new WebPage("404 Not Found", new File(this.localDir + "templates/errors/404.html"));
@@ -178,7 +186,7 @@ public class GetHandler {
                     }
                     else{
 
-                        // 404
+                        // 404 - Not Found
 
                         this.status = "404 Not Found";
                         this.webPage = new WebPage("404 Not Found", new File(this.localDir + "templates/errors/404.html"));
@@ -202,8 +210,11 @@ public class GetHandler {
                     this.webPage = new WebPage("Journalists", html);
                 }
                 else{
-                    System.err.println("El gestor de contenido encontró un error");
-                    exit(0);
+                    
+                    // 501 - No Implementado
+                    
+                    this.status = "501 Not Implemented";
+                    this.webPage = new WebPage("501 Not Implemented", new File(this.localDir + "templates/errors/501.html")); 
                 }
             }
         }

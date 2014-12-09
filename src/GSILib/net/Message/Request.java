@@ -79,6 +79,14 @@ public class Request {
      * TODO: JavaDoc
      * @return 
      */
+    public String getReduced(){
+        return this.request.split(("\r\n|\r|\n"))[0];
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @return 
+     */
     public String getHost(){
         Matcher matcher = Pattern.compile("Host: ([^\\\n]+)").matcher(this.request);
         if (matcher.find()) {
