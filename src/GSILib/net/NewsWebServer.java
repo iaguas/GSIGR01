@@ -23,6 +23,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.JSONException;
 
 /**
  * TODO: JavaDoc
@@ -217,9 +220,10 @@ public class NewsWebServer {
                     
                     PostHandler postHandler = new PostHandler(request, this.bs);
                 }
-            }
-            catch(IOException ex) {
+            } catch (IOException ex) {
                 System.out.println(ex);
+            } catch (JSONException ex) {
+                Logger.getLogger(NewsWebServer.class.getName()).log(Level.SEVERE, null, ex);
             }
             finally {
 

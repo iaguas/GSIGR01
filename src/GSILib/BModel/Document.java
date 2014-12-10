@@ -11,6 +11,9 @@ import GSILib.BModel.workers.Journalist;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -205,5 +208,29 @@ public abstract class Document implements Serializable{
         return "Document ID: " + this.getId() + "\n  Headline: " + this.getHeadline()
                 + "\n  Body: " + this.getBody() + "\n  Journalist: " +
                 this.getAuthor();    
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @return
+     * @throws JSONException 
+     */
+    public JSONObject getJSONObject() throws JSONException{
+        
+        JSONObject json = new JSONObject();
+        
+        json.put("body", this.body);
+        json.put("headline", this.headline);
+        
+        List<JSONObject> jsonJournalists = new ArrayList();
+
+        for(Journalist journalist : this.journalists){
+            jsonJournalists.add(journalist.getJSONObject());
+        }
+        
+        json.put("journalists", new JSONArray(jsonJournalists));
+        json.put("prizes", new JSONArray(this.prizes));
+        
+        return json;
     }
 }

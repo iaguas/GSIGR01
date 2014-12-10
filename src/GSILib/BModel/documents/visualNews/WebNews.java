@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -427,5 +430,20 @@ public class WebNews extends VisualNews implements XMLRepresentable{
                       " </div>\n";
         
         return html;
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @return
+     * @throws JSONException 
+     */
+    public JSONObject getJSONObject() throws JSONException{
+        
+        JSONObject json = super.getJSONObject();
+        
+        json.put("url", this.url);
+        json.put("keywords", new JSONArray(this.keywords));
+        
+        return json;
     }
 }

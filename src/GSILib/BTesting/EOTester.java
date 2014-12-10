@@ -42,7 +42,7 @@ public class EOTester {
         interestsOfAlvaro.add("Tocar las narices");
         interestsOfAlvaro.add("Jugar al CS");
 
-        Journalist journalistAlvaro = new Journalist("8", "Alvaro Octal", "27/12/1993", interestsOfAlvaro);
+        Journalist journalistAlvaro = new Journalist("8", "Alvaro Octal", "1993/12/27", interestsOfAlvaro);
         bs.addJournalist(journalistAlvaro);
 
         // Nuevo Journalist
@@ -54,7 +54,7 @@ public class EOTester {
         interestsOfPirata.add("Cantar canciones");
         interestsOfPirata.add("trifulcas de bar");
 
-        Journalist journalistPirata = new Journalist("2", "Pirata", "01/01/01", interestsOfPirata);
+        Journalist journalistPirata = new Journalist("2", "Pirata", "2000/01/01", interestsOfPirata);
         bs.addJournalist(journalistPirata);
 
         Photographer photographer = new Photographer("12", "Arguitxu Arzcarrena", "01/01/1990", "Bilbao", "Carpa");
@@ -69,11 +69,11 @@ public class EOTester {
 
         // Nueva PrintableNews
 
-        PrintableNews printableNewsFiber = new PrintableNews("Sobre XML", "Se recomienda no hacer atributos tipo string muy largos, que el los navegadores los desprecian y te dan errores de parseo", journalistAlvaro);
-        //printableNewsFiber.addReviewer(journalistPirata);
-        //printableNewsFiber.addPicture(pictureRed);
-        //printableNewsFiber.addPicture(pictureBlue);
-        bs.insertNews(printableNewsFiber);
+        PrintableNews printableNewsXML = new PrintableNews("Sobre XML", "Se recomienda no hacer atributos tipo string muy largos, que el los navegadores los desprecian y te dan errores de parseo", journalistAlvaro);
+        printableNewsXML.addReviewer(journalistPirata);
+        printableNewsXML.addPicture(pictureRed);
+        printableNewsXML.addPicture(pictureBlue);
+        bs.insertNews(printableNewsXML);
         
         // Nueva PrintableNews
         
@@ -85,7 +85,7 @@ public class EOTester {
         Date currentDate = new Date();
         
         bs.createNewspaper(currentDate);
-        bs.addNewsToIssue(bs.getNewspaper(currentDate), printableNewsFiber);
+        bs.addNewsToIssue(bs.getNewspaper(currentDate), printableNewsXML);
         bs.addNewsToIssue(bs.getNewspaper(currentDate), printableNewsBFHL);
         
         // Nueva WebNews

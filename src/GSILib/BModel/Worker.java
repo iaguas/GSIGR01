@@ -7,6 +7,9 @@
 package GSILib.BModel;
 
 import java.io.Serializable;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Element;
 
 /**
@@ -125,4 +128,19 @@ public abstract class Worker implements Serializable {
         return this.getId().equals(w.getId());
     }
 
+    /**
+     * TODO: JavaDoc
+     * @return
+     * @throws JSONException 
+     */
+    public JSONObject getJSONObject() throws JSONException{
+        
+        JSONObject json = new JSONObject();
+        
+        json.put("id", this.id);
+        json.put("name", this.name);
+        json.put("birthDate", this.birthDate);
+        
+        return json;
+    }
 }

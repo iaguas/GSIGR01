@@ -15,8 +15,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.ArrayList;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
@@ -252,5 +255,15 @@ public class Teletype extends Document implements XMLRepresentable{
                 + "|- Headline: " + this.getHeadline() + "\n"
                 + "|- Body: " + this.getBody() + "\n"
                 + "|- Journalist: " + this.getAuthor() + "\n";
+    }
+    
+    
+    /**
+     * TODO: JavaDoc
+     * @return
+     * @throws JSONException 
+     */
+    public JSONObject getJSONObject() throws JSONException{
+        return super.getJSONObject();
     }
 }

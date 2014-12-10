@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Locale;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -338,5 +341,26 @@ public class Newspaper implements XMLRepresentable{
                              " </div>");
             
         return html;
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @return
+     * @throws JSONException 
+     */
+    public JSONObject getJSONObject() throws JSONException{
+        
+        JSONObject json = new JSONObject();
+        
+        json.put("date", this.getDate());
+        List<JSONObject> jsonPrintableNews = new ArrayList();
+
+        for(PrintableNews printableNews : this.news){
+            jsonPrintableNews.add(printableNews.getJSONObject());
+        }
+        
+        json.put("news", new JSONArray(jsonPrintableNews));
+        
+        return json;
     }
 }

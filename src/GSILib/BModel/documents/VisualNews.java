@@ -13,6 +13,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -132,5 +135,24 @@ public abstract class VisualNews extends Document implements Serializable {
                 + "|- Body: " + this.getBody() + "\n"
                 + "|- Journalist: " + this.getAuthor() + "\n"
                 + "|- Pictures: " + this.pictures + "\n";
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @return 
+     */
+    public JSONObject getJSONObject() throws JSONException{
+        
+        JSONObject json = super.getJSONObject();
+        
+        List<JSONObject> jsonPictures = new ArrayList();
+
+        for(Picture picture : this.pictures){
+            jsonPictures.add(picture.getJSONObject());
+        }
+        
+       json.put("Pictures", new JSONArray(jsonPictures));
+        
+        return json;
     }
 }

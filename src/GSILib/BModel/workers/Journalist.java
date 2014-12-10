@@ -17,6 +17,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
@@ -310,7 +311,9 @@ public class Journalist extends Worker implements XMLRepresentable, Serializable
                       "             <h5>" + 
                       "                 <a href=\"./?format=xml\" class=\"btn btn-primary btn-xs\" role=\"button\">XML</a>" +
                       "                 <a href=\"./?format=json\" class=\"btn btn-primary btn-xs\" role=\"button\">JSON</a>" +
-                      "                 <a href=\"./?format=vcard\" class=\"btn btn-primary btn-xs\" role=\"button\">vCard</a>" +
+                      "                 <a class=\"btn btn-primary btn-xs\" download=\"" + super.getName() + ".vcf\"\n" +
+                      "                     href=\"data:text/plain;base64," + new String(Base64.getEncoder().encode(this.getvCard() .getBytes())) + "\">vCard\n" +
+                      "                 </a>" +
                       "             </h5>\n" +
                       "             <hr style=\"margin:8px auto\">\n";
         
@@ -325,14 +328,26 @@ public class Journalist extends Worker implements XMLRepresentable, Serializable
      * TODO: JavaDoc
      * @return 
      */
-    public JSONObject getJSON() throws JSONException{
+    public JSONObject getJSONObject() throws JSONException{
         
-        JSONObject json = new JSONObject();
+        JSONObject json = super.getJSONObject();
 
-        json.put("name", super.getName());
-        json.put("birthDate", this.getBirthDate());
         json.put("interests", new JSONArray(this.interests));
         
         return json;
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @return 
+     */
+    public String getvCard(){
+        String vCard = "begin:VCARD\n" +
+                       "version:3.0\n" +
+                       "fn:" + super.getName() + "\n" +
+                       "bday:" + super.getBirthDate() + "\n" +
+                       "end:vcard\n\n";
+        
+        return vCard;
     }
 }

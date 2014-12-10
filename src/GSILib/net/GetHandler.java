@@ -97,6 +97,13 @@ public class GetHandler {
                             this.webPage.setContent("application/xml");
                             System.out.println(this.webPage);
                         }
+                        else if (this.pathHandler.getFileType().equals("json")){
+
+                            // El cliente pide un JSON
+
+                            this.webPage = new WebPage(printableNews.getJSONObject().toString(4));
+                            this.webPage.setContent("application/json");
+                        }
                         else{
 
                             // 415 - Unsuported Type of File
@@ -163,6 +170,13 @@ public class GetHandler {
 
                             this.webPage = new WebPage(newspaper.toXML());
                             this.webPage.setContent("application/xml");
+                        }
+                        else if (this.pathHandler.getFileType().equals("json")){
+
+                            // El cliente pide un JSON
+
+                            this.webPage = new WebPage(newspaper.getJSONObject().toString(4));
+                            this.webPage.setContent("application/json");
                         }
                         else{
 
@@ -231,6 +245,13 @@ public class GetHandler {
 
                             this.webPage = new WebPage(webNews.toXML());
                             this.webPage.setContent("application/xml");
+                        }
+                        else if (this.pathHandler.getFileType().equals("json")){
+
+                            // El cliente pide un JSON
+
+                            this.webPage = new WebPage(webNews.getJSONObject().toString(4));
+                            this.webPage.setContent("application/json");
                         }
                         else{
 
@@ -313,12 +334,18 @@ public class GetHandler {
                             this.webPage = new WebPage(journalist.toXML());
                             this.webPage.setContent("application/xml");
                         }
-                        if (this.pathHandler.getFileType().equals("json")){
+                        else if (this.pathHandler.getFileType().equals("json")){
 
                             // El cliente pide un JSON
 
-                            this.webPage = new WebPage(journalist.getJSON().toString());
+                            this.webPage = new WebPage(journalist.getJSONObject().toString(4));
                             this.webPage.setContent("application/json");
+                        }
+                        else if (this.pathHandler.getFileType().equals("vcard")){
+
+                            // El cliente pide una vCard
+
+                            this.webPage = new WebPage(journalist.getvCard());
                         }
                         else{
 

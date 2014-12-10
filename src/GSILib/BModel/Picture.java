@@ -19,6 +19,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -268,5 +270,19 @@ public class Picture implements XMLRepresentable{
         // Devolvemos un string con los datos de la imagen.
         return "+ Picture URL: " + this.getUrl() + "\n"
                 + "|- Photographer: " + this.getAuthor() + "\n";
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @return 
+     */
+    public JSONObject getJSONObject() throws JSONException{
+        
+        JSONObject json = new JSONObject();
+
+        json.put("url", this.url);
+        json.put("Photographer", this.author.getJSONObject());
+        
+        return json;
     }
 }
