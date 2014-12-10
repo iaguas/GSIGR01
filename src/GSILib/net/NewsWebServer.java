@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import org.json.JSONException;
 
 /**
@@ -182,17 +183,32 @@ public class NewsWebServer {
                 
                 String inputLine;
                 StringBuilder requestString = new StringBuilder();
-                int lines = 0;
+                int lines = 0, contentLength = 0;
                 
                 try {
-                    while ((inputLine = this.socketIn.readLine()) != null && inputLine.length() > 0 && lines < 100) {
+                    while ((inputLine = this.socketIn.readLine()) != null && ! inputLine.equals("") && lines < 100) {
+                        
                         requestString.append(inputLine + "\n");
                         lines++;
+                        
+                        if (inputLine.startsWith("Content-Length: ")) {
+                            contentLength = Integer.parseInt(inputLine.substring("Content-Length: ".length()));
+                        }
+                    }
+                    
+                    if (requestString.toString().startsWith("POST")){
+                        
+                        // Lectura de las variables POST
+                        
+                        char[] content = new char[contentLength];
+                        this.socketIn.read(content);
+                        requestString.append("POST-Data: " + new String(content) + "\n");
                     }
                 }
                 catch (IOException e) {
                     System.err.println("Error: " + e);
                 }
+                
                 
                 //------------------------------------------------------------------------------
                 //  Tratamos el protocolo
@@ -204,22 +220,33 @@ public class NewsWebServer {
                 //  Respondemos al cliente
                 //------------------------------------------------------------------------------
                 
+                System.out.print(request.getReduced());
+                Response response;
+                
                 if (request.getOrder().equals("GET")){
                     
                     // GET Request
                     
-                    System.out.print(request.getReduced());
-                    
                     GetHandler getHandler = new GetHandler(request, this.bs, this.localDir);
-                    Response response = new Response(request.getMode(), getHandler.getStatus(), getHandler.getWebPage(), getHandler.getContentType());
-                    this.socketOut.println(response);
+                    response = new Response(request.getMode(), getHandler.getStatus(), getHandler.getWebPage(), getHandler.getContentType());
+                    
                 }
                 else if (request.getOrder().equals("POST")){
                     
                     // POST Request
                     
-                    PostHandler postHandler = new PostHandler(request, this.bs);
+                    PostHandler postHandler = new PostHandler(request, this.bs, this.localDir);
+                    response = new Response(request.getMode(), postHandler.getStatus(), postHandler.getWebPage());
+                    
                 }
+                else{
+                    
+                    // Error
+                    
+                    response = null;
+                }
+                
+                this.socketOut.println(response);
             } catch (IOException ex) {
                 System.out.println(ex);
             } catch (JSONException ex) {
@@ -239,7 +266,7 @@ public class NewsWebServer {
                 }
                 System.out.println(" [done]");
             }
-        }
+        }      
     }
     
     public static void main(String[] args) throws Exception {

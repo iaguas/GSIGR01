@@ -32,6 +32,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 import org.jopendocument.dom.OOUtils;
@@ -443,13 +445,29 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
         
         Newspaper newspaper = new Newspaper(date);
         
-        // Añadimos a la lista
+        if (! this.newspapers.containsKey(newspaper.getDate())){
+            
+            
+            this.newspapers.put(newspaper.getDate(), newspaper);
         
-        this.newspapers.put(newspaper.getDate(), newspaper);
-        
-        // Retornamos el resultado de la creación.
-        
-        return ! this.newspapers.containsKey(this.simpleDateFormat.format(date));
+            // Retornamos el resultado de la creación.
+
+            return this.newspapers.containsKey(newspaper.getDate());
+        }
+        else{
+            return false;
+        }
+    }
+    
+    @Override
+    public boolean createNewspaper(String date){
+        try {
+            System.out.println(date);
+            return this.createNewspaper(this.simpleDateFormat.parse(date));
+        } catch (ParseException ex) {
+            System.out.println("fallo sdf");
+            return false;
+        }
     }
     
     @Override

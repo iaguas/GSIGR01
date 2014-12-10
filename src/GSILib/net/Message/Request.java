@@ -6,7 +6,10 @@
 
 package GSILib.net.Message;
 
+import java.io.UnsupportedEncodingException;
 import static java.lang.System.exit;
+import java.net.URLDecoder;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,12 +23,13 @@ public class Request {
     
     private String pattern = "(GET|HEAD|POST|PUT|DELETE|TRACE|OPTIONS|CONNECT) ([^\\ ]+) ([^\\\n]+)";
     private String order, path, mode;
+    private HashMap<String, String> post;
     
     /**
      * TODO: JavaDoc
      * @param request 
      */
-    public Request(String request){
+    public Request(String request) throws UnsupportedEncodingException{
         
         this.request = request;
         
@@ -38,6 +42,12 @@ public class Request {
             this.order = matcher.group(1);
             this.path = matcher.group(2);
             this.mode = matcher.group(3);
+            
+            // Generamos, si es post, un HashMap de variables
+            
+            if (this.order.equals("POST")){
+                this.post = this.getPostHashMap(this.getPOSTData());
+            }   
         }
         else{
             
@@ -181,8 +191,31 @@ public class Request {
      * TODO: JavaDoc
      * @return 
      */
+    public String getPOSTData(){
+        Matcher matcher = Pattern.compile("POST-Data: ([^\\\n]+)").matcher(this.request);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        else{
+            return null;
+        }
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @return 
+     */
     public int countLines(){
         return this.request.split("\r\n|\r|\n").length;
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @param key
+     * @return 
+     */
+    public String getPOST(String key){
+        return this.post.get(key);
     }
     
     /**
@@ -192,5 +225,30 @@ public class Request {
     @Override
     public String toString(){
         return this.request;
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @param postString 
+     */
+    private HashMap<String, String> getPostHashMap(String postString) throws UnsupportedEncodingException{
+        
+        HashMap<String, String> post = new HashMap();
+        
+        String[] postVarables = postString.split("&");
+        for(String variable : postVarables){
+            
+            // Tratamos cada variable y la insertamos en una HashMap de clave valor
+            
+            Matcher matcher = Pattern.compile("([^\\=]+)=([^\\n]+)").matcher(variable);
+            if (matcher.find()) {
+                post.put(URLDecoder.decode(matcher.group(1), "ISO-8859-1"), URLDecoder.decode(matcher.group(2), "ISO-8859-1"));
+            }
+            else{
+                System.err.println("Error decoding a POST variable");
+            }
+        }
+        
+        return post;
     }
 }

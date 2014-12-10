@@ -142,6 +142,15 @@ public class WebPage {
         this.body = body;
     }
     
+    /**
+     * TODO: JavaDoc
+     * @param oldString
+     * @param newString 
+     */
+    public void replaceInTemplate(String oldString, String newString){
+        this.body = this.body.replace(oldString, newString);
+    }
+    
     @Override
     public String toString(){
         

@@ -279,6 +279,13 @@ public interface EditorialOffice{
     
     /**
      * TODO: JavaDoc
+     * @param date
+     * @return 
+     */
+    public boolean createNewspaper(String date);
+    
+    /**
+     * TODO: JavaDoc
      * @param newspaper
      * @return 
      */

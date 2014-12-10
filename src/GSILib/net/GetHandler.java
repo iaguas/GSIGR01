@@ -363,6 +363,34 @@ public class GetHandler {
                         this.webPage = new WebPage("404 Not Found", new File(this.localDir + "templates/errors/404.html"));
                     }
                 }
+                else if (this.pathHandler.getMode().equals("CreateJournalist")){
+                    
+                    // Create Journalist
+                    
+                    this.webPage = new WebPage("Create Journalist", new File(this.localDir + "templates/forms/journalist.html")); 
+                
+                }
+                else if (this.pathHandler.getMode().equals("CreateNewspaper")){
+                    
+                    // Create Journalist
+                    
+                    this.webPage = new WebPage("Create Newspaper", new File(this.localDir + "templates/forms/newspaper.html")); 
+                
+                }
+                else if (this.pathHandler.getMode().equals("CreatePrintableNews")){
+                    
+                    // Create Journalist
+                    
+                    this.webPage = new WebPage("Create PrintableNews", new File(this.localDir + "templates/forms/printableNews.html")); 
+                
+                }
+                else if (this.pathHandler.getMode().equals("CreateWebNews")){
+                    
+                    // Create Journalist
+                    
+                    this.webPage = new WebPage("Create WebNews", new File(this.localDir + "templates/forms/webNews.html")); 
+                
+                }
                 else if (this.pathHandler.getMode().equals("Teapot")){
                     
                     // 418 - Teapot
