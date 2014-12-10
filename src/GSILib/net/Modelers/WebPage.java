@@ -80,6 +80,16 @@ public class WebPage {
     
     /**
      * TODO: JavaDoc
+     * @param file 
+     */
+    public WebPage(String file){
+        
+        this.mode = "file";
+        this.file = file;
+    }
+    
+    /**
+     * TODO: JavaDoc
      * @param path
      * @return
      * @throws IOException 

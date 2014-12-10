@@ -16,8 +16,7 @@ import GSILib.net.Modelers.PathHandler;
 import GSILib.net.Modelers.WebPage;
 import java.io.File;
 import java.io.IOException;
-import static java.lang.System.exit;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import org.json.JSONException;
 
 /**
  *
@@ -32,13 +31,13 @@ public class GetHandler {
     private String status = "200 OK";
     private String contentType;
     
-    public GetHandler(Request request, BusinessSystem bs, String localDir) throws IOException{
+    public GetHandler(Request request, BusinessSystem bs, String localDir) throws IOException, JSONException{
         
         this.pathHandler = new PathHandler(request.getPath());
         this.localDir = localDir;
         
-        if(request.countLines() < 100){
-            if(this.pathHandler.getMode() == null){
+        if (request.countLines() < 100){
+            if (this.pathHandler.getMode() == null){
 
                 // El cliente pide un fichero local
 
@@ -83,6 +82,37 @@ public class GetHandler {
 
                     this.webPage = new WebPage(printableNews.getHeadline(), printableNews.getHTMLBody());
                 }
+                else if (this.pathHandler.getMode().equals("PrintableNewsToFile")){
+                    
+                    // El cliente pide una PrintableNews serializada
+                    
+                    PrintableNews printableNews = bs.getPrintableNews(Integer.parseInt(this.pathHandler.getPrintableNewsID()));
+                    
+                    if (printableNews != null){
+                        if (this.pathHandler.getFileType().equals("xml")){
+
+                            // El cliente pide un XML
+
+                            this.webPage = new WebPage(printableNews.toXML());
+                            this.webPage.setContent("application/xml");
+                            System.out.println(this.webPage);
+                        }
+                        else{
+
+                            // 415 - Unsuported Type of File
+
+                            this.status = "415 Unsuported Type of File";
+                            this.webPage = new WebPage("415 Unsuported Type of File", new File(this.localDir + "templates/errors/415.html"));
+                        }
+                    }
+                    else{
+                        
+                        // 404 - Not Found
+
+                        this.status = "404 Not Found";
+                        this.webPage = new WebPage("404 Not Found", new File(this.localDir + "templates/errors/404.html"));
+                    }
+                }
                 else if (this.pathHandler.getMode().equals("Newspaper")){
 
                     // El cliente pide un Newspaper
@@ -97,30 +127,60 @@ public class GetHandler {
                     }
                     else{
 
-                        // 404
+                        // 404 - Not Found
 
                         this.status = "404 Not Found";
                         this.webPage = new WebPage("404 Not Found", new File(this.localDir + "templates/errors/404.html"));
                     }
                 }
-                else if(this.pathHandler.getMode().equals("Newspapers")){
+                else if (this.pathHandler.getMode().equals("Newspapers")){
 
                     // El cliente pide los Newspapers
 
-                    String html = "<h2>Newspapers</h2><hr><ul>";
+                    String html = " <div class=\"list-group\"><li class=\"list-group-item disabled\">Newspapers</li>";
 
                     Newspaper[] newspapers = bs.getNewspapers();
 
                     if (newspapers != null){
                         for (Newspaper newspaper : newspapers){
-                            html = html.concat("<li><a href=\" " + newspaper.getDate() + "/\">" + newspaper.getDate() + "</a></li>");
+                            html = html.concat("<a class=\"list-group-item\" href=\" " + newspaper.getDate() + "/\">" + newspaper.getDate() + "</a>");
                         }
                     }
-                    html = html.concat("</ul>");
+                    html = html.concat("</div>");
 
                     this.webPage = new WebPage("Newspapers", html);
                 }
-                else if(this.pathHandler.getMode().equals("SingleWebNews")){
+                else if (this.pathHandler.getMode().equals("NewspaperToFile")){
+                    
+                    // El cliente pide un Newspaper serializado
+                    
+                    Newspaper newspaper = bs.getNewspaper(this.pathHandler.getNewspaperDate());
+                    
+                    if (newspaper != null){
+                        if (this.pathHandler.getFileType().equals("xml")){
+
+                            // El cliente pide un XML
+
+                            this.webPage = new WebPage(newspaper.toXML());
+                            this.webPage.setContent("application/xml");
+                        }
+                        else{
+
+                            // 415 - Unsuported Type of File
+
+                            this.status = "415 Unsuported Type of File";
+                            this.webPage = new WebPage("415 Unsuported Type of File", new File(this.localDir + "templates/errors/415.html"));
+                        }
+                    }
+                    else{
+                        
+                        // 404 - Not Found
+
+                        this.status = "404 Not Found";
+                        this.webPage = new WebPage("404 Not Found", new File(this.localDir + "templates/errors/404.html"));
+                    }
+                }
+                else if (this.pathHandler.getMode().equals("SingleWebNews")){
 
                     // El cliente pide una WebNews
 
@@ -141,24 +201,54 @@ public class GetHandler {
                     }
 
                 }
-                else if(this.pathHandler.getMode().equals("WebNews")){
+                else if (this.pathHandler.getMode().equals("WebNews")){
 
                     // El cliente pide las WebNews
 
-                    String html = "<h2>WebNews</h2><hr><ul>";
+                    String html = " <div class=\"list-group\"><li class=\"list-group-item disabled\">WebNews</li>";
 
                     WebNews[] webNews = bs.getWebNews();
 
                     if (webNews != null){
                         for (WebNews singleWebNews : webNews){
-                            html = html.concat("<li><a href=\" " + singleWebNews.getUrl() + "/\">" + singleWebNews.getHeadline() + "</a></li>");
+                            html = html.concat("<a class=\"list-group-item\" href=\" " + singleWebNews.getUrl() + "/\">" + singleWebNews.getHeadline() + "</a>");
                         }
                     }
-                    html = html.concat("</ul>");
+                    html = html.concat("</div>");
 
                     this.webPage = new WebPage("WebNews", html);
                 }
-                else if(this.pathHandler.getMode().equals("Journalist")){
+                else if (this.pathHandler.getMode().equals("WebNewsToFile")){
+                    
+                    // El cliente pide una WebNews serializado
+                    
+                    WebNews webNews = bs.getWebNews(this.pathHandler.getWebNewsURL());
+                    
+                    if (webNews != null){
+                        if (this.pathHandler.getFileType().equals("xml")){
+
+                            // El cliente pide un XML
+
+                            this.webPage = new WebPage(webNews.toXML());
+                            this.webPage.setContent("application/xml");
+                        }
+                        else{
+
+                            // 415 - Unsuported Type of File
+
+                            this.status = "415 Unsuported Type of File";
+                            this.webPage = new WebPage("415 Unsuported Type of File", new File(this.localDir + "templates/errors/415.html"));
+                        }
+                    }
+                    else{
+                        
+                        // 404 - Not Found
+
+                        this.status = "404 Not Found";
+                        this.webPage = new WebPage("404 Not Found", new File(this.localDir + "templates/errors/404.html"));
+                    }
+                }
+                else if (this.pathHandler.getMode().equals("Journalist")){
 
                     // El cliente pide un Journalist
 
@@ -170,19 +260,19 @@ public class GetHandler {
 
                         this.webPage = new WebPage("Journalist | " + journalist.getName(), journalist.getHTMLBody());
 
-                        this.webPage.append("<hr><h3>Has written...</h3><br><ul>");
+                        this.webPage.append("<div class=\"list-group\"><li class=\"list-group-item disabled\">Has written...</li>");
 
                         PrintableNews[] printableNews = bs.getPrintableNewsFromAuthor(journalist);
 
                         if(printableNews != null){
                             for(PrintableNews singlePrintableNews : printableNews){
-                                this.webPage.append("<li><a href=\"/newspapers/0/0/0/" + singlePrintableNews.getId() + "/\">" + singlePrintableNews.getHeadline() + "</a>");
+                                this.webPage.append("<a class=\"list-group-item\" href=\"/newspapers/0/0/0/" + singlePrintableNews.getId() + "/\">" + singlePrintableNews.getHeadline() + "</a>");
                             }
                         }
                         else{
-                            this.webPage.append("nothing, fire him");
+                            this.webPage.append("<li class=\"list-group-item danger\">nothing, fire him</li>");
                         }
-                        this.webPage.append("</ul>");
+                        this.webPage.append("</div>");
                     }
                     else{
 
@@ -192,22 +282,67 @@ public class GetHandler {
                         this.webPage = new WebPage("404 Not Found", new File(this.localDir + "templates/errors/404.html"));
                     }
                 }
-                else if(this.pathHandler.getMode().equals("Journalists")){
+                else if (this.pathHandler.getMode().equals("Journalists")){
 
                     // El cliente pide los Journalists
 
-                    String html = "<h2>Journalists</h2><hr><ul>";
+                    String html = " <div class=\"list-group\"><li class=\"list-group-item disabled\">Journalists</li>";
 
                     Journalist[] journalists = bs.getJournalists();
 
                     if (journalists != null){
                         for (Journalist journalist : journalists){
-                            html = html.concat("<li><a href=\" " + journalist.getId() + "/\">" + journalist.getName() + "</a></li>");
+                            html = html.concat("<a class=\"list-group-item\" href=\" " + journalist.getId() + "/\">" + journalist.getName() + "</a>");
                         }
                     }
-                    html = html.concat("</ul>");
+                    html = html.concat("</div>");
 
                     this.webPage = new WebPage("Journalists", html);
+                }
+                else if (this.pathHandler.getMode().equals("JournalistToFile")){
+                    
+                    // El cliente pide un Journalist serializado
+                    
+                    Journalist journalist = bs.findJournalist(this.pathHandler.getJournalistID());
+                    
+                    if (journalist != null){
+                        if (this.pathHandler.getFileType().equals("xml")){
+
+                            // El cliente pide un XML
+
+                            this.webPage = new WebPage(journalist.toXML());
+                            this.webPage.setContent("application/xml");
+                        }
+                        if (this.pathHandler.getFileType().equals("json")){
+
+                            // El cliente pide un JSON
+
+                            this.webPage = new WebPage(journalist.getJSON().toString());
+                            this.webPage.setContent("application/json");
+                        }
+                        else{
+
+                            // 415 - Unsuported Type of File
+
+                            this.status = "415 Unsuported Type of File";
+                            this.webPage = new WebPage("415 Unsuported Type of File", new File(this.localDir + "templates/errors/415.html"));
+                        }
+                    }
+                    else{
+                        
+                        // 404 - Not Found
+
+                        this.status = "404 Not Found";
+                        this.webPage = new WebPage("404 Not Found", new File(this.localDir + "templates/errors/404.html"));
+                    }
+                }
+                else if (this.pathHandler.getMode().equals("Teapot")){
+                    
+                    // 418 - Teapot
+                    
+                    this.status = "418 Teapot";
+                    this.webPage = new WebPage("418 Teapot", new File(this.localDir + "templates/errors/418.html")); 
+                
                 }
                 else{
                     

@@ -20,12 +20,8 @@ import java.text.Normalizer;
 import java.text.Normalizer.Form;
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -408,10 +404,28 @@ public class WebNews extends VisualNews implements XMLRepresentable{
      */
     public String getHTMLBody(){
         
-        String html = "<h2>" + this.getHeadline() + "</h2><hr><ul>";
-            
-        html = html.concat("<p>" + this.getBody() + "</p>");
+        String html = " <div class=\"panel panel-default\">\n" +
+                      "     <div class=\"panel-heading\">\n" +
+                      "         <h3 class=\"panel-title\">" + this.getHeadline() + "</h3>\n" +
+                      "     </div>\n" +
+                      "     <div class=\"panel-body\">\n" +
+                      "           " + this.getBody() + "\n" +
+                      "     </div>\n" +
+                      "     <div class=\"panel-footer\">\n" +
+                      "         <div class=\"row\">\n" +
+                      "             <div class=\"col-md-12\">\n" +
+                      "                 <span class=\"pull-left\">\n" +
+                      "                     <a href=\"./?format=xml\" class=\"btn btn-primary btn-xs\" role=\"button\">XML</a>\n" +
+                      "                     <a href=\"./?format=json\" class=\"btn btn-primary btn-xs\" role=\"button\">JSON</a>\n" +
+                      "                 </span>\n" +
+                      "                 <span class=\"pull-right\">\n" +
+                      "                     by <a href=\"/journalists/" + this.journalists.get(0).getId() + "/\">" + this.journalists.get(0).getName() + "</a>\n" +
+                      "                 </span>\n" +
+                      "             </div>\n" +
+                      "         </div>\n" +
+                      "     </div>\n" +
+                      " </div>\n";
         
-        return html.concat("<p> by <a href=\"/journalists/" + this.journalists.get(0).getId() + "/\">" + this.journalists.get(0).getName() + "</a></p>");
+        return html;
     }
 }

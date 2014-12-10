@@ -18,21 +18,26 @@ public class PathHandler {
     // mode = {"PrintableNews" | "Newspaper" | "Newspapers" | "SingleWebNews" 
     //       | "WebNews" | "Journalist" | "Journalists" | "CreateJournalist" 
     //       | "CreateNewspaper" | "CreatePrintableNews" | "CreateWebNews" 
-    //       | "Protected" | "null"}
+    //       | "JournalistToFile" | "NewspaperToFile" | "PrintableNewsToFile"
+    //       | "WebNewsToFile" | "Protected" | "Teapot" | "null"}
     
     private String path, mode = null; 
     
     // Patterns
     
     private final String printableNewsPattern = "^\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/";
+    private final String printableNewsToFilePattern = "^\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/\\?format=([^\\/]+)";
     private final String newspaperPattern = "^\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/";
+    private final String newspaperToFilePattern = "^\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/\\?format=([^\\/]+)";
     private final String webNewsPattern = "^\\/([^\\/]+)\\/([^\\/]+)\\/";
+    private final String webNewsToFilePattern = "^\\/([^\\/]+)\\/([^\\/]+)\\/\\?format=([^\\/]+)";
     private final String journalistPattern = "^\\/([^\\/]+)\\/([^\\/]+)\\/";
+    private final String journalistToFilePattern = "^\\/([^\\/]+)\\/([^\\/]+)\\/\\?format=([^\\/]+)";
     private final String directoryPattern = "^\\/([^\\/]+)\\/";
     
     // Directories
     
-    private String year, month, day, printableNewsID, webNewsURL, journalistID;
+    private String year, month, day, printableNewsID, webNewsURL, journalistID, fileType;
     
     
     /**
@@ -50,39 +55,70 @@ public class PathHandler {
             
             // Pide algo del arbol de Newspaper
             
-            matcher = Pattern.compile(this.printableNewsPattern).matcher(this.path);
+            matcher = Pattern.compile(this.printableNewsToFilePattern).matcher(this.path);
             if (matcher.find()) {
-
-                // Pide una PrintableNews
-
-                this.mode = "PrintableNews";
+                
+                // Pide una PrintableNews To File
+                
+                this.mode = "PrintableNewsToFile";
 
                 this.year = matcher.group(2);
                 this.month = matcher.group(3);
                 this.day = matcher.group(4);
                 this.printableNewsID = matcher.group(5);
+                this.fileType = matcher.group(6);
             }
             else{
-
-                matcher = Pattern.compile(this.newspaperPattern).matcher(this.path);
+                
+                matcher = Pattern.compile(this.newspaperToFilePattern).matcher(this.path);
                 if (matcher.find()) {
 
-                    // Pide un Newspaper
+                    // Pide un Newspaper To File
 
-                    this.mode = "Newspaper";
+                    this.mode = "NewspaperToFile";
 
                     this.year = matcher.group(2);
                     this.month = matcher.group(3);
                     this.day = matcher.group(4);
+                    this.fileType = matcher.group(5);
                 }
                 else{
-
-                    matcher = Pattern.compile(this.directoryPattern).matcher(this.path);
+                    
+                    matcher = Pattern.compile(this.printableNewsPattern).matcher(this.path);
                     if (matcher.find()) {
 
-                        // Pide los Newspapers
+                        // Pide una PrintableNews
 
-                        this.mode = "Newspapers";
+                        this.mode = "PrintableNews";
+
+                        this.year = matcher.group(2);
+                        this.month = matcher.group(3);
+                        this.day = matcher.group(4);
+                        this.printableNewsID = matcher.group(5);
+                    }
+                    else{
+
+                        matcher = Pattern.compile(this.newspaperPattern).matcher(this.path);
+                        if (matcher.find()) {
+
+                            // Pide un Newspaper
+
+                            this.mode = "Newspaper";
+
+                            this.year = matcher.group(2);
+                            this.month = matcher.group(3);
+                            this.day = matcher.group(4);
+                        }
+                        else{
+
+                            matcher = Pattern.compile(this.directoryPattern).matcher(this.path);
+                            if (matcher.find()) {
+
+                                // Pide los Newspapers
+
+                                this.mode = "Newspapers";
+                            }
+                        }
                     }
                 }
             }
@@ -91,47 +127,73 @@ public class PathHandler {
 
             // Pide algo del arbol de WebNews
 
-            matcher = Pattern.compile(this.webNewsPattern).matcher(this.path);
+            matcher = Pattern.compile(this.webNewsToFilePattern).matcher(this.path);
             if (matcher.find()) {
-
-                // Pide una WebNews
+                
+                // Pide una WebNews to File
+                
+                this.mode = "WebNewsToFile";
 
                 this.webNewsURL = matcher.group(2);
-
-                this.mode = "SingleWebNews";
+                this.fileType = matcher.group(3);
             }
             else{
-
-                matcher = Pattern.compile(this.directoryPattern).matcher(this.path);
+                
+                matcher = Pattern.compile(this.webNewsPattern).matcher(this.path);
                 if (matcher.find()) {
 
-                    // Pide las WebNews
+                    // Pide una WebNews
 
-                    this.mode = "WebNews";
+                    this.mode = "SingleWebNews";
+
+                    this.webNewsURL = matcher.group(2);
+                }
+                else{
+
+                    matcher = Pattern.compile(this.directoryPattern).matcher(this.path);
+                    if (matcher.find()) {
+
+                        // Pide las WebNews
+
+                        this.mode = "WebNews";
+                    }
                 }
             }
         }
         else if (Pattern.compile("^\\/journalists\\/").matcher(this.path).find()){
 
             // Pide algo del arbol de Journalist
-
-            matcher = Pattern.compile(this.journalistPattern).matcher(this.path);
+            
+            matcher = Pattern.compile(this.journalistToFilePattern).matcher(this.path);
             if (matcher.find()) {
-
-                // Pide un Journalist
-
+                
+                // Pide un Journalist To File
+                
+                this.mode = "JournalistToFile";
+                
                 this.journalistID = matcher.group(2);
-
-                this.mode = "Journalist";
+                this.fileType = matcher.group(3);
             }
             else{
-
-                matcher = Pattern.compile(this.directoryPattern).matcher(this.path);
+                
+                matcher = Pattern.compile(this.journalistPattern).matcher(this.path);
                 if (matcher.find()) {
 
-                    // Pide los Journalists
+                    // Pide un Journalist
 
-                    this.mode = "Journalists";
+                    this.mode = "Journalist";
+                    
+                    this.journalistID = matcher.group(2);
+                }
+                else{
+
+                    matcher = Pattern.compile(this.directoryPattern).matcher(this.path);
+                    if (matcher.find()) {
+
+                        // Pide los Journalists
+
+                        this.mode = "Journalists";
+                    }
                 }
             }
         }
@@ -169,6 +231,12 @@ public class PathHandler {
             // Directorio protegido
             
             this.mode = "Protected";
+        }
+        else if(Pattern.compile("^\\/areyouateapot\\?").matcher(this.path).find()){
+            
+            // 418
+            
+            this.mode = "Teapot";
         }
     }
     
@@ -222,5 +290,13 @@ public class PathHandler {
      */
     public String getJournalistID(){
         return this.journalistID;
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @return 
+     */
+    public String getFileType(){
+        return this.fileType;
     }
 }

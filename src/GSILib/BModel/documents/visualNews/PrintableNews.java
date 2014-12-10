@@ -392,10 +392,28 @@ public class PrintableNews extends VisualNews implements XMLRepresentable, Seria
      */
     public String getHTMLBody(){
         
-        String html = "<h2>" + this.getHeadline() + "</h2><hr><ul>";
-            
-        html = html.concat("<p>" + this.getBody() + "</p><hr>");
+        String html = " <div class=\"panel panel-default\">\n" +
+                      "     <div class=\"panel-heading\">\n" +
+                      "         <h3 class=\"panel-title\">" + this.getHeadline() + "</h3>\n" +
+                      "     </div>\n" +
+                      "     <div class=\"panel-body\">\n" +
+                      "           " + this.getBody() + "\n" +
+                      "     </div>\n" +
+                      "     <div class=\"panel-footer\">\n" +
+                      "         <div class=\"row\">\n" +
+                      "             <div class=\"col-md-12\">\n" +
+                      "                 <span class=\"pull-left\">\n" +
+                      "                     <a href=\"./?format=xml\" class=\"btn btn-primary btn-xs\" role=\"button\">XML</a>\n" +
+                      "                     <a href=\"./?format=json\" class=\"btn btn-primary btn-xs\" role=\"button\">JSON</a>\n" +
+                      "                 </span>\n" +
+                      "                 <span class=\"pull-right\">\n" +
+                      "                     by <a href=\"/journalists/" + this.journalists.get(0).getId() + "/\">" + this.journalists.get(0).getName() + "</a>\n" +
+                      "                 </span>\n" +
+                      "             </div>\n" +
+                      "         </div>\n" +
+                      "     </div>\n" +
+                      " </div>\n";
         
-        return html.concat("<p> by <a href=\"/journalists/" + this.journalists.get(0).getId() + "/\">" + this.journalists.get(0).getName() + "</a></p>");
+        return html;
     }
 }

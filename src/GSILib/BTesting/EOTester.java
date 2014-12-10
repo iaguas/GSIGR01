@@ -69,10 +69,10 @@ public class EOTester {
 
         // Nueva PrintableNews
 
-        PrintableNews printableNewsFiber = new PrintableNews("255Tbps: World’s fastest network could carry all of the internet’s traffic on a single fiber", "A joint group of researchers from the Netherlands and the US have smashed the world speed record for a fiber network, pushing 255 terabits per second down a single strand of glass fiber. This is equivalent to around 32 terabytes per second — enough to transfer a 1GB movie in 31.25 microseconds (0.03 milliseconds), or alternatively, the entire contents of your 1TB hard drive in about 31 milliseconds.", journalistAlvaro);
-        printableNewsFiber.addReviewer(journalistPirata);
-        printableNewsFiber.addPicture(pictureRed);
-        printableNewsFiber.addPicture(pictureBlue);
+        PrintableNews printableNewsFiber = new PrintableNews("Sobre XML", "Se recomienda no hacer atributos tipo string muy largos, que el los navegadores los desprecian y te dan errores de parseo", journalistAlvaro);
+        //printableNewsFiber.addReviewer(journalistPirata);
+        //printableNewsFiber.addPicture(pictureRed);
+        //printableNewsFiber.addPicture(pictureBlue);
         bs.insertNews(printableNewsFiber);
         
         // Nueva PrintableNews

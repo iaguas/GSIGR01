@@ -20,6 +20,9 @@ import java.util.Arrays;
 import java.util.List;
 import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -123,6 +126,21 @@ public class Journalist extends Worker implements XMLRepresentable, Serializable
         if(this.interests.isEmpty())
             return null;
         return this.interests.toArray(new String[this.interests.size()]);
+    }
+    
+    
+    
+    /**
+     * Sets the interests for a Journalist
+     * @param interests List of interests to asociate with a Journalist
+     */
+    public void setInterests(ArrayList<String> interests){
+        // Borro lo que había en la lista si contenia algo.
+        if(! this.interests.isEmpty())
+            this.interests.clear();
+        
+        // Pueblo de nuevo la lista con los argumentos pasados.
+        this.interests.addAll(interests);
     }
     
     /**
@@ -277,26 +295,44 @@ public class Journalist extends Worker implements XMLRepresentable, Serializable
     }
     
     /**
-     * Sets the interests for a Journalist
-     * @param interests List of interests to asociate with a Journalist
+     * TODO: JavaDoc
+     * @return 
      */
-    public void setInterests(ArrayList<String> interests){
-        // Borro lo que había en la lista si contenia algo.
-        if(! this.interests.isEmpty())
-            this.interests.clear();
+    public String getHTMLBody(){
         
-        // Pueblo de nuevo la lista con los argumentos pasados.
-        this.interests.addAll(interests);
+        String html = " <div class=\"row\">" +
+                      "     <div class=\"media\">\n" +
+                      "         <a class=\"pull-left\" href=\"#\">\n" +
+                      "             <img class=\"media-object dp img-circle\" src=\"http://placehold.it/100x100\" style=\"width: 100px;height:100px;\">\n" +
+                      "         </a>\n" +
+                      "         <div class=\"media-body\">\n" +
+                      "             <h3 class=\"media-heading\">" + this.getName() + " - <small>" + this.getBirthDate() + "</small></h3>\n" +
+                      "             <h5>" + 
+                      "                 <a href=\"./?format=xml\" class=\"btn btn-primary btn-xs\" role=\"button\">XML</a>" +
+                      "                 <a href=\"./?format=json\" class=\"btn btn-primary btn-xs\" role=\"button\">JSON</a>" +
+                      "                 <a href=\"./?format=vcard\" class=\"btn btn-primary btn-xs\" role=\"button\">vCard</a>" +
+                      "             </h5>\n" +
+                      "             <hr style=\"margin:8px auto\">\n";
+        
+        for (String interest : this.interests){
+            html = html.concat("<span class=\"label label-default\">" + interest + "</span>\n");
+        }
+            
+        return html.concat("</div></div></div><br>");
     }
     
     /**
      * TODO: JavaDoc
      * @return 
      */
-    public String getHTMLBody(){
+    public JSONObject getJSON() throws JSONException{
         
-        String html = "<h2>" + this.getName() + "</h2><hr><ul>";
-            
-        return html.concat("<p>" + this.getBirthDate() + " - " + this.interests + "</p>");
+        JSONObject json = new JSONObject();
+
+        json.put("name", super.getName());
+        json.put("birthDate", this.getBirthDate());
+        json.put("interests", new JSONArray(this.interests));
+        
+        return json;
     }
 }

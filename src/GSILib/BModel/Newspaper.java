@@ -314,12 +314,29 @@ public class Newspaper implements XMLRepresentable{
      */
     public String getHTMLBody(){
         
-        String html = "<h2>Newspaper | " + this.getDate() + "</h2><hr><ul>";
+        String html = "<div class=\"panel panel-default\">\n" +
+                      "     <div class=\"panel-heading\">\n" +
+                      "         <h3 class=\"panel-title\">Newspaper - " + this.getDate() + "</h3>\n" +
+                      "     </div>\n" +
+                      "     <div class=\"list-group\">";
         
         for(PrintableNews printableNews : this.news){
-            html = html.concat("<li><a href=\" " + printableNews.getId() + "/\">" + printableNews.getHeadline() + "</a></li>");
+            html = html.concat("<a class=\"list-group-item\" href=\" " + printableNews.getId() + "/\">" + printableNews.getHeadline() + "</a>");
         }
+        
+        html = html.concat(  "     </div>" +
+                             "     <div class=\"panel-footer\">\n" +
+                             "         <div class=\"row\">\n" +
+                             "             <div class=\"col-md-12\">\n" +
+                             "                 <span class=\"pull-left\">\n" +
+                             "                     <a href=\"./?format=xml\" class=\"btn btn-primary btn-xs\" role=\"button\">XML</a>\n" +
+                             "                     <a href=\"./?format=json\" class=\"btn btn-primary btn-xs\" role=\"button\">JSON</a>\n" +
+                             "                 </span>\n" +
+                             "             </div>\n" +
+                             "         </div>\n" +
+                             "     </div>\n" +
+                             " </div>");
             
-        return html.concat("</ul>");
+        return html;
     }
 }
