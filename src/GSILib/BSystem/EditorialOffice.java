@@ -356,4 +356,15 @@ public interface EditorialOffice{
      */
     public Picture getPicture(String url);
     
+    /**
+     * TODO: JavaDoc
+     * @return 
+     */
+    public String getJournalistOptions();
+    
+    /**
+     * TODO: JavaDoc
+     * @return 
+     */
+    public String getNewspaperOptions();
 }

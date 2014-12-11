@@ -281,7 +281,7 @@ public class GetHandler {
 
                         this.webPage = new WebPage("Journalist | " + journalist.getName(), journalist.getHTMLBody());
 
-                        this.webPage.append("<div class=\"list-group\"><li class=\"list-group-item disabled\">Has written...</li>");
+                        this.webPage.append("<div class=\"list-group\"><li class=\"list-group-item disabled\">Printable News authored</li>");
 
                         PrintableNews[] printableNews = bs.getPrintableNewsFromAuthor(journalist);
 
@@ -291,7 +291,7 @@ public class GetHandler {
                             }
                         }
                         else{
-                            this.webPage.append("<li class=\"list-group-item danger\">nothing, fire him</li>");
+                            this.webPage.append("<li class=\"list-group-item danger\">none, fire him</li>");
                         }
                         this.webPage.append("</div>");
                     }
@@ -372,23 +372,26 @@ public class GetHandler {
                 }
                 else if (this.pathHandler.getMode().equals("CreateNewspaper")){
                     
-                    // Create Journalist
+                    // Create Newspaper
                     
                     this.webPage = new WebPage("Create Newspaper", new File(this.localDir + "templates/forms/newspaper.html")); 
                 
                 }
                 else if (this.pathHandler.getMode().equals("CreatePrintableNews")){
                     
-                    // Create Journalist
-                    
+                    // Create PrintableNews
+                   
                     this.webPage = new WebPage("Create PrintableNews", new File(this.localDir + "templates/forms/printableNews.html")); 
-                
+                    this.webPage.replaceInTemplate("<!--journalistOptions-->", bs.getJournalistOptions());
+                    this.webPage.replaceInTemplate("<!--newspaperOptions-->", bs.getNewspaperOptions());
+                    
                 }
                 else if (this.pathHandler.getMode().equals("CreateWebNews")){
                     
-                    // Create Journalist
+                    // Create WebNews
                     
                     this.webPage = new WebPage("Create WebNews", new File(this.localDir + "templates/forms/webNews.html")); 
+                    this.webPage.replaceInTemplate("<!--journalistOptions-->", bs.getJournalistOptions());
                 
                 }
                 else if (this.pathHandler.getMode().equals("Teapot")){

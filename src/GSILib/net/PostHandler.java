@@ -4,6 +4,9 @@
  */
 package GSILib.net;
 
+import GSILib.BModel.Newspaper;
+import GSILib.BModel.documents.visualNews.PrintableNews;
+import GSILib.BModel.documents.visualNews.WebNews;
 import GSILib.BModel.workers.Journalist;
 import GSILib.BSystem.BusinessSystem;
 import GSILib.net.Message.Request;
@@ -71,7 +74,7 @@ public class PostHandler {
                         "</div>";
             }
             
-            this.webPage = new WebPage("Journalist Created", new File(this.localDir + "templates/forms/journalist.html"));
+            this.webPage = new WebPage("Create Journalist", new File(this.localDir + "templates/forms/journalist.html"));
             this.webPage.replaceInTemplate("<!--alert-->", alert);
         }
         else if (Pattern.compile("^\\/create\\/newspaper\\/").matcher(this.path).find()) {
@@ -99,8 +102,99 @@ public class PostHandler {
                         "</div>";
             }
             
-            this.webPage = new WebPage("Newspaper Created", new File(this.localDir + "templates/forms/newspaper.html"));
+            this.webPage = new WebPage("Create Newspaper", new File(this.localDir + "templates/forms/newspaper.html"));
             this.webPage.replaceInTemplate("<!--alert-->", alert);
+        }
+        else if (Pattern.compile("^\\/create\\/printablenews\\/").matcher(this.path).find()) {
+            
+            // Pide crear una PrintableNews
+            
+            String headline = request.getPOST("headline");
+            String body = request.getPOST("body");
+            Journalist journalist = bs.findJournalist(request.getPOST("journalist"));
+            String newspaperDate = request.getPOST("newspaper");
+            
+            PrintableNews printableNews = new PrintableNews(headline, body, journalist);
+            
+            if (bs.insertNews(printableNews)){
+                
+                if (!newspaperDate.equals("0")){
+                
+                    // Añadir a un Newspaper
+
+                    bs.getNewspaper(newspaperDate).addNews(printableNews);
+                    
+                    // Creada e Insertada con exito
+
+                    alert = "<div id=\"defaults-change-alert\" class=\"alert alert-success alert-dismissible\" role=\"alert\">\n" +
+                            "   <button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">×</span><span class=\"sr-only\">Close</span></button>\n" +
+                            "   PrintableNews <a href=\"/newspapers/" + newspaperDate + "/" + printableNews.getId() + "/\">creada</a> e <a href=\"/newspapers/" + newspaperDate + "/\">insertada</a> con exito.\n" +
+                            "</div>";
+                }
+                else{
+                    
+                    // Creada con exito
+
+                    alert = "<div id=\"defaults-change-alert\" class=\"alert alert-success alert-dismissible\" role=\"alert\">\n" +
+                            "   <button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">×</span><span class=\"sr-only\">Close</span></button>\n" +
+                            "   PrintableNews <a href=\"/newspapers/0/0/0/" + printableNews.getId() + "/\">creada</a> con exito.\n" +
+                            "</div>";
+                }
+            }
+            else{
+
+                // Error la insertar
+
+                alert = "<div id=\"defaults-change-alert\" class=\"alert alert-danger alert-dismissible\" role=\"alert\">\n" +
+                        "   <button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">×</span><span class=\"sr-only\">Close</span></button>\n" +
+                        "   Se produjo un error al insertar la PrintableNews.\n" +
+                        "</div>";
+            }
+            
+            this.webPage = new WebPage("Create PrintableNews", new File(this.localDir + "templates/forms/printableNews.html"));
+            this.webPage.replaceInTemplate("<!--alert-->", alert);
+            this.webPage.replaceInTemplate("<!--journalistOptions-->", bs.getJournalistOptions());
+            this.webPage.replaceInTemplate("<!--newspaperOptions-->", bs.getNewspaperOptions());
+        }
+        else if (Pattern.compile("^\\/create\\/webnews\\/").matcher(this.path).find()) {
+            
+            // Pide crear una WebNews
+            
+            String headline = request.getPOST("headline");
+            String body = request.getPOST("body");
+            Journalist journalist = bs.findJournalist(request.getPOST("journalist"));
+            ArrayList<String> keywords = new ArrayList();
+            keywords.addAll(Arrays.asList(request.getPOST("keywords").split("\\s*,\\s*")));
+            
+            WebNews webNews = new WebNews(headline, body, journalist);
+            if (keywords != null){
+                for (String keyword : keywords){
+                    webNews.addKeyWord(keyword);
+                }
+            }
+             
+            if (bs.insertNews(webNews)){
+                
+                // Creada con exito
+
+                alert = "<div id=\"defaults-change-alert\" class=\"alert alert-success alert-dismissible\" role=\"alert\">\n" +
+                        "   <button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">×</span><span class=\"sr-only\">Close</span></button>\n" +
+                        "   PrintableNews <a href=\"/webnews/" + webNews.getUrl() + "/\">creada</a> con exito.\n" +
+                        "</div>";
+            }
+            else{
+                
+                // Error al insertar
+
+                alert = "<div id=\"defaults-change-alert\" class=\"alert alert-danger alert-dismissible\" role=\"alert\">\n" +
+                        "   <button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">×</span><span class=\"sr-only\">Close</span></button>\n" +
+                        "   Se produjo un error al insertar la WebNews.\n" +
+                        "</div>";
+            }
+            
+            this.webPage = new WebPage("Create WebNews", new File(this.localDir + "templates/forms/webNews.html"));
+            this.webPage.replaceInTemplate("<!--alert-->", alert);
+            this.webPage.replaceInTemplate("<!--journalistOptions-->", bs.getJournalistOptions());
         }
         else{
             

@@ -1522,4 +1522,31 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
         
         return this.saveToXML(file);
     }
+    
+    @Override
+    public String getJournalistOptions(){
+        
+        // Lista de Journalists
+                    
+        String journalistOptions = "";
+        Journalist[] journalists = this.getJournalists();
+        for(Journalist journalist : journalists){
+            journalistOptions = journalistOptions.concat("<option value=\"" + journalist.getId() + "\">" + journalist.getName() + "</option>");
+        }
+        
+        return journalistOptions;
+    }
+    
+    @Override 
+    public String getNewspaperOptions(){
+        // Lista de Newspapers
+                    
+        String newspaperOpctions = "";
+        Newspaper[] newspapers = this.getNewspapers();
+        for(Newspaper newspaper : newspapers){
+            newspaperOpctions = newspaperOpctions.concat("<option value=\"" + newspaper.getDate() + "\">" + newspaper.getDate() + "</option>");
+        }
+        
+        return newspaperOpctions;
+    }
 }
