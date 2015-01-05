@@ -48,7 +48,7 @@ public class SSTest01 {
         }
         
         // Información de usuario.
-        System.out.println("El archivo test02.ods se ha escrito de manera correcta.");
+        System.out.println("El archivo test01.ods se ha escrito de manera correcta.");
         
     }
 }
