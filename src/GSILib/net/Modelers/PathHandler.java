@@ -1,3 +1,4 @@
+// ******************************** REVISADA **********************************
 /* 
  * Práctica 05 - Grupo 01
  * Gestión de Sistemas de Información
@@ -21,10 +22,10 @@ public class PathHandler {
     //       | "JournalistToFile" | "NewspaperToFile" | "PrintableNewsToFile"
     //       | "WebNewsToFile" | "Protected" | "Teapot" | "null"}
     
-    private String path, mode = null; 
+    private final String path;
+    private String mode = null; 
     
     // Patterns
-    
     private final String printableNewsPattern = "^\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/";
     private final String printableNewsToFilePattern = "^\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/\\?format=([^\\/]+)";
     private final String newspaperPattern = "^\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/([^\\/]+)\\/";
@@ -35,8 +36,7 @@ public class PathHandler {
     private final String journalistToFilePattern = "^\\/([^\\/]+)\\/([^\\/]+)\\/\\?format=([^\\/]+)";
     private final String directoryPattern = "^\\/([^\\/]+)\\/";
     
-    // Directories
-    
+    // Paramethers
     private String year, month, day, printableNewsID, webNewsURL, journalistID, fileType;
     
     
@@ -45,204 +45,165 @@ public class PathHandler {
      * @param path 
      */
     public PathHandler(String path){
-        
+        // Establecemos las variables de la clase.
         this.path = path;
-        
+    }
+    
+    
+    /**
+     * TODO: JAVADOC
+     */
+    public void processPath(){
         // Filtramos y clasificamos segun lo que pide
         
-        Matcher matcher = null;
-        if (Pattern.compile("^\\/newspapers\\/").matcher(this.path).find()) {
-            
+        // Se nos pide la página principal.
+        if(this.path.equals("/")){
+            this.mode = "NewspapersIndex";
+        }
+        else{
+            // Creamos el comprobador de expresiones regulares.
+            Matcher matcher = null;
             // Pide algo del arbol de Newspaper
-            
-            matcher = Pattern.compile(this.printableNewsToFilePattern).matcher(this.path);
-            if (matcher.find()) {
-                
-                // Pide una PrintableNews To File
-                
-                this.mode = "PrintableNewsToFile";
+            if (Pattern.compile("^\\/newspapers\\/").matcher(this.path).find()) {
 
-                this.year = matcher.group(2);
-                this.month = matcher.group(3);
-                this.day = matcher.group(4);
-                this.printableNewsID = matcher.group(5);
-                this.fileType = matcher.group(6);
-            }
-            else{
-                
-                matcher = Pattern.compile(this.newspaperToFilePattern).matcher(this.path);
+                // Comprobamos si pide una PrintableNews a fichero.
+                matcher = Pattern.compile(this.printableNewsToFilePattern).matcher(this.path);
                 if (matcher.find()) {
-
-                    // Pide un Newspaper To File
-
-                    this.mode = "NewspaperToFile";
-
+                    this.mode = "PrintableNewsToFile";
                     this.year = matcher.group(2);
                     this.month = matcher.group(3);
                     this.day = matcher.group(4);
-                    this.fileType = matcher.group(5);
+                    this.printableNewsID = matcher.group(5);
+                    this.fileType = matcher.group(6);
                 }
                 else{
-                    
-                    matcher = Pattern.compile(this.printableNewsPattern).matcher(this.path);
+                    // Comprobamos si pide un Newspaper a fichero.
+                    matcher = Pattern.compile(this.newspaperToFilePattern).matcher(this.path);
                     if (matcher.find()) {
-
-                        // Pide una PrintableNews
-
-                        this.mode = "PrintableNews";
-
+                        this.mode = "NewspaperToFile";
                         this.year = matcher.group(2);
                         this.month = matcher.group(3);
                         this.day = matcher.group(4);
-                        this.printableNewsID = matcher.group(5);
+                        this.fileType = matcher.group(5);
                     }
                     else{
-
-                        matcher = Pattern.compile(this.newspaperPattern).matcher(this.path);
+                        // Comprobamos si pide una PrintableNews
+                        matcher = Pattern.compile(this.printableNewsPattern).matcher(this.path);
                         if (matcher.find()) {
-
-                            // Pide un Newspaper
-
-                            this.mode = "Newspaper";
-
+                            this.mode = "PrintableNews";
                             this.year = matcher.group(2);
                             this.month = matcher.group(3);
                             this.day = matcher.group(4);
+                            this.printableNewsID = matcher.group(5);
                         }
                         else{
-
-                            matcher = Pattern.compile(this.directoryPattern).matcher(this.path);
+                            // Comprobamos si pide un Newspaper.
+                            matcher = Pattern.compile(this.newspaperPattern).matcher(this.path);
                             if (matcher.find()) {
-
-                                // Pide los Newspapers
-
-                                this.mode = "Newspapers";
+                                this.mode = "Newspaper";
+                                this.year = matcher.group(2);
+                                this.month = matcher.group(3);
+                                this.day = matcher.group(4);
+                            }
+                            else{
+                                // Comprobamos si pide los Newspapers
+                                matcher = Pattern.compile(this.directoryPattern).matcher(this.path);
+                                if (matcher.find()) {
+                                    this.mode = "Newspapers";
+                                }
                             }
                         }
                     }
                 }
             }
-        }
-        else if(Pattern.compile("^\\/webnews\\/").matcher(this.path).find()){
 
             // Pide algo del arbol de WebNews
+            else if(Pattern.compile("^\\/webnews\\/").matcher(this.path).find()){
 
-            matcher = Pattern.compile(this.webNewsToFilePattern).matcher(this.path);
-            if (matcher.find()) {
-                
-                // Pide una WebNews to File
-                
-                this.mode = "WebNewsToFile";
 
-                this.webNewsURL = matcher.group(2);
-                this.fileType = matcher.group(3);
-            }
-            else{
-                
-                matcher = Pattern.compile(this.webNewsPattern).matcher(this.path);
+                // Comprobamos si pide una WebNews a fichero.
+                matcher = Pattern.compile(this.webNewsToFilePattern).matcher(this.path);
                 if (matcher.find()) {
-
-                    // Pide una WebNews
-
-                    this.mode = "SingleWebNews";
-
+                    this.mode = "WebNewsToFile";
                     this.webNewsURL = matcher.group(2);
+                    this.fileType = matcher.group(3);
                 }
                 else{
-
-                    matcher = Pattern.compile(this.directoryPattern).matcher(this.path);
+                    // Comprobamos si pide una WebNews
+                    matcher = Pattern.compile(this.webNewsPattern).matcher(this.path);
                     if (matcher.find()) {
-
-                        // Pide las WebNews
-
-                        this.mode = "WebNews";
+                        this.mode = "SingleWebNews";
+                        this.webNewsURL = matcher.group(2);
+                    }
+                    else{
+                        // Comprobamos si pide las WebNews.
+                        matcher = Pattern.compile(this.directoryPattern).matcher(this.path);
+                        if (matcher.find()) {
+                            this.mode = "WebNews";
+                        }
                     }
                 }
             }
-        }
-        else if (Pattern.compile("^\\/journalists\\/").matcher(this.path).find()){
 
             // Pide algo del arbol de Journalist
-            
-            matcher = Pattern.compile(this.journalistToFilePattern).matcher(this.path);
-            if (matcher.find()) {
-                
-                // Pide un Journalist To File
-                
-                this.mode = "JournalistToFile";
-                
-                this.journalistID = matcher.group(2);
-                this.fileType = matcher.group(3);
-            }
-            else{
-                
-                matcher = Pattern.compile(this.journalistPattern).matcher(this.path);
+            else if (Pattern.compile("^\\/journalists\\/").matcher(this.path).find()){
+                // Comprobamos si pide un Journalist en fichero.
+                matcher = Pattern.compile(this.journalistToFilePattern).matcher(this.path);
                 if (matcher.find()) {
-
-                    // Pide un Journalist
-
-                    this.mode = "Journalist";
-                    
+                    this.mode = "JournalistToFile";
                     this.journalistID = matcher.group(2);
+                    this.fileType = matcher.group(3);
                 }
                 else{
-
-                    matcher = Pattern.compile(this.directoryPattern).matcher(this.path);
+                    // Comprobamos si pide un Journalist
+                    matcher = Pattern.compile(this.journalistPattern).matcher(this.path);
                     if (matcher.find()) {
-
-                        // Pide los Journalists
-
-                        this.mode = "Journalists";
+                        this.mode = "Journalist";
+                        this.journalistID = matcher.group(2);
+                    }
+                    else{
+                        // Comprobamos si pide la lista de Journalists.
+                        matcher = Pattern.compile(this.directoryPattern).matcher(this.path);
+                        if (matcher.find()) {
+                            this.mode = "Journalists";
+                        }
                     }
                 }
             }
-        }
-        else if (Pattern.compile("^\\/create\\/").matcher(this.path).find()){
 
             // Pide algo del arbol de Create
-
-            if (Pattern.compile("^\\/create\\/journalist\\/").matcher(this.path).find()) {
-
-                // Pide crear un Journalist
-
-                this.mode = "CreateJournalist";
+            else if (Pattern.compile("^\\/create\\/").matcher(this.path).find()){
+                // Comprobamos si pide crear un Journalist.
+                if (Pattern.compile("^\\/create\\/journalist\\/").matcher(this.path).find()) {
+                    this.mode = "CreateJournalist";
+                }
+                // Comprobamos si pide crear un Newspaper.
+                else if (Pattern.compile("\\/create\\/newspaper\\/").matcher(this.path).find()) {
+                    this.mode = "CreateNewspaper";
+                }
+                // Comprobamos si pide crear una PrintableNews
+                else if (Pattern.compile("^\\/create\\/printablenews\\/").matcher(this.path).find()) {
+                  this.mode = "CreatePrintableNews";
+                }
+                // Comprobamos si pide crear una WebNews.
+                else if (Pattern.compile("^\\/create\\/webnews\\/").matcher(this.path).find()) {
+                   this.mode = "CreateWebNews";
+                }
             }
-            else if (Pattern.compile("\\/create\\/newspaper\\/").matcher(this.path).find()) {
 
-                // Pide crear un Newspaper
-
-                this.mode = "CreateNewspaper";
+            // Pide algo del árbol Templates.
+            else if (Pattern.compile("^\\/templates\\/").matcher(this.path).find()){
+                this.mode = "Protected";
             }
-            else if (Pattern.compile("^\\/create\\/printablenews\\/").matcher(this.path).find()) {
 
-                // Pide crear una PrintableNews
-
-                this.mode = "CreatePrintableNews";
+            // Pide algo del árbol de Teapot.  
+            else if(Pattern.compile("^\\/areyouateapot\\?").matcher(this.path).find()){
+                // 418
+                this.mode = "Teapot";
             }
-            else if (Pattern.compile("^\\/create\\/webnews\\/").matcher(this.path).find()) {
-
-                // Pide crear una WebNews
-
-                this.mode = "CreateWebNews";
-            }
-        }
-        else if (Pattern.compile("^\\/templates\\/").matcher(this.path).find()){
-            
-            // Directorio protegido
-            
-            this.mode = "Protected";
-        }
-        else if(Pattern.compile("^\\/areyouateapot\\?").matcher(this.path).find()){
-            
-            // 418
-            
-            this.mode = "Teapot";
         }
     }
     
-    //------------------------------------------------------------------------------
-    //  GET
-    //------------------------------------------------------------------------------
     
     /**
      * TODO: JavaDoc
@@ -252,6 +213,7 @@ public class PathHandler {
         return this.path;
     }
     
+    
     /**
      * TODO: JavaDoc
      * @return 
@@ -259,6 +221,7 @@ public class PathHandler {
     public String getMode(){
         return this.mode;
     }
+    
     
     /**
      * TODO: JavaDoc
@@ -268,6 +231,7 @@ public class PathHandler {
         return this.year + "/" + this.month + "/" +  this.day;
     }
     
+    
     /**
      * TODO: JavaDoc
      * @return 
@@ -275,6 +239,7 @@ public class PathHandler {
     public String getPrintableNewsID(){
         return this.printableNewsID;
     }
+    
     
     /**
      * TODO: JavaDoc
@@ -284,6 +249,7 @@ public class PathHandler {
         return this.webNewsURL;
     }
     
+    
     /**
      * TODO: JavaDoc
      * @return 
@@ -291,6 +257,7 @@ public class PathHandler {
     public String getJournalistID(){
         return this.journalistID;
     }
+    
     
     /**
      * TODO: JavaDoc

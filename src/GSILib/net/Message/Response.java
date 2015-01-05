@@ -1,3 +1,4 @@
+// ******************************** REVISADA **********************************
 /* 
  * Práctica 05 - Grupo 01
  * Gestión de Sistemas de Información
@@ -33,11 +34,12 @@ public class Response {
         this.date = new Date();
     }
     
+    
     /**
      * TODO: JavaDoc
      * @param mode
-     * @param status
-     * @param html 
+     * @param status 
+     * @param webPage 
      */
     public Response(String mode, String status, WebPage webPage){
         this.mode = mode;
@@ -46,11 +48,12 @@ public class Response {
         this.date = new Date();
     }
     
+    
     /**
      * TODO: JavaDoc
      * @param mode
      * @param status
-     * @param html
+     * @param webPage
      * @param contentType 
      */
     public Response(String mode, String status, WebPage webPage, String contentType){
@@ -61,9 +64,6 @@ public class Response {
         this.date = new Date();
     }
     
-    //------------------------------------------------------------------------------
-    //  SET
-    //------------------------------------------------------------------------------
     
     /**
      * TODO: JavaDoc
@@ -72,6 +72,7 @@ public class Response {
     public void setMode(String mode){
         this.mode = mode;
     }
+    
     
     /**
      * TODO: JavaDoc
@@ -97,9 +98,6 @@ public class Response {
         this.webPage = webPage;
     }
     
-    //------------------------------------------------------------------------------
-    //  GET
-    //------------------------------------------------------------------------------
     
     /**
      * TODO: JavaDoc
@@ -109,6 +107,7 @@ public class Response {
         return this.simpleDateFormat.format(this.date);
     }
     
+    
     /**
      * TODO: JavaDoc
      * @return 
@@ -117,9 +116,6 @@ public class Response {
         return this.webPage.toString().length();
     }
     
-    //------------------------------------------------------------------------------
-    //  UTILS
-    //------------------------------------------------------------------------------
     
     @Override
     public String toString(){

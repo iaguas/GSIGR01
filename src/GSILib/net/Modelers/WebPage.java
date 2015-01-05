@@ -36,9 +36,8 @@ public class WebPage {
      * @param body 
      */
     public WebPage(String title, String body){
-        
+        // Parámetros básicos de la clase.
         this.mode = "html";
-        
         this.title = title;
         this.body = body;
     }
@@ -49,10 +48,9 @@ public class WebPage {
      * @param file
      * @throws IOException 
      */
-    public WebPage(String title, File file) throws IOException{
-        
+    public WebPage(String title, File file) throws IOException{  // TODO: Sin excepción
+        // Parámetros básicos de la clase.
         this.mode = "html";
-        
         this.title = title;
         this.body = this.getTemplate(file.getPath());
     }
@@ -61,8 +59,8 @@ public class WebPage {
      * TODO: JavaDoc
      * @param file 
      */
-    public WebPage(File file) throws FileNotFoundException, IOException{
-        
+    public WebPage(File file) throws FileNotFoundException, IOException{ // TODO: Sin excepción
+        // Parámetros básicos de la clase.
         this.mode = "file";
         
         BufferedReader reader = new BufferedReader( new FileReader (file));
@@ -83,7 +81,7 @@ public class WebPage {
      * @param file 
      */
     public WebPage(String file){
-        
+        // Parámetros básicos de la clase.
         this.mode = "file";
         this.file = file;
     }
@@ -95,6 +93,7 @@ public class WebPage {
      * @throws IOException 
      */
     private String getTemplate(String path) throws IOException{
+        // Devolvemos la plantilla.
         return new String(Files.readAllBytes(Paths.get(path)));
     }
     
@@ -103,6 +102,7 @@ public class WebPage {
      * @param html 
      */
     public void append(String html){
+        // Concatenamos el string actual con el introducido.
         this.body = this.body.concat(html);
     }
     
@@ -115,6 +115,7 @@ public class WebPage {
      * @param content 
      */
     public void setContent(String content){
+        // Establecemos el contenido.
         this.content = content;
     }
     
@@ -122,7 +123,8 @@ public class WebPage {
      * TODO: JavaDoc
      * @param charset 
      */
-    public void seyChatset(String charset){
+    public void setCharset(String charset){
+        // Establecemos el tipo de conjunto de caracteres.
         this.charset = charset;
     }
     
@@ -131,6 +133,7 @@ public class WebPage {
      * @param title 
      */
     public void setTitle(String title){
+        // Establecemos el título.
         this.title = title;
     }
     
@@ -139,6 +142,7 @@ public class WebPage {
      * @param body 
      */
     public void setBody(String body){
+        // Establecemos el cuerpo de la página.
         this.body = body;
     }
     
@@ -148,12 +152,13 @@ public class WebPage {
      * @param newString 
      */
     public void replaceInTemplate(String oldString, String newString){
+        // Remplazamos un string por otro.
         this.body = this.body.replace(oldString, newString);
     }
     
     @Override
     public String toString(){
-        
+        // En función del modo elegido, guardamos la información de clase en el fichero.
         if (this.mode.equals("html")){
             try {
                 return this.getTemplate(this.template).replace("{{charset}}", this.charset).replace("{{content}}", this.content).replace("{{title}}", this.title).replace("{{body}}", this.body);
@@ -164,7 +169,7 @@ public class WebPage {
         else if (this.mode.equals("file")){
             return this.file;
         }
-        
+        // Si ha habido problemas, devolvemos un string nulo.
         return null;
     }
 }

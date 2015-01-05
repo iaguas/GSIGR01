@@ -1,3 +1,4 @@
+// ******************************** REVISADA **********************************
 /* 
  * Práctica 05 - Grupo 01
  * Gestión de Sistemas de Información
@@ -19,9 +20,9 @@ import java.util.regex.Pattern;
  */
 public class Request {
     
-    private String request;
+    private final String request;
     
-    private String pattern = "(GET|HEAD|POST|PUT|DELETE|TRACE|OPTIONS|CONNECT) ([^\\ ]+) ([^\\\n]+)";
+    private final String patterns = "(GET|HEAD|POST|PUT|DELETE|TRACE|OPTIONS|CONNECT) ([^\\ ]+) ([^\\\n]+)";
     private String order, path, mode;
     private HashMap<String, String> post;
     
@@ -29,30 +30,31 @@ public class Request {
      * TODO: JavaDoc
      * @param request 
      */
-    public Request(String request) throws UnsupportedEncodingException{
-        
+    public Request(String request){
+        // Establecemos los parámetros de la clase.
         this.request = request;
-        
-        Pattern pattern = Pattern.compile(this.pattern);
+    }
+    
+    
+    public void processRequest() throws UnsupportedEncodingException{
+        // Inicializamos el comparador de expresiones regulares.
+        Pattern pattern = Pattern.compile(this.patterns);
         Matcher matcher = pattern.matcher(this.request);
+        
+        //Comprobamos la petición
         if (matcher.find()) {
-
             // Peticion valida
-            
             this.order = matcher.group(1);
             this.path = matcher.group(2);
             this.mode = matcher.group(3);
             
             // Generamos, si es post, un HashMap de variables
-            
             if (this.order.equals("POST")){
-                this.post = this.getPostHashMap(this.getPOSTData());
+                this.post = this.getPostHashMap(this.getPOSTData()); // 
             }   
         }
         else{
-            
-            // Peticion invalida
-            
+            // Peticion invalida    
             exit(0);
         }
     }
@@ -81,10 +83,7 @@ public class Request {
         return this.mode;
     }
     
-    //------------------------------------------------------------------------------
-    //  GET Useless Data
-    //------------------------------------------------------------------------------
-    
+   
     /**
      * TODO: JavaDoc
      * @return 

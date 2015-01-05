@@ -1,15 +1,13 @@
-/*
- * Esto es una prueba
- * Each line should be prefixed with  * 
+// ******************************** REVISADA **********************************
+/* 
+ * Práctica 05 - Grupo 01
+ * Gestión de Sistemas de Información
+ * Universidad Pública de Navarra - curso 2014-15
  */
+
 package GSILib.net.Config;
 
-import GSILib.Serializable.XMLHandler;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
 
 /**
  *
@@ -17,32 +15,32 @@ import org.xml.sax.SAXException;
  */
 public class ServerConfig {
     
-    private int port = 8080;
-    private String localDir = "web/";
+    private int port;
+    private String domain;
     
     /**
      * Constructor which gets WebServer configuration from an XML document
      * @param xmlConfig a XML Element of a ServerConfig
-     * @throws IOException handles errors asociated to IO
-     * @throws SAXException handles errors asociated to XML Handling
      */
-    public ServerConfig(Element xmlConfig) throws IOException, SAXException{
-
+    public ServerConfig(Element xmlConfig) {
         // Si se pueden leer, se leen, sino los default
-        
         if (! xmlConfig.getAttribute("port").isEmpty())
             this.port = Integer.parseInt(xmlConfig.getAttribute("port"));
+        else 
+            port = 8080;
         if (! xmlConfig.getAttribute("localDir").isEmpty())
-            this.localDir = xmlConfig.getAttribute("localDir");
-        
+            this.domain = xmlConfig.getAttribute("localDir");
+        else
+            domain = "web/";
     }
     
     /**
      * TODO: JavaDoc
      */
     public ServerConfig(){
-        
-        // Constructor nulo
+        // Constructor básico con parámetros predeterminados.
+        port = 8080;
+        domain = "web/";
     }
     
     /**
@@ -57,7 +55,7 @@ public class ServerConfig {
      * TODO: JavaDoc
      * @return 
      */
-    public String getLocalDir(){
-        return this.localDir;
+    public String getDomain(){
+        return this.domain;
     }
 }
