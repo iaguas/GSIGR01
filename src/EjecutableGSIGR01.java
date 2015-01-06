@@ -190,13 +190,13 @@ public abstract class EjecutableGSIGR01 {
         
         switch (option) {
             case 1: //
-                BusinessServer.main(none);
+                //BusinessServer.main(none); // Todo: Me da fallos y lo comento
                 break;
             case 2: // 
-                HRClient.main(none);
+                //HRClient.main(none);
                 break;
             case 3: // 
-                VLClient.main(none);
+                //VLClient.main(none);
                 break;
             case 0: // Salimos sin hacer nada para volver al menú principal.
                 break;

@@ -24,16 +24,16 @@ public class HTTPStatusHandler {
     GetHandler getHandler;
     PostHandler postHandler;
     
-    HashMap<Integer, String> stateStrings;
+    HashMap<Integer, String> stateStrings = new HashMap<>();
     
     /**
      * TODO: JAVADOC
-     * @param gh
+     * @param getHandler
      * @param localDir 
      */
-    public HTTPStatusHandler(GetHandler gh, String localDir){
+    public HTTPStatusHandler(GetHandler getHandler, String localDir){
         this.localDir = localDir;
-        this.getHandler = gh;
+        this.getHandler = getHandler;
         this.stateStrings = new HashMap<>();
         inicializeErrorStrings();
     }
@@ -41,39 +41,43 @@ public class HTTPStatusHandler {
     
     /**
      * TODO: JAVADOC
-     * @param ph
+     * @param postHandler
      * @param localDir 
      */
-    public HTTPStatusHandler(PostHandler ph, String localDir){
+    public HTTPStatusHandler(PostHandler postHandler, String localDir){
         this.localDir = localDir;
-        this.postHandler = ph;
-        this.stateStrings = new HashMap<>();
-        inicializeErrorStrings();
+        this.postHandler = postHandler;
+        this.inicializeErrorStrings();
     }
-    
     
     /**
      * TODO: JAVADOC
      * @param errorNumber 
      */
     public void showError(int errorNumber){
-        // Modificamos el estado al de error.
-        getHandler.setStatus(stateStrings.get(errorNumber));
-        // Devolvemos la página correspondiente.
-        try {
-            getHandler.setWebPage(new WebPage(stateStrings.get(errorNumber), new File(localDir + "templates/errors/" + errorNumber +".html")));
-        } 
-        catch (IOException ex) {
-            System.err.print("ERROR in " + errorNumber + " error webpage creation.\n" + ex);
+        
+        this.getHandler.setStatus(this.stateStrings.get(errorNumber));
+        
+        File errorPageFile = new File(this.localDir + "templates/errors/" + errorNumber +".html");
+        if (errorPageFile.exists()){
+            try {
+                this.getHandler.setWebPage(new WebPage(this.stateStrings.get(errorNumber), errorPageFile));
+            } 
+            catch (IOException ex) {
+                System.err.print("Unable to Read file: " +  errorPageFile.getAbsolutePath());
+            }
+            
+        }
+        else{
+            System.err.println("Server was unable to find a template for (" +  errorNumber + ") error.");
         }
     }
-    
   
     /**
      * TODO: JAVADOC
      */
     private void inicializeErrorStrings(){
-        // Introducimos los errores posibles en la tabla de búsqueda.
+        
         stateStrings.put(100, "100 Continue");
         stateStrings.put(101, "101 Switching Protocols ");
         stateStrings.put(200, "200 OK ");
@@ -109,7 +113,7 @@ public class HTTPStatusHandler {
         stateStrings.put(415, "415 Unsupported Media Type");
         stateStrings.put(416, "416 Requested Range Not Satisfiable");
         stateStrings.put(417, "417 Expectation Failed ");
-        stateStrings.put(418, "418 Teapot"); // TODO: Este error no existe.
+        stateStrings.put(418, "418 Teapot");
         stateStrings.put(500, "500 Internal Server Error");
         stateStrings.put(501, "501 Not Implemented");
         stateStrings.put(502, "502 Bad Gateway ");
