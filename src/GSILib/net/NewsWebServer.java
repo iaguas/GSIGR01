@@ -74,16 +74,17 @@ public class NewsWebServer {
     
     /**
      * TODO: JAVADOC
-     * @param domain
+     * @param port
      * @return 
      */
-    public boolean stop(String domain){
+    public boolean stop(int port){
         
         for(ServerThread serverThread : this.serverThreads){
             
-            if(serverThread.getDomain().equals(domain)){
-                serverThread.interrupt(); // TODO: Revisar que no lance exception.
-                serverThreads.remove(serverThread);
+            if(serverThread.port == port){
+
+                serverThread.interrupt();
+                this.serverThreads.remove(serverThread);
                 return true;
             }
         }

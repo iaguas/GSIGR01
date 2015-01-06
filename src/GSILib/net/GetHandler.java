@@ -320,7 +320,7 @@ public class GetHandler {
                             }
                         }
                         else{
-                            this.webPage.append("<li class=\"list-group-item danger\">There is no news for this Journalist, you should fire him</li>");
+                            this.webPage.append("<li class=\"list-group-item danger\">There are no news for this Journalist, you should fire him</li>");
                         }
                         this.webPage.append("</div>");
                     }
