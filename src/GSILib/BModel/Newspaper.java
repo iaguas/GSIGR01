@@ -66,6 +66,7 @@ public class Newspaper implements XMLRepresentable{
      * tagged nodes, which are Newspaper type objects.
      * @param newspaperFromXML XML document to parse, which contains nodes corresponding to the class Newspaper
      * @throws SAXException exception derived from XML file reading
+     * @throws java.text.ParseException
      */
     public Newspaper(String newspaperFromXML) throws SAXException, ParseException{
         

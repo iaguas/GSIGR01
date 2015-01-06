@@ -15,11 +15,12 @@ import GSILib.persistence.XMLParsingException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.rmi.RemoteException;
 import java.text.ParseException;
 import org.xml.sax.SAXException;
 
 /**
- *
+ * This class contains the executable for a .jar file that this project can be converted to.
  * @author inigo
  */
 public abstract class EjecutableGSIGR01 {
@@ -41,17 +42,20 @@ public abstract class EjecutableGSIGR01 {
         System.out.println("| Universidad Pública de Navarra - curso 2014-15 |");
         System.out.println("+------------------------------------------------+");
         
-        // Iniciamos el bucle de ejecución.
-        int option = 1;
-        while (option != 0){
-            option = menuPrincipal();
+        // Iniciamos la selección y ejecución de la práctica.
+            int option = menuPrincipal();
             principalHandler(option);
-        }
         
+        // Mostramos el final.
         System.out.println("Cerrando el sistema...");
     }
- 
     
+ 
+    /**
+     * This method shows the main menu for the resume of labs of subject and reads
+     * the option selected by user.
+     * @return option selected by user via keyboard.
+     */
     private static int menuPrincipal(){
         System.out.println("-- MENÚ PRINCIPAL --");
         System.out.print(
@@ -73,7 +77,15 @@ public abstract class EjecutableGSIGR01 {
         }
     }
        
-    
+    /**
+     * This method reads the option and it starts a test of the lab selected.
+     * @param option Sected by the user in a menu method.
+     * @throws SAXException
+     * @throws XMLParsingException
+     * @throws IOException
+     * @throws ParseException
+     * @throws Exception 
+     */
     private static void principalHandler(int option) throws SAXException, XMLParsingException, IOException, ParseException, Exception{
         
         switch (option) {
@@ -103,7 +115,10 @@ public abstract class EjecutableGSIGR01 {
         }
     }
     
-
+    /**
+     * This method shows the menu for lab 2 and reads the option selected by user.
+     * @return option selected by user via keyboard.
+     */
     private static int menuLab2(){
         System.out.println("\t- MENÚ LAB 2 -");
         System.out.print(
@@ -114,8 +129,8 @@ public abstract class EjecutableGSIGR01 {
             "\t  4. Ejercicio 5.\n" +
             "\t  5. Ejercicio 6. importTeletypes().\n" + 
             "\t  6. Demostración importPrintableNews().\n" + 
-            "\t  7. Implementación ODSPersistent. saveToFile().\n" + 
-            "\t  8. Implementación ODSPersistent. loadFromFile().\n" + 
+            "\t  7. Implementación ODSPersistent.saveToFile().\n" + 
+            "\t  8. Implementación ODSPersistent.loadFromFile().\n" + 
             "\t  0. Volver al menú principal.\n" +
             "\t  Opción: "
         );
@@ -128,7 +143,10 @@ public abstract class EjecutableGSIGR01 {
         }
     }
        
-    
+    /**
+     * This method reads the option and it starts a test of the lab selected.
+     * @param option Sected by the user in a menu method.
+     */
     private static void lab2Handler(int option) throws SAXException, XMLParsingException, IOException, ParseException, Exception{
         
         switch (option) {
@@ -164,8 +182,11 @@ public abstract class EjecutableGSIGR01 {
                 lab2Handler(newOption);
         }
     }    
-    
-    
+   
+    /**
+     * This method shows the menu for lab 2 and reads the option selected by user.
+     * @return option selected by user via keyboard.
+     */
     private static int menuLab4(){
         System.out.println("\t- MENÚ LAB 4 -");
         System.out.print(
@@ -183,10 +204,16 @@ public abstract class EjecutableGSIGR01 {
         catch(NumberFormatException | IOException ex){
             return -1;
         }
-    }
-       
-    
-    private static void lab4Handler(int option) {
+    }  
+
+    /**
+     * This method reads the option and it starts a test of the lab selected.
+     * @param option Sected by the user in a menu method.
+     * @throws IOException
+     * @throws RemoteException
+     * @throws SAXException 
+     */
+    private static void lab4Handler(int option) throws IOException, RemoteException, SAXException {
         
         switch (option) {
             case 1: //
