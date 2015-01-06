@@ -16,31 +16,36 @@ import org.w3c.dom.Element;
 public class ServerConfig {
     
     private int port;
-    private String domain;
+    private String localDir, domain;
     
     /**
      * Constructor which gets WebServer configuration from an XML document
      * @param xmlConfig a XML Element of a ServerConfig
      */
     public ServerConfig(Element xmlConfig) {
-        // Si se pueden leer, se leen, sino los default
+        
         if (! xmlConfig.getAttribute("port").isEmpty())
             this.port = Integer.parseInt(xmlConfig.getAttribute("port"));
         else 
-            port = 8080;
+            this.port = 8080;
         if (! xmlConfig.getAttribute("localDir").isEmpty())
-            this.domain = xmlConfig.getAttribute("localDir");
+            this.localDir = xmlConfig.getAttribute("localDir");
         else
-            domain = "web/";
+            this.localDir = "web/";
+        if (! xmlConfig.getAttribute("domain").isEmpty())
+            this.domain = xmlConfig.getAttribute("domain");
+        else
+            this.domain = "";
     }
     
     /**
      * TODO: JavaDoc
      */
     public ServerConfig(){
-        // Constructor básico con parámetros predeterminados.
-        port = 8080;
-        domain = "web/";
+        
+        this.port = 8080;
+        this.localDir = "web/";
+        this.domain = "localhost:8080";
     }
     
     /**
@@ -49,6 +54,14 @@ public class ServerConfig {
      */
     public int getPort(){
         return this.port;
+    }
+    
+    /**
+     * TODO: JavaDoc
+     * @return 
+     */
+    public String getLocalDir(){
+        return this.localDir;
     }
     
     /**

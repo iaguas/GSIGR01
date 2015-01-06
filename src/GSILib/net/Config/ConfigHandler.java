@@ -24,14 +24,12 @@ import org.xml.sax.SAXException;
 public class ConfigHandler {
     
     private String loadDataPath;
-    private List<ServerConfig> serverConfigs;
+    private List<ServerConfig> serverConfigs = new ArrayList();
     
     /**
      * TODO: JavaDoc
      */
-    public ConfigHandler(){
-        this.serverConfigs = new ArrayList();
-    }
+    public ConfigHandler(){}
     
     /**
      * TODO: JAVADOC
@@ -68,7 +66,7 @@ public class ConfigHandler {
             this.serverConfigs.add(new ServerConfig());
             return false;
         }
-        // Todo ha ido bien.
+        
         return true;
     }
    
@@ -85,8 +83,7 @@ public class ConfigHandler {
      * TODO: JavaDoc
      * @return 
      */
-    public ServerConfig[] getServersConfig(){
-        // Devolvemos la configuración de los servidores (puede haber más de uno).
+    public ServerConfig[] getServerConfigs(){
         if(this.serverConfigs.isEmpty())
             return null;
         return this.serverConfigs.toArray(new ServerConfig[this.serverConfigs.size()]);

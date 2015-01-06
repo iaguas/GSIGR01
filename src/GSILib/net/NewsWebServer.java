@@ -57,41 +57,38 @@ public class NewsWebServer {
      * @param domain
      * @return 
      */
-    public boolean run(int port, String domain){
+    public boolean run(int port, String domain, String localDir){
         try{
-            // Creamos un nuevo servidor
-            ServerThread serverThread = new ServerThread(port, domain, this.bs);
+            
+            ServerThread serverThread = new ServerThread(port, domain, localDir, this.bs);
             serverThread.start();
-
-            // Guardamos en la lista de servidores
+            
             this.serverThreads.add(serverThread);
             
-            // Devolvemos que todo ha ido bien.
             return true;
         }
         catch (java.net.BindException ex){
-            // Si ha habido algún problema, devolvemos que algo no ha ido bien.
             return false;
         }
     }
     
     /**
      * TODO: JAVADOC
-     * @param domain
+     * @param port
      * @return 
      */
-    public boolean stop(String domain){
-        // Recoremos la lista de servidores buscando el que nos interesa.
+    public boolean stop(int port){
+        
         for(ServerThread serverThread : this.serverThreads){
-            // Cuando encontramos el servidor, lo paramos y lo eliminamos.
-            if(serverThread.getDomain().equals(domain)){
-                serverThread.interrupt(); // TODO: Revisar que no lance exception.
-                serverThreads.remove(serverThread);
+            
+            if(serverThread.port == port){
+
+                serverThread.interrupt();
+                this.serverThreads.remove(serverThread);
                 return true;
             }
         }
-     
-        // Si no encontramos ningun servidor en ejecución de ese dominio.
+        
         return false;
     }
     
@@ -99,12 +96,11 @@ public class NewsWebServer {
      * TODO: JavaDoc
      */
     public void stopAll(){
-        // Recoremos la lista de servidores para parar cada uno de ellos.
+        
         for(ServerThread serverThread : this.serverThreads){
             serverThread.interrupt();
         }
         
-        // Limpiamos la lista de servidores dejándola vacía.
         this.serverThreads.clear();
     }
 
@@ -113,9 +109,9 @@ public class NewsWebServer {
      * TODO: JAVADOC
      */
     public static class ServerThread extends Thread{
-        // Parámetros de la clase NewsWebServer
+        
         private final int port;
-        private final String domain;
+        private final String domain, localDir;
         private final BusinessSystem bs;
         
         /**
@@ -125,9 +121,10 @@ public class NewsWebServer {
          * @param bs
          * @throws BindException 
          */
-        public ServerThread(int port, String domain, BusinessSystem bs) throws BindException{
-            // Incorporamos los datos básicos del servidor.
+        public ServerThread(int port, String domain, String localDir, BusinessSystem bs) throws BindException{
+            
             this.port = port;
+            this.localDir = localDir;
             this.domain = domain;
             this.bs = bs;
         }
@@ -147,18 +144,17 @@ public class NewsWebServer {
         @Override
         public void run(){
             try {
-                // Creamos el socket y lo indicamos por consola.
+                
                 ServerSocket serverSocket = new ServerSocket(this.port);
                 System.out.println("[" + this.port + "] Servidor iniciado");
                 
-                // Comenzamos un bucle infinito de atención a los clientes.
                 try {
                     while (true && !this.isInterrupted()) { // TODO: Revisar condición.
-                        new ClientThread(serverSocket.accept(), this.bs, this.domain).start();
+                        new ClientThread(serverSocket.accept(), this.bs, this.domain, this.localDir).start();
                     }
                     System.out.println("[" + this.port + "]  Servidor cerrado");
                 }
-                // Siempre que se destruya la instancia, destruiremos el socket.
+                
                 finally {
                     serverSocket.close();
                 }   
@@ -176,13 +172,12 @@ public class NewsWebServer {
      * TODO: JavaDoc
      */
     private static class ClientThread extends Thread {
-
-        // Parámetros de la clase NewsWebServer
+        
         private final Socket socket;
         private BufferedReader socketIn;
         private PrintWriter socketOut;
         private final BusinessSystem bs;
-        private final String domain;
+        private final String domain, localDir;
 
         /**
          * TODO: JavaDoc
@@ -190,11 +185,12 @@ public class NewsWebServer {
          * @param bs
          * @param localDir 
          */
-        public ClientThread(Socket socket, BusinessSystem bs, String domain) {
-            // Asignamos los datos básicos de cliente a atender en el servidor.
+        public ClientThread(Socket socket, BusinessSystem bs, String domain, String localDir) {
+            
             this.socket = socket;
             this.bs = bs;
             this.domain = domain;
+            this.localDir = localDir;
         }
         
         /**
@@ -203,30 +199,28 @@ public class NewsWebServer {
         @Override
         public void run() {
             try {
-                // Creamos los objetos socket para mandar y recibir mensajes
+                
                 this.socketIn = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
                 this.socketOut = new PrintWriter(this.socket.getOutputStream(), true);
-
-                // Leemos el mensaje del cliente  
+                
                 String inputLine;
                 StringBuilder requestString = new StringBuilder();
                 int lines = 0, contentLength = 0;
                 
                 try {
-                    // Para poder tratar el método POST, hacemos el análisis de 
-                    // la entrada
+                    
                     while ((inputLine = this.socketIn.readLine()) != null && ! inputLine.equals("") && lines < 100) {
-                        //
+                        
                         requestString.append(inputLine + "\n");
                         lines++;
-                        // Guardamos la longitud del mensaje HTTP cuando se indica.
+                        
                         if (inputLine.startsWith("Content-Length: ")) {
                             contentLength = Integer.parseInt(inputLine.substring("Content-Length: ".length()));
                         }
                     }
-                    // Guardamos las variables POST cuando existan.
+                    
                     if (requestString.toString().startsWith("POST")){
-                        // Lectura de las variables POST
+                        
                         char[] content = new char[contentLength];
                         this.socketIn.read(content);
                         requestString.append("POST-Data: " + new String(content) + "\n");
@@ -236,39 +230,41 @@ public class NewsWebServer {
                     System.err.println("ERROR: " + e);
                 }
                 
-                // Creamos la petición con el análisis inicial de la entrada.
                 Request request = new Request(requestString.toString());
                 request.processRequest();
                 
-                // Respuesta al cliente
                 System.out.print(request.getReduced());
                 Response response;
                 
                 if (request.getOrder().equals("GET")){
-                    // Tratamiento de las peticiones GET.
-                    GetHandler getHandler = new GetHandler(this.bs, this.domain);
+                   
+                    GetHandler getHandler = new GetHandler(this.bs, this.domain, this.localDir);
                     getHandler.processGetPetition(request);
                     response = new Response(request.getMode(), getHandler.getStatus(), getHandler.getWebPage(), getHandler.getContentType());
                 }
                 else if (request.getOrder().equals("POST")){
-                    // Tratamiento de las peticiones POST.
-                    PostHandler postHandler = new PostHandler(this.bs, this.domain);
+                    
+                    PostHandler postHandler = new PostHandler(this.bs, this.localDir);
                     postHandler.processPostPetition(request);
                     response = new Response(request.getMode(), postHandler.getStatus(), postHandler.getWebPage());
                 }
                 else{
+                    
                     // Error
+                    
                     response = null;
                 }
-                // Envío de la respuesta.
+                
+                // Send Response
+                
                 this.socketOut.println(response);
+                
             } catch (IOException ex) {
                 System.out.println(ex);
             } catch (JSONException ex) {
                 Logger.getLogger(NewsWebServer.class.getName()).log(Level.SEVERE, null, ex);
             }
             finally {
-                // Si este cliente se desconecta, el hilo se cerrará.
                 
                 try {
                     this.socket.close();
@@ -287,7 +283,9 @@ public class NewsWebServer {
      * @throws Exception 
      */
     public static void main(String[] args) throws Exception {
+        
         // Creamos los manejadores de la configuración y el sistema.
+        
         ConfigHandler configHandler = null;
         BusinessSystem bs = null;
         
@@ -296,62 +294,81 @@ public class NewsWebServer {
             // Config File
             File file = new File(args[0]);
             if (file.exists()){
+                
                 // Creamos el manejador de configuración.
+                
                 configHandler = new ConfigHandler();
                 configHandler.setConfig(args[0]);
                 
                 // Comprobamos que exista el archivo de carga de datos.
+                
                 if (! configHandler.getLoadDataPath().isEmpty()){
+                    
                     // Se ha indicado un XML, creamos el archivo
+                    
                     file = new File(configHandler.getLoadDataPath());
                     if (file.exists()){
+                        
                         // Carga un BS desde el XML
+                        
                         bs = BusinessSystem.loadFromFileXML(file); 
                     }
                     else{
+                        
                         // No existe el archivo XML
+                        
                         System.err.println("LoadData File does not exists");
                         exit(0);
                     }
                 }
                 else{
+                    
                     // Cargamos el BusinessSystem de prueba, si no hay fichero.
+                    
                     bs = EOTester.getTestingBusinessSystem();
                 }
                 System.out.println("[done] Config loaded");
             }
             else{
-                // Como no disponemos de un archivo de configuración...
+                
+                // Error, fichero de configuracion no existe
+                
                 System.err.println("ConfigFile does not exist");
                 exit(0);
             }
         }
         else if (args.length == 0){
+            
             // Cargamos el BusinessSystem de prueba.
+            
             configHandler = new ConfigHandler();
             configHandler.setConfig();
             bs = EOTester.getTestingBusinessSystem();
         }
         else{
+            
             System.err.println("Incorrect number of arguments\n");
             System.err.println("use: java_program [config_file]");
             exit(0);
         }
         
-        // Creamos un nuevo servidor maestro.
         NewsWebServer newsWebServer = new NewsWebServer(bs);
         
-        // Analizamos la configuración y si es correcta la aplicamos.
-        ServerConfig[] serversConfig = configHandler.getServersConfig();
-        if (serversConfig != null){
-            for(ServerConfig serverConfig : serversConfig){
-                if ((new File(serverConfig.getDomain()).isDirectory())){
+        ServerConfig[] serverConfigs = configHandler.getServerConfigs();
+        
+        if (serverConfigs != null){
+            for(ServerConfig serverConfig : serverConfigs){
+                if ((new File(serverConfig.getLocalDir()).isDirectory())){
+                    
                     // Creamos un nuevo servidor con las indicaciones de configuración.
-                    newsWebServer.run(serverConfig.getPort(), serverConfig.getDomain());
+                    
+                    newsWebServer.run(serverConfig.getPort(), serverConfig.getDomain(), serverConfig.getLocalDir());
                 }
                 else{
-                    // No se ha especificado un dominio válido
-                    System.err.println("[" + serverConfig.getPort() + "] Domain is not a valid directory (" + serverConfig.getDomain() + ")");
+                    
+                    // No se ha especificado un localDir válido
+                    
+                    System.err.println("[" + serverConfig.getPort() + "] Domain is not a valid directory (" + serverConfig.getLocalDir()+ ")");
                 }
             }
         }
