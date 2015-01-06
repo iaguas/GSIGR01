@@ -30,7 +30,6 @@ public class SSTest07 {
         // Creamos la instancia de nuestro sistema de información.
         BusinessSystem bsystem = new BusinessSystem();  
         
-        // RANDOM DATA TODO: delete
         // Añadimos periodistas
         ArrayList<String> interest = new ArrayList<>();
         interest.add("swimming");
@@ -76,8 +75,6 @@ public class SSTest07 {
         bsystem.createNewspaper(new Date(2014, 10, 28));
         Newspaper np = bsystem.getNewspaper(new Date(2014, 10, 28));
         np.addNews(pn);
-
-        // RANDOM DATA END
         
         // Creamos el objeto fichero con el que manejaremos la hoja de calculo.
         final File file = new File("businessSystem.ods");

@@ -24,8 +24,13 @@ public class SSTest06 {
         // Creamos el objeto fichero con el que manejaremos la hoja de calculo.
         final File f = new File("P02Ej06.ods");
         
-        // Importamos los teletipos.
-        bsystem.importPrintableNews(f);
+        if(f.exists()){
+            // Importamos las Printable News.
+            int n = bsystem.importPrintableNews(f);
+            System.out.println("Se han importado " + n + " Printable News.");
+        }
+        else
+            System.err.println("El archivo P02Ej06.ods no existe. No se puede ejecutar el programa.");
         
     }
 }

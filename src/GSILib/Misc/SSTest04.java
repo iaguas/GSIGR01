@@ -46,7 +46,6 @@ public class SSTest04 {
         WebNews wn = new WebNews("title3","body3",jr,"http://midominio.com/noticias/id");
         wn.addPrize("Master Webnews 2013");
         bsystem.insertNews(wn);
-        // TODO: Meter alguna cosa más para comprobar que todo funciona.
         
         // Creamos una nueva hoja de cálculo.
         // Creamos el objeto fichero con el que manejaremos la hoja de calculo.
