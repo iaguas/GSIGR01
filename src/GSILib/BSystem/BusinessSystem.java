@@ -976,7 +976,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
                 // Especificamos que es un Teletype con un casting
                 Teletype teletype = (Teletype) document;
                 // Guardamos los datos del Journalist
-                sheetTeletypes.setValueAt(document.getAuthor().getId(), 0, numTeletype);
+                sheetTeletypes.setValueAt(document.getId(), 0, numTeletype);
                 sheetTeletypes.setValueAt(document.getAuthor().getId(), 1, numTeletype);
                 sheetTeletypes.setValueAt(document.getHeadline(), 2, numTeletype);
                 sheetTeletypes.setValueAt(document.getBody(), 3, numTeletype);
@@ -1104,7 +1104,8 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
         // Recorremos la lista de Newspapers
         
         // Preparamos el formato con el que guardaremos la fecha.
-        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Format formatter = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
         
         int numNewspaper = 0;
         Iterator iteratorNewspapers = this.newspapers.entrySet().iterator();
@@ -1114,7 +1115,7 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
             // Cargamos el valor de ese par como Newspaper
             Newspaper newspaper = (Newspaper) pair.getValue();
             // Rellenar la tabla
-            sheetNewspapers.setValueAt(formatter.format(pair.getKey()), 0, numNewspaper);
+            sheetNewspapers.setValueAt(newspaper.getDate(), 0, numNewspaper);
             // Rellenar la tabla - Campos multivaluados
             PrintableNews[] printableNews = newspaper.getPrintableNews();
             if (printableNews != null){
