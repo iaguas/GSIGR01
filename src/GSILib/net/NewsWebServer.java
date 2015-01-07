@@ -203,7 +203,7 @@ public class NewsWebServer {
         public void run() {
             try {
                 // Creamos los objetos socket para mandar y recibir mensajes
-                this.socketIn = new BufferedReader(new Inpu// Leemos el mensaje del cliente  tStreamReader(this.socket.getInputStream()));
+                this.socketIn = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
                 this.socketOut = new PrintWriter(this.socket.getOutputStream(), true);
                 
                 // Leemos el mensaje del cliente  
