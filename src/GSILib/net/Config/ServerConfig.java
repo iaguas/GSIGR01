@@ -23,7 +23,7 @@ public class ServerConfig {
      * @param xmlConfig a XML Element of a ServerConfig
      */
     public ServerConfig(Element xmlConfig) {
-        
+        // Si se pueden leer, se leen, sino los default
         if (! xmlConfig.getAttribute("port").isEmpty())
             this.port = Integer.parseInt(xmlConfig.getAttribute("port"));
         else 

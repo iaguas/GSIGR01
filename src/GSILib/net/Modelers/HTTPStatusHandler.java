@@ -55,12 +55,14 @@ public class HTTPStatusHandler {
      * @param errorNumber 
      */
     public void showError(int errorNumber){
-        
+        // Modificamos el estado al de error en el handler de GET.
         this.getHandler.setStatus(this.stateStrings.get(errorNumber));
         
+        // Comprobamos que el archivo existe.
         File errorPageFile = new File(this.localDir + "templates/errors/" + errorNumber +".html");
         if (errorPageFile.exists()){
             try {
+                // Creamos la página web para el error.
                 this.getHandler.setWebPage(new WebPage(this.stateStrings.get(errorNumber), errorPageFile));
             } 
             catch (IOException ex) {
@@ -77,7 +79,7 @@ public class HTTPStatusHandler {
      * TODO: JAVADOC
      */
     private void inicializeErrorStrings(){
-        
+        // Introducimos todos los posibles estados en la tabla
         stateStrings.put(100, "100 Continue");
         stateStrings.put(101, "101 Switching Protocols ");
         stateStrings.put(200, "200 OK ");

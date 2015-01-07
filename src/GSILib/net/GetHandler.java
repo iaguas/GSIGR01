@@ -40,7 +40,7 @@ public class GetHandler {
      * @param localDir 
      */
     public GetHandler(BusinessSystem bs, String domain, String localDir){
-        
+        // Crear parámetros de la clase.
         this.bs = bs;
         this.domain = domain;
         this.localDir = localDir;
@@ -55,12 +55,11 @@ public class GetHandler {
      * @throws JSONException 
      */
     public void processGetPetition(Request request) throws IOException, JSONException{
-        
+        // Inicializamos el manejador de rutas para analizarla.
         this.pathHandler = new PathHandler(request.getPath());
         this.pathHandler.processPath();
         if (request.countLines() < 100){
             if (this.pathHandler.getMode() == null){
-
                 // El cliente pide un fichero local
                 File file = new File(this.localDir + this.pathHandler.getPath());
 
@@ -69,30 +68,24 @@ public class GetHandler {
                 }
 
                 // El archivo existe
-
                 if (file.exists()){
                     this.webPage = new WebPage(file);
                     this.contentType = this.guessContentType(this.pathHandler.getPath());
                 }
                 else{
-
                     // 404 - Not Found
-
                     this.httpStatusHandler.showError(404);
                 }
             }
 
             // Check if domain is valid
-
             else if ((! this.domain.equals(request.getHost())) && (! this.domain.equals(""))){
                 
                 // 401 - No Autorizado
-                
                 this.httpStatusHandler.showError(401);
             }   
 
             // El cliente pide una pagina virtual
-
             else{
                 if (this.pathHandler.getMode().equals("Protected")){   
                     // 403
@@ -100,21 +93,17 @@ public class GetHandler {
                 }
 
                 // El cliente pide una PrintableNews
-
                 else if (this.pathHandler.getMode().equals("PrintableNews")){
                     PrintableNews printableNews = bs.getPrintableNews(Integer.parseInt(this.pathHandler.getPrintableNewsID()));
                     this.webPage = new WebPage(printableNews.getHeadline(), printableNews.getHTMLBody());
                 }
 
                 // El cliente pide una PrintableNews serializada
-
                 else if (this.pathHandler.getMode().equals("PrintableNewsToFile")){
                     PrintableNews printableNews = bs.getPrintableNews(Integer.parseInt(this.pathHandler.getPrintableNewsID()));
 
                     if (printableNews != null){
-
                         // El cliente pide un XML
-
                         if (this.pathHandler.getFileType().equals("xml")){
                             this.webPage = new WebPage(printableNews.toXML());
                             this.webPage.setContent("application/xml");
@@ -122,39 +111,30 @@ public class GetHandler {
                         }
 
                         // El cliente pide un JSON
-
                         else if (this.pathHandler.getFileType().equals("json")){
                             this.webPage = new WebPage(printableNews.getJSONObject().toString(4));
                             this.webPage.setContent("application/json");
                         }
                         else{
-
                             // 415 - Unsuported Type of File
-
                             this.httpStatusHandler.showError(415);
                         }
                     }
                     else{
 
                         // 404 - Not found
-
                         this.httpStatusHandler.showError(404);
                     }
                 }
 
                 // El cliente pide un Newspaper
-
                 else if (this.pathHandler.getMode().equals("Newspaper")){
-
                     Newspaper newspaper = bs.getNewspaper(this.pathHandler.getNewspaperDate());
-
                     if (newspaper != null){
                         this.webPage = new WebPage("Newspaper | " + newspaper.getDate(), newspaper.getHTMLBody());
                     }
                     else{
-
                         // 404 - Not Found
-
                         this.httpStatusHandler.showError(404);
                     }
                 }
@@ -162,11 +142,8 @@ public class GetHandler {
                 // El cliente pide los Newspapers
 
                 else if (this.pathHandler.getMode().equals("Newspapers")){
-
                     String html = " <div class=\"list-group\"><li class=\"list-group-item disabled\">Newspapers</li>";
-
                     Newspaper[] newspapers = bs.getNewspapers();
-
                     if (newspapers != null){
                         for (Newspaper newspaper : newspapers){
                             html = html.concat("<a class=\"list-group-item\" href=\" " + newspaper.getDate() + "/\">" + newspaper.getDate() + "</a>");
@@ -181,43 +158,35 @@ public class GetHandler {
 
                 else if (this.pathHandler.getMode().equals("NewspapersIndex")){
                     String html = " <div class=\"list-group\"><li class=\"list-group-item disabled\">Newspapers</li>";
-
                     Newspaper[] newspapers = bs.getNewspapers();
-
                     if (newspapers != null){
                         for (Newspaper newspaper : newspapers){
                             html = html.concat("<a class=\"list-group-item\" href=\"\\newspapers\\" + newspaper.getDate() + "/\">" + newspaper.getDate() + "</a>");
                         }
                     }
                     html = html.concat("</div>");
-
                     this.webPage = new WebPage("Newspapers", html);
                 }
 
                 // El cliente pide un Newspaper serializado
-
                 else if (this.pathHandler.getMode().equals("NewspaperToFile")){
                     Newspaper newspaper = bs.getNewspaper(this.pathHandler.getNewspaperDate());
 
                     if (newspaper != null){
 
                         // El cliente pide un XML
-
                         if (this.pathHandler.getFileType().equals("xml")){
                             this.webPage = new WebPage(newspaper.toXML());
                             this.webPage.setContent("application/xml");
                         }
 
                         // El cliente pide un JSON
-
                         else if (this.pathHandler.getFileType().equals("json")){
                             this.webPage = new WebPage(newspaper.getJSONObject().toString(4));
                             this.webPage.setContent("application/json");
                         }
                         else{
-
                             // 415 - Unsuported Formar
-
                             this.httpStatusHandler.showError(415);
                         }
                     }
@@ -228,31 +197,23 @@ public class GetHandler {
                 }
 
                 // El cliente pide una WebNews
-
                 else if (this.pathHandler.getMode().equals("SingleWebNews")){
 
                     WebNews webNews = bs.getWebNews(this.pathHandler.getWebNewsURL());
-
                     if (webNews != null){
-
                         this.webPage = new WebPage("WebNews | " + webNews.getHeadline(), webNews.getHTMLBody());
                     }
                     else{
-
                         // 404 - Not found
-
                         this.httpStatusHandler.showError(404);
                     }
                 }
 
                 // El cliente pide las WebNews
-
                 else if (this.pathHandler.getMode().equals("WebNews")){
 
                     String html = " <div class=\"list-group\"><li class=\"list-group-item disabled\">WebNews</li>";
-
                     WebNews[] webNews = bs.getWebNews();
-
                     if (webNews != null){
                         for (WebNews singleWebNews : webNews){
                             html = html.concat("<a class=\"list-group-item\" href=\" " + singleWebNews.getUrl() + "/\">" + singleWebNews.getHeadline() + "</a>");
@@ -264,55 +225,42 @@ public class GetHandler {
                 }
 
                 // El cliente pide una WebNews serializado
-
                 else if (this.pathHandler.getMode().equals("WebNewsToFile")){
 
                     WebNews webNews = bs.getWebNews(this.pathHandler.getWebNewsURL());
-
                     if (webNews != null){
 
                         // El cliente pide un XML
-
                         if (this.pathHandler.getFileType().equals("xml")){
                             this.webPage = new WebPage(webNews.toXML());
                             this.webPage.setContent("application/xml");
                         }
 
                         // El cliente pide un JSON
-
                         else if (this.pathHandler.getFileType().equals("json")){
-
                             this.webPage = new WebPage(webNews.getJSONObject().toString(4));
                             this.webPage.setContent("application/json");
                         }
                         else{
-
                             // 415 - Unsuported Type of File
-
                             this.httpStatusHandler.showError(415);
                         }
                     }
                     else{
-
                         // 404 - Not found
-
                         this.httpStatusHandler.showError(404);
                     }
                 }
 
                 // El cliente pide un Journalist
-
                 else if (this.pathHandler.getMode().equals("Journalist")){
 
                     Journalist journalist = bs.findJournalist(this.pathHandler.getJournalistID());
-
                     if (journalist != null){
-
                         this.webPage = new WebPage("Journalist | " + journalist.getName(), journalist.getHTMLBody());
                         this.webPage.append("<div class=\"list-group\"><li class=\"list-group-item disabled\">Printable News authored</li>");
 
                         // Recogemos y procesamos todas las noticias del Periodista.
-
                         PrintableNews[] printableNews = bs.getPrintableNewsFromAuthor(journalist);
                         if(printableNews != null){
                             for(PrintableNews singlePrintableNews : printableNews){
@@ -325,15 +273,12 @@ public class GetHandler {
                         this.webPage.append("</div>");
                     }
                     else{
-
                         // 404 - Not found
-
                         this.httpStatusHandler.showError(404);
                     }
                 }
 
                 // El cliente pide los Journalists
-
                 else if (this.pathHandler.getMode().equals("Journalists")){
                     String html = " <div class=\"list-group\"><li class=\"list-group-item disabled\">Journalists</li>";
 
@@ -350,60 +295,50 @@ public class GetHandler {
                 }
 
                 // El cliente pide un Journalist serializado
-
                 else if (this.pathHandler.getMode().equals("JournalistToFile")){
                     Journalist journalist = bs.findJournalist(this.pathHandler.getJournalistID());
 
                     if (journalist != null){
 
                         // El cliente pide un XML
-
                         if (this.pathHandler.getFileType().equals("xml")){
                             this.webPage = new WebPage(journalist.toXML());
                             this.webPage.setContent("application/xml");
                         }
 
                         // El cliente pide un JSON
-
                         else if (this.pathHandler.getFileType().equals("json")){
                             this.webPage = new WebPage(journalist.getJSONObject().toString(4));
                             this.webPage.setContent("application/json");
                         }
 
                         // El cliente pide una vCard
-
                         else if (this.pathHandler.getFileType().equals("vcard")){
                             this.webPage = new WebPage(journalist.getvCard());
                         }
                         else{
-
                             // 415 - Unsuported Type of File
-
                             this.httpStatusHandler.showError(415);
                         }
                     }
                     else{
 
                         // 404 - Not found
-
                         this.httpStatusHandler.showError(404);
                     }
                 }
 
                 // Create Journalist
-
                 else if (this.pathHandler.getMode().equals("CreateJournalist")){
                     this.webPage = new WebPage("Create Journalist", new File(this.localDir + "templates/forms/journalist.html")); 
                 }
 
                 // Create Newspaper
-
                 else if (this.pathHandler.getMode().equals("CreateNewspaper")){
                     this.webPage = new WebPage("Create Newspaper", new File(this.localDir + "templates/forms/newspaper.html")); 
                 }
 
                 // Create PrintableNews
-
                 else if (this.pathHandler.getMode().equals("CreatePrintableNews")){
                     this.webPage = new WebPage("Create PrintableNews", new File(this.localDir + "templates/forms/printableNews.html")); 
                     this.webPage.replaceInTemplate("<!--journalistOptions-->", bs.getJournalistOptions());
@@ -412,7 +347,6 @@ public class GetHandler {
                 }
 
                 // Create WebNews
-
                 else if (this.pathHandler.getMode().equals("CreateWebNews")){
                     this.webPage = new WebPage("Create WebNews", new File(this.localDir + "templates/forms/webNews.html")); 
                     this.webPage.replaceInTemplate("<!--journalistOptions-->", bs.getJournalistOptions());
@@ -420,24 +354,18 @@ public class GetHandler {
                 }
 
                 else if (this.pathHandler.getMode().equals("Teapot")){
-
                     // 418 - Teapot
-
                     this.httpStatusHandler.showError(418);                
                 }
                 else{
-
                     // 501 - No Implementado
-
                     this.httpStatusHandler.showError(501);
                 }
             }
         }
         
         else{
-            
             // 413 - Request too long
-            
             this.httpStatusHandler.showError(413);
         }
     }

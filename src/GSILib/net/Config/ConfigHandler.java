@@ -66,7 +66,7 @@ public class ConfigHandler {
             this.serverConfigs.add(new ServerConfig());
             return false;
         }
-        
+        // Ha ido bien.
         return true;
     }
    
@@ -84,6 +84,7 @@ public class ConfigHandler {
      * @return 
      */
     public ServerConfig[] getServerConfigs(){
+        // Devolvemos la configuración de los servidores (puede haber más de uno).
         if(this.serverConfigs.isEmpty())
             return null;
         return this.serverConfigs.toArray(new ServerConfig[this.serverConfigs.size()]);
