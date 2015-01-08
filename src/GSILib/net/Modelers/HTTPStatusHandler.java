@@ -25,8 +25,8 @@ public class HTTPStatusHandler {
 
     /**
      * Class construtor with getHandler and localDir parameters
-     * @param getHandler
-     * @param localDir 
+     * @param getHandler GetHandler which is trated
+     * @param localDir current local directory
      */
     public HTTPStatusHandler(GetHandler getHandler, String localDir){
         this.localDir = localDir;
@@ -38,8 +38,8 @@ public class HTTPStatusHandler {
     
     /**
      * Class constructor with postHandler and localDir parameters
-     * @param postHandler
-     * @param localDir 
+     * @param postHandler PostHandler which is trated
+     * @param localDir current local directory
      */
     public HTTPStatusHandler(PostHandler postHandler, String localDir){
         this.localDir = localDir;
@@ -48,19 +48,19 @@ public class HTTPStatusHandler {
     }
     
     /**
-     * Shows and HTTP status error given a number to suit
-     * @param errorNumber 
+     * Shows and HTTP status message given a number to suit
+     * @param statusNumber number of HTTP status.
      */
-    public void showError(int errorNumber){
+    public void showError(int statusNumber){
         // Modificamos el estado al de error en el handler de GET.
-        this.getHandler.setStatus(this.stateStrings.get(errorNumber));
+        this.getHandler.setStatus(this.stateStrings.get(statusNumber));
         
         // Comprobamos que el archivo existe.
-        File errorPageFile = new File(this.localDir + "templates/errors/" + errorNumber +".html");
+        File errorPageFile = new File(this.localDir + "templates/errors/" + statusNumber +".html");
         if (errorPageFile.exists()){
             try {
                 // Creamos la página web para el error.
-                this.getHandler.setWebPage(new WebPage(this.stateStrings.get(errorNumber), errorPageFile));
+                this.getHandler.setWebPage(new WebPage(this.stateStrings.get(statusNumber), errorPageFile));
             } 
             catch (IOException ex) {
                 System.err.print("Unable to Read file: " +  errorPageFile.getAbsolutePath());
@@ -68,7 +68,7 @@ public class HTTPStatusHandler {
             
         }
         else{
-            System.err.println("Server was unable to find a template for (" +  errorNumber + ") error.");
+            System.err.println("Server was unable to find a template for (" +  statusNumber + ") error.");
         }
     }
   

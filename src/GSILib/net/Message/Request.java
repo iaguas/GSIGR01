@@ -27,7 +27,7 @@ public class Request {
     
     /**
      * Class constructor with request parameter
-     * @param request 
+     * @param request HTTP request
      */
     public Request(String request){
         // Establecemos los parámetros de la clase.
@@ -36,7 +36,7 @@ public class Request {
     
     /**
      * This method process a HTTP Request correctly inicializated.
-     * @throws UnsupportedEncodingException 
+     * @throws UnsupportedEncodingException  exception derivated from unsupported encoding.
      */
     public void processRequest() throws UnsupportedEncodingException{
         // Inicializamos el comparador de expresiones regulares.
@@ -52,7 +52,7 @@ public class Request {
             
             // Generamos, si es post, un HashMap de variables
             if (this.order.equals("POST")){
-                this.post = this.getPostHashMap(this.getPOSTData()); // 
+                this.post = this.getPostHashMap(this.getPOSTData());
             }   
         }
         else{
@@ -63,7 +63,7 @@ public class Request {
     
     /**
      * Gets the URL request order.
-     * @return order
+     * @return order An URL request order.
      */
     public String getOrder(){
         return this.order;
@@ -71,7 +71,7 @@ public class Request {
     
     /**
      * Gets the path of the requested web directory.
-     * @return path
+     * @return path path of the requested web directory.
      */
     public String getPath(){
         return this.path;
@@ -79,7 +79,7 @@ public class Request {
     
     /**
      * Gets mode of the URL request.
-     * @return mode
+     * @return mode mode of the URL request.
      */
     public String getMode(){
         return this.mode;
@@ -87,7 +87,7 @@ public class Request {
    
     /**
      * Gets a reduced URL request
-     * @return reduced URL request
+     * @return reduced URL request.
      */
     public String getReduced(){
         return this.request.split(("\r\n|\r|\n"))[0];
@@ -109,7 +109,7 @@ public class Request {
     
     /**
      * Confirms that the host sends the request in the correct encoding
-     * @return String
+     * @return String HTTP Accept-Encoding status.
      */
     public String getAcceptEnconding(){
         Matcher matcher = Pattern.compile("Accept-Encoding: ([^\\\n]+)").matcher(this.request);
@@ -123,7 +123,7 @@ public class Request {
     
     /**
      * Gets the request acknoledgement 
-     * @return String
+     * @return String HTTP Accept status.
      */
     public String getAccept(){
         Matcher matcher = Pattern.compile("Accept: ([^\\\n]+)").matcher(this.request);
@@ -165,7 +165,7 @@ public class Request {
     
     /**
      * Gets data on the cache control
-     * @return String
+     * @return String HTTP Cache-control status.
      */
     public String getCacheControl(){
         Matcher matcher = Pattern.compile("Cache-Control: ([^\\\n]+)").matcher(this.request);
@@ -179,7 +179,7 @@ public class Request {
     
     /**
      * Gets the connection status
-     * @return String 
+     * @return String HTTP Connection status.
      */
     public String getConnection(){
         Matcher matcher = Pattern.compile("Connection: ([^\\\n]+)").matcher(this.request);
@@ -193,7 +193,7 @@ public class Request {
     
     /**
      * Gets the data sent by POST for such case
-     * @return String 
+     * @return String HTTP POST-Data status.
      */
     public String getPOSTData(){
         Matcher matcher = Pattern.compile("POST-Data: ([^\\\n]+)").matcher(this.request);
@@ -207,7 +207,7 @@ public class Request {
     
     /**
      * Returns number of lines of the request message
-     * @return int
+     * @return int number of lines
      */
     public int countLines(){
         return this.request.split("\r\n|\r|\n").length;
@@ -215,7 +215,7 @@ public class Request {
     
     /**
      * Verifies whether the request is a POST request by a given key
-     * @param key
+     * @param key key of a POST request.
      * @return A string, in case the request is POST
      */
     public String getPOST(String key){

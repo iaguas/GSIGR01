@@ -44,7 +44,7 @@ public class NewsWebServer {
     
     /**
      * Class constructor with EditorialOffice parameter (converted to BusinessSystem)
-     * @param eo 
+     * @param eo Instance of interface EditorialOffice
      */
     public NewsWebServer(EditorialOffice eo){
         this.bs = (BusinessSystem) eo;
@@ -52,9 +52,9 @@ public class NewsWebServer {
     
     /**
      * ServerThread run method
-     * @param port
-     * @param domain
-     * @param localDir
+     * @param port integer port number
+     * @param domain domain server string
+     * @param localDir local directory of files
      * @return true if and only server is run correctly
      */
     public boolean run(int port, String domain, String localDir){
@@ -117,10 +117,11 @@ public class NewsWebServer {
         
         /**
          * ServerThread constructor, and element of the list ServerThreads in NewsWebServer
-         * @param port
-         * @param domain
-         * @param bs
-         * @throws BindException 
+         * @param port integer port number.
+         * @param domain domain server string.
+         * @param localDir local directory of files.
+         * @param bs business system asociate to server.
+         * @throws BindException exception derived from socket (the port is not disponible).
          */
         public ServerThread(int port, String domain, String localDir, BusinessSystem bs) throws BindException{
             // Incorporamos los datos básicos del servidor.
@@ -181,9 +182,9 @@ public class NewsWebServer {
 
         /**
          * Class constructor with socket, bs, and localDir parameters
-         * @param socket
-         * @param bs
-         * @param localDir 
+         * @param socket where connect the client.
+         * @param bs business system asociated with server
+         * @param localDir local directory of files
          */
         public ClientThread(Socket socket, BusinessSystem bs, String domain, String localDir) {
             // Asignamos los datos básicos de cliente a atender en el servidor.
@@ -277,8 +278,8 @@ public class NewsWebServer {
     
     /** 
      * Main method
-     * @param args
-     * @throws Exception 
+     * @param args stack of args of main method.
+     * @throws Exception An exception.
      */
     public static void main(String[] args) throws Exception {
 

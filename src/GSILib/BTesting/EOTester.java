@@ -25,8 +25,8 @@ import java.util.Date;
 public class EOTester {
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Returns a simulated BusinessSystem with example entities
+     * @return bs a BusinessSystem
      */
     public static BusinessSystem getTestingBusinessSystem(){
         

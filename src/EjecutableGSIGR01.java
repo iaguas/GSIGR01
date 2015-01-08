@@ -4,6 +4,8 @@
  * Universidad Pública de Navarra - curso 2014-15
  */
 
+package GSILib;
+
 import GSILib.BTesting.EOTester;
 import GSILib.BTesting.XMLTesting;
 import GSILib.connect.client.HRClient;

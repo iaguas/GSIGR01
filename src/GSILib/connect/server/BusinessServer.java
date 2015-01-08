@@ -83,7 +83,7 @@ public class BusinessServer {
     
     /**
      * This is the main method for the BusinessServer, which is the server RMI uses
-     * @param args
+     * @param args Arguments for Main Method.
      * @throws RemoteException handles errors associated to RMI
      * @throws IOException handles errors associated to IO reading
      * @throws SAXException handles errors associated to XML handling

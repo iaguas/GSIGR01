@@ -51,8 +51,8 @@ public class GetHandler {
      /** 
      * Processes GET type petitions by showing data stored in the directories
      * @param request URL request
-     * @throws IOException
-     * @throws JSONException 
+     * @throws IOException exception derived from io.
+     * @throws JSONException exception derived from JSON parsing.
      */
     public void processGetPetition(Request request) throws IOException, JSONException{
         // Inicializamos el manejador de rutas para analizarla.
@@ -372,7 +372,7 @@ public class GetHandler {
     
     /**
      * Gets current web page
-     * @return WebPage
+     * @return WebPage webpage generated.
      */
     public WebPage getWebPage(){
         return this.webPage;
@@ -380,23 +380,23 @@ public class GetHandler {
     
     /**
      * Set the web page to the given WebPage
-     * @param webPage 
+     * @param webPage current webpage
      */
     public void setWebPage(WebPage webPage){
         this.webPage = webPage;
     }
     
     /**
-     * Returns status of the URL protocol
-     * @return 
+     * Returns status of the HTTP protocol
+     * @return status of HTTP
      */
     public String getStatus(){
         return this.status;
     }
     
     /**
-     * Sets the status for the URL protocol
-     * @param status URL status code
+     * Sets the status for the HTTP protocol
+     * @param status HTTP status code
      */
     public void setStatus(String status){
         this.status = status;
@@ -404,7 +404,7 @@ public class GetHandler {
     
     /**
      * Gets the content type of the requested web resource
-     * @return contentType
+     * @return contentType contentType of a HTTP response.
      */
     public String getContentType(){
         return this.contentType;

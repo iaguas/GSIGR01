@@ -6,7 +6,6 @@
 
 package GSILib.BModel;
 
-import GSILib.BModel.documents.visualNews.PrintableNews;
 import GSILib.BModel.workers.Journalist;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -184,8 +183,8 @@ public abstract class Document implements Serializable{
     }
     
     /**
-     * TODO JavaDoc
-     * @param newDocument 
+     * Copies name and birthdate from a Document to an associated new one.
+     * @param newDocument original Document the fields are read from
      */
     protected void copyValuesFrom(Document newDocument){
         this.body = newDocument.getBody();
@@ -211,9 +210,9 @@ public abstract class Document implements Serializable{
     }
     
     /**
-     * TODO: JavaDoc
-     * @return
-     * @throws JSONException 
+     * Document to JSON object parser
+     * @return json JSON object containing a Document 
+     * @throws JSONException exception derived from JSON inputing
      */
     public JSONObject getJSONObject() throws JSONException{
         

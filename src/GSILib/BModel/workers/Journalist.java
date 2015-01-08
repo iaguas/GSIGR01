@@ -59,7 +59,7 @@ public class Journalist extends Worker implements XMLRepresentable, Serializable
     /**
      * Class constructor
      * @param journalistFromXML This is a xml String which represents a Jorunalist
-     * @throws org.xml.sax.SAXException
+     * @throws org.xml.sax.SAXException exception derived from data consistence.
      */
     public Journalist(String journalistFromXML) throws SAXException{
         
@@ -100,7 +100,7 @@ public class Journalist extends Worker implements XMLRepresentable, Serializable
      * XML Element. 
      * @param xmlJournalist Element type which contains useful data (interest(s))
      */
-    // Este método no lanza ninguna excepción
+    @Override
     protected void loadFromElement(Element xmlJournalist){
         
         // Worker rellena sus datos
@@ -145,7 +145,8 @@ public class Journalist extends Worker implements XMLRepresentable, Serializable
     }
     
     /**
-     * Helper method which creates a XML element <Journalist>
+     * Helper method which creates a XML element "Journalist"
+     * @param xml XML Handler for system.
      * @return XML element snippet representing a journalist
      */
     public Element getElement(XMLHandler xml){
@@ -267,8 +268,8 @@ public class Journalist extends Worker implements XMLRepresentable, Serializable
     }
     
     /**
-     * TODO: JavaDoc
-     * @param newJournalist 
+     * Copies all the fields from a Journalist to an associated new one.
+     * @param newJournalist original Journalist the fields are read from
      */
     public void copyValuesFrom(Journalist newJournalist){
         super.copyValuesFrom(newJournalist);
@@ -296,8 +297,8 @@ public class Journalist extends Worker implements XMLRepresentable, Serializable
     }
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Creates an HTML template with the representation of a Journalist
+     * @return html fragment with the values of a Journalist
      */
     public String getHTMLBody(){
         
@@ -324,10 +325,7 @@ public class Journalist extends Worker implements XMLRepresentable, Serializable
         return html.concat("</div></div></div><br>");
     }
     
-    /**
-     * TODO: JavaDoc
-     * @return 
-     */
+    @Override
     public JSONObject getJSONObject() throws JSONException{
         
         JSONObject json = super.getJSONObject();
@@ -338,8 +336,8 @@ public class Journalist extends Worker implements XMLRepresentable, Serializable
     }
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Returns a contact card of a Journalist
+     * @return vCard Journalist vCard
      */
     public String getvCard(){
         String vCard = "begin:VCARD\n" +

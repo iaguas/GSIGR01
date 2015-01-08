@@ -136,7 +136,8 @@ public class Picture implements XMLRepresentable{
     }
     
     /**
-     * Helper method which creates a XML element <Photographer>
+     * Helper method which creates a XML element "Photographer"
+     * @param xml XML handler for the system.
      * @return XML element snippet representing a photographer
      */
     public Element getElement(XMLHandler xml){
@@ -273,8 +274,9 @@ public class Picture implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Picture to JSON object parser
+     * @return json JSON object containing a Picture
+     * @throws JSONException exception derived from JSON inputing
      */
     public JSONObject getJSONObject() throws JSONException{
         

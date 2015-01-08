@@ -32,8 +32,8 @@ public class WebPage {
     
     /**
      * Class constructor with title and body paramters
-     * @param title
-     * @param body 
+     * @param title title of webpage.
+     * @param body body of webpage.
      */
     public WebPage(String title, String body){
         // Parámetros básicos de la clase.
@@ -44,9 +44,9 @@ public class WebPage {
     
     /**
      * Class constructor with title and file parameters
-     * @param title
-     * @param file
-     * @throws IOException 
+     * @param title title of webpage.
+     * @param file file of the template of body of webpage.
+     * @throws IOException exception derived from io.
      */
     public WebPage(String title, File file) throws IOException{  // TODO: Sin excepción
         // Parámetros básicos de la clase.
@@ -57,7 +57,9 @@ public class WebPage {
     
     /**
      * Class constructor with file parameter
-     * @param file 
+     * @param file file of the template of body of webpage.
+     * @throws java.io.FileNotFoundException exception derived from not found file
+     * @throws java.io.IOException exception derived from io
      */
     public WebPage(File file) throws FileNotFoundException, IOException{ // TODO: Sin excepción
         // Parámetros básicos de la clase.
@@ -78,7 +80,7 @@ public class WebPage {
     
     /**
      * Class constructor with file path parameter
-     * @param file 
+     * @param file file of the template of body of webpage.
      */
     public WebPage(String file){
         // Parámetros básicos de la clase.
@@ -88,7 +90,7 @@ public class WebPage {
     
     /**
      * Gets the HTML template based on a file
-     * @param path
+     * @param path ask by user.
      * @return HTML file in String form
      * @throws IOException 
      */
@@ -108,7 +110,7 @@ public class WebPage {
     
     /**
      * Sets the content for a given HTML template
-     * @param content 
+     * @param content content of webpage.
      */
     public void setContent(String content){
         // Establecemos el contenido.
@@ -117,7 +119,7 @@ public class WebPage {
     
     /**
      * Sets the charset for a given HTML template
-     * @param charset 
+     * @param charset charset of webpage.
      */
     public void setCharset(String charset){
         // Establecemos el tipo de conjunto de caracteres.
@@ -126,7 +128,7 @@ public class WebPage {
     
     /**
      * Sets the title for a given HTML template
-     * @param title 
+     * @param title title of webpage
      */
     public void setTitle(String title){
         // Establecemos el título.
@@ -135,7 +137,7 @@ public class WebPage {
     
     /**
      * Sets the body for a given HTML template
-     * @param body 
+     * @param body body of webpage.
      */
     public void setBody(String body){
         // Establecemos el cuerpo de la página.
@@ -144,8 +146,8 @@ public class WebPage {
     
     /**
      * Replaces oldString for a newString in an HTML template
-     * @param oldString
-     * @param newString 
+     * @param oldString string to replase.
+     * @param newString string with replase.
      */
     public void replaceInTemplate(String oldString, String newString){
         // Remplazamos un string por otro.

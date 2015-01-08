@@ -103,8 +103,8 @@ public abstract class Worker implements Serializable {
     }
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Copies name and birthdate from an associated Worker to a new one
+     * @param newWorker original Worker the fields are read from
      */
     protected void copyValuesFrom(Worker newWorker){
         this.name = newWorker.getName();
@@ -129,9 +129,9 @@ public abstract class Worker implements Serializable {
     }
 
     /**
-     * TODO: JavaDoc
-     * @return
-     * @throws JSONException 
+     * Worker to JSON object parser
+     * @return json JSON object containing a Worker
+     * @throws JSONException exception derived from JSON inputing
      */
     public JSONObject getJSONObject() throws JSONException{
         

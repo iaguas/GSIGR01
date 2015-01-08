@@ -114,7 +114,8 @@ public class Teletype extends Document implements XMLRepresentable{
     }
     
     /**
-     * Helper method which creates a XML element <Teletype>
+     * Helper method which creates a XML element "Teletype"
+     * @param xml XML handler for system.
      * @return XML element snippet representing a teletype
      */
     public Element getElement(XMLHandler xml){
@@ -259,9 +260,9 @@ public class Teletype extends Document implements XMLRepresentable{
     
     
     /**
-     * TODO: JavaDoc
-     * @return
-     * @throws JSONException 
+     * Teletype to JSON object parser (use of inherited method from Document)
+     * @return json JSON object containing a Teletype
+     * @throws JSONException exception derived from JSON inputing
      */
     public JSONObject getJSONObject() throws JSONException{
         return super.getJSONObject();

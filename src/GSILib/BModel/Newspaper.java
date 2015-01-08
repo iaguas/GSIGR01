@@ -47,17 +47,15 @@ public class Newspaper implements XMLRepresentable{
     /**
      * Empty class constructor.
      */
-    public Newspaper(){
-        
+    public Newspaper(){ 
         this.date = new Date();
     }
     
     /**
-     * TODO: JavaDoc
-     * @param date 
+     * Class constructor with date parameter
+     * @param date Date type attribute for Newspaper
      */
     public Newspaper(Date date){
-        
         this.date = date;
     }
     
@@ -66,7 +64,7 @@ public class Newspaper implements XMLRepresentable{
      * tagged nodes, which are Newspaper type objects.
      * @param newspaperFromXML XML document to parse, which contains nodes corresponding to the class Newspaper
      * @throws SAXException exception derived from XML file reading
-     * @throws java.text.ParseException
+     * @throws java.text.ParseException exception derived from parsing.
      */
     public Newspaper(String newspaperFromXML) throws SAXException, ParseException{
         
@@ -85,6 +83,7 @@ public class Newspaper implements XMLRepresentable{
      * Imports list of Newspapers from the Element gathered from an XML Document
      * containing Newspaper node list.
      * @param xmlNewspaper Element type containing "Newspaper" tagged nodes
+     * @throws java.text.ParseException exception derived from parsing.
      */
     public Newspaper(Element xmlNewspaper) throws ParseException{
         
@@ -99,6 +98,7 @@ public class Newspaper implements XMLRepresentable{
      * XML Element. 
      * @param xmlNewspaper Element type which contains useful data (dates and a 
      * list of PrintableNews)
+     * @throws java.text.ParseException exception derivated from parsing.
      */
     protected void loadFromElement(Element xmlNewspaper) throws ParseException{
         
@@ -176,7 +176,8 @@ public class Newspaper implements XMLRepresentable{
     }
     
     /**
-     * Helper method which creates a XML element <Newspaper>
+     * Helper method which creates a XML element "Newspaper".
+     * @param xml XML handler for the system.
      * @return XML element snippet representing a newspaper
      */
     public Element getElement(XMLHandler xml){
@@ -313,8 +314,8 @@ public class Newspaper implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Creates an HTML template with the representation of a Newspaper
+     * @return html fragment with the listing of PrintableNews contained in a Newspaper
      */
     public String getHTMLBody(){
         
@@ -345,9 +346,9 @@ public class Newspaper implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
-     * @return
-     * @throws JSONException 
+     * Newspaper to JSON object parser
+     * @return json JSON object containing a Newspaper
+     * @throws JSONException exception derived from JSON inputing
      */
     public JSONObject getJSONObject() throws JSONException{
         

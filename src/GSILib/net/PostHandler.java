@@ -33,8 +33,8 @@ public class PostHandler {
     
     /**
      * Class constructor with bs and localDir parameters.
-     * @param bs 
-     * @param localDir 
+     * @param bs bussines sistem asociated
+     * @param localDir current local directory
      */
     public PostHandler(BusinessSystem bs, String localDir){
         this.bs = bs;
@@ -44,8 +44,8 @@ public class PostHandler {
     
     /**
      * Processes a POST requests and executes the demanded actions.
-     * @param request
-     * @throws IOException 
+     * @param request request HTTP where is the POST petition.
+     * @throws IOException exception derived from io.
      */
     public void processPostPetition(Request request) throws IOException{
         // Guardamos el parámetro que falta.
@@ -203,7 +203,7 @@ public class PostHandler {
     
     /**
      * Gets the WebPage to be shown
-     * @return webPage
+     * @return webPage created webpage.
      */
     public WebPage getWebPage(){
         return this.webPage;
@@ -211,7 +211,7 @@ public class PostHandler {
     
     /**
      * Gets the URL status.
-     * @return status
+     * @return status result HTTP status  
      */
     public String getStatus(){
         return this.status;

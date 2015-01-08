@@ -42,7 +42,7 @@ public class PathHandler {
     
     /**
      * Class constructor with web resource path parameter
-     * @param path 
+     * @param path ask to server by user.
      */
     public PathHandler(String path){
         // Establecemos las variables de la clase.
@@ -208,7 +208,7 @@ public class PathHandler {
     
     /**
      * Gets the path for a requested web resource
-     * @return path
+     * @return path asked.
      */
     public String getPath(){
         return this.path;
@@ -217,7 +217,7 @@ public class PathHandler {
     
     /**
      * Gets the action requested by the web client (mode)
-     * @return mode
+     * @return mode of request.
      */
     public String getMode(){
         return this.mode;
@@ -226,7 +226,7 @@ public class PathHandler {
     
    /**
      * Gets the newspaper date by translating the naming format for Newspapers
-     * @return a date
+     * @return a date of a news paper.
      */
     public String getNewspaperDate(){
         return this.year + "/" + this.month + "/" +  this.day;
@@ -235,7 +235,7 @@ public class PathHandler {
     
     /**
      * Gets a PrintableNews ID
-     * @return printableNewsID
+     * @return printableNewsID printablenews ID requested
      */
     public String getPrintableNewsID(){
         return this.printableNewsID;
@@ -244,7 +244,7 @@ public class PathHandler {
     
     /**
      * Gets the URL of a requested WebNews
-     * @return webNewsURL
+     * @return webNewsURL webnews URL requested
      */
     public String getWebNewsURL(){
         return this.webNewsURL;
@@ -253,7 +253,7 @@ public class PathHandler {
     
     /**
      * Gets a Journalist ID
-     * @return journalistID
+     * @return journalistID journalist ID requested
      */
     public String getJournalistID(){
         return this.journalistID;
@@ -262,7 +262,7 @@ public class PathHandler {
     
     /**
      * Gets file type of the requested file
-     * @return fileType
+     * @return fileType fileType requested
      */
     public String getFileType(){
         return this.fileType;

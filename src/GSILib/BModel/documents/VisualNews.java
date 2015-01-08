@@ -108,15 +108,16 @@ public abstract class VisualNews extends Document implements Serializable {
         return this.pictures.toArray(new Picture[this.pictures.size()]);
     }
     
-    /**
-     * TODO: JavaDoc
-     * @param newVisualNews 
+   /**
+     * Copies all values from a VisualNews to an associated new one.
+     * @param newVisualNews original VisualNews the fields are read from
      */
     protected void copyValuesFrom(VisualNews newVisualNews){
         super.copyValuesFrom(newVisualNews);
         if (newVisualNews.getPictures() != null)
             this.pictures.addAll(Arrays.asList(newVisualNews.getPictures()));
     }
+    
     /** 
      * Equals. Known if 2 object are the same.
      * @param vn a teletype
@@ -138,8 +139,9 @@ public abstract class VisualNews extends Document implements Serializable {
     }
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * VisualNews to JSON object parser (use of inherited method from Document)
+     * @return json JSON object containing a VisualNews
+     * @throws JSONException exception derived from JSON inputing
      */
     public JSONObject getJSONObject() throws JSONException{
         

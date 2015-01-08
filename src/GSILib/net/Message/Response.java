@@ -25,8 +25,8 @@ public class Response {
     
     /**
      * Class constructor with mode and status parameters
-     * @param mode
-     * @param status 
+     * @param mode mode of response.
+     * @param status HTTP status of the response
      */
     public Response(String mode, String status){
         this.mode = mode;
@@ -36,9 +36,9 @@ public class Response {
     
     /**
      * Class constructor with mode, status and webPage parameters
-     * @param mode
-     * @param status 
-     * @param webPage 
+     * @param mode mode of response.
+     * @param status HTTP status of the response
+     * @param webPage webpage to use.
      */
     public Response(String mode, String status, WebPage webPage){
         this.mode = mode;
@@ -49,10 +49,10 @@ public class Response {
     
     /**
      * Class constructor with mode, status, webPage and contentType parameters
-     * @param mode
-     * @param status
-     * @param webPage
-     * @param contentType 
+     * @param mode mode of response.
+     * @param status HTTP status of the response
+     * @param webPage webpage to use.
+     * @param contentType contentType to use.
      */
     public Response(String mode, String status, WebPage webPage, String contentType){
         this.mode = mode;
@@ -64,7 +64,7 @@ public class Response {
     
     /**
      * Sets the mode of the response.
-     * @param mode
+     * @param mode mode of response.
      */
     public void setMode(String mode){
         this.mode = mode;
@@ -72,7 +72,7 @@ public class Response {
     
     /**
      * Sets the status.
-     * @param status 
+     * @param status status of the response.
      */
     public void setStatus(String status){
         this.status = status;
@@ -80,7 +80,7 @@ public class Response {
     
     /**
      * Sets the content type.
-     * @param contentType 
+     * @param contentType content type of the response
      */
     public void setContentType(String contentType){
         this.contentType = contentType;
@@ -88,7 +88,7 @@ public class Response {
     
     /**
      * Sets the web page.
-     * @param webPage 
+     * @param webPage webpage of the response.
      */
     public void setWebPage(WebPage webPage){
         this.webPage = webPage;
@@ -104,7 +104,7 @@ public class Response {
     
     /**
      * Gets the web page length of a response
-     * @return int 
+     * @return int lengh fo a response webpage.
      */
     private int getContentLength(){
         return this.webPage.toString().length();

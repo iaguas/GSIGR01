@@ -1137,7 +1137,8 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
     }  
     
     /**
-     * Helper method which creates a XML element <BusinessSystem>
+     * Helper method which creates a XML element "BusinessSystem"
+     * @param xml XML Handler for the system.
      * @return XML element snippet representing a BusinessSystem
      */
     public Element getElement(XMLHandler xml){
@@ -1342,10 +1343,11 @@ public class BusinessSystem implements EditorialOffice, ODSPersistent, XMLRepres
      * Main method which imports a BusinessSystem from an XML file which contains
      * complete data of all the classes which conform the business system.
      * @param file XML type file
-     * @throws XMLParsingException, IOException, SAXException cover all the
-     * spectrum of posible exceptions that might occur on the reading of the XML
-     * file, including file and data consistency
-     * 
+     * @return a business system with all the inclusions that XML defines.
+     * @throws XMLParsingException exception derived from XML parsing.
+     * @throws IOException exception derived from io.
+     * @throws SAXException exception derived from SAXException (data consistency).     
+     * @throws java.text.ParseException exception derived from Parsing.
      */
     public static BusinessSystem loadFromFileXML(File file) throws XMLParsingException, IOException, SAXException, ParseException{
 

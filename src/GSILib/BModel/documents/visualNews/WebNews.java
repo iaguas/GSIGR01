@@ -58,11 +58,10 @@ public class WebNews extends VisualNews implements XMLRepresentable{
     }
     
     /**
-     * Class constructor that makes an object with headline, body, author and URL.
+     * Class constructor that makes an object with headline, body and author.
      * @param headline headline of the notice that you want to save.
      * @param body all text of the notice.
      * @param journalist worker who has written the notice.
-     * @param url URL that's a unique identifier of the notice.
      */
     public WebNews(String headline, String body, Journalist journalist) {
         // Llamamos al constructor de la superclase.
@@ -118,7 +117,8 @@ public class WebNews extends VisualNews implements XMLRepresentable{
     /**
      * Lowest rank method which obtains the atribute values for WebNews from an
      * XML Element. 
-     * @param xmlWebNews Element type which contains useful data (url and keyword(s))
+     * @param xmlWebNews Element type which contains useful data (url and keyword(s)).
+     * @param journalist Journalist which you are loking for.
      */
     public WebNews(Element xmlWebNews, Journalist journalist){
         
@@ -196,9 +196,9 @@ public class WebNews extends VisualNews implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
-     * @param url
-     * @return 
+     * Provides a correct formatting to the inputted URL String
+     * @param url to be normalized
+     * @return String Normalized URL
      */
     private String getSEOFriendlyURL(String url){
         return Normalizer.normalize(url.toLowerCase(), Form.NFD)
@@ -207,7 +207,8 @@ public class WebNews extends VisualNews implements XMLRepresentable{
     }
     
     /**
-     * Helper method which creates a XML element <WebNews>
+     * Helper method which creates a XML element "WebNews"
+     * @param xml XML Handler for the system.
      * @return XML element snippet representing a webNews
      */
     public Element getElement(XMLHandler xml){
@@ -402,8 +403,8 @@ public class WebNews extends VisualNews implements XMLRepresentable{
     }
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Creates an HTML template with the representation of a WebNews
+     * @return html fragment with a WebNews
      */
     public String getHTMLBody(){
         
@@ -432,11 +433,7 @@ public class WebNews extends VisualNews implements XMLRepresentable{
         return html;
     }
     
-    /**
-     * TODO: JavaDoc
-     * @return
-     * @throws JSONException 
-     */
+    @Override
     public JSONObject getJSONObject() throws JSONException{
         
         JSONObject json = super.getJSONObject();

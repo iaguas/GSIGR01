@@ -55,8 +55,8 @@ public interface EditorialOffice{
     public Journalist findJournalist(String ID);
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Returns the list of Journalists stored in the system
+     * @return a list of Journalists
      */
     public Journalist[] getJournalists();
     
@@ -239,21 +239,21 @@ public interface EditorialOffice{
     
     /**
      * Retrieves a PrintableNews form his ID
-     * @param ID	The printableNewsID
+     * @param printableNewsID The printableNewsID
      * @return 	The element, or null if no element matched the search.
      */
     public PrintableNews getPrintableNews(int printableNewsID);
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Returns the list of Webnews stored in the system
+     * @return a list of Webnews
      */
     public WebNews[] getWebNews();
     
     /**
-     * TODO: JavaDoc
-     * @param URL
-     * @return 
+     * Gets the WebNews associated to a given URL
+     * @param URL resource with a WebNews
+     * @return webnews requested.
      */
     public WebNews getWebNews(String URL);
 	
@@ -278,16 +278,16 @@ public interface EditorialOffice{
     public boolean createNewspaper(Date d);
     
     /**
-     * TODO: JavaDoc
-     * @param date
-     * @return 
+     * Creates a Newspaper for the specified date given in String format
+     * @param date String to be converted into Date
+     * @return true if and only if the newspaper was correctly created
      */
     public boolean createNewspaper(String date);
     
     /**
-     * TODO: JavaDoc
-     * @param newspaper
-     * @return 
+     * Adds a Newspaper to the system
+     * @param newspaper to be added to the System
+     * @return instance of a Newspaper
      */
     public Newspaper insertNewspaper(Newspaper newspaper);
     
@@ -306,9 +306,9 @@ public interface EditorialOffice{
     public Newspaper getNewspaper(String d);
     
     /**
-     * TODO: JavaDoc
-     * @param date
-     * @return 
+     * Returns a list of Newspapers of a given date, which is the partial key
+     * @param date The date that filters the Newspapers
+     * @return a list of Newspapers which have the given date
      */
     public Newspaper[] getNewspapersByPartialKey(String date);
     
@@ -357,14 +357,14 @@ public interface EditorialOffice{
     public Picture getPicture(String url);
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Creates an HTML fragment with a listing of selectable Journalists
+     * @return HTML fragment to be shown in a web page for the listing of Journalists
      */
     public String getJournalistOptions();
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Creates an HTML fragment with a listing of selectable Newspapers
+     * @return HTML fragment to be shown in a web page for the listing of Newspapers
      */
     public String getNewspaperOptions();
 }

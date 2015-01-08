@@ -32,8 +32,9 @@ public class HRClient {
     
     /**
      * This is the main method for the HumanResourceClient stub
-     * @param args
-     * @throws RemoteException, IOException that handle RMI associated errors
+     * @param args arguments for Main Method
+     * @throws RemoteException that handle RMI associated errors
+     * @throws IOException exception derived from io.
      */
     public static void main(String[] args) throws RemoteException, IOException {
         

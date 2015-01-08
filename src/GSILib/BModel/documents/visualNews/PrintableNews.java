@@ -171,8 +171,9 @@ public class PrintableNews extends VisualNews implements XMLRepresentable, Seria
     }
     
     /**
-     * Helper method which creates a XML element <PrintableNews>
-     * @return XML element snippet representing a printableNews
+     * Helper method which creates a XML element "PrintableNews"
+     * @param xml XML handler for the system.
+     * @return XML element snippet representing a printableNews.
      */
     public Element getElement(XMLHandler xml){
 
@@ -390,8 +391,8 @@ public class PrintableNews extends VisualNews implements XMLRepresentable, Seria
     }
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Creates an HTML template with the representation of a PrintableNews (inside Newspaper template)
+     * @return html fragment with a PrintableNews contained in a Newspaper
      */
     public String getHTMLBody(){
         
@@ -420,11 +421,7 @@ public class PrintableNews extends VisualNews implements XMLRepresentable, Seria
         return html;
     }
     
-    /**
-     * TODO: JavaDoc
-     * @return
-     * @throws JSONException 
-     */
+    @Override
     public JSONObject getJSONObject() throws JSONException{
         
         JSONObject json = super.getJSONObject();

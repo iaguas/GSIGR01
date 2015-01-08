@@ -50,8 +50,8 @@ public class Photographer extends Worker implements XMLRepresentable, Serializab
     
     /**
      * Class constructor
-     * @param journalistFromXML This is a xml String which represents a Jorunalist
-     * @throws org.xml.sax.SAXException
+     * @param photographerFromXML This is a xml String which represents a Photographer.
+     * @throws org.xml.sax.SAXException exception derivated from data consistence.
      */
     public Photographer(String photographerFromXML) throws SAXException{
         
@@ -125,7 +125,8 @@ public class Photographer extends Worker implements XMLRepresentable, Serializab
     }
     
     /**
-     * Helper method which creates a XML element <Photographer>
+     * Helper method which creates a XML element "Photographer"
+     * @param xml XML handler for system.
      * @return XML element snippet representing a photographer
      */
     public Element getElement(XMLHandler xml){
@@ -281,10 +282,7 @@ public class Photographer extends Worker implements XMLRepresentable, Serializab
                 + "|- Holiday residence: " + this.holidayResidence + "\n";
     }
     
-    /**
-     * TODO: JavaDoc
-     * @return 
-     */
+    @Override
     public JSONObject getJSONObject() throws JSONException{
         
         JSONObject json = super.getJSONObject();
