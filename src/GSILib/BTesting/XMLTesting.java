@@ -23,12 +23,28 @@ import java.io.IOException;
 import java.text.ParseException;
 
 /**
- *
- * @author Alvaro
+ * This class is used to show the examples for lab 3.
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class XMLTesting {
     
+    /**
+     * This is the main class of XMLTesting.
+     * @param args
+     * @throws SAXException
+     * @throws XMLParsingException
+     * @throws IOException
+     * @throws ParseException 
+     */
     public static void main(String args[]) throws SAXException, XMLParsingException, IOException, ParseException {
+        
+        // Nos aseguramos que existe el directorio donde se guardan las cosas,
+        // sino lo creamos
+        File saveDir = new File("xml");
+        if(! saveDir.exists()){
+            saveDir.mkdirs();
+        }
+        
         
         System.out.println("---------------");
         System.out.println("***  Store  ***");

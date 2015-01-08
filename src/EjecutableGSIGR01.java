@@ -47,9 +47,6 @@ public abstract class EjecutableGSIGR01 {
         // Iniciamos la selección y ejecución de la práctica.
             int option = menuPrincipal();
             principalHandler(option);
-        
-        // Mostramos el final.
-        System.out.println("Cerrando el sistema...");
     }
     
  
