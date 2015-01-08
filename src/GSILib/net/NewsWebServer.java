@@ -1,4 +1,3 @@
-// ******************************** REVISADA **********************************
 /* 
  * Práctica 05 - Grupo 01
  * Gestión de Sistemas de Información
@@ -35,8 +34,8 @@ import org.json.JSONException;
 //         (1 servidor por cada dominio y puerto)     (1 hilo de atención a cada cliente HTTP)
 
 /**
- * TODO: JavaDoc
- * @author Alvaro
+ * Main class for the web service to be instanciated in ServerThreads, and which also instanciates ClientThreads  
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class NewsWebServer {
     // Parámetros de la clase NewsWebServer
@@ -44,7 +43,7 @@ public class NewsWebServer {
     private final List<ServerThread> serverThreads = new ArrayList();
     
     /**
-     * TODO: JavaDoc
+     * Class constructor with EditorialOffice parameter (converted to BusinessSystem)
      * @param eo 
      */
     public NewsWebServer(EditorialOffice eo){
@@ -52,10 +51,11 @@ public class NewsWebServer {
     }
     
     /**
-     * TODO: JavaDoc
+     * ServerThread run method
      * @param port
      * @param domain
-     * @return 
+     * @param localDir
+     * @return true if and only server is run correctly
      */
     public boolean run(int port, String domain, String localDir){
         try{
@@ -76,9 +76,9 @@ public class NewsWebServer {
     }
     
     /**
-     * TODO: JAVADOC
-     * @param port
-     * @return 
+     * Stops a ServerThread by a given port
+     * @param port associated to a ServerThread
+     * @return true if and only if serverThread is stopped and removed correctly
      */
     public boolean stop(int port){
         // Recoremos la lista de servidores buscando el que nos interesa.
@@ -95,7 +95,7 @@ public class NewsWebServer {
     }
     
     /**
-     * TODO: JavaDoc
+     * Stops all ServerThreads.
      */
     public void stopAll(){
         // Recoremos la lista de servidores para parar cada uno de ellos.
@@ -107,17 +107,16 @@ public class NewsWebServer {
     }
 
     /** 
-     * Clase interna ServerThread
-     * TODO: JAVADOC
+     * Class ServerThread. Makes differents threads for each sever.
      */
     public static class ServerThread extends Thread{
-        // Parámetros de la clase NewsWebServer
+        // Parámetros de la clase ServerThread
         private final int port;
         private final String domain, localDir;
         private final BusinessSystem bs;
         
         /**
-         * TODO: JavaDoc
+         * ServerThread constructor, and element of the list ServerThreads in NewsWebServer
          * @param port
          * @param domain
          * @param bs
@@ -132,17 +131,14 @@ public class NewsWebServer {
         }
         
         /** 
-         * TODO: JAVADOC
-         * @return 
+         * Gets the domain of a ServerThread
+         * @return domain
          */
         public String getDomain(){
             // Devolvemos el dominio del servidor de este hilo.
             return domain;
         }
         
-        /**
-         * TODO: JavaDoc
-         */
         @Override
         public void run(){
             try {
@@ -172,7 +168,8 @@ public class NewsWebServer {
     }
     
     /**
-     * TODO: JavaDoc
+     * Class ClientThread. It creates a thread for each client that ask something
+     * to any server.
      */
     private static class ClientThread extends Thread {
         // Parámetros de la clase ClientThread
@@ -183,7 +180,7 @@ public class NewsWebServer {
         private final String domain, localDir;
 
         /**
-         * TODO: JavaDoc
+         * Class constructor with socket, bs, and localDir parameters
          * @param socket
          * @param bs
          * @param localDir 
@@ -195,10 +192,7 @@ public class NewsWebServer {
             this.domain = domain;
             this.localDir = localDir;
         }
-        
-        /**
-         * TODO: JavaDoc
-         */
+
         @Override
         public void run() {
             try {
@@ -282,7 +276,7 @@ public class NewsWebServer {
     }
     
     /** 
-     * TODO: JAVADOC
+     * Main method
      * @param args
      * @throws Exception 
      */

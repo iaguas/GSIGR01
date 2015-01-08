@@ -1,4 +1,3 @@
-// ******************************** REVISADA **********************************
 /* 
  * Práctica 05 - Grupo 01
  * Gestión de Sistemas de Información
@@ -22,8 +21,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *
- * @author Alvaro
+ * This class manages the URL protocol, controlling requests and responses POST.
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class PostHandler {
     private final BusinessSystem bs;
@@ -33,7 +32,7 @@ public class PostHandler {
     private final HTTPStatusHandler httpStatusHandler;
     
     /**
-     * TODO: JavaDoc
+     * Class constructor with bs and localDir parameters.
      * @param bs 
      * @param localDir 
      */
@@ -44,7 +43,7 @@ public class PostHandler {
     }
     
     /**
-     * TODO: JAVADOC
+     * Processes a POST requests and executes the demanded actions.
      * @param request
      * @throws IOException 
      */
@@ -202,19 +201,17 @@ public class PostHandler {
         }
     }
     
-    
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Gets the WebPage to be shown
+     * @return webPage
      */
     public WebPage getWebPage(){
         return this.webPage;
     }
     
-    
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Gets the URL status.
+     * @return status
      */
     public String getStatus(){
         return this.status;

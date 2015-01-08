@@ -11,8 +11,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *
- * @author Alvaro
+ * This handler takes an URL and analize it, convertering it in an object.
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class PathHandler {
     
@@ -41,7 +41,7 @@ public class PathHandler {
     
     
     /**
-     * TODO JavaDoc
+     * Class constructor with web resource path parameter
      * @param path 
      */
     public PathHandler(String path){
@@ -51,7 +51,8 @@ public class PathHandler {
     
     
     /**
-     * TODO: JAVADOC
+     * Creates, filters and classifies web resources upon their directory name, 
+     * type, naming format, and data relative to each type
      */
     public void processPath(){
         // Filtramos y clasificamos segun lo que pide
@@ -206,8 +207,8 @@ public class PathHandler {
     
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Gets the path for a requested web resource
+     * @return path
      */
     public String getPath(){
         return this.path;
@@ -215,17 +216,17 @@ public class PathHandler {
     
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Gets the action requested by the web client (mode)
+     * @return mode
      */
     public String getMode(){
         return this.mode;
     }
     
     
-    /**
-     * TODO: JavaDoc
-     * @return 
+   /**
+     * Gets the newspaper date by translating the naming format for Newspapers
+     * @return a date
      */
     public String getNewspaperDate(){
         return this.year + "/" + this.month + "/" +  this.day;
@@ -233,8 +234,8 @@ public class PathHandler {
     
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Gets a PrintableNews ID
+     * @return printableNewsID
      */
     public String getPrintableNewsID(){
         return this.printableNewsID;
@@ -242,8 +243,8 @@ public class PathHandler {
     
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Gets the URL of a requested WebNews
+     * @return webNewsURL
      */
     public String getWebNewsURL(){
         return this.webNewsURL;
@@ -251,8 +252,8 @@ public class PathHandler {
     
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Gets a Journalist ID
+     * @return journalistID
      */
     public String getJournalistID(){
         return this.journalistID;
@@ -260,8 +261,8 @@ public class PathHandler {
     
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Gets file type of the requested file
+     * @return fileType
      */
     public String getFileType(){
         return this.fileType;

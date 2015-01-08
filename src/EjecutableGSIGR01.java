@@ -21,13 +21,13 @@ import org.xml.sax.SAXException;
 
 /**
  * This class contains the executable for a .jar file that this project can be converted to.
- * @author inigo
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public abstract class EjecutableGSIGR01 {
     // Para cuando los main no tienen nada que recibir.
-    private static String none[] = {};
+    private static final String none[] = {};
     // Para poder controlar el teclado
-    private static BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
+    private static final BufferedReader keyboard = new BufferedReader(new InputStreamReader(System.in));
     // Para acceder a los argumentos del main.
     private static String mainArgs[];
     

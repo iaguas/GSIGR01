@@ -20,8 +20,8 @@ import java.io.IOException;
 import org.json.JSONException;
 
 /**
- *
- * @author Alvaro
+ * This class manages the URL protocol, controlling requests and responses GET.
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class GetHandler {
     private final BusinessSystem bs;
@@ -34,10 +34,10 @@ public class GetHandler {
     private String contentType;
     
     /**
-     * TODO JAVADOC:
-     * @param bs
-     * @param domain
-     * @param localDir 
+     * Class constructor with basic attributes
+     * @param bs BusinessSystem
+     * @param domain Current domain
+     * @param localDir Current directory
      */
     public GetHandler(BusinessSystem bs, String domain, String localDir){
         // Crear parámetros de la clase.
@@ -48,9 +48,9 @@ public class GetHandler {
     }
     
     
-    /** 
-     * TODO: JAVADOC
-     * @param request
+     /** 
+     * Processes GET type petitions by showing data stored in the directories
+     * @param request URL request
      * @throws IOException
      * @throws JSONException 
      */
@@ -371,15 +371,15 @@ public class GetHandler {
     }
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Gets current web page
+     * @return WebPage
      */
     public WebPage getWebPage(){
         return this.webPage;
     }
     
     /**
-     * TODO: JAVADOC
+     * Set the web page to the given WebPage
      * @param webPage 
      */
     public void setWebPage(WebPage webPage){
@@ -387,7 +387,7 @@ public class GetHandler {
     }
     
     /**
-     * TODO: JavaDoc
+     * Returns status of the URL protocol
      * @return 
      */
     public String getStatus(){
@@ -395,24 +395,24 @@ public class GetHandler {
     }
     
     /**
-     * TODO: JAVADOC
-     * @param status 
+     * Sets the status for the URL protocol
+     * @param status URL status code
      */
     public void setStatus(String status){
         this.status = status;
     }
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Gets the content type of the requested web resource
+     * @return contentType
      */
     public String getContentType(){
         return this.contentType;
     }
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Identifies the content type of a web resource stored in a given path
+     * @return content type of a given web resource
      */
     private String guessContentType(String path){
         

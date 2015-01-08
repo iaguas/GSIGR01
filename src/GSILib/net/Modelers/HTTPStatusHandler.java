@@ -1,4 +1,3 @@
-// ******************************** REVISADA **********************************
 /* 
  * Práctica 05 - Grupo 01
  * Gestión de Sistemas de Información
@@ -14,20 +13,18 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
- *
- * @author inigo
+ * This class provides information of the requested HTTP status
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
-
-
 public class HTTPStatusHandler {
-    String localDir;
-    GetHandler getHandler;
-    PostHandler postHandler;
+    private String localDir;
+    private GetHandler getHandler;
+    private PostHandler postHandler;
     
-    HashMap<Integer, String> stateStrings = new HashMap<>();
-    
+    private HashMap<Integer, String> stateStrings = new HashMap<>();
+
     /**
-     * TODO: JAVADOC
+     * Class construtor with getHandler and localDir parameters
      * @param getHandler
      * @param localDir 
      */
@@ -40,7 +37,7 @@ public class HTTPStatusHandler {
     
     
     /**
-     * TODO: JAVADOC
+     * Class constructor with postHandler and localDir parameters
      * @param postHandler
      * @param localDir 
      */
@@ -51,7 +48,7 @@ public class HTTPStatusHandler {
     }
     
     /**
-     * TODO: JAVADOC
+     * Shows and HTTP status error given a number to suit
      * @param errorNumber 
      */
     public void showError(int errorNumber){
@@ -76,7 +73,7 @@ public class HTTPStatusHandler {
     }
   
     /**
-     * TODO: JAVADOC
+     * Sets up all the HTTP statuses
      */
     private void inicializeErrorStrings(){
         // Introducimos todos los posibles estados en la tabla

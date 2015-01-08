@@ -1,4 +1,3 @@
-// ******************************** REVISADA **********************************
 /* 
  * Práctica 05 - Grupo 01
  * Gestión de Sistemas de Información
@@ -10,8 +9,8 @@ package GSILib.net.Config;
 import org.w3c.dom.Element;
 
 /**
- *
- * @author Alvaro
+ * This class gets WebServer configuration from a file
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class ServerConfig {
     
@@ -19,7 +18,7 @@ public class ServerConfig {
     private String localDir, domain;
     
     /**
-     * Constructor which gets WebServer configuration from an XML document
+     * Constructor which gets WebServer configuration from an XML document.
      * @param xmlConfig a XML Element of a ServerConfig
      */
     public ServerConfig(Element xmlConfig) {
@@ -39,7 +38,7 @@ public class ServerConfig {
     }
     
     /**
-     * TODO: JavaDoc
+     * Class constructor which sets the default server configuration.
      */
     public ServerConfig(){
         
@@ -49,7 +48,7 @@ public class ServerConfig {
     }
     
     /**
-     * Gets connection port
+     * Gets connection port.
      * @return port
      */
     public int getPort(){
@@ -57,16 +56,16 @@ public class ServerConfig {
     }
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Gets the current directory.
+     * @return localDir
      */
     public String getLocalDir(){
         return this.localDir;
     }
     
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Gets the current domain.
+     * @return domain
      */
     public String getDomain(){
         return this.domain;

@@ -13,8 +13,8 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- *
- * @author Alvaro
+ * This class is a modeler of a HTTP Response and implements it funcionality.
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil. 
  */
 public class Response {
     
@@ -24,7 +24,7 @@ public class Response {
     private WebPage webPage;
     
     /**
-     * TODO: JavaDoc
+     * Class constructor with mode and status parameters
      * @param mode
      * @param status 
      */
@@ -34,9 +34,8 @@ public class Response {
         this.date = new Date();
     }
     
-    
     /**
-     * TODO: JavaDoc
+     * Class constructor with mode, status and webPage parameters
      * @param mode
      * @param status 
      * @param webPage 
@@ -48,9 +47,8 @@ public class Response {
         this.date = new Date();
     }
     
-    
     /**
-     * TODO: JavaDoc
+     * Class constructor with mode, status, webPage and contentType parameters
      * @param mode
      * @param status
      * @param webPage
@@ -64,18 +62,16 @@ public class Response {
         this.date = new Date();
     }
     
-    
     /**
-     * TODO: JavaDoc
-     * @param mode 
+     * Sets the mode of the response.
+     * @param mode
      */
     public void setMode(String mode){
         this.mode = mode;
     }
     
-    
     /**
-     * TODO: JavaDoc
+     * Sets the status.
      * @param status 
      */
     public void setStatus(String status){
@@ -83,7 +79,7 @@ public class Response {
     }
     
     /**
-     * TODO: JavaDoc
+     * Sets the content type.
      * @param contentType 
      */
     public void setContentType(String contentType){
@@ -91,31 +87,28 @@ public class Response {
     }
     
     /**
-     * TODO: JavaDoc
+     * Sets the web page.
      * @param webPage 
      */
     public void setWebPage(WebPage webPage){
         this.webPage = webPage;
     }
     
-    
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Gets the date of a response
+     * @return date in String format
      */
     public String getDate(){
         return this.simpleDateFormat.format(this.date);
     }
     
-    
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Gets the web page length of a response
+     * @return int 
      */
     private int getContentLength(){
         return this.webPage.toString().length();
     }
-    
     
     @Override
     public String toString(){

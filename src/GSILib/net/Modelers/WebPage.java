@@ -17,8 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author Alvaro
+ * Creates a WebPage by several collected HTML templates
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class WebPage {
     
@@ -31,7 +31,7 @@ public class WebPage {
     private String mode = null; // mode = {"html" | "file" | "null"}
     
     /**
-     * TODO: JavaDoc
+     * Class constructor with title and body paramters
      * @param title
      * @param body 
      */
@@ -43,7 +43,7 @@ public class WebPage {
     }
     
     /**
-     * TODO: JavaDoc
+     * Class constructor with title and file parameters
      * @param title
      * @param file
      * @throws IOException 
@@ -56,7 +56,7 @@ public class WebPage {
     }
     
     /**
-     * TODO: JavaDoc
+     * Class constructor with file parameter
      * @param file 
      */
     public WebPage(File file) throws FileNotFoundException, IOException{ // TODO: Sin excepción
@@ -77,7 +77,7 @@ public class WebPage {
     }
     
     /**
-     * TODO: JavaDoc
+     * Class constructor with file path parameter
      * @param file 
      */
     public WebPage(String file){
@@ -87,9 +87,9 @@ public class WebPage {
     }
     
     /**
-     * TODO: JavaDoc
+     * Gets the HTML template based on a file
      * @param path
-     * @return
+     * @return HTML file in String form
      * @throws IOException 
      */
     private String getTemplate(String path) throws IOException{
@@ -98,20 +98,16 @@ public class WebPage {
     }
     
     /**
-     * TODO: JavaDoc
-     * @param html 
+     * Concatenates two HTML bodies into the first one
+     * @param html file whose body is to be concatenated
      */
     public void append(String html){
         // Concatenamos el string actual con el introducido.
         this.body = this.body.concat(html);
     }
     
-    //------------------------------------------------------------------------------
-    //  SET
-    //------------------------------------------------------------------------------
-    
     /**
-     * TODO: JavaDoc
+     * Sets the content for a given HTML template
      * @param content 
      */
     public void setContent(String content){
@@ -120,7 +116,7 @@ public class WebPage {
     }
     
     /**
-     * TODO: JavaDoc
+     * Sets the charset for a given HTML template
      * @param charset 
      */
     public void setCharset(String charset){
@@ -129,7 +125,7 @@ public class WebPage {
     }
     
     /**
-     * TODO: JavaDoc
+     * Sets the title for a given HTML template
      * @param title 
      */
     public void setTitle(String title){
@@ -138,7 +134,7 @@ public class WebPage {
     }
     
     /**
-     * TODO: JavaDoc
+     * Sets the body for a given HTML template
      * @param body 
      */
     public void setBody(String body){
@@ -147,7 +143,7 @@ public class WebPage {
     }
     
     /**
-     * TODO: JavaDoc
+     * Replaces oldString for a newString in an HTML template
      * @param oldString
      * @param newString 
      */

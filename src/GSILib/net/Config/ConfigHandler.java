@@ -1,4 +1,3 @@
-// ******************************** REVISADA **********************************
 /* 
  * Práctica 05 - Grupo 01
  * Gestión de Sistemas de Información
@@ -19,7 +18,7 @@ import org.xml.sax.SAXException;
 
 /**
  * This class makes posible introuduce the configuration information to BusinessServer.
- * @author Alvaro
+ * @author Iñigo Aguas, Iñaki Garcia y Alvaro Gil.
  */
 public class ConfigHandler {
     
@@ -27,13 +26,13 @@ public class ConfigHandler {
     private List<ServerConfig> serverConfigs = new ArrayList();
     
     /**
-     * TODO: JavaDoc
+     * Empty class constructor.
      */
     public ConfigHandler(){}
     
     /**
-     * TODO: JAVADOC
-     * @return 
+     * Adds a server configuration (ServerConfig) to this class' list of server configurations (serverConfigs)
+     * @return true if and only if a server configuration is added correctly
      */
     public boolean setConfig(){
         this.serverConfigs.add(new ServerConfig());
@@ -41,9 +40,9 @@ public class ConfigHandler {
     }
     
     /** 
-     * TODO: JAVADOC
-     * @param path
-     * @return 
+     * Sets a server configuration stored in an XML file, given by a path.
+     * @param path Location of the XML file containing a server configuration
+     * @return true if and only if XML correctly read
      */
     public boolean setConfig(String path){
         try{
@@ -71,17 +70,17 @@ public class ConfigHandler {
     }
    
     /**
-     * TODO: JavaDoc
-     * @return 
+     * Returns the path of the XML server configuration file.
+     * @return The path of the XML file
      */
     public String getLoadDataPath(){
         // Devolvemos la ruta del fichero.
         return this.loadDataPath;
     }
     
-    /**
-     * TODO: JavaDoc
-     * @return 
+   /**
+     * Returns the list of the saved server configurations.
+     * @return a list of ServerConfigs
      */
     public ServerConfig[] getServerConfigs(){
         // Devolvemos la configuración de los servidores (puede haber más de uno).
