@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BusinessSystem>
+    <Workers>
+        <Photographer birthDate="01/01/1990" holidayResidence="Carpa"
+            id="12" name="Arguitxu Arzcarrena" regularResidence="Bilbao"/>
+        <Journalist birthDate="01/01/01" id="2" name="Pirata">
+            <interest>Comer pasta</interest>
+            <interest>beber cerveza</interest>
+            <interest>Cantar canciones</interest>
+            <interest>trifulcas de bar</interest>
+        </Journalist>
+        <Journalist birthDate="27/12/1993" id="8" name="Alvaro Octal">
+            <interest>Discutir</interest>
+            <interest>Tocar las narices</interest>
+            <interest>Jugar al CS</interest>
+        </Journalist>
+    </Workers>
+    <Documents>
+        <PrintableNews
+            body="A joint group of researchers from the Netherlands and the US have smashed the world speed record for a fiber network, pushing 255 terabits per second down a single strand of glass fiber. This is equivalent to around 32 terabytes per second — enough to transfer a 1GB movie in 31.25 microseconds (0.03 milliseconds), or alternatively, the entire contents of your 1TB hard drive in about 31 milliseconds."
+            headline="255Tbps: World’s fastest network could carry all of the internet’s traffic on a single fiber" id="0">
+            <Journalist birthDate="27/12/1993" id="8" name="Alvaro Octal">
+                <interest>Discutir</interest>
+                <interest>Tocar las narices</interest>
+                <interest>Jugar al CS</interest>
+            </Journalist>
+            <Reviewers>
+                <Journalist birthDate="01/01/01" id="2" name="Pirata">
+                    <interest>Comer pasta</interest>
+                    <interest>beber cerveza</interest>
+                    <interest>Cantar canciones</interest>
+                    <interest>trifulcas de bar</interest>
+                </Journalist>
+            </Reviewers>
+            <Pictures>
+                <Picture url="http://images.example.com/testRed.png">
+                    <Photographer birthDate="01/01/1990"
+                        holidayResidence="Carpa" id="12"
+                        name="Arguitxu Arzcarrena" regularResidence="Bilbao"/>
+                </Picture>
+                <Picture url="http://images.example.com/testBlue.png">
+                    <Photographer birthDate="01/01/1990"
+                        holidayResidence="Carpa" id="12"
+                        name="Arguitxu Arzcarrena" regularResidence="Bilbao"/>
+                </Picture>
+            </Pictures>
+        </PrintableNews>
+        <Teletype
+            body="Se conoce el grupo de burdos patanes fueron owneados"
+            headline="Anonymous hackea la web de AEDE" id="1">
+            <Journalist birthDate="27/12/1993" id="8" name="Alvaro Octal">
+                <interest>Discutir</interest>
+                <interest>Tocar las narices</interest>
+                <interest>Jugar al CS</interest>
+            </Journalist>
+        </Teletype>
+        <WebNews
+            body="A joint group of researchers from the Netherlands and the US have smashed the world speed record for a fiber network, pushing 255 terabits per second down a single strand of glass fiber. This is equivalent to around 32 terabytes per second — enough to transfer a 1GB movie in 31.25 microseconds (0.03 milliseconds), or alternatively, the entire contents of your 1TB hard drive in about 31 milliseconds."
+            headline="255Tbps: World’s fastest network could carry all of the internet’s traffic on a single fiber"
+            id="2" url="http://example.com/1/">
+            <Journalist birthDate="27/12/1993" id="8" name="Alvaro Octal">
+                <interest>Discutir</interest>
+                <interest>Tocar las narices</interest>
+                <interest>Jugar al CS</interest>
+            </Journalist>
+            <keywords>
+                <keyword>fibra</keyword>
+                <keyword>internet</keyword>
+            </keywords>
+            <Pictures>
+                <Picture url="http://images.example.com/testRed.png">
+                    <Photographer birthDate="01/01/1990"
+                        holidayResidence="Carpa" id="12"
+                        name="Arguitxu Arzcarrena" regularResidence="Bilbao"/>
+                </Picture>
+                <Picture url="http://images.example.com/testBlue.png">
+                    <Photographer birthDate="01/01/1990"
+                        holidayResidence="Carpa" id="12"
+                        name="Arguitxu Arzcarrena" regularResidence="Bilbao"/>
+                </Picture>
+            </Pictures>
+        </WebNews>
+    </Documents>
+    <Pictures>
+        <Picture url="http://images.example.com/testRed.png">
+            <Photographer birthDate="01/01/1990"
+                holidayResidence="Carpa" id="12"
+                name="Arguitxu Arzcarrena" regularResidence="Bilbao"/>
+        </Picture>
+        <Picture url="http://images.example.com/testBlue.png">
+            <Photographer birthDate="01/01/1990"
+                holidayResidence="Carpa" id="12"
+                name="Arguitxu Arzcarrena" regularResidence="Bilbao"/>
+        </Picture>
+    </Pictures>
+    <Newspapers>
+        <Newspaper date="1970/01/01">
+            <PrintableNews
+                body="A joint group of researchers from the Netherlands and the US have smashed the world speed record for a fiber network, pushing 255 terabits per second down a single strand of glass fiber. This is equivalent to around 32 terabytes per second — enough to transfer a 1GB movie in 31.25 microseconds (0.03 milliseconds), or alternatively, the entire contents of your 1TB hard drive in about 31 milliseconds."
+                headline="255Tbps: World’s fastest network could carry all of the internet’s traffic on a single fiber" id="0">
+                <Journalist birthDate="27/12/1993" id="8" name="Alvaro Octal">
+                    <interest>Discutir</interest>
+                    <interest>Tocar las narices</interest>
+                    <interest>Jugar al CS</interest>
+                </Journalist>
+                <Reviewers>
+                    <Journalist birthDate="01/01/01" id="2" name="Pirata">
+                        <interest>Comer pasta</interest>
+                        <interest>beber cerveza</interest>
+                        <interest>Cantar canciones</interest>
+                        <interest>trifulcas de bar</interest>
+                    </Journalist>
+                </Reviewers>
+                <Pictures>
+                    <Picture url="http://images.example.com/testRed.png">
+                        <Photographer birthDate="01/01/1990"
+                            holidayResidence="Carpa" id="12"
+                            name="Arguitxu Arzcarrena" regularResidence="Bilbao"/>
+                    </Picture>
+                    <Picture url="http://images.example.com/testBlue.png">
+                        <Photographer birthDate="01/01/1990"
+                            holidayResidence="Carpa" id="12"
+                            name="Arguitxu Arzcarrena" regularResidence="Bilbao"/>
+                    </Picture>
+                </Pictures>
+            </PrintableNews>
+        </Newspaper>
+    </Newspapers>
+</BusinessSystem>

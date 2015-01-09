@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebNews
+    body="A joint group of researchers from the Netherlands and the US have smashed the world speed record for a fiber network, pushing 255 terabits per second down a single strand of glass fiber. This is equivalent to around 32 terabytes per second — enough to transfer a 1GB movie in 31.25 microseconds (0.03 milliseconds), or alternatively, the entire contents of your 1TB hard drive in about 31 milliseconds."
+    headline="255Tbps: World’s fastest network could carry all of the internet’s traffic on a single fiber"
+    id="null" url="http://example.com/1/">
+    <Journalist birthDate="27/12/1993" id="8" name="Alvaro Octal">
+        <interest>Discutir</interest>
+        <interest>Tocar las narices</interest>
+        <interest>Jugar al CS</interest>
+    </Journalist>
+    <keywords>
+        <keyword>fibra</keyword>
+        <keyword>internet</keyword>
+    </keywords>
+    <Pictures>
+        <Picture url="http://images.example.com/testRed.png">
+            <Photographer birthDate="01/01/1990"
+                holidayResidence="Carpa" id="12"
+                name="Arguitxu Arzcarrena" regularResidence="Bilbao"/>
+        </Picture>
+        <Picture url="http://images.example.com/testBlue.png">
+            <Photographer birthDate="01/01/1990"
+                holidayResidence="Carpa" id="12"
+                name="Arguitxu Arzcarrena" regularResidence="Bilbao"/>
+        </Picture>
+    </Pictures>
+</WebNews>

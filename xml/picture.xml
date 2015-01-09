@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Picture url="http://images.example.com/testRed.png">
+    <Photographer birthDate="01/01/1990" holidayResidence="Carpa"
+        id="12" name="Arguitxu Arzcarrena" regularResidence="Bilbao"/>
+</Picture>
