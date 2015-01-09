@@ -35,11 +35,19 @@ public class XMLParsingException extends Exception{
     /*public XMLParsingException() {
 
     }*/
-    
+    /**
+     * Constructor of exception XMLParsingException
+     * @param message Message to show by error.
+     */
     public XMLParsingException(String message) {
         super(message);
     }
-
+    
+    /**
+     * Constructor of exception XMLParsingException
+     * @param message Message to show by error.
+     * @param throwable Thing to throw
+     */
     public XMLParsingException(String message, Throwable throwable) {
         super(message, throwable);
     }

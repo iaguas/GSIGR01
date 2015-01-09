@@ -33,6 +33,15 @@ public abstract class EjecutableGSIGR01 {
     // Para acceder a los argumentos del main.
     private static String mainArgs[];
     
+    /**
+     * This is the main method who start the virtual machine.
+     * @param mainArgs arguments stack of args of main method.
+     * @throws SAXException exception derivated from data consistence.
+     * @throws XMLParsingException exception derivated from XML parsing.
+     * @throws IOException exception derivated from io.
+     * @throws ParseException exception derivated from parsing.
+     * @throws Exception exception derivated an exception.
+     */
     public static void main(String mainArgs[]) throws SAXException, XMLParsingException, IOException, ParseException, Exception{
         // Guardamos los argumentos para utilizarlos más adelante, si procede.
         EjecutableGSIGR01.mainArgs = mainArgs;

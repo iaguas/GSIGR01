@@ -30,11 +30,11 @@ public class XMLTesting {
     
     /**
      * This is the main class of XMLTesting.
-     * @param args
-     * @throws SAXException
-     * @throws XMLParsingException
-     * @throws IOException
-     * @throws ParseException 
+     * @param args arguments stack of args of main method.
+     * @throws SAXException exception derivated from data consistence.
+     * @throws XMLParsingException exception derivated from XML parsing.
+     * @throws IOException exception derivated from io.
+     * @throws ParseException exception derivated from parsing.
      */
     public static void main(String args[]) throws SAXException, XMLParsingException, IOException, ParseException {
         

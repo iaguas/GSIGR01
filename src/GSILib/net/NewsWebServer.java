@@ -278,7 +278,7 @@ public class NewsWebServer {
     
     /** 
      * Main method
-     * @param args stack of args of main method.
+     * @param args arguments stack of args of main method.
      * @throws Exception An exception.
      */
     public static void main(String[] args) throws Exception {
@@ -355,5 +355,6 @@ public class NewsWebServer {
                 }
             }
         }
+
     }
 }

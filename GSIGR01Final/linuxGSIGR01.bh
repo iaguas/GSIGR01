@@ -1,0 +1,3 @@
+#!/bin/bash
+
+java -jar GSIGR01withLibs.jar $1;

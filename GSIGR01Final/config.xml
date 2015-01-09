@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ServerConfigs>
+	<ServerConfig port="80" localDir="web/" domain="localhost:8080"/>
+	<ServerConfig port="8081" localDir="patata/" domain="localhost:8080"/>
+	<ServerConfig port="8080" localDir="web/" domain="localhost:8080"/>
+</ServerConfigs>

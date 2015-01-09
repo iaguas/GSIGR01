@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="{{charset}}">
+        <meta http-equiv="X-UA-Compatible" content="{{content}}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="GSIGR01">
+
+        <title>{{title}}</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/assets/css/footer.css" rel="stylesheet">
+    </head>
+
+    <body>
+
+        <!-- Barra superior -->
+
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">Java Web Sever</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/journalists/">Journalists</a></li>
+                        <li><a href="/newspapers/">Newspapers</a></li>
+                        <li><a href="/webnews/">WebNews</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Create <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Workers</li>
+                                <li><a href="/create/journalist/">Journalist</a></li>
+                                <li class="divider"></li>
+                                <li class="dropdown-header">Documents</li>
+                                <li><a href="/create/newspaper/">Newspaper</a></li>
+                                <li><a href="/create/printablenews/">PrintableNews</a></li>
+                                <li><a href="/create/webnews/">WebNews</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Begin page content -->
+
+        <div class="container bs-docs-container" role="main">
+            {{body}}
+        </div>
+
+        <!-- Footer -->
+
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <p class="text-muted">
+                        <div class="col-md-6">Created by GSIGR01.
+                        </div>
+                        <div class="col-md-6"> 
+                            <p class="text-right">based on
+                                <a href="http://getbootstrap.com">
+                                    Bootstrap
+                                </a>
+                            </p>
+                        </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="/assets/js/bootstrap.min.js"></script>
+    </body>
+</html>
